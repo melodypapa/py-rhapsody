@@ -3292,7 +3292,7 @@ knowledge and documentation transfer directly.
 
 - Windows with a licensed IBM Rhapsody installation (COM automation is
   Windows-only).
-- Python 3.9+
+- Python 3.8+
 - `pywin32`
 
 ## Installation

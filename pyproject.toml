@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "py-rhapsody"
+version = "0.1.0"
+description = "Pythonic wrapper around the IBM Rhapsody COM API, mirroring the Rhapsody Java API"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+dependencies = [
+    "pywin32>=306",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "ruff>=0.4",
+    "black>=24.1",
+    "mypy>=1.8",
+]
+
+[tool.setuptools.packages.find]
+include = ["py_rhapsody*"]
+
+[tool.setuptools.package-data]
+py_rhapsody = ["py.typed"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "win32com.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pywintypes"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
