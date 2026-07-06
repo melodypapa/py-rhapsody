@@ -1,8 +1,8 @@
-"""Tests for py_rhapsody.exceptions."""
+"""Tests for rhapsody_cli.exceptions."""
 
 from __future__ import annotations
 
-from py_rhapsody.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
+from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
 
 
 def test_rhapsody_runtime_exception_preserves_message() -> None:

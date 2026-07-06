@@ -1,19 +1,19 @@
-"""Tests for the public py_rhapsody package API surface."""
+"""Tests for the public rhapsody_cli package API surface."""
 
 from __future__ import annotations
 
-import py_rhapsody
-from py_rhapsody.models._core import wrap
+import rhapsody_cli
+from rhapsody_cli.models._core import wrap
 from tests.fakes import make_fake_element
 
 
 def test_rhapsody_application_is_exported() -> None:
-    assert py_rhapsody.RhapsodyApplication is not None
+    assert rhapsody_cli.RhapsodyApplication is not None
 
 
 def test_exceptions_are_exported() -> None:
-    assert py_rhapsody.RhapsodyConnectionError is not None
-    assert py_rhapsody.RhapsodyRuntimeException is not None
+    assert rhapsody_cli.RhapsodyConnectionError is not None
+    assert rhapsody_cli.RhapsodyRuntimeException is not None
 
 
 def test_importing_package_registers_all_core_element_wrappers() -> None:

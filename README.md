@@ -1,4 +1,4 @@
-# py_rhapsody
+# rhapsody_cli
 
 A Pythonic, object-oriented wrapper around the IBM Rhapsody COM API for
 Windows. Method names and class hierarchy mirror the Rhapsody Java API
@@ -21,7 +21,7 @@ pip install -e ".[dev,cli]"
 ## Usage
 
 ```python
-from py_rhapsody import RhapsodyApplication
+from rhapsody_cli import RhapsodyApplication
 
 # Attaches to a running Rhapsody instance, or launches a new one if none
 # is running.
@@ -51,5 +51,5 @@ Rhapsody installation or license is required to run the test suite.
 
 ## Design
 
-See `docs/superpowers/specs/2026-07-06-py-rhapsody-com-api-design.md` for
+See `docs/superpowers/specs/2026-07-06-rhapsody-cli-com-api-design.md` for
 the full architecture and design rationale.

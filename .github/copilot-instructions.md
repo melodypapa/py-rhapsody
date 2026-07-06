@@ -1,4 +1,4 @@
-# Copilot Instructions for py-rhapsody
+# Copilot Instructions for rhapsody-cli
 
 ## Quick Reference
 
@@ -93,7 +93,7 @@ git push origin main
 git checkout -b feature/<type>-<short-description>
 
 # 2. Make changes, test, commit (locally on feature branch)
-git add src/py_rhapsody/models/elements/myclass.py tests/elements/test_myclass.py
+git add src/rhapsody_cli/models/elements/myclass.py tests/elements/test_myclass.py
 git commit -m "feat: add RPMyClass element wrapper"
 
 # 3. Push to origin
@@ -123,19 +123,19 @@ Use kebab-case with a type prefix:
 
 ### High-Level Overview
 
-**py-rhapsody** is a Pythonic wrapper around the IBM Rhapsody COM API. It consists of three layers:
+**rhapsody-cli** is a Pythonic wrapper around the IBM Rhapsody COM API. It consists of three layers:
 
-1. **Core Model Wrapping** (`src/py_rhapsody/models/`)
+1. **Core Model Wrapping** (`src/rhapsody_cli/models/`)
    - Base class `RPModelElement` wraps all Rhapsody COM objects
    - Element subclasses mirror Rhapsody Java API (e.g., `RPClass`, `RPPackage`, `RPAttribute`)
    - Wrapper registry pattern: each element module registers its wrapper class in `_WRAPPER_REGISTRY`
    - `call_com()` translates COM failures to `RhapsodyRuntimeException`
 
-2. **Application Entry Point** (`src/py_rhapsody/application.py`)
+2. **Application Entry Point** (`src/rhapsody_cli/application.py`)
    - `RhapsodyApplication` handles Rhapsody connection (attach/launch)
    - Supports three connection modes: `attach()` (existing instance), `launch()` (new instance), `connect()` (try attach then launch)
 
-3. **CLI Layer** (`src/py_rhapsody/cli/`)
+3. **CLI Layer** (`src/rhapsody_cli/cli/`)
    - Click-based command-line interface using class-based architecture
    - Command groups: `project`, `element`, `io`
    - Context: `RhapsodyContext` manages the current Rhapsody state
@@ -158,7 +158,7 @@ Formatted Output (table/JSON/CSV)
 ### API Mirroring
 
 Method names and class hierarchy **exactly mirror** the Rhapsody Java API (`com.telelogic.rhapsody.core`):
-- Java: `com.telelogic.rhapsody.core.IRPClass` → Python: `py_rhapsody.models.elements.class_.RPClass`
+- Java: `com.telelogic.rhapsody.core.IRPClass` → Python: `rhapsody_cli.models.elements.class_.RPClass`
 - Java: `getNestedElements()` → Python: `getNestedElements()`
 - COM errors become `RhapsodyRuntimeException` for consistent error handling
 
@@ -219,8 +219,8 @@ class ProjectCommandGroup(click.Group):
 New element types must register themselves with the wrapper registry:
 
 ```python
-# In src/py_rhapsody/models/elements/myclass.py
-from py_rhapsody.models._core import register_wrapper, RPModelElement
+# In src/rhapsody_cli/models/elements/myclass.py
+from rhapsody_cli.models._core import register_wrapper, RPModelElement
 
 class RPMyClass(RPModelElement):
     """Wraps IRPMyClass."""
@@ -278,7 +278,7 @@ No Rhapsody installation or license is required to run the full test suite.
 ### Code Layout
 
 ```
-src/py_rhapsody/
+src/rhapsody_cli/
 ├── __init__.py                    # Public API exports
 ├── application.py                 # RhapsodyApplication entry point
 ├── exceptions/                    # Exception types
@@ -341,11 +341,11 @@ tests/
 
 ### Add a new element wrapper
 
-1. Create `src/py_rhapsody/models/elements/myclass.py`
+1. Create `src/rhapsody_cli/models/elements/myclass.py`
 2. Define `RPMyClass(RPModelElement)` with method mirrors
 3. Call `register_wrapper("MyClass", RPMyClass)` at module level
 4. Write tests in `tests/elements/test_myclass.py` with fakes
-5. Add to `src/py_rhapsody/models/elements/__init__.py` exports
+5. Add to `src/rhapsody_cli/models/elements/__init__.py` exports
 
 ### Add a new CLI command
 
@@ -377,7 +377,7 @@ result = cast(str, com_call())
 
 ## References
 
-- **Design & Architecture:** `docs/superpowers/specs/2026-07-06-py-rhapsody-com-api-design.md`
+- **Design & Architecture:** `docs/superpowers/specs/2026-07-06-rhapsody-cli-com-api-design.md`
 - **Code Guidelines (TDD/Classes):** `docs/CODE_GUIDELINES.md`
 - **Rhapsody Java API:** https://www.ibm.com/docs/en/rhapsody (method/class reference)
 - **Click CLI Documentation:** https://click.palletsprojects.com/

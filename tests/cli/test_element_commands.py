@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from py_rhapsody.cli.commands.element import ElementCommandGroup
+from rhapsody_cli.cli.commands.element import ElementCommandGroup
 
 
 class TestElementCommandGroup:

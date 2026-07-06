@@ -1,9 +1,9 @@
-"""Tests for py_rhapsody.elements.classifier.RPClassifier."""
+"""Tests for rhapsody_cli.elements.classifier.RPClassifier."""
 
 from __future__ import annotations
 
-from py_rhapsody.models._core import RPUnit
-from py_rhapsody.models.elements.classifier import RPClassifier
+from rhapsody_cli.models._core import RPUnit
+from rhapsody_cli.models.elements.classifier import RPClassifier
 from tests.fakes import make_fake_collection, make_fake_element
 
 

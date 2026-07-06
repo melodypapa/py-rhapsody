@@ -6,7 +6,7 @@ from unittest.mock import patch
 
 from click.testing import CliRunner
 
-from py_rhapsody.cli.commands.project import ProjectCommandGroup
+from rhapsody_cli.cli.commands.project import ProjectCommandGroup
 
 
 class TestProjectCommandGroup:
@@ -55,8 +55,8 @@ class TestOpenProjectCommand:
             with open("test.rpy", "w") as f:
                 f.write("mock project")
 
-            with patch("py_rhapsody.cli.context.RhapsodyContext.connect"):
-                with patch("py_rhapsody.cli.context.RhapsodyContext.open_project"):
+            with patch("rhapsody_cli.cli.context.RhapsodyContext.connect"):
+                with patch("rhapsody_cli.cli.context.RhapsodyContext.open_project"):
                     result = runner.invoke(group, ["open", "test.rpy"])
                     # Command executes (may fail due to mocking, but should accept args)
                     assert result.exit_code in (0, 1)

@@ -1,4 +1,4 @@
-# py-rhapsody Code Guidelines
+# rhapsody-cli Code Guidelines
 
 > **Core Principle:** Test-first, class-based architecture. Write tests before code. Organize code as classes, not functions.
 
@@ -67,8 +67,8 @@ tests/
 # tests/cli/test_commands.py
 import pytest
 from click.testing import CliRunner
-from py_rhapsody.cli.commands.project import OpenProjectCommand
-from py_rhapsody.cli.context import RhapsodyContext
+from rhapsody_cli.cli.commands.project import OpenProjectCommand
+from rhapsody_cli.cli.context import RhapsodyContext
 
 class TestOpenProjectCommand:
     def test_open_project_with_valid_path_succeeds(self):
@@ -106,7 +106,7 @@ class TestOpenProjectCommand:
 #### Step 2: Implement Minimal Code
 
 ```python
-# src/py_rhapsody/cli/commands/project.py
+# src/rhapsody_cli/cli/commands/project.py
 class OpenProjectCommand(click.Command):
     def __init__(self):
         super().__init__(
@@ -456,7 +456,7 @@ def test_context_open_project_calls_app_open_project():
 def test_project_open_command_end_to_end():
     """Test: 'project open' command works end-to-end."""
     from click.testing import CliRunner
-    from py_rhapsody.cli.commands.project import ProjectCommandGroup
+    from rhapsody_cli.cli.commands.project import ProjectCommandGroup
     
     runner = CliRunner()
     group = ProjectCommandGroup()
@@ -560,9 +560,9 @@ All code reviews must verify:
 
 See the following for before/after refactoring:
 
-- **CLI commands:** `src/py_rhapsody/cli/commands/`
-- **Formatters:** `src/py_rhapsody/cli/formatters.py`
-- **Context:** `src/py_rhapsody/cli/context.py`
+- **CLI commands:** `src/rhapsody_cli/cli/commands/`
+- **Formatters:** `src/rhapsody_cli/cli/formatters.py`
+- **Context:** `src/rhapsody_cli/cli/context.py`
 - **Tests:** `tests/test_cli.py`
 
 ### Future Examples
@@ -581,5 +581,5 @@ For clarification on these guidelines, refer to:
 ---
 
 **Last Updated:** 2024  
-**Author:** py-rhapsody development team  
+**Author:** rhapsody-cli development team  
 **Status:** Active - Applied to all new code and ongoing refactoring

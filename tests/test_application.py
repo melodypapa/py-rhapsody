@@ -1,4 +1,4 @@
-"""Tests for py_rhapsody.application.RhapsodyApplication."""
+"""Tests for rhapsody_cli.application.RhapsodyApplication."""
 
 from __future__ import annotations
 
@@ -6,13 +6,13 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from py_rhapsody.application import RhapsodyApplication
-from py_rhapsody.exceptions import RhapsodyConnectionError
-from py_rhapsody.models.elements.project import RPProject
+from rhapsody_cli.application import RhapsodyApplication
+from rhapsody_cli.exceptions import RhapsodyConnectionError
+from rhapsody_cli.models.elements.project import RPProject
 from tests.fakes import make_com_error, make_fake_collection, make_fake_element
 
 
-@patch("py_rhapsody.application.win32com.client.GetActiveObject")
+@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
 def test_attach_wraps_active_com_object(mock_get_active_object: MagicMock) -> None:
     fake_app = MagicMock(name="FakeApplication")
     mock_get_active_object.return_value = fake_app
@@ -23,7 +23,7 @@ def test_attach_wraps_active_com_object(mock_get_active_object: MagicMock) -> No
     assert app._com is fake_app
 
 
-@patch("py_rhapsody.application.win32com.client.GetActiveObject")
+@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
 def test_attach_raises_connection_error_when_none_running(
     mock_get_active_object: MagicMock,
 ) -> None:
@@ -33,7 +33,7 @@ def test_attach_raises_connection_error_when_none_running(
         RhapsodyApplication.attach()
 
 
-@patch("py_rhapsody.application.win32com.client.Dispatch")
+@patch("rhapsody_cli.application.win32com.client.Dispatch")
 def test_launch_wraps_new_com_object(mock_dispatch: MagicMock) -> None:
     fake_app = MagicMock(name="FakeApplication")
     mock_dispatch.return_value = fake_app
@@ -44,7 +44,7 @@ def test_launch_wraps_new_com_object(mock_dispatch: MagicMock) -> None:
     assert app._com is fake_app
 
 
-@patch("py_rhapsody.application.win32com.client.Dispatch")
+@patch("rhapsody_cli.application.win32com.client.Dispatch")
 def test_launch_raises_connection_error_when_dispatch_fails(
     mock_dispatch: MagicMock,
 ) -> None:
@@ -54,8 +54,8 @@ def test_launch_raises_connection_error_when_dispatch_fails(
         RhapsodyApplication.launch()
 
 
-@patch("py_rhapsody.application.win32com.client.Dispatch")
-@patch("py_rhapsody.application.win32com.client.GetActiveObject")
+@patch("rhapsody_cli.application.win32com.client.Dispatch")
+@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
 def test_connect_prefers_attach_when_available(
     mock_get_active_object: MagicMock, mock_dispatch: MagicMock
 ) -> None:
@@ -69,8 +69,8 @@ def test_connect_prefers_attach_when_available(
     assert app._com is fake_app
 
 
-@patch("py_rhapsody.application.win32com.client.Dispatch")
-@patch("py_rhapsody.application.win32com.client.GetActiveObject")
+@patch("rhapsody_cli.application.win32com.client.Dispatch")
+@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
 def test_connect_falls_back_to_launch_when_attach_fails(
     mock_get_active_object: MagicMock, mock_dispatch: MagicMock
 ) -> None:
@@ -84,8 +84,8 @@ def test_connect_falls_back_to_launch_when_attach_fails(
     assert app._com is fake_app
 
 
-@patch("py_rhapsody.application.win32com.client.Dispatch")
-@patch("py_rhapsody.application.win32com.client.GetActiveObject")
+@patch("rhapsody_cli.application.win32com.client.Dispatch")
+@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
 def test_connect_raises_connection_error_when_launch_fails(
     mock_get_active_object: MagicMock, mock_dispatch: MagicMock
 ) -> None:

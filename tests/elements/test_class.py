@@ -1,10 +1,10 @@
-"""Tests for py_rhapsody.elements.class_.RPClass."""
+"""Tests for rhapsody_cli.elements.class_.RPClass."""
 
 from __future__ import annotations
 
-from py_rhapsody.models._core import wrap
-from py_rhapsody.models.elements.class_ import RPClass
-from py_rhapsody.models.elements.classifier import RPClassifier
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.class_ import RPClass
+from rhapsody_cli.models.elements.classifier import RPClassifier
 from tests.fakes import make_fake_element
 
 

@@ -1,9 +1,9 @@
-"""Tests for py_rhapsody.elements.package.RPPackage."""
+"""Tests for rhapsody_cli.elements.package.RPPackage."""
 
 from __future__ import annotations
 
-from py_rhapsody.models._core import RPUnit, wrap
-from py_rhapsody.models.elements.package import RPPackage
+from rhapsody_cli.models._core import RPUnit, wrap
+from rhapsody_cli.models.elements.package import RPPackage
 from tests.fakes import make_fake_element
 
 

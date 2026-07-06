@@ -1,10 +1,10 @@
-"""Tests for py_rhapsody.elements.usecase.RPUseCase."""
+"""Tests for rhapsody_cli.elements.usecase.RPUseCase."""
 
 from __future__ import annotations
 
-from py_rhapsody.models._core import wrap
-from py_rhapsody.models.elements.classifier import RPClassifier
-from py_rhapsody.models.elements.usecase import RPUseCase
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.classifier import RPClassifier
+from rhapsody_cli.models.elements.usecase import RPUseCase
 from tests.fakes import make_fake_collection, make_fake_element
 
 

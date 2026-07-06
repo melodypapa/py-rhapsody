@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from click.testing import CliRunner
 
-from py_rhapsody.cli.context import RhapsodyContext
-from py_rhapsody.cli.formatters import OutputFormatter
-from py_rhapsody.cli.main import cli
+from rhapsody_cli.cli.context import RhapsodyContext
+from rhapsody_cli.cli.formatters import OutputFormatter
+from rhapsody_cli.cli.main import cli
 
 
 def test_cli_help() -> None:

@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/project/py-rhapsody/
+      url: https://pypi.org/project/rhapsody-cli/
 
     steps:
     - uses: actions/checkout@v4

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from py_rhapsody.cli.commands.io import IOCommandGroup
+from rhapsody_cli.cli.commands.io import IOCommandGroup
 
 
 class TestIOCommandGroup:

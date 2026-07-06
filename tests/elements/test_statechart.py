@@ -1,9 +1,9 @@
-"""Tests for py_rhapsody.elements.statechart.RPStatechart."""
+"""Tests for rhapsody_cli.elements.statechart.RPStatechart."""
 
 from __future__ import annotations
 
-from py_rhapsody.models._core import RPModelElement, RPUnit, wrap
-from py_rhapsody.models.elements.statechart import RPStatechart
+from rhapsody_cli.models._core import RPModelElement, RPUnit, wrap
+from rhapsody_cli.models.elements.statechart import RPStatechart
 from tests.fakes import make_fake_element
 
 
