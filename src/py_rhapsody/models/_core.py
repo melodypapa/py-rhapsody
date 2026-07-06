@@ -10,16 +10,23 @@ wrapper class using a registry populated by each element module.
 from __future__ import annotations
 
 import sys
-from typing import TYPE_CHECKING, Any, Callable, Iterator, TypeVar
+from typing import Any, Callable, Iterator, TypeVar
 
 from py_rhapsody.exceptions import RhapsodyRuntimeException
 
 if sys.platform == "win32":
     import pywintypes
 else:
-    if TYPE_CHECKING:
-        import pywintypes as pywintypes_stub  # noqa: F401
-    pywintypes = None  # type: ignore[assignment,misc]
+    # pywintypes is Windows-only; provide a stub for non-Windows platforms
+    # to allow imports on Linux CI runners. See: tests/fakes.py for test mocks.
+    class pywintypes:  # type: ignore[no-redef]
+        """Stub for pywintypes on non-Windows platforms."""
+
+        @staticmethod
+        def com_error(*args: Any, **kwargs: Any) -> Exception:
+            """Stub that never matches in runtime (sys.platform != 'win32')."""
+            raise RuntimeError("pywintypes unavailable on non-Windows platforms")
+
 
 T = TypeVar("T")
 
@@ -40,7 +47,7 @@ def call_com(func: Callable[[], T]) -> T:
     try:
         return func()
     except Exception as exc:
-        if sys.platform == "win32" and type(exc).__name__ == "com_error":
+        if isinstance(exc, pywintypes.com_error):
             raise RhapsodyRuntimeException(str(exc)) from exc
         raise
 
