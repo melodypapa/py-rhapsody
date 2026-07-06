@@ -41,9 +41,9 @@ project.save()
 ```bash
 pip install -e .[dev]
 pytest
-ruff check py_rhapsody tests
-black --check py_rhapsody tests
-mypy py_rhapsody
+ruff check src/ tests/
+black --check src/ tests/
+mypy src/ tests/
 ```
 
 Tests run entirely against mocked COM objects (see `tests/fakes.py`) — no

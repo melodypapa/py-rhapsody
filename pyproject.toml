@@ -21,9 +21,12 @@ dev = [
     "mypy>=1.8",
 ]
 
-[tool.setuptools]
-packages = ["py_rhapsody"]
-package-dir = {"" = "src"}
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["py_rhapsody*"]
 
 [tool.setuptools.package-data]
 py_rhapsody = ["py.typed"]
