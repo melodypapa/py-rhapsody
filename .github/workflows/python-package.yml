@@ -40,7 +40,7 @@ jobs:
         black --check src/ tests/
     - name: Type check with mypy
       run: |
-        mypy src/ tests/ --python-version ${{ matrix.python-version }}
+        mypy src/ tests/
     - name: Test with pytest
       run: |
         pytest tests/ -v --cov=src/py_rhapsody --cov-report=xml
