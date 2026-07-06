@@ -15,7 +15,7 @@ knowledge and documentation transfer directly.
 ## Installation
 
 ```bash
-pip install -e .[dev]
+pip install -e ".[dev,cli]"
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ project.save()
 ## Development
 
 ```bash
-pip install -e .[dev]
+pip install -e ".[dev,cli]"
 pytest
 ruff check src/ tests/
 black --check src/ tests/
