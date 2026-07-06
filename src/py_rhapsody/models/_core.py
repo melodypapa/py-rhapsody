@@ -11,9 +11,12 @@ from __future__ import annotations
 
 from typing import Any, Callable, Iterator, TypeVar
 
-import pywintypes
-
 from py_rhapsody.exceptions import RhapsodyRuntimeException
+
+try:
+    import pywintypes
+except ImportError:  # pragma: no cover - pywintypes is Windows-only
+    pywintypes = None
 
 T = TypeVar("T")
 
@@ -33,8 +36,11 @@ def call_com(func: Callable[[], T]) -> T:
     """Invoke a COM call, translating COM errors into RhapsodyRuntimeException."""
     try:
         return func()
-    except pywintypes.com_error as exc:
-        raise RhapsodyRuntimeException(str(exc)) from exc
+    except Exception as exc:
+        # On Windows, pywintypes.com_error; on other platforms, re-raise
+        if type(exc).__name__ == "com_error":
+            raise RhapsodyRuntimeException(str(exc)) from exc
+        raise
 
 
 def _wrap_if_element(value: Any) -> Any:

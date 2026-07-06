@@ -15,9 +15,10 @@
 ### Installation
 
 ```bash
-pip install -e .[dev]       # Install with dev dependencies
-pip install -e .[cli]       # Install with CLI dependencies only
-pip install -e .            # Install package only
+pip install -e ".[dev,cli]"  # Full dev setup: required to run the full test suite (CLI tests need click/tabulate/rich)
+pip install -e ".[dev]"      # Dev tools only (ruff/black/mypy/pytest) - tests/cli/* will fail to import
+pip install -e ".[cli]"      # CLI runtime dependencies only
+pip install -e .             # Install package only (pywin32 on Windows)
 ```
 
 ### Testing
