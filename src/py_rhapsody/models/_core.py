@@ -9,11 +9,15 @@ wrapper class using a registry populated by each element module.
 
 from __future__ import annotations
 
+import sys
 from typing import Any, Callable, Iterator, TypeVar
 
-import pywintypes
-
 from py_rhapsody.exceptions import RhapsodyRuntimeException
+
+if sys.platform == "win32":
+    import pywintypes
+else:
+    pywintypes = None  # type: ignore[assignment]
 
 T = TypeVar("T")
 
