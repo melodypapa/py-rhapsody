@@ -9,3 +9,4 @@ from py_rhapsody.elements import classifier as classifier  # noqa: F401
 from py_rhapsody.elements import operation as operation  # noqa: F401
 from py_rhapsody.elements import package as package  # noqa: F401
 from py_rhapsody.elements import project as project  # noqa: F401
+from py_rhapsody.elements import usecase as usecase  # noqa: F401
