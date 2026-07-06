@@ -69,3 +69,22 @@ class RPModelElement:
 
     def __repr__(self) -> str:
         return f"{type(self).__name__}(name={self.getName()!r})"
+
+
+class RPUnit(RPModelElement):
+    """Wraps ``IRPUnit``: model elements that can be saved as separate files."""
+
+    def save(self) -> None:
+        call_com(lambda: self._com.save())
+
+    def getFilename(self) -> str:
+        return call_com(lambda: str(self._com.getFilename()))
+
+    def setFilename(self, filename: str) -> None:
+        call_com(lambda: self._com.setFilename(filename))
+
+    def isReadOnly(self) -> bool:
+        return call_com(lambda: bool(self._com.isReadOnly()))
+
+    def setReadOnly(self, read_only: bool) -> None:
+        call_com(lambda: self._com.setReadOnly(1 if read_only else 0))

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from py_rhapsody._core import RPModelElement, call_com
+from py_rhapsody._core import RPModelElement, RPUnit, call_com
 from py_rhapsody.exceptions import RhapsodyRuntimeException
 from tests.fakes import make_com_error, make_fake_element
 
@@ -76,3 +76,52 @@ def test_model_element_equality_by_underlying_com_object() -> None:
 
     assert RPModelElement(fake) == RPModelElement(fake)
     assert RPModelElement(fake) != RPModelElement(make_fake_element("Class"))
+
+
+def test_unit_save_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.save()
+
+    fake.save.assert_called_once_with()
+
+
+def test_unit_get_filename_delegates_to_com() -> None:
+    fake = make_fake_element("Package", getFilename="Model/Foo.sbs")
+    unit = RPUnit(fake)
+
+    assert unit.getFilename() == "Model/Foo.sbs"
+
+
+def test_unit_set_filename_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setFilename("Model/Bar.sbs")
+
+    fake.setFilename.assert_called_once_with("Model/Bar.sbs")
+
+
+def test_unit_is_read_only_delegates_to_com() -> None:
+    fake = make_fake_element("Package", isReadOnly=1)
+    unit = RPUnit(fake)
+
+    assert unit.isReadOnly() is True
+
+
+def test_unit_set_read_only_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setReadOnly(True)
+
+    fake.setReadOnly.assert_called_once_with(1)
+
+
+def test_unit_is_a_model_element() -> None:
+    fake = make_fake_element("Package", getName="MyPkg")
+    unit = RPUnit(fake)
+
+    assert isinstance(unit, RPModelElement)
+    assert unit.getName() == "MyPkg"
