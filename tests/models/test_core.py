@@ -14,7 +14,7 @@ from rhapsody_cli.models._core import (
     call_com,
     register_wrapper,
 )
-from tests.fakes import make_com_error, make_fake_collection, make_fake_element
+from tests.models.fakes import make_com_error, make_fake_collection, make_fake_element
 
 
 class _FakeClassWrapper(RPModelElement):

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import rhapsody_cli
 from rhapsody_cli.models._core import wrap
-from tests.fakes import make_fake_element
+from tests.models.fakes import make_fake_element
 
 
 def test_rhapsody_application_is_exported() -> None:
