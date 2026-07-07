@@ -21,12 +21,12 @@ without launching a duplicate process.
 **Acceptance Criteria:**
 - Given a Rhapsody instance is already running on the machine, When I call
   `RhapsodyApplication.attach()`, Then a `RhapsodyApplication` instance is returned whose
-  underlying COM object is the active `"Rhapsody.Application"` instance.
+  underlying COM object is the active `"Rhapsody2.Application.1"` instance.
 - Given no Rhapsody instance is running, When I call `RhapsodyApplication.attach()`, Then
   a `RhapsodyConnectionError` is raised with a message indicating that no running instance
   was found.
 - Given `attach()` succeeds, When I inspect the COM Prog ID used internally, Then it is the
-  canonical `"Rhapsody.Application"` Prog ID.
+  canonical `"Rhapsody2.Application.1"` Prog ID.
 **Verification Criteria:**
 Open Task Manager, confirm no `rhapsody.exe` is running, call `attach()` and assert that
 `RhapsodyConnectionError` is raised. Launch Rhapsody manually, call `attach()`, and assert

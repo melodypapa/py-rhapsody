@@ -70,7 +70,7 @@ class ListProjectsCommand(BaseProjectCommand):
 
             rows = []
             for proj in projects:
-                rows.append([proj.getName(), proj.getPath()])
+                rows.append([proj.getName(), proj.getFilename()])
 
             output = OutputFormatter.table(["Name", "Path"], rows)
             click.echo(output)
@@ -108,6 +108,37 @@ class CloseProjectCommand(BaseProjectCommand):
             raise click.Abort() from e
 
 
+class NewProjectCommand(BaseProjectCommand):
+    """Command: Create a new empty Rhapsody project."""
+
+    def __init__(self) -> None:
+        super().__init__(
+            name="new",
+            help="Create a new empty Rhapsody project.",
+            callback=self.execute,
+            params=[
+                click.Argument(["project_location"], type=click.Path()),
+                click.Argument(["project_name"]),
+            ],
+        )
+
+    def execute(self, project_location: str, project_name: str) -> None:
+        """Execute the new command."""
+        try:
+            ctx = RhapsodyContext()
+            ctx.connect("attach")
+            ctx.create_project(project_location, project_name)
+            click.echo(f"Created project: {project_name} at {project_location}")
+        except click.Abort:
+            raise
+        except RhapsodyConnectionError as e:
+            click.echo(f"Connection error: {e}", err=True)
+            raise click.Abort() from e
+        except Exception as e:
+            click.echo(f"Error: {e}", err=True)
+            raise click.Abort() from e
+
+
 class ProjectCommandGroup(click.Group):
     """Command group for project operations."""
 
@@ -120,6 +151,7 @@ class ProjectCommandGroup(click.Group):
         self.add_command(OpenProjectCommand())
         self.add_command(ListProjectsCommand())
         self.add_command(CloseProjectCommand())
+        self.add_command(NewProjectCommand())
 
 
 project = ProjectCommandGroup()

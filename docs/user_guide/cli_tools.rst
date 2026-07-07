@@ -51,6 +51,22 @@ Examples
 Project Commands
 ----------------
 
+``project new`` - Create a New Empty Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   rhapsody-cli project new <PROJECT_LOCATION> <PROJECT_NAME>
+
+Creates a new empty Rhapsody project in ``PROJECT_LOCATION`` and names it
+``PROJECT_NAME``. The new project becomes the active project.
+
+**Example:**
+
+.. code-block:: bash
+
+   rhapsody-cli project new "C:\MyModels" MyNewProject
+
 ``project open`` - Open a Rhapsody Project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

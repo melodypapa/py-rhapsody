@@ -46,39 +46,67 @@ def call_com(func: Callable[[], T]) -> T:
 
 def _wrap_if_element(value: Any) -> Any:
     """Wrap ``value`` if it looks like a Rhapsody model element."""
-    if hasattr(value, "getMetaClass"):
+    if hasattr(value, "getMetaClass") or hasattr(value, "metaClass"):
         return wrap(value)
     return value
 
 
 def wrap(com_obj: Any) -> RPModelElement:
     """Wrap a raw Rhapsody COM model element in its matching wrapper class."""
-    meta_class = call_com(lambda: str(com_obj.getMetaClass()))
+    meta_class = str(_get_method_or_property(com_obj, "getMetaClass", "metaClass"))
     wrapper_cls = _WRAPPER_REGISTRY.get(meta_class, RPModelElement)
     return wrapper_cls(com_obj)
+
+
+def _get_method_or_property(com_obj: Any, method_name: str, prop_name: str) -> Any:
+    """Read a value from ``com_obj``, preferring the Java-style method.
+
+    Some Rhapsody COM automation Prog IDs (e.g. the Java-mirroring
+    ``Rhapsody.Application``) expose model element attributes as methods
+    (``getName()``, ``getGUID()``, ...), while others (e.g.
+    ``Rhapsody2.Application.1``) expose the same data as bare COM
+    properties (``name``, ``GUID``, ...). Prefer the method when present,
+    and fall back to the bare property otherwise.
+    """
+    if hasattr(com_obj, method_name):
+        return call_com(lambda: getattr(com_obj, method_name)())
+    return call_com(lambda: getattr(com_obj, prop_name))
+
+
+def _set_method_or_property(com_obj: Any, method_name: str, prop_name: str, value: Any) -> None:
+    """Write a value to ``com_obj``, preferring the Java-style setter method.
+
+    See :func:`_get_method_or_property` for why both forms exist.
+    """
+    if hasattr(com_obj, method_name):
+        call_com(lambda: getattr(com_obj, method_name)(value))
+    else:
+        call_com(lambda: setattr(com_obj, prop_name, value))
 
 
 class RPModelElement:
     """Wraps ``IRPModelElement``: the base interface for all model elements.
 
     Method names mirror the Rhapsody Java API exactly (``getName``,
-    ``setName``, ``getMetaClass``, ``getGUID``, ...).
+    ``setName``, ``getMetaClass``, ``getGUID``, ...). Some Rhapsody COM Prog
+    IDs expose these as bare properties instead of methods; see
+    :func:`_get_method_or_property`.
     """
 
     def __init__(self, com_obj: Any) -> None:
         self._com = com_obj
 
     def getName(self) -> str:
-        return call_com(lambda: str(self._com.getName()))
+        return str(_get_method_or_property(self._com, "getName", "name"))
 
     def setName(self, name: str) -> None:
-        call_com(lambda: self._com.setName(name))
+        _set_method_or_property(self._com, "setName", "name", name)
 
     def getMetaClass(self) -> str:
-        return call_com(lambda: str(self._com.getMetaClass()))
+        return str(_get_method_or_property(self._com, "getMetaClass", "metaClass"))
 
     def getGUID(self) -> str:
-        return call_com(lambda: str(self._com.getGUID()))
+        return str(_get_method_or_property(self._com, "getGUID", "GUID"))
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, RPModelElement):
@@ -99,10 +127,10 @@ class RPUnit(RPModelElement):
         call_com(lambda: self._com.save())
 
     def getFilename(self) -> str:
-        return call_com(lambda: str(self._com.getFilename()))
+        return str(_get_method_or_property(self._com, "getFilename", "filename"))
 
     def setFilename(self, filename: str) -> None:
-        call_com(lambda: self._com.setFilename(filename))
+        _set_method_or_property(self._com, "setFilename", "filename", filename)
 
     def isReadOnly(self) -> bool:
         return call_com(lambda: bool(self._com.isReadOnly()))
@@ -118,10 +146,14 @@ class RPCollection:
         self._com = com_obj
 
     def getCount(self) -> int:
-        return call_com(lambda: int(self._com.getCount()))
+        return int(_get_method_or_property(self._com, "getCount", "Count"))
 
     def getItem(self, index: int) -> Any:
-        return _wrap_if_element(call_com(lambda: self._com.getItem(index)))
+        if hasattr(self._com, "getItem"):
+            raw_item = call_com(lambda: self._com.getItem(index))
+        else:
+            raw_item = call_com(lambda: self._com.Item(index))
+        return _wrap_if_element(raw_item)
 
     def addItem(self, element: RPModelElement) -> None:
         call_com(lambda: self._com.addItem(element._com))

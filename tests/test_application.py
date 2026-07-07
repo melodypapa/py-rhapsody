@@ -19,7 +19,7 @@ def test_attach_wraps_active_com_object(mock_get_active_object: MagicMock) -> No
 
     app = RhapsodyApplication.attach()
 
-    mock_get_active_object.assert_called_once_with("Rhapsody.Application")
+    mock_get_active_object.assert_called_once_with("Rhapsody2.Application.1")
     assert app._com is fake_app
 
 
@@ -40,7 +40,7 @@ def test_launch_wraps_new_com_object(mock_dispatch: MagicMock) -> None:
 
     app = RhapsodyApplication.launch()
 
-    mock_dispatch.assert_called_once_with("Rhapsody.Application")
+    mock_dispatch.assert_called_once_with("Rhapsody2.Application.1")
     assert app._com is fake_app
 
 
@@ -64,7 +64,7 @@ def test_connect_prefers_attach_when_available(
 
     app = RhapsodyApplication.connect()
 
-    mock_get_active_object.assert_called_once_with("Rhapsody.Application")
+    mock_get_active_object.assert_called_once_with("Rhapsody2.Application.1")
     mock_dispatch.assert_not_called()
     assert app._com is fake_app
 
@@ -80,7 +80,7 @@ def test_connect_falls_back_to_launch_when_attach_fails(
 
     app = RhapsodyApplication.connect()
 
-    mock_dispatch.assert_called_once_with("Rhapsody.Application")
+    mock_dispatch.assert_called_once_with("Rhapsody2.Application.1")
     assert app._com is fake_app
 
 
@@ -132,6 +132,36 @@ def test_get_projects_returns_collection_of_rpproject() -> None:
     assert len(projects) == 1
     assert isinstance(projects[0], RPProject)
     assert projects[0].getName() == "P1"
+
+
+def test_get_projects_falls_back_to_projects_property_when_method_missing() -> None:
+    """Some Rhapsody COM Prog IDs (e.g. Rhapsody2.Application.1) expose the
+    projects collection via the bare 'projects' property instead of a
+    getProjects() method."""
+    fake_project = make_fake_element("Project", getName="P1")
+    fake_app = MagicMock(spec=["projects"])
+    fake_app.projects = make_fake_collection([fake_project])
+    app = RhapsodyApplication(fake_app)
+
+    projects = app.getProjects()
+
+    assert len(projects) == 1
+    assert isinstance(projects[0], RPProject)
+    assert projects[0].getName() == "P1"
+
+
+def test_create_new_project_calls_com_and_returns_active_project() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_project = make_fake_element("Project", getName="NewProject")
+    fake_app.activeProject.return_value = fake_project
+    app = RhapsodyApplication(fake_app)
+
+    project = app.createNewProject("C:/models", "NewProject")
+
+    fake_app.createNewProject.assert_called_once_with("C:/models", "NewProject")
+    fake_app.activeProject.assert_called_once_with()
+    assert isinstance(project, RPProject)
+    assert project.getName() == "NewProject"
 
 
 def test_quit_delegates_to_com() -> None:

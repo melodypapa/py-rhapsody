@@ -137,7 +137,7 @@ end-to-end via the CLI's `project list` command and an explicit disconnect.
 This test verifies that `RhapsodyApplication` is not a global singleton: two instances can
 be created in the same process, each wrapping a distinct fake COM object, and operating on
 one does not affect the other. It also confirms the canonical Prog ID
-`"Rhapsody.Application"` is used.
+`"Rhapsody2.Application.1"` is used.
 **Pre-conditions:**
 - A fake `win32com.client.Dispatch` that returns a fresh fake `Rhapsody.Application`
   object on each call, recording the Prog ID passed.
@@ -149,16 +149,16 @@ one does not affect the other. It also confirms the canonical Prog ID
 2. Open project A on the first instance and project B on the second.
 3. Invoke `project list` against each instance and capture output.
 4. Inspect the fake Dispatch recorder to confirm the Prog ID was
-   `"Rhapsody.Application"` on both calls.
+   `"Rhapsody2.Application.1"` on both calls.
 **Expected Result:**
 - Each instance lists only its own opened project, confirming independence.
 - The fake Dispatch recorder shows two calls, both with Prog ID
-   `"Rhapsody.Application"`.
+   `"Rhapsody2.Application.1"`.
 **Verification Criteria:**
 - Pass if instance 1's project list contains only project A and instance 2's contains
   only project B, and both Dispatch calls used the canonical Prog ID.
 - Fail if both instances share state (e.g. both lists contain both projects), or if the
-  Prog ID differs from `"Rhapsody.Application"`.
+  Prog ID differs from `"Rhapsody2.Application.1"`.
 **Last Changed:** 2026-07-07
 
 ---

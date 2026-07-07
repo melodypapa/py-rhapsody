@@ -15,7 +15,7 @@
 **Type:** Unit
 **Priority:** High
 **Description:**
-Verifies that `RhapsodyApplication.attach()` calls `win32com.client.GetActiveObject("Rhapsody.Application")` and returns a `RhapsodyApplication` instance whose `_com` is the object returned by the COM call.
+Verifies that `RhapsodyApplication.attach()` calls `win32com.client.GetActiveObject("Rhapsody2.Application.1")` and returns a `RhapsodyApplication` instance whose `_com` is the object returned by the COM call.
 **Pre-conditions:**
 - `tests.fakes.make_fake_element("Application")` produces a fake COM application object.
 - `win32com.client.GetActiveObject` is patched (e.g., via `unittest.mock.patch`) to return that fake object.
@@ -24,9 +24,9 @@ Verifies that `RhapsodyApplication.attach()` calls `win32com.client.GetActiveObj
 2. Call `RhapsodyApplication.attach()`.
 3. Inspect the returned instance's `_com` attribute.
 **Expected Result:**
-A `RhapsodyApplication` instance is returned and its `_com` attribute is the fake COM object returned by `GetActiveObject`. `GetActiveObject` is called exactly once with the string `"Rhapsody.Application"`.
+A `RhapsodyApplication` instance is returned and its `_com` attribute is the fake COM object returned by `GetActiveObject`. `GetActiveObject` is called exactly once with the string `"Rhapsody2.Application.1"`.
 **Verification Criteria:**
-Pass if the returned object is a `RhapsodyApplication`, `result._com is fake_app`, and `GetActiveObject` was called once with `"Rhapsody.Application"`.
+Pass if the returned object is a `RhapsodyApplication`, `result._com is fake_app`, and `GetActiveObject` was called once with `"Rhapsody2.Application.1"`.
 **Last Changed:** 2026-07-07
 
 ---
@@ -63,7 +63,7 @@ Pass if `RhapsodyConnectionError` is raised, the message contains the original C
 **Type:** Unit
 **Priority:** High
 **Description:**
-Verifies that `RhapsodyApplication.launch()` calls `win32com.client.Dispatch("Rhapsody.Application")` and returns a `RhapsodyApplication` wrapping the dispatched object.
+Verifies that `RhapsodyApplication.launch()` calls `win32com.client.Dispatch("Rhapsody2.Application.1")` and returns a `RhapsodyApplication` wrapping the dispatched object.
 **Pre-conditions:**
 - A fake COM application object built via `tests.fakes.make_fake_element("Application")`.
 - `win32com.client.Dispatch` is patched to return that fake object.
@@ -72,9 +72,9 @@ Verifies that `RhapsodyApplication.launch()` calls `win32com.client.Dispatch("Rh
 2. Call `RhapsodyApplication.launch()`.
 3. Inspect the returned instance's `_com` attribute.
 **Expected Result:**
-A `RhapsodyApplication` is returned whose `_com` is the dispatched fake object. `Dispatch` is called exactly once with `"Rhapsody.Application"`.
+A `RhapsodyApplication` is returned whose `_com` is the dispatched fake object. `Dispatch` is called exactly once with `"Rhapsody2.Application.1"`.
 **Verification Criteria:**
-Pass if `isinstance(result, RhapsodyApplication)`, `result._com is fake_app`, and `Dispatch` call args are `("Rhapsody.Application",)`.
+Pass if `isinstance(result, RhapsodyApplication)`, `result._com is fake_app`, and `Dispatch` call args are `("Rhapsody2.Application.1",)`.
 **Last Changed:** 2026-07-07
 
 ---
@@ -348,27 +348,27 @@ Pass if `app_a._com is fake_app_a`, `app_b._com is fake_app_b`, `app_a is not ap
 
 ---
 
-## UTS_APP_00015: Prog ID Constant Equals Rhapsody.Application
+## UTS_APP_00015: Prog ID Constant Equals Rhapsody2.Application.1
 
 **ID:** UTS_APP_00015
 **Traces-To:** SWR_APP_00009
-**Title:** _PROG_ID module constant is the canonical Rhapsody.Application Prog ID
+**Title:** _PROG_ID module constant is the canonical Rhapsody2.Application.1 Prog ID
 **Type:** Unit
 **Priority:** Low
 **Description:**
-Verifies that the `_PROG_ID` module-level constant in `rhapsody_cli.application` equals `"Rhapsody.Application"` and that `attach()`/`launch()` pass that exact string to `GetActiveObject`/`Dispatch`.
+Verifies that the `_PROG_ID` module-level constant in `rhapsody_cli.application` equals `"Rhapsody2.Application.1"` and that `attach()`/`launch()` pass that exact string to `GetActiveObject`/`Dispatch`.
 **Pre-conditions:**
 - Import access to `rhapsody_cli.application._PROG_ID`.
 - `GetActiveObject` and `Dispatch` patched to capture call args.
 **Test Steps:**
 1. Import `_PROG_ID` from `rhapsody_cli.application`.
-2. Assert `_PROG_ID == "Rhapsody.Application"`.
+2. Assert `_PROG_ID == "Rhapsody2.Application.1"`.
 3. Patch `GetActiveObject` to return a fake; call `attach()`; capture the call argument.
 4. Patch `Dispatch` to return a fake; call `launch()`; capture the call argument.
 **Expected Result:**
-`_PROG_ID` is `"Rhapsody.Application"`. Both `GetActiveObject` and `Dispatch` are called with exactly that string.
+`_PROG_ID` is `"Rhapsody2.Application.1"`. Both `GetActiveObject` and `Dispatch` are called with exactly that string.
 **Verification Criteria:**
-Pass if `_PROG_ID == "Rhapsody.Application"`, and the captured call args for both `GetActiveObject` and `Dispatch` equal `("Rhapsody.Application",)`.
+Pass if `_PROG_ID == "Rhapsody2.Application.1"`, and the captured call args for both `GetActiveObject` and `Dispatch` equal `("Rhapsody2.Application.1",)`.
 **Last Changed:** 2026-07-07
 
 ---

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from unittest.mock import MagicMock, patch
+
 from click.testing import CliRunner
 
 from rhapsody_cli.cli.context import RhapsodyContext
@@ -91,3 +93,37 @@ def test_context_output_format() -> None:
     ctx = RhapsodyContext()
     ctx.output_format = "json"
     assert ctx.output_format == "json"
+
+
+def test_context_create_project_connects_and_stores_project() -> None:
+    """Test create_project connects, delegates to app, and stores result."""
+    ctx = RhapsodyContext()
+    fake_app = MagicMock(name="FakeApplication")
+    fake_project = MagicMock(name="FakeProject")
+    fake_app.createNewProject.return_value = fake_project
+    ctx.app = fake_app
+
+    result = ctx.create_project("C:/models", "NewProject")
+
+    fake_app.createNewProject.assert_called_once_with("C:/models", "NewProject")
+    assert result is fake_project
+    assert ctx.project is fake_project
+
+
+def test_context_create_project_connects_when_not_connected() -> None:
+    """Test create_project calls connect() when no app is set yet."""
+    ctx = RhapsodyContext()
+    fake_app = MagicMock(name="FakeApplication")
+    fake_project = MagicMock(name="FakeProject")
+    fake_app.createNewProject.return_value = fake_project
+
+    def fake_connect(method: str = "attach") -> MagicMock:
+        ctx.app = fake_app
+        return fake_app
+
+    with patch.object(ctx, "connect", side_effect=fake_connect) as mock_connect:
+        result = ctx.create_project("C:/models", "NewProject")
+
+    mock_connect.assert_called_once()
+    assert result is fake_project
+    assert ctx.project is fake_project

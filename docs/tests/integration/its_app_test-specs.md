@@ -26,7 +26,7 @@ points to the launched instance.
 - `RhapsodyApplication` class is importable from `rhapsody_cli.application`.
 **Test Steps:**
 1. Call `RhapsodyApplication.connect(prefer_attach=True)`.
-2. Assert that `attach()` was attempted first (i.e., `GetActiveObject` was invoked once with `"Rhapsody.Application"`).
+2. Assert that `attach()` was attempted first (i.e., `GetActiveObject` was invoked once with `"Rhapsody2.Application.1"`).
 3. Assert that the returned object is a `RhapsodyApplication` instance whose `_com` is the mock returned by `Dispatch`.
 4. Assert that no `RhapsodyConnectionError` propagated out of `connect()`.
 **Expected Result:**
@@ -35,7 +35,7 @@ points to the launched instance.
 **Verification Criteria:**
 - Returned object `isinstance` of `RhapsodyApplication`.
 - `GetActiveObject` called exactly once before `Dispatch`.
-- `Dispatch` called exactly once with `"Rhapsody.Application"`.
+- `Dispatch` called exactly once with `"Rhapsody2.Application.1"`.
 - No exception escapes the call.
 **Last Changed:** 2026-07-07
 

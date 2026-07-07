@@ -9,6 +9,30 @@ Projects are the top-level containers in Rhapsody. This guide covers how to open
 Opening Projects
 ----------------
 
+Creating a New Empty Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using the CLI:
+
+.. code-block:: bash
+
+   rhapsody-cli project new C:\path\to\directory MyNewProject
+
+Programmatically:
+
+.. code-block:: python
+
+   from rhapsody_cli.application import RhapsodyApplication
+
+   app = RhapsodyApplication()
+   app.connect()
+
+   # Create a new empty project (becomes the active project)
+   project = app.createNewProject("C:\\path\\to\\directory", "MyNewProject")
+
+The ``createNewProject()`` method creates the project on disk and returns
+the resulting ``RPProject`` instance (fetched via ``activeProject()``).
+
 Opening a Project File
 ~~~~~~~~~~~~~~~~~~~~~~
 

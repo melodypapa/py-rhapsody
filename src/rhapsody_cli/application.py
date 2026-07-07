@@ -14,10 +14,10 @@ except ImportError:  # pragma: no cover - pywin32 is Windows-only
     win32com = None
 
 from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
-from rhapsody_cli.models._core import RPCollection, call_com
+from rhapsody_cli.models._core import RPCollection, _get_method_or_property, call_com
 from rhapsody_cli.models.elements.project import RPProject
 
-_PROG_ID = "Rhapsody.Application"
+_PROG_ID = "Rhapsody2.Application.1"
 
 
 class RhapsodyApplication:
@@ -62,11 +62,15 @@ class RhapsodyApplication:
     def openProject(self, filename: str) -> RPProject:
         return RPProject(call_com(lambda: self._com.openProject(filename)))
 
+    def createNewProject(self, project_location: str, project_name: str) -> RPProject:
+        call_com(lambda: self._com.createNewProject(project_location, project_name))
+        return self.activeProject()
+
     def activeProject(self) -> RPProject:
         return RPProject(call_com(lambda: self._com.activeProject()))
 
     def getProjects(self) -> RPCollection:
-        return RPCollection(call_com(lambda: self._com.getProjects()))
+        return RPCollection(_get_method_or_property(self._com, "getProjects", "projects"))
 
     def quit(self) -> None:
         call_com(lambda: self._com.quit())

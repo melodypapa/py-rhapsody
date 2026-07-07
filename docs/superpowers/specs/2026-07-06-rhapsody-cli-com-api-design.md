@@ -51,10 +51,10 @@ Importable package: `rhapsody_cli` (distinct from the repo name `rhapsody-cli`).
 hierarchy).
 
 - `RhapsodyApplication.attach()` — attaches to an already-running Rhapsody
-  instance via `win32com.client.GetActiveObject("Rhapsody.Application")`.
+  instance via `win32com.client.GetActiveObject("Rhapsody2.Application.1")`.
   Raises `RhapsodyConnectionError` if no instance is running.
 - `RhapsodyApplication.launch()` — starts a new Rhapsody instance via
-  `win32com.client.Dispatch("Rhapsody.Application")`.
+  `win32com.client.Dispatch("Rhapsody2.Application.1")`.
 - `RhapsodyApplication.connect(prefer_attach: bool = True)` — convenience
   entry point: tries `attach()` first (if `prefer_attach`), falls back to
   `launch()` on failure. This is the primary way most users will start.

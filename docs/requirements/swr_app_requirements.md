@@ -15,7 +15,7 @@
 **Priority:** High
 **Description:**
 The `RhapsodyApplication.attach()` class method shall attach to an already-running
-IBM Rhapsody instance by calling `win32com.client.GetActiveObject("Rhapsody.Application")`.
+IBM Rhapsody instance by calling `win32com.client.GetActiveObject("Rhapsody2.Application.1")`.
 If no running instance is found, a `RhapsodyConnectionError` shall be raised.
 **Implementation:** src/rhapsody_cli/application.py:RhapsodyApplication.attach
 **Last Changed:** 2026-07-07
@@ -30,7 +30,7 @@ If no running instance is found, a `RhapsodyConnectionError` shall be raised.
 **Priority:** High
 **Description:**
 The `RhapsodyApplication.launch()` class method shall start a new Rhapsody instance
-by calling `win32com.client.Dispatch("Rhapsody.Application")`. If launch fails, a
+by calling `win32com.client.Dispatch("Rhapsody2.Application.1")`. If launch fails, a
 `RhapsodyConnectionError` shall be raised.
 **Implementation:** src/rhapsody_cli/application.py:RhapsodyApplication.launch
 **Last Changed:** 2026-07-07
@@ -132,7 +132,9 @@ side by side in the same process.
 **Status:** Implemented
 **Priority:** Low
 **Description:**
-The COM Prog ID used for attach/launch shall be `"Rhapsody.Application"` (the canonical
-Rhapsody automation Prog ID).
+The COM Prog ID used for attach/launch shall be `"Rhapsody2.Application.1"` (the
+canonical Rhapsody automation Prog ID for the "new" COM API version, as documented
+in IBM Rhapsody's automation samples; the legacy `"Rhapsody.Application"` Prog ID
+is not registered by all Rhapsody installations, e.g. Rhapsody 9.0.2).
 **Implementation:** src/rhapsody_cli/application.py:_PROG_ID
 **Last Changed:** 2026-07-07

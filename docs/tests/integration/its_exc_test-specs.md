@@ -188,7 +188,7 @@ call).
 2. Assert `RhapsodyConnectionError` is raised.
 3. Assert the exception message contains a substring like `"Failed to launch Rhapsody instance"`.
 4. Assert `GetActiveObject` was NOT called (attach was skipped because `prefer_attach=False`).
-5. Assert `Dispatch` was called exactly once with `"Rhapsody.Application"`.
+5. Assert `Dispatch` was called exactly once with `"Rhapsody2.Application.1"`.
 6. Assert no `RhapsodyApplication` instance was returned (the exception propagated).
 **Expected Result:**
 `connect(prefer_attach=False)` attempts only `launch()`; on failure it raises
@@ -196,7 +196,7 @@ call).
 **Verification Criteria:**
 - `pytest.raises(RhapsodyConnectionError)` succeeds.
 - `GetActiveObject.call_count == 0`.
-- `Dispatch.call_count == 1` with arg `"Rhapsody.Application"`.
+- `Dispatch.call_count == 1` with arg `"Rhapsody2.Application.1"`.
 - Exception message contains `"Failed to launch Rhapsody instance"`.
 **Last Changed:** 2026-07-07
 

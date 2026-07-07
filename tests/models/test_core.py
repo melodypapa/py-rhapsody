@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from unittest.mock import call
+from unittest.mock import MagicMock, call
 
 import pytest
 
@@ -67,6 +67,54 @@ def test_model_element_get_meta_class_delegates_to_com() -> None:
     assert element.getMetaClass() == "Package"
 
 
+def test_model_element_get_name_falls_back_to_property_when_method_missing() -> None:
+    """Some Rhapsody COM automation ProgIDs (e.g. Rhapsody2.Application.1)
+    expose 'name'/'GUID'/'metaClass' as bare properties instead of
+    getName()/getGUID()/getMetaClass() methods. Wrapper methods must fall
+    back to bare property access in that case."""
+    fake = MagicMock(spec=["name"])
+    fake.name = "PropertyStyleName"
+    element = RPModelElement(fake)
+
+    assert element.getName() == "PropertyStyleName"
+
+
+def test_model_element_set_name_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["name"])
+    element = RPModelElement(fake)
+
+    element.setName("NewName")
+
+    assert fake.name == "NewName"
+
+
+def test_model_element_get_meta_class_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["metaClass"])
+    fake.metaClass = "Class"
+    element = RPModelElement(fake)
+
+    assert element.getMetaClass() == "Class"
+
+
+def test_model_element_get_guid_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["GUID"])
+    fake.GUID = "guid-456"
+    element = RPModelElement(fake)
+
+    assert element.getGUID() == "guid-456"
+
+
+def test_wrap_falls_back_to_meta_class_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["metaClass"])
+    fake.metaClass = "Class"
+
+    from rhapsody_cli.models._core import wrap
+
+    element = wrap(fake)
+
+    assert element.getMetaClass() == "Class"
+
+
 def test_model_element_get_guid_delegates_to_com() -> None:
     fake = make_fake_element("Class", getGUID="guid-123")
     element = RPModelElement(fake)
@@ -113,6 +161,23 @@ def test_unit_set_filename_delegates_to_com() -> None:
     unit.setFilename("Model/Bar.sbs")
 
     fake.setFilename.assert_called_once_with("Model/Bar.sbs")
+
+
+def test_unit_get_filename_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["filename"])
+    fake.filename = "Model/Foo.sbs"
+    unit = RPUnit(fake)
+
+    assert unit.getFilename() == "Model/Foo.sbs"
+
+
+def test_unit_set_filename_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["filename"])
+    unit = RPUnit(fake)
+
+    unit.setFilename("Model/Bar.sbs")
+
+    assert fake.filename == "Model/Bar.sbs"
 
 
 def test_unit_is_read_only_delegates_to_com() -> None:
@@ -201,6 +266,30 @@ def test_collection_get_count_delegates_to_com() -> None:
     collection = RPCollection(fake)
 
     assert collection.getCount() == 2
+
+
+def test_collection_get_count_falls_back_to_count_property_when_method_missing() -> None:
+    """Some Rhapsody COM Prog IDs (e.g. Rhapsody2.Application.1) expose the
+    collection size/item accessors via 'Count'/'Item' properties instead of
+    getCount()/getItem() methods."""
+    fake = MagicMock(spec=["Count"])
+    fake.Count = 3
+    collection = RPCollection(fake)
+
+    assert collection.getCount() == 3
+
+
+def test_collection_get_item_falls_back_to_item_property_when_method_missing() -> None:
+    inner = make_fake_element("Class", getName="Widget")
+    fake = MagicMock(spec=["Item"])
+    fake.Item.return_value = inner
+    collection = RPCollection(fake)
+
+    item = collection.getItem(1)
+
+    assert isinstance(item, RPModelElement)
+    assert item.getName() == "Widget"
+    fake.Item.assert_called_once_with(1)
 
 
 def test_wrap_dispatches_to_registered_wrapper() -> None:

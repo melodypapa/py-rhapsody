@@ -31,6 +31,14 @@ class RhapsodyContext:
         self.project = self.app.openProject(project_path)
         return self.project
 
+    def create_project(self, project_location: str, project_name: str) -> RPProject:
+        """Create a new empty Rhapsody project."""
+        if self.app is None:
+            self.connect()
+        assert self.app is not None  # For mypy type narrowing
+        self.project = self.app.createNewProject(project_location, project_name)
+        return self.project
+
     def close_project(self) -> None:
         """Close active project."""
         if self.project:
