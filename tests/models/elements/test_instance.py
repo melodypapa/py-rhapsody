@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-from rhapsody_cli.models._core import RPUnit, wrap
-from rhapsody_cli.models.elements.instance import RPInstance
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.relations import RPInstance, RPRelation
 from tests.models.fakes import make_fake_collection, make_fake_element
 
 
-def test_instance_is_a_unit() -> None:
+def test_instance_is_a_relation() -> None:
     fake = make_fake_element("Instance", getName="driver1")
     instance = RPInstance(fake)
 
-    assert isinstance(instance, RPUnit)
+    assert isinstance(instance, RPRelation)
     assert instance.getName() == "driver1"
 
 

@@ -1,17 +1,17 @@
-"""Tests for rhapsody_cli.elements.requirement.RPRequirement."""
+"""Tests for rhapsody_cli.models.elements.requirements.RPRequirement."""
 
 from __future__ import annotations
 
-from rhapsody_cli.models._core import RPUnit, wrap
-from rhapsody_cli.models.elements.requirement import RPRequirement
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.requirements import RPAnnotation, RPRequirement
 from tests.models.fakes import make_fake_element
 
 
-def test_requirement_is_a_unit() -> None:
+def test_requirement_is_an_annotation() -> None:
     fake = make_fake_element("Requirement", getName="REQ-1")
     requirement = RPRequirement(fake)
 
-    assert isinstance(requirement, RPUnit)
+    assert isinstance(requirement, RPAnnotation)
     assert requirement.getName() == "REQ-1"
 
 

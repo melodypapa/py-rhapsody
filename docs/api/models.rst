@@ -9,42 +9,50 @@ Element Wrappers
    :undoc-members:
    :show-inheritance:
 
-Class Elements
-~~~~~~~~~~~~~~
-
-.. automodule:: rhapsody_cli.models.elements.class_
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Attribute Elements
+Classifier Elements
 ~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: rhapsody_cli.models.elements.attribute
+.. automodule:: rhapsody_cli.models.elements.classifiers
    :members:
    :undoc-members:
    :show-inheritance:
 
-Operation Elements
-~~~~~~~~~~~~~~~~~~
+Variable Elements
+~~~~~~~~~~~~~~~~~
 
-.. automodule:: rhapsody_cli.models.elements.operation
+.. automodule:: rhapsody_cli.models.elements.variables
    :members:
    :undoc-members:
    :show-inheritance:
 
-Package Elements
+Containment Elements
+~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.containment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Diagram Elements
 ~~~~~~~~~~~~~~~~
 
-.. automodule:: rhapsody_cli.models.elements.package
+.. automodule:: rhapsody_cli.models.elements.diagrams
    :members:
    :undoc-members:
    :show-inheritance:
 
-Project Elements
-~~~~~~~~~~~~~~~~
+Relation Elements
+~~~~~~~~~~~~~~~~~
 
-.. automodule:: rhapsody_cli.models.elements.project
+.. automodule:: rhapsody_cli.models.elements.relations
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Requirement Elements
+~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.requirements
    :members:
    :undoc-members:
    :show-inheritance:

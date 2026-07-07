@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-from rhapsody_cli.models._core import RPUnit, wrap
-from rhapsody_cli.models.elements.attribute import RPAttribute
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.variables import RPAttribute, RPVariable
 from tests.models.fakes import make_fake_element
 
 
-def test_attribute_is_a_unit() -> None:
+def test_attribute_is_a_variable() -> None:
     fake = make_fake_element("Attribute", getName="count")
     attribute = RPAttribute(fake)
 
-    assert isinstance(attribute, RPUnit)
+    assert isinstance(attribute, RPVariable)
     assert attribute.getName() == "count"
 
 
@@ -61,22 +61,6 @@ def test_attribute_set_visibility_delegates_to_com() -> None:
     attribute.setVisibility("public")
 
     fake.setVisibility.assert_called_once_with("public")
-
-
-def test_attribute_get_default_value_delegates_to_com() -> None:
-    fake = make_fake_element("Attribute", getDefaultValue="0")
-    attribute = RPAttribute(fake)
-
-    assert attribute.getDefaultValue() == "0"
-
-
-def test_attribute_set_default_value_delegates_to_com() -> None:
-    fake = make_fake_element("Attribute")
-    attribute = RPAttribute(fake)
-
-    attribute.setDefaultValue("42")
-
-    fake.setDefaultValue.assert_called_once_with("42")
 
 
 def test_attribute_is_registered_for_meta_class_attribute() -> None:

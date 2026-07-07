@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-from rhapsody_cli.models._core import RPUnit, wrap
-from rhapsody_cli.models.elements.operation import RPOperation
+from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.elements.classifiers import RPInterfaceItem, RPOperation
 from tests.models.fakes import make_fake_element
 
 
-def test_operation_is_a_unit() -> None:
+def test_operation_is_an_interface_item() -> None:
     fake = make_fake_element("Operation", getName="doIt")
     operation = RPOperation(fake)
 
-    assert isinstance(operation, RPUnit)
+    assert isinstance(operation, RPInterfaceItem)
     assert operation.getName() == "doIt"
 
 

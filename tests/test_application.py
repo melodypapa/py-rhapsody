@@ -8,7 +8,7 @@ import pytest
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.exceptions import RhapsodyConnectionError
-from rhapsody_cli.models.elements.project import RPProject
+from rhapsody_cli.models.elements.containment import RPProject
 from tests.models.fakes import make_com_error, make_fake_collection, make_fake_element
 
 
