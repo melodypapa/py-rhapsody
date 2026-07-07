@@ -162,18 +162,18 @@ Three-layer traceability for the rhapsody-cli project:
 
 | Requirement ID | Implementation |
 |----------------|----------------|
-| SWR_ELEM_00001 | src/rhapsody_cli/models/elements/project.py:RPProject |
-| SWR_ELEM_00002 | src/rhapsody_cli/models/elements/package.py:RPPackage |
-| SWR_ELEM_00003 | src/rhapsody_cli/models/elements/classifier.py:RPClassifier |
-| SWR_ELEM_00004 | src/rhapsody_cli/models/elements/class_.py:RPClass |
-| SWR_ELEM_00005 | src/rhapsody_cli/models/elements/actor.py:RPActor |
-| SWR_ELEM_00006 | src/rhapsody_cli/models/elements/operation.py:RPOperation |
-| SWR_ELEM_00007 | src/rhapsody_cli/models/elements/attribute.py:RPAttribute |
-| SWR_ELEM_00008 | src/rhapsody_cli/models/elements/diagram.py:RPDiagram |
-| SWR_ELEM_00009 | src/rhapsody_cli/models/elements/instance.py:RPInstance |
-| SWR_ELEM_00010 | src/rhapsody_cli/models/elements/requirement.py:RPRequirement |
-| SWR_ELEM_00011 | src/rhapsody_cli/models/elements/statechart.py:RPStatechart |
-| SWR_ELEM_00012 | src/rhapsody_cli/models/elements/usecase.py:RPUseCase |
+| SWR_ELEM_00001 | src/rhapsody_cli/models/elements/containment.py:RPProject |
+| SWR_ELEM_00002 | src/rhapsody_cli/models/elements/containment.py:RPPackage |
+| SWR_ELEM_00003 | src/rhapsody_cli/models/elements/classifiers.py:RPClassifier |
+| SWR_ELEM_00004 | src/rhapsody_cli/models/elements/classifiers.py:RPClass |
+| SWR_ELEM_00005 | src/rhapsody_cli/models/elements/classifiers.py:RPActor |
+| SWR_ELEM_00006 | src/rhapsody_cli/models/elements/classifiers.py:RPOperation |
+| SWR_ELEM_00007 | src/rhapsody_cli/models/elements/variables.py:RPAttribute |
+| SWR_ELEM_00008 | src/rhapsody_cli/models/elements/diagrams.py:RPDiagram |
+| SWR_ELEM_00009 | src/rhapsody_cli/models/elements/relations.py:RPInstance |
+| SWR_ELEM_00010 | src/rhapsody_cli/models/elements/requirements.py:RPRequirement |
+| SWR_ELEM_00011 | src/rhapsody_cli/models/elements/classifiers.py:RPStatechart |
+| SWR_ELEM_00012 | src/rhapsody_cli/models/elements/classifiers.py:RPUseCase |
 | SWR_ELEM_00013 | src/rhapsody_cli/models/elements/__init__.py |
 
 ### CLI (Command-Line Interface)

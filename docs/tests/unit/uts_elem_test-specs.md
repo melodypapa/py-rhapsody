@@ -7,24 +7,24 @@
 
 ---
 
-## UTS_ELEM_00001: RPProject Extends RPUnit
+## UTS_ELEM_00001: RPProject Extends RPPackage
 
 **ID:** UTS_ELEM_00001
 **Traces-To:** SWR_ELEM_00001
-**Title:** RPProject is a subclass of RPUnit and registers itself for meta class "Project"
+**Title:** RPProject is a subclass of RPPackage and registers itself for meta class "Project"
 **Type:** Unit
 **Priority:** High
 **Description:**
-Verifies that `RPProject` extends `RPUnit` and is registered in `_WRAPPER_REGISTRY` under the meta class `"Project"` at import time of `rhapsody_cli.models.elements.project`.
+Verifies that `RPProject` extends `RPPackage` and is registered in `_WRAPPER_REGISTRY` under the meta class `"Project"` at import time of `rhapsody_cli.models.elements.containment`.
 **Pre-conditions:**
 - `rhapsody_cli.models.elements` imported so the registry is populated.
 - Access to `_WRAPPER_REGISTRY` from `rhapsody_cli.models._core`.
 **Test Steps:**
-1. Import `rhapsody_cli.models.elements.project` and `rhapsody_cli.models._core` (for the registry).
-2. Assert `issubclass(RPProject, RPUnit)`.
+1. Import `rhapsody_cli.models.elements.containment` and `rhapsody_cli.models._core` (for the registry).
+2. Assert `issubclass(RPProject, RPPackage)`.
 3. Assert `_WRAPPER_REGISTRY["Project"] is RPProject`.
 **Expected Result:**
-`RPProject` is a subclass of `RPUnit`, and the registry maps `"Project"` to `RPProject`.
+`RPProject` is a subclass of `RPPackage`, and the registry maps `"Project"` to `RPProject`.
 **Verification Criteria:**
 Pass if both assertions hold.
 **Last Changed:** 2026-07-07
@@ -443,11 +443,11 @@ Pass if all type/call-args assertions hold.
 
 ---
 
-## UTS_ELEM_00019: RPInstance Extends RPUnit and Registers for "Instance"
+## UTS_ELEM_00019: RPInstance Extends RPRelation and Registers for "Instance"
 
 **ID:** UTS_ELEM_00019
 **Traces-To:** SWR_ELEM_00009
-**Title:** RPInstance is a subclass of RPUnit registered under meta class "Instance"
+**Title:** RPInstance is a subclass of RPRelation registered under meta class "Instance"
 **Type:** Unit
 **Priority:** Medium
 **Description:**
@@ -455,8 +455,8 @@ Verifies the inheritance chain and registry entry for `RPInstance`.
 **Pre-conditions:**
 - `rhapsody_cli.models.elements` imported.
 **Test Steps:**
-1. Import `RPInstance`, `RPUnit`, and `_WRAPPER_REGISTRY`.
-2. Assert `issubclass(RPInstance, RPUnit)`.
+1. Import `RPInstance`, `RPRelation`, and `_WRAPPER_REGISTRY`.
+2. Assert `issubclass(RPInstance, RPRelation)`.
 3. Assert `_WRAPPER_REGISTRY["Instance"] is RPInstance`.
 **Expected Result:**
 Both assertions hold.
@@ -673,7 +673,7 @@ Verifies that calling `register_wrapper` again (e.g., via `importlib.reload`) fo
 - Access to `importlib.reload` and `_WRAPPER_REGISTRY`.
 **Test Steps:**
 1. Snapshot `_WRAPPER_REGISTRY["Class"]`.
-2. Call `importlib.reload(rhapsody_cli.models.elements.class_)`.
+2. Call `importlib.reload(rhapsody_cli.models.elements.classifiers)`.
 3. Assert `_WRAPPER_REGISTRY["Class"] is RPClass` still holds.
 4. Assert the number of keys containing `"Class"` is exactly one.
 **Expected Result:**
