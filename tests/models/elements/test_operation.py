@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from rhapsody_cli.models._core import RPUnit, wrap
-from rhapsody_cli.models.elements.operation import RPOperation
+from rhapsody_cli.models.elements.classifiers import RPOperation
 from tests.models.fakes import make_fake_element
 
 

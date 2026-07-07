@@ -1,4 +1,6 @@
-"""RPRequirement: wraps IRPRequirement, a traceable requirement in the model."""
+"""Requirement-family wrappers: mirrors IRPAnnotation and IRPRequirement
+from com.telelogic.rhapsody.core.
+"""
 
 from __future__ import annotations
 

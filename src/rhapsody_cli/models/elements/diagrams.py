@@ -1,4 +1,4 @@
-"""RPDiagram: wraps IRPDiagram, the base interface for all Rhapsody diagram types."""
+"""Diagram-family wrappers: mirrors IRPDiagram from com.telelogic.rhapsody.core."""
 
 from __future__ import annotations
 

@@ -2,16 +2,15 @@
 
 from __future__ import annotations
 
-from rhapsody_cli.models._core import RPUnit
-from rhapsody_cli.models.elements.project import RPProject
+from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 from tests.models.fakes import make_fake_collection, make_fake_element
 
 
-def test_project_is_a_unit() -> None:
+def test_project_is_a_package() -> None:
     fake = make_fake_element("Project", getName="MyProject")
     project = RPProject(fake)
 
-    assert isinstance(project, RPUnit)
+    assert isinstance(project, RPPackage)
     assert project.getName() == "MyProject"
 
 

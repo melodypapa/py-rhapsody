@@ -15,7 +15,7 @@ except ImportError:  # pragma: no cover - pywin32 is Windows-only
 
 from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
 from rhapsody_cli.models._core import RPCollection, _get_method_or_property, call_com
-from rhapsody_cli.models.elements.project import RPProject
+from rhapsody_cli.models.elements.containment import RPProject
 
 _PROG_ID = "Rhapsody2.Application.1"
 

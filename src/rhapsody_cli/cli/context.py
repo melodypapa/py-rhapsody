@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from rhapsody_cli import RhapsodyApplication
-from rhapsody_cli.models.elements.project import RPProject
+from rhapsody_cli.models.elements.containment import RPProject
 
 
 class RhapsodyContext:

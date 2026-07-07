@@ -1,4 +1,6 @@
-"""RPAttribute: wraps IRPAttribute, a class/package-level attribute or variable."""
+"""Variable-family wrappers: mirrors IRPVariable and IRPAttribute from
+com.telelogic.rhapsody.core.
+"""
 
 from __future__ import annotations
 
