@@ -28,13 +28,13 @@ class CliLoggingConfigurator:
         logger.addHandler(self._build_stream_handler(formatter))
         logger.addHandler(self._build_file_handler(formatter))
 
-    def _build_stream_handler(self, formatter: logging.Formatter) -> logging.StreamHandler:
+    def _build_stream_handler(self, formatter: logging.Formatter) -> logging.Handler:
         """Build the stderr console handler."""
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
         return handler
 
-    def _build_file_handler(self, formatter: logging.Formatter) -> logging.FileHandler:
+    def _build_file_handler(self, formatter: logging.Formatter) -> logging.Handler:
         """Build the append-mode file handler writing to LOG_FILE_NAME."""
         handler = logging.FileHandler(self.LOG_FILE_NAME, mode="a")
         handler.setFormatter(formatter)

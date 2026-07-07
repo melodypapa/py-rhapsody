@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 import click
 
 from rhapsody_cli.cli.commands.element import element as element_cmd
@@ -14,6 +16,23 @@ from rhapsody_cli.cli.logging_config import CliLoggingConfigurator
 # running instance's active project instead. Re-enable by importing
 # `project as project_cmd` from `rhapsody_cli.cli.commands.project` and adding
 # `cli.add_command(project_cmd)` below.
+
+
+def _ensure_active_project_accessor() -> None:
+    """Backfill get_active_project() while the context module catches up."""
+    if hasattr(RhapsodyContext, "get_active_project"):
+        return
+
+    def get_active_project(self: RhapsodyContext) -> Any:
+        app = self.connect("attach")
+        project = app.activeProject()
+        self.project = project
+        return project
+
+    RhapsodyContext.get_active_project = get_active_project  # type: ignore[method-assign]
+
+
+_ensure_active_project_accessor()
 
 
 @click.group()
