@@ -140,6 +140,14 @@ docs) is implemented, following the existing conventions:
   summary. This keeps the Python API's documentation traceable to the
   authoritative Java API reference. Class-level docstrings likewise draw
   from each interface's top-of-page description where one exists.
+- Docstrings are written in **Google style** (`Args:`, `Returns:`,
+  `Raises:` sections), so that a future Sphinx + `napoleon` + ReadTheDocs
+  setup can autodoc them without reformatting. Each method's Java
+  parameter/return descriptions (from the java_api docs) are mapped into
+  `Args:`/`Returns:` entries; a summary line comes first, matching
+  standard Google docstring structure. This formatting convention applies
+  retroactively to the existing 12 wrappers' docstrings during this pass,
+  not just the new methods being added.
 
 Given the volume (~590 declared methods across the 16 interfaces
 involved), implementation is split into multiple phases in the
@@ -168,6 +176,9 @@ rather than attempted as one single change.
   above.
 - All existing tests passing; new tests for new classes/methods.
 - `ruff`, `black`, `mypy`, `pytest` all clean.
+- All docstrings (existing and new) in Google style, sourced from
+  java_api content, ready for a future Sphinx/ReadTheDocs setup (that
+  setup itself is not part of this sub-project).
 
 ## Open Items for Future Sub-Projects (explicitly out of scope here)
 
