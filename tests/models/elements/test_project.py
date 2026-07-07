@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from rhapsody_cli.models._core import RPUnit
 from rhapsody_cli.models.elements.project import RPProject
-from tests.fakes import make_fake_collection, make_fake_element
+from tests.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_project_is_a_unit() -> None:

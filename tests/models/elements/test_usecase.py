@@ -5,7 +5,7 @@ from __future__ import annotations
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.classifier import RPClassifier
 from rhapsody_cli.models.elements.usecase import RPUseCase
-from tests.fakes import make_fake_collection, make_fake_element
+from tests.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_usecase_is_a_classifier() -> None:
