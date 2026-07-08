@@ -1,6 +1,6 @@
 """Element command group - dispatches to per-subcommand Action classes."""
 
-from __future__ import annotations
+from typing import List
 
 from rhapsody_cli.actions.abstract_action import AbstractAction
 from rhapsody_cli.actions.element_action import (
@@ -15,7 +15,7 @@ from rhapsody_cli.commands.abstract_command import AbstractCommand
 class ElementCommand(AbstractCommand):
     """Element command group - handles element subcommands (add, view, query, delete)."""
 
-    def __init__(self, args: list[str]) -> None:
+    def __init__(self, args: List[str]) -> None:
         """Initialize ElementCommand and parse element subcommands.
 
         Args:
@@ -24,7 +24,7 @@ class ElementCommand(AbstractCommand):
         """
         super().__init__("element", args)
 
-    def get_actions(self) -> list[AbstractAction]:
+    def get_actions(self) -> List[AbstractAction]:
         """Return the element subcommand actions."""
         return [
             ElementAddAction(),

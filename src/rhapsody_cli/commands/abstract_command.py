@@ -1,9 +1,8 @@
 """Abstract base class for all CLI command groups."""
 
-from __future__ import annotations
-
 import argparse
 import sys
+from typing import Dict, List, Optional
 
 from rhapsody_cli.actions.abstract_action import AbstractAction
 
@@ -17,7 +16,7 @@ class AbstractCommand:
     top-level parsing and dispatch to the selected action.
     """
 
-    def __init__(self, command: str, args: list[str]) -> None:
+    def __init__(self, command: str, args: List[str]) -> None:
         """Initialize the command group and parse its subcommand arguments.
 
         Args:
@@ -25,8 +24,8 @@ class AbstractCommand:
             args: Raw command-line arguments after the command group name
         """
         self._args = args
-        self._subcommand: str | None = None
-        self._parsed_args: argparse.Namespace | None = None
+        self._subcommand: Optional[str] = None
+        self._parsed_args: Optional[argparse.Namespace] = None
 
         parser = argparse.ArgumentParser(
             prog=f"rhapsody-cli {command}",
@@ -35,7 +34,7 @@ class AbstractCommand:
         )
 
         actions = self.get_actions()
-        self._sub_commands: dict[str, AbstractAction] = {action.command_id: action for action in actions}
+        self._sub_commands: Dict[str, AbstractAction] = {action.command_id: action for action in actions}
 
         sub_parsers = parser.add_subparsers(dest="subcommand", help=f"{command.capitalize()} operations")
         for action in actions:
@@ -52,7 +51,7 @@ class AbstractCommand:
             parser.print_help()
             sys.exit(2)
 
-    def get_actions(self) -> list[AbstractAction]:
+    def get_actions(self) -> List[AbstractAction]:
         """Return the list of actions (subcommands) for this command group.
 
         Subclasses must override this to register their own actions.

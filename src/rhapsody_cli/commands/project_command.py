@@ -1,6 +1,6 @@
 """Project command group - dispatches to per-subcommand Action classes."""
 
-from __future__ import annotations
+from typing import List
 
 from rhapsody_cli.actions.abstract_action import AbstractAction
 from rhapsody_cli.actions.project_action import (
@@ -15,7 +15,7 @@ from rhapsody_cli.commands.abstract_command import AbstractCommand
 class ProjectCommand(AbstractCommand):
     """Project command group - handles project subcommands (open, list, close, new)."""
 
-    def __init__(self, args: list[str]) -> None:
+    def __init__(self, args: List[str]) -> None:
         """Initialize ProjectCommand and parse project subcommands.
 
         Args:
@@ -24,7 +24,7 @@ class ProjectCommand(AbstractCommand):
         """
         super().__init__("project", args)
 
-    def get_actions(self) -> list[AbstractAction]:
+    def get_actions(self) -> List[AbstractAction]:
         """Return the project subcommand actions."""
         return [
             ProjectOpenAction(),
