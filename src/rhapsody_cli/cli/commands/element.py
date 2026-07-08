@@ -1,11 +1,12 @@
-"""Element-related CLI commands using class-based architecture."""
+"""Element-related CLI commands for argparse."""
 
 from __future__ import annotations
 
+import sys
 import logging
+from typing import Optional
 
-import click
-
+from rhapsody_cli.cli.abstract_command import AbstractCommand
 from rhapsody_cli.cli.context import RhapsodyContext
 from rhapsody_cli.cli.formatters import OutputFormatter
 from rhapsody_cli.exceptions import RhapsodyConnectionError
@@ -17,39 +18,23 @@ _NO_ACTIVE_INSTANCE_MESSAGE = (
 )
 
 
-class BaseElementCommand(click.Command):
-    """Base class for element commands."""
-
-    pass
-
-
-class AddElementCommand(BaseElementCommand):
+class AddElementCommand(AbstractCommand):
     """Command: Add a new element to the project."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="add",
-            help="Add a new element to the project.",
-            callback=self.execute,
-            params=[
-                click.Option(
-                    ["--type", "element_type"],
-                    required=True,
-                    help="Element type (class, actor, etc)",
-                ),
-                click.Option(["--name"], required=True, help="Element name"),
-            ],
-        )
-
     def execute(self, element_type: str, name: str) -> None:
-        """Execute the add command."""
+        """Execute the add command.
+        
+        Args:
+            element_type: Type of element to add (class, actor, package)
+            name: Name of the new element
+        """
         ctx = RhapsodyContext()
         try:
             project = ctx.get_active_project()
         except RhapsodyConnectionError as e:
             logger.error("Failed to attach to Rhapsody: %s", e)
-            click.echo(_NO_ACTIVE_INSTANCE_MESSAGE, err=True)
-            raise click.Abort() from e
+            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
+            sys.exit(1)
 
         try:
             root = project.getRoot()  # type: ignore[attr-defined]
@@ -72,41 +57,33 @@ class AddElementCommand(BaseElementCommand):
             elif element_type.lower() == "package":
                 container.addNestedPackage(name) if container != root else root.addPackage(name)
             else:
-                click.echo(f"Error: Unknown element type '{element_type}'", err=True)
-                raise click.Abort()
+                print(f"Error: Unknown element type '{element_type}'", file=sys.stderr)
+                sys.exit(1)
 
             logger.info("Created %s: %s", element_type, name)
-            click.echo(f"Created {element_type}: {name}")
-        except click.Abort:
-            raise
+            print(f"Created {element_type}: {name}")
         except Exception as e:
             logger.error("Failed to create %s '%s': %s", element_type, name, e)
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
 
-class ViewElementCommand(BaseElementCommand):
+class ViewElementCommand(AbstractCommand):
     """Command: View element details."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="view",
-            help="View element details.",
-            callback=self.execute,
-            params=[
-                click.Option(["--path"], required=True, help="Element path (e.g., Root::MyClass)"),
-            ],
-        )
-
     def execute(self, path: str) -> None:
-        """Execute the view command."""
+        """Execute the view command.
+        
+        Args:
+            path: Element path (e.g., Root::MyClass)
+        """
         ctx = RhapsodyContext()
         try:
             ctx.get_active_project()
         except RhapsodyConnectionError as e:
             logger.error("Failed to attach to Rhapsody: %s", e)
-            click.echo(_NO_ACTIVE_INSTANCE_MESSAGE, err=True)
-            raise click.Abort() from e
+            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
+            sys.exit(1)
 
         try:
             data = {
@@ -121,41 +98,29 @@ class ViewElementCommand(BaseElementCommand):
                 rows = [["path", path], ["type", "unknown"]]
                 output = OutputFormatter.table(["Property", "Value"], rows)
 
-            click.echo(output)
-        except click.Abort:
-            raise
+            print(output)
         except Exception as e:
             logger.error("Failed to view element '%s': %s", path, e)
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
 
-class QueryElementCommand(BaseElementCommand):
+class QueryElementCommand(AbstractCommand):
     """Command: Query elements in active project."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="query",
-            help="Query elements in active project.",
-            callback=self.execute,
-            params=[
-                click.Option(["--filter"], default=None, help="Filter by type or name"),
-            ],
-        )
-
-    def execute(self, **kwargs: object) -> None:
-        """Execute the query command."""
-        filter_str = kwargs.get("filter")
-        if filter_str is not None:
-            filter_str = str(filter_str)
-
+    def execute(self, pattern: Optional[str] = None) -> None:
+        """Execute the query command.
+        
+        Args:
+            pattern: Optional search pattern (not yet implemented)
+        """
         ctx = RhapsodyContext()
         try:
             project = ctx.get_active_project()
         except RhapsodyConnectionError as e:
             logger.error("Failed to attach to Rhapsody: %s", e)
-            click.echo(_NO_ACTIVE_INSTANCE_MESSAGE, err=True)
-            raise click.Abort() from e
+            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
+            sys.exit(1)
 
         try:
             root = project.getRoot()  # type: ignore[attr-defined]
@@ -184,43 +149,29 @@ class QueryElementCommand(BaseElementCommand):
                 rows = [[elem.getName(), elem.getMetaClass()] for elem in elements]
                 output = OutputFormatter.table(["Name", "Type"], rows)
 
-            click.echo(output)
-        except click.Abort:
-            raise
+            print(output)
         except Exception as e:
             logger.error("Failed to query elements: %s", e)
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
 
-class DeleteElementCommand(BaseElementCommand):
+class DeleteElementCommand(AbstractCommand):
     """Command: Delete an element from the project."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="delete",
-            help="Delete an element from the project.",
-            callback=self.execute,
-            params=[
-                click.Option(
-                    ["--path"],
-                    required=True,
-                    help="Element path (e.g., Root::MyClass)",
-                ),
-            ],
-        )
-
-    def execute(self, **kwargs: object) -> None:
-        """Execute the delete command."""
-        path = str(kwargs.get("path", ""))
-
+    def execute(self, path: str) -> None:
+        """Execute the delete command.
+        
+        Args:
+            path: Element path to delete (e.g., Root::MyClass)
+        """
         ctx = RhapsodyContext()
         try:
             project = ctx.get_active_project()
         except RhapsodyConnectionError as e:
             logger.error("Failed to attach to Rhapsody: %s", e)
-            click.echo(_NO_ACTIVE_INSTANCE_MESSAGE, err=True)
-            raise click.Abort() from e
+            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
+            sys.exit(1)
 
         try:
             root = project.getRoot()  # type: ignore[attr-defined]
@@ -229,8 +180,8 @@ class DeleteElementCommand(BaseElementCommand):
             path_parts = path.split("::")
             if len(path_parts) < 2:
                 msg = f"Error: Invalid path format '{path}'. Use 'Root::ElementName'"
-                click.echo(msg, err=True)
-                raise click.Abort()
+                print(msg, file=sys.stderr)
+                sys.exit(1)
 
             element_name = path_parts[-1]
             parent_path_parts = path_parts[:-1]
@@ -245,8 +196,8 @@ class DeleteElementCommand(BaseElementCommand):
                         found = elem
                         break
                 if not found:
-                    click.echo(f"Error: Parent path not found: {part}", err=True)
-                    raise click.Abort()
+                    print(f"Error: Parent path not found: {part}", file=sys.stderr)
+                    sys.exit(1)
                 parent = found
 
             # Find and delete the element
@@ -270,8 +221,8 @@ class DeleteElementCommand(BaseElementCommand):
                         break
 
             if not element_to_delete:
-                click.echo(f"Error: Element '{element_name}' not found at path '{path}'", err=True)
-                raise click.Abort()
+                print(f"Error: Element '{element_name}' not found at path '{path}'", file=sys.stderr)
+                sys.exit(1)
 
             # Try to delete using different methods based on element type
             meta_class = element_to_delete.getMetaClass()
@@ -294,48 +245,13 @@ class DeleteElementCommand(BaseElementCommand):
                     deleted = True
 
             if not deleted:
-                click.echo(f"Error: Unable to delete element of type '{meta_class}'", err=True)
-                raise click.Abort()
+                print(f"Error: Unable to delete element of type '{meta_class}'", file=sys.stderr)
+                sys.exit(1)
 
             logger.info("Deleted %s: %s", meta_class, element_name)
-            click.echo(f"Deleted {meta_class.lower()}: {element_name}")
-        except click.Abort:
-            raise
+            print(f"Deleted {meta_class.lower()}: {element_name}")
         except Exception as e:
             logger.error("Failed to delete element at path '%s': %s", path, e)
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
-
-class ElementCommandGroup(click.Group):
-    """Command group for element operations."""
-
-    def __init__(self) -> None:
-        super().__init__(
-            name="element",
-            help="Manage model elements.",
-            invoke_without_command=False,
-            params=[
-                click.Option(
-                    ["--verbose", "-v"],
-                    is_flag=True,
-                    default=False,
-                    help="Enable DEBUG-level logging (default: INFO).",
-                ),
-            ],
-        )
-        self.add_command(AddElementCommand())
-        self.add_command(ViewElementCommand())
-        self.add_command(QueryElementCommand())
-        self.add_command(DeleteElementCommand())
-
-    def invoke(self, ctx: click.Context) -> object:
-        """Override invoke to configure logging based on verbose flag."""
-        from rhapsody_cli.cli.logging_config import CliLoggingConfigurator
-        
-        verbose = ctx.params.get("verbose", False)
-        CliLoggingConfigurator(verbose=verbose).configure()
-        return super().invoke(ctx)
-
-
-element = ElementCommandGroup()

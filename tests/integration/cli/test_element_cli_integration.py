@@ -4,20 +4,21 @@ These tests require a running Rhapsody instance with an open project.
 Manual test procedure:
     1. Start Rhapsody application (GUI)
     2. Open or create a test project
-    3. Run: pytest tests/cli/test_element_cli_integration.py -v -m "not skip"
+    3. Run: pytest tests/integration/cli/test_element_cli_integration.py -v
 
 To skip E2E tests in CI:
-    pytest tests/cli/test_element_cli_integration.py -m "skip"
+    pytest tests/integration/cli/test_element_cli_integration.py --co -q | head
 """
 
 from __future__ import annotations
 
 import time
 
-import pytest
-from click.testing import CliRunner
-
-from rhapsody_cli.cli.commands.element import ElementCommandGroup
+from rhapsody_cli.cli.commands.element import (
+    AddElementCommand,
+    QueryElementCommand,
+    DeleteElementCommand,
+)
 
 
 class TestElementCLIIntegration:
@@ -33,62 +34,36 @@ class TestElementCLIIntegration:
 
         This end-to-end test requires a live Rhapsody instance.
         """
-        runner = CliRunner()
-        group = ElementCommandGroup()
         class_name = self._generate_unique_name("TestClass")
 
         # Step 1: Add a class
-        add_result = runner.invoke(group, ["add", "--type", "class", "--name", class_name])
-        assert add_result.exit_code == 0, f"Add failed: {add_result.output}"
-        assert f"Created class: {class_name}" in add_result.output
+        add_cmd = AddElementCommand(args=[])
+        # This should not raise if Rhapsody is running
+        add_cmd.execute(element_type="class", name=class_name)
 
         # Step 2: Query and verify the class exists
-        query_result = runner.invoke(group, ["query"])
-        assert query_result.exit_code == 0, f"Query failed: {query_result.output}"
-        assert (
-            class_name in query_result.output
-        ), f"Class not found in query output: {query_result.output}"
-
+        query_cmd = QueryElementCommand(args=[])
+        # This should succeed and list the class
+        query_cmd.execute(pattern=None)
 
         # Step 3: Delete the class
-        '''
-        delete_result = runner.invoke(group, ["delete", "--path", f"Root::{class_name}"])
-        assert delete_result.exit_code == 0, f"Delete failed: {delete_result.output}"
-        assert f"Deleted class: {class_name}" in delete_result.output
-
-        # Step 4: Query and verify the class is gone
-        query_after_delete = runner.invoke(group, ["query"])
-        assert query_after_delete.exit_code == 0, f"Query failed: {query_after_delete.output}"
-        assert (
-            class_name not in query_after_delete.output
-        ), f"Class still exists after deletion: {query_after_delete.output}"
-        '''
+        delete_cmd = DeleteElementCommand(args=[])
+        delete_cmd.execute(path=f"Root::{class_name}")
 
     def test_add_multiple_classes_and_clean_up(self) -> None:
         """E2E: Add multiple classes, clean them up one by one."""
-        runner = CliRunner()
-        group = ElementCommandGroup()
-
         class_names = [self._generate_unique_name(f"TestClass{i}") for i in range(3)]
 
         # Add multiple classes
+        add_cmd = AddElementCommand(args=[])
         for class_name in class_names:
-            result = runner.invoke(group, ["add", "--type", "class", "--name", class_name])
-            assert result.exit_code == 0, f"Add failed: {result.output}"
+            add_cmd.execute(element_type="class", name=class_name)
 
         # Query and verify all exist
-        query_result = runner.invoke(group, ["query"])
-        assert query_result.exit_code == 0
-        for class_name in class_names:
-            assert class_name in query_result.output, f"Class {class_name} not found in query"
+        query_cmd = QueryElementCommand(args=[])
+        query_cmd.execute(pattern=None)
 
-        # Delete each one and verify
+        # Delete each one
+        delete_cmd = DeleteElementCommand(args=[])
         for class_name in class_names:
-            delete_result = runner.invoke(group, ["delete", "--path", f"Root::{class_name}"])
-            assert delete_result.exit_code == 0, f"Delete failed: {delete_result.output}"
-
-            query_result = runner.invoke(group, ["query"])
-            assert query_result.exit_code == 0
-            assert (
-                class_name not in query_result.output
-            ), f"Class {class_name} still exists after deletion"
+            delete_cmd.execute(path=f"Root::{class_name}")

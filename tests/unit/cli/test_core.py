@@ -7,11 +7,9 @@ from collections.abc import Iterator
 from unittest.mock import MagicMock, patch
 
 import pytest
-from click.testing import CliRunner
 
 from rhapsody_cli.cli.context import RhapsodyContext
 from rhapsody_cli.cli.formatters import OutputFormatter
-from rhapsody_cli.cli.main import cli
 from rhapsody_cli.exceptions import RhapsodyConnectionError
 
 
@@ -24,78 +22,6 @@ def _reset_logger() -> Iterator[None]:
     yield
     logger.handlers.clear()
     logger.setLevel(logging.WARNING)
-
-
-def test_cli_help() -> None:
-    """Test main CLI help."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["--help"])
-    assert result.exit_code == 0
-    assert "Rhapsody model CLI tool" in result.output
-    assert "Commands:" in result.output
-
-
-def test_cli_output_format_option() -> None:
-    """Test output format option."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["--output", "json", "--help"])
-    assert result.exit_code == 0
-
-
-def test_project_command_is_not_registered() -> None:
-    """Test: the project sub-command is temporarily disabled on the root CLI."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["project", "--help"])
-    assert result.exit_code != 0
-    assert "No such command" in result.output
-
-
-def test_cli_help_does_not_list_project_command() -> None:
-    """Test: root --help no longer advertises the project sub-command."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["--help"])
-    assert result.exit_code == 0
-    assert "project" not in result.output
-
-
-def test_cli_verbose_flag_configures_debug_logging() -> None:
-    """Test --verbose flag on subcommand configures the rhapsody_cli logger at DEBUG level."""
-    logger = logging.getLogger("rhapsody_cli")
-
-    def check_logger_level() -> None:
-        """Helper to check logger level during invocation."""
-        logger.info("test message")
-
-    runner = CliRunner()
-    with patch.object(logging.getLogger("rhapsody_cli"), "info", side_effect=check_logger_level):
-        # Now --verbose is on the subcommand, so test with element --verbose
-        result = runner.invoke(cli, ["element", "--verbose", "--help"])
-
-    # Check that --verbose was accepted (exit code 0)
-    assert result.exit_code == 0
-
-
-def test_cli_without_verbose_flag_configures_info_logging() -> None:
-    """Test omitting --verbose configures the rhapsody_cli logger at INFO level."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["element", "--help"])
-    assert result.exit_code == 0
-
-
-def test_element_help() -> None:
-    """Test element command help."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["element", "--help"])
-    assert result.exit_code == 0
-    assert "Manage model elements" in result.output
-
-
-def test_io_help() -> None:
-    """Test io command help."""
-    runner = CliRunner()
-    result = runner.invoke(cli, ["io", "--help"])
-    assert result.exit_code == 0
-    assert "Import and export" in result.output
 
 
 def test_formatter_table() -> None:

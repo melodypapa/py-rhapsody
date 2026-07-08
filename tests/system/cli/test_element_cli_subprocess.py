@@ -61,8 +61,8 @@ class TestElementCLISubprocess:
         assert "path" in result.stdout.lower()
 
     def test_cli_verbose_flag(self) -> None:
-        """Test that --verbose flag is accepted."""
-        result = self._run_cli("--verbose", "element", "query")
+        """Test that --verbose flag is accepted at subcommand level."""
+        result = self._run_cli("element", "--verbose", "query")
         # Should not crash with unrecognized option error
         # (May fail with Rhapsody connection error, but not with usage error)
         assert "unrecognized arguments" not in result.stderr.lower()
@@ -73,20 +73,20 @@ class TestElementCLISubprocess:
         # Should fail with usage error
         assert result.returncode != 0
         assert (
-            "Missing option" in result.stderr
+            "required" in result.stderr.lower()
             or "Error" in result.stderr
-            or "Usage" in result.stderr
+            or "usage:" in result.stderr.lower()
         )
 
     def test_element_delete_missing_arguments(self) -> None:
-        """Test that delete command requires --path argument."""
+        """Test that delete command requires path argument."""
         result = self._run_cli("element", "delete")
         # Should fail with usage error
         assert result.returncode != 0
         assert (
-            "Missing option" in result.stderr
+            "required" in result.stderr.lower()
             or "Error" in result.stderr
-            or "Usage" in result.stderr
+            or "usage:" in result.stderr.lower()
         )
 
     def test_cli_invalid_command(self) -> None:
@@ -94,9 +94,9 @@ class TestElementCLISubprocess:
         result = self._run_cli("invalid_command")
         assert result.returncode != 0
         assert (
-            "No such command" in result.stderr
+            "invalid choice" in result.stderr.lower()
             or "Error" in result.stderr
-            or "Usage" in result.stderr
+            or "usage:" in result.stderr.lower()
         )
 
     def test_cli_query_connection_check(self) -> None:
@@ -129,7 +129,7 @@ class TestElementCLISubprocess:
 
         When Rhapsody is not running, should fail with connection error.
         """
-        result = self._run_cli("element", "delete", "--path", "Root::TestClass")
+        result = self._run_cli("element", "delete", "Root::TestClass")
         # Will fail due to no Rhapsody, but should have a proper error message
         if result.returncode != 0:
             # Make sure it's not a usage error
@@ -145,8 +145,8 @@ class TestElementCLISubprocess:
 
     def test_cli_verbose_outputs_debug_info(self) -> None:
         """Test that --verbose flag changes output verbosity."""
-        # Run with verbose
-        result_verbose = self._run_cli("--verbose", "element", "query")
+        # Run with verbose at subcommand level
+        result_verbose = self._run_cli("element", "--verbose", "query")
 
         # Just verify verbose flag is accepted (not an unrecognized option error)
         assert "unrecognized arguments" not in result_verbose.stderr.lower()

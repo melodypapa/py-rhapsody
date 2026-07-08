@@ -22,13 +22,12 @@ dev = [
     "mypy>=1.8",
 ]
 cli = [
-    "click>=8.0",
     "tabulate>=0.9",
     "rich>=13.0",
 ]
 
 [project.scripts]
-rhapsody-cli = "rhapsody_cli.cli.main:cli"
+rhapsody-cli = "rhapsody_cli.cli.main:main"
 
 [tool.setuptools.package-dir]
 "" = "src"

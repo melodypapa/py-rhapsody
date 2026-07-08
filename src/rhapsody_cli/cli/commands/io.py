@@ -1,126 +1,50 @@
-"""Import and export CLI commands using class-based architecture."""
+"""Import and export CLI commands using argparse architecture."""
 
 from __future__ import annotations
 
-import click
+import sys
 
+from rhapsody_cli.cli.abstract_command import AbstractCommand
 from rhapsody_cli.cli.context import RhapsodyContext
 
 
-class BaseIOCommand(click.Command):
-    """Base class for io commands."""
-
-    pass
-
-
-class ImportCommand(BaseIOCommand):
+class ImportCommand(AbstractCommand):
     """Command: Import model from file."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="import",
-            help="Import model from file.",
-            callback=self.execute,
-            params=[
-                click.Argument(["source"], type=click.Path(exists=True)),
-                click.Option(
-                    ["--target"],
-                    default="Root",
-                    help="Target container (default: Root)",
-                ),
-            ],
-        )
-
-    def execute(self, source: str, target: str) -> None:
+    def execute(self, source: str, target: str = "Root") -> None:
         """Execute the import command."""
         ctx = RhapsodyContext()
-        if not isinstance(ctx, RhapsodyContext):
-            click.echo("Error: Invalid context", err=True)
-            raise click.Abort()
-
-        if ctx.project is None:
-            click.echo("Error: No active project", err=True)
-            raise click.Abort()
+        try:
+            ctx.get_active_project()
+        except Exception as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
         try:
-            click.echo(f"Importing from {source} into {target}...")
-            click.echo("(Import functionality depends on file format and Rhapsody API)")
-            click.echo("✓ Import completed")
-        except click.Abort:
-            raise
+            print(f"Importing from {source} into {target}...")
+            print("(Import functionality depends on file format and Rhapsody API)")
+            print("✓ Import completed")
         except Exception as e:
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
 
-class ExportCommand(BaseIOCommand):
+class ExportCommand(AbstractCommand):
     """Command: Export model to file."""
 
-    def __init__(self) -> None:
-        super().__init__(
-            name="export",
-            help="Export model to file.",
-            callback=self.execute,
-            params=[
-                click.Argument(["output"], type=click.Path()),
-                click.Option(
-                    ["--format"],
-                    "export_format",
-                    default="xmi",
-                    help="Export format (xmi, json)",
-                ),
-            ],
-        )
-
-    def execute(self, output: str, export_format: str) -> None:
+    def execute(self, output: str, export_format: str = "xmi") -> None:
         """Execute the export command."""
         ctx = RhapsodyContext()
-        if not isinstance(ctx, RhapsodyContext):
-            click.echo("Error: Invalid context", err=True)
-            raise click.Abort()
-
-        if ctx.project is None:
-            click.echo("Error: No active project", err=True)
-            raise click.Abort()
+        try:
+            ctx.get_active_project()
+        except Exception as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
 
         try:
-            click.echo(f"Exporting to {output} as {export_format}...")
-            click.echo("(Export functionality depends on file format and Rhapsody API)")
-            click.echo(f"✓ Export completed: {output}")
-        except click.Abort:
-            raise
+            print(f"Exporting to {output} as {export_format}...")
+            print("(Export functionality depends on file format and Rhapsody API)")
+            print(f"✓ Export completed: {output}")
         except Exception as e:
-            click.echo(f"Error: {e}", err=True)
-            raise click.Abort() from e
-
-
-class IOCommandGroup(click.Group):
-    """Command group for import and export operations."""
-
-    def __init__(self) -> None:
-        super().__init__(
-            name="io",
-            help="Import and export Rhapsody models.",
-            invoke_without_command=False,
-            params=[
-                click.Option(
-                    ["--verbose", "-v"],
-                    is_flag=True,
-                    default=False,
-                    help="Enable DEBUG-level logging (default: INFO).",
-                ),
-            ],
-        )
-        self.add_command(ImportCommand())
-        self.add_command(ExportCommand())
-
-    def invoke(self, ctx: click.Context) -> object:
-        """Override invoke to configure logging based on verbose flag."""
-        from rhapsody_cli.cli.logging_config import CliLoggingConfigurator
-        
-        verbose = ctx.params.get("verbose", False)
-        CliLoggingConfigurator(verbose=verbose).configure()
-        return super().invoke(ctx)
-
-
-io = IOCommandGroup()
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
