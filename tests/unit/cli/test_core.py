@@ -1,7 +1,7 @@
 """Tests for CLI components."""
 
 import logging
-from collections.abc import Iterator
+from typing import Iterator
 from unittest.mock import MagicMock, patch
 
 import pytest
