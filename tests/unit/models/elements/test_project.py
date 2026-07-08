@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
-from tests.models.fakes import make_fake_collection, make_fake_element
+from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_project_is_a_package() -> None:

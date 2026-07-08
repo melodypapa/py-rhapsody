@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from rhapsody_cli.models._core import RPModelElement, wrap
 from rhapsody_cli.models.elements.classifiers import RPClass, RPStatechart
-from tests.models.fakes import make_fake_element
+from tests.unit.models.fakes import make_fake_element
 
 
 def test_statechart_is_a_class() -> None:

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.relations import RPInstance, RPRelation
-from tests.models.fakes import make_fake_collection, make_fake_element
+from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_instance_is_a_relation() -> None:

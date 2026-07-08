@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.classifiers import RPInterfaceItem, RPOperation
-from tests.models.fakes import make_fake_element
+from tests.unit.models.fakes import make_fake_element
 
 
 def test_operation_is_an_interface_item() -> None:

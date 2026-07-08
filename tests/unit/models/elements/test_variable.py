@@ -5,7 +5,7 @@ from __future__ import annotations
 from rhapsody_cli.models._core import RPCollection, RPUnit, wrap
 from rhapsody_cli.models.elements.classifiers import RPClassifier
 from rhapsody_cli.models.elements.variables import RPVariable
-from tests.models.fakes import make_fake_collection, make_fake_element
+from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_variable_is_a_unit() -> None:

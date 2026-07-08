@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.variables import RPAttribute, RPVariable
-from tests.models.fakes import make_fake_element
+from tests.unit.models.fakes import make_fake_element
 
 
 def test_attribute_is_a_variable() -> None:
