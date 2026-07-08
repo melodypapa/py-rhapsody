@@ -6,7 +6,7 @@
 **Build System:** setuptools (src-layout)  
 **Testing:** pytest with unit tests only (no Rhapsody installation required)  
 **Quality Tools:** ruff (linting), black (formatting), mypy (type checking)  
-**CLI Framework:** Click with class-based command architecture
+**CLI Framework:** argparse (stdlib) with class-based command/action architecture
 
 ---
 
@@ -15,8 +15,8 @@
 ### Installation
 
 ```bash
-pip install -e ".[dev,cli]"  # Full dev setup: required to run the full test suite (CLI tests need click/tabulate/rich)
-pip install -e ".[dev]"      # Dev tools only (ruff/black/mypy/pytest) - tests/cli/* will fail to import
+pip install -e ".[dev,cli]"  # Full dev setup: required to run the full test suite (CLI tests need tabulate/rich)
+pip install -e ".[dev]"      # Dev tools only (ruff/black/mypy/pytest) - tests that import tabulate/rich will fail
 pip install -e ".[cli]"      # CLI runtime dependencies only
 pip install -e .             # Install package only (pywin32 on Windows)
 ```
@@ -25,8 +25,8 @@ pip install -e .             # Install package only (pywin32 on Windows)
 
 ```bash
 pytest                       # Run all tests
-pytest tests/cli/            # Run only CLI tests
-pytest tests/elements/       # Run only element tests
+pytest tests/unit/cli/               # Run only CLI unit tests
+pytest tests/unit/models/elements/   # Run only element tests
 pytest tests/test_core.py   # Run single test module
 pytest -k "test_open"       # Run tests matching pattern
 pytest -v                   # Verbose output
@@ -40,7 +40,7 @@ ruff check src/ tests/      # Run linter
 ruff check src/ tests/ --fix # Auto-fix issues
 black --check src/ tests/   # Check formatting
 black src/ tests/           # Auto-format
-mypy src/ tests/            # Type checking (Python 3.9 strict mode)
+mypy src/ tests/            # Type checking (strict mode, python_version 3.9)
 ```
 
 ### Running Everything
@@ -135,9 +135,11 @@ Use kebab-case with a type prefix:
    - `RhapsodyApplication` handles Rhapsody connection (attach/launch)
    - Supports three connection modes: `attach()` (existing instance), `launch()` (new instance), `connect()` (try attach then launch)
 
-3. **CLI Layer** (`src/rhapsody_cli/cli/`)
-   - Click-based command-line interface using class-based architecture
-   - Command groups: `project`, `element`, `io`
+3. **CLI Layer** (`src/rhapsody_cli/cli/` + `src/rhapsody_cli/commands/` + `src/rhapsody_cli/actions/`)
+   - argparse-based (stdlib) CLI using a class-based command/action architecture
+   - `main()` dispatches on the first argv token to an `AbstractCommand` subclass
+   - Command groups (`ElementCommand`, `ProjectCommand`, `IOCommand`) each own a set of `AbstractAction` subcommands
+   - Each action registers its own argparse subparser (`init_arguments`) and owns its execution (`execute`)
    - Context: `RhapsodyContext` manages the current Rhapsody state
    - Formatters: `OutputFormatter` handles table/JSON/CSV output
 
@@ -182,36 +184,29 @@ Method names and class hierarchy **exactly mirror** the Rhapsody Java API (`com.
 **Mandatory for CLI:** All CLI commands must be class-based (not function-based with decorators):
 
 ```python
-# ✅ CORRECT: Class-based command
-class OpenProjectCommand(click.Command):
+# ✅ CORRECT: Class-based action (argparse)
+class ElementAddAction(ElementManagementAction):
     def __init__(self) -> None:
-        super().__init__(
-            name="open",
-            help="Open a Rhapsody project file.",
-            callback=self.execute,
-            params=[click.Argument(["project_path"], type=click.Path(exists=True))],
-        )
+        super().__init__(command_id="add")
 
-    def execute(self, project_path: str) -> None:
-        """Business logic here."""
+    def init_arguments(self, sub_parser) -> None:
+        add_parser = sub_parser.add_parser("add", help="Add a new element")
+        add_parser.add_argument("--type", required=True)
+        add_parser.add_argument("--name", required=True)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        # Business logic here
         ...
 
-# ❌ WRONG: Function-based with decorators
-@click.command()
-@click.argument("project_path")
-def open_project(project_path):
-    ...
-```
+# Command groups inherit from AbstractCommand and register actions in get_actions():
+class ElementCommand(AbstractCommand):
+    def __init__(self, args: List[str]) -> None:
+        super().__init__("element", args)
 
-**Command groups** inherit from `click.Group` and add subcommands in `__init__`:
+    def get_actions(self) -> List[AbstractAction]:
+        return [ElementAddAction(), ElementViewAction(), ElementQueryAction(), ElementDeleteAction()]
 
-```python
-class ProjectCommandGroup(click.Group):
-    def __init__(self) -> None:
-        super().__init__(name="project", help="Project commands")
-        self.add_command(OpenProjectCommand())
-        self.add_command(ListProjectsCommand())
-        ...
+# ❌ WRONG: Function-based with decorators (Click style) — not used in this project
 ```
 
 ### Wrapper Registry Pattern
@@ -236,14 +231,14 @@ This enables automatic dispatch: `wrap(com_object)` returns the correct subclass
 - Use `call_com(lambda: ...)` to wrap all COM calls
 - Catch `RhapsodyConnectionError` for connection issues
 - Catch `RhapsodyRuntimeException` for COM API failures
-- CLI commands re-raise `click.Abort` without modification, wrap other errors
+- CLI actions use `sys.exit(1)` for errors after logging via `_handle_connection_error` / `_handle_execution_error`
 
 ```python
 try:
     ctx.connect("attach")
 except RhapsodyConnectionError as e:
-    click.echo(f"Connection error: {e}", err=True)
-    raise click.Abort() from e
+    self._handle_connection_error(e)
+    sys.exit(1)
 ```
 
 ### Type Annotations
@@ -289,32 +284,39 @@ src/rhapsody_cli/
 │   ├── _core.py                  # RPModelElement, wrap(), call_com(), registry
 │   └── elements/                 # Specific element types
 │       ├── __init__.py
-│       ├── class_.py             # RPClass
-│       ├── attribute.py          # RPAttribute
-│       └── ...
-├── cli/                           # CLI commands (class-based)
-│   ├── main.py                   # CLI root group
+│       ├── classifiers.py        # RPClass, RPClassifier, RPActor
+│       ├── containment.py        # RPPackage, RPProject
+│       └── ...                   # Other element types
+├── commands/                      # CLI command groups (argparse, class-based)
+│   ├── __init__.py
+│   ├── abstract_command.py       # AbstractCommand base class
+│   ├── element_command.py        # ElementCommand
+│   ├── project_command.py        # ProjectCommand
+│   └── io_command.py             # IOCommand
+├── actions/                       # CLI subcommand actions (argparse, class-based)
+│   ├── __init__.py
+│   ├── abstract_action.py        # AbstractAction, RhapsodyContextAction, ElementManagementAction
+│   ├── element_action.py         # ElementAddAction, ElementViewAction, ElementQueryAction, ElementDeleteAction
+│   ├── project_action.py         # Project subcommand actions
+│   └── io_action.py              # Import/export actions
+├── cli/                           # CLI entry point and support
+│   ├── main.py                   # Entry point (re-exports cli.main)
+│   ├── cli.py                    # main() dispatcher
 │   ├── context.py                # RhapsodyContext (state management)
 │   ├── formatters.py             # OutputFormatter (table/JSON/CSV)
-│   └── commands/
-│       ├── __init__.py
-│       ├── project.py            # ProjectCommandGroup
-│       ├── element.py            # ElementCommandGroup
-│       └── io.py                 # IOCommandGroup
+│   └── logging_config.py         # CliLoggingConfigurator
 └── py.typed                       # PEP 561 marker (type stubs available)
 
 tests/
-├── fakes.py                      # Fake COM objects for testing
-├── test_application.py           # Tests for RhapsodyApplication
-├── test_core.py                  # Tests for wrap(), call_com(), registry
-├── cli/
-│   ├── test_command_classes.py  # Tests for CLI command classes
-│   ├── test_element_commands.py  # Tests for element commands
-│   └── test_io_commands.py       # Tests for io commands
-└── elements/
-    ├── test_class.py            # Tests for RPClass
-    ├── test_attribute.py        # Tests for RPAttribute
-    └── ...
+├── unit/                          # Unit tests (mocked COM, no Rhapsody needed)
+│   ├── conftest.py
+│   ├── models/fakes.py            # Fake COM objects for testing
+│   ├── cli/                       # CLI unit tests
+│   ├── commands/                  # Command-group unit tests
+│   ├── models/elements/           # Element wrapper tests
+│   └── exceptions/                # Exception tests
+├── integration/                   # Integration tests (require live Rhapsody)
+└── system/                        # End-to-end subprocess tests
 ```
 
 ### GitHub Actions CI/CD
@@ -331,7 +333,7 @@ tests/
 2. **Write tests first** — then implementation
 3. **Use `call_com(lambda: ...)`** for all COM calls
 4. **Register new element wrappers** in the wrapper registry
-5. **Class-based CLI commands** — never function-based
+5. **Class-based CLI actions** — never function-based or Click-decorator-based
 6. **Type annotations on all functions** — mypy strict mode enforces this
 7. **Run quality gates:** `ruff check`, `black --check`, `mypy`, `pytest`
 
@@ -344,16 +346,16 @@ tests/
 1. Create `src/rhapsody_cli/models/elements/myclass.py`
 2. Define `RPMyClass(RPModelElement)` with method mirrors
 3. Call `register_wrapper("MyClass", RPMyClass)` at module level
-4. Write tests in `tests/elements/test_myclass.py` with fakes
+4. Write tests in `tests/unit/models/elements/test_myclass.py` with fakes
 5. Add to `src/rhapsody_cli/models/elements/__init__.py` exports
 
 ### Add a new CLI command
 
-1. Write tests first in appropriate `tests/cli/test_*.py` module
-2. Create command class inheriting from `click.Command`
-3. Implement `execute()` method with business logic
-4. Add to appropriate command group (project/element/io)
-5. Verify all CLI tests pass
+1. Write tests first in appropriate tests/unit/cli/ or tests/unit/commands/ module
+2. Create an action class inheriting from AbstractAction (or RhapsodyContextAction / ElementManagementAction)
+3. Implement init_arguments() to register the subparser and execute() for business logic
+4. Register the action in the appropriate command group's get_actions() (element/project/io)
+5. Verify all unit tests pass
 
 ### Fix a type checking error
 
@@ -380,4 +382,4 @@ result = cast(str, com_call())
 - **Design & Architecture:** `docs/superpowers/specs/2026-07-06-rhapsody-cli-com-api-design.md`
 - **Code Guidelines (TDD/Classes):** `docs/CODE_GUIDELINES.md`
 - **Rhapsody Java API:** https://www.ibm.com/docs/en/rhapsody (method/class reference)
-- **Click CLI Documentation:** https://click.palletsprojects.com/
+- **argparse documentation:** https://docs.python.org/3/library/argparse.html
