@@ -16,7 +16,7 @@ class ProjectOpenAction(RhapsodyContextAction):
         """Initialize the 'open' action."""
         super().__init__(command_id="open")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'open' subcommand and its arguments."""
         open_parser = sub_parser.add_parser("open", help="Open a project file")
         open_parser.add_argument("project_path", help="Path to the project file")
@@ -45,7 +45,7 @@ class ProjectListAction(RhapsodyContextAction):
         """Initialize the 'list' action."""
         super().__init__(command_id="list")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'list' subcommand and its arguments."""
         list_parser = sub_parser.add_parser("list", help="List open projects")
         self.add_verbose_argument(list_parser)
@@ -80,7 +80,7 @@ class ProjectCloseAction(RhapsodyContextAction):
         """Initialize the 'close' action."""
         super().__init__(command_id="close")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'close' subcommand and its arguments."""
         close_parser = sub_parser.add_parser("close", help="Close active project")
         self.add_verbose_argument(close_parser)
@@ -106,7 +106,7 @@ class ProjectNewAction(RhapsodyContextAction):
         """Initialize the 'new' action."""
         super().__init__(command_id="new")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'new' subcommand and its arguments."""
         new_parser = sub_parser.add_parser("new", help="Create a new project")
         new_parser.add_argument("project_location", help="Location for the project")

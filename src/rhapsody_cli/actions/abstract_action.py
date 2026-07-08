@@ -32,7 +32,7 @@ class AbstractAction:
         self.command_id = command_id
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register this action's subparser and arguments.
 
         Args:

@@ -13,7 +13,7 @@ class IOImportAction(ElementManagementAction):
         """Initialize the 'import' action."""
         super().__init__(command_id="import")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'import' subcommand and its arguments."""
         import_parser = sub_parser.add_parser("import", help="Import model from file")
         import_parser.add_argument("source", help="Source file path")
@@ -45,7 +45,7 @@ class IOExportAction(ElementManagementAction):
         """Initialize the 'export' action."""
         super().__init__(command_id="export")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'export' subcommand and its arguments."""
         export_parser = sub_parser.add_parser("export", help="Export model to file")
         export_parser.add_argument("output", help="Output file path")

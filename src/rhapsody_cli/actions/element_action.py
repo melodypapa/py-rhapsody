@@ -14,7 +14,7 @@ class ElementAddAction(ElementManagementAction):
         """Initialize the 'add' action."""
         super().__init__(command_id="add")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'add' subcommand and its arguments."""
         add_parser = sub_parser.add_parser("add", help="Add a new element")
         add_parser.add_argument("--type", required=True, help="Element type (class, actor, package)")
@@ -65,7 +65,7 @@ class ElementViewAction(ElementManagementAction):
         """Initialize the 'view' action."""
         super().__init__(command_id="view")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'view' subcommand and its arguments."""
         view_parser = sub_parser.add_parser("view", help="View element details")
         view_parser.add_argument("--path", required=True, help="Element path (e.g., Root::MyClass)")
@@ -84,6 +84,7 @@ class ElementViewAction(ElementManagementAction):
             }
 
             from rhapsody_cli.cli.context import RhapsodyContext
+
             ctx = RhapsodyContext()
 
             if ctx.output_format == "json":
@@ -107,7 +108,7 @@ class ElementQueryAction(ElementManagementAction):
         """Initialize the 'query' action."""
         super().__init__(command_id="query")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'query' subcommand and its arguments."""
         query_parser = sub_parser.add_parser("query", help="Query elements in active project")
         query_parser.add_argument("pattern", nargs="?", default=None, help="Search pattern (optional)")
@@ -129,6 +130,7 @@ class ElementQueryAction(ElementManagementAction):
                         pass  # If we can't get nested elements, just skip
 
             from rhapsody_cli.cli.context import RhapsodyContext
+
             ctx = RhapsodyContext()
 
             if ctx.output_format == "json":
@@ -161,7 +163,7 @@ class ElementDeleteAction(ElementManagementAction):
         """Initialize the 'delete' action."""
         super().__init__(command_id="delete")
 
-    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'delete' subcommand and its arguments."""
         delete_parser = sub_parser.add_parser("delete", help="Delete an element")
         delete_parser.add_argument("path", help="Element path to delete")
