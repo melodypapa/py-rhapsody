@@ -1,8 +1,7 @@
 """Tests for AbstractCommand base class."""
 
-from __future__ import annotations
-
 import argparse
+from typing import List, Optional
 
 import pytest
 
@@ -15,7 +14,7 @@ class FakeAction(AbstractAction):
 
     def __init__(self) -> None:
         super().__init__(command_id="run")
-        self.executed_with: argparse.Namespace | None = None
+        self.executed_with: Optional[argparse.Namespace] = None
 
     def init_arguments(self, sub_parser: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
         """Register the 'run' subcommand and its arguments."""
@@ -30,11 +29,11 @@ class FakeAction(AbstractAction):
 class ConcreteCommand(AbstractCommand):
     """Concrete implementation of AbstractCommand for testing."""
 
-    def __init__(self, args: list[str], action: AbstractAction) -> None:
+    def __init__(self, args: List[str], action: AbstractAction) -> None:
         self._action = action
         super().__init__("concrete", args)
 
-    def get_actions(self) -> list[AbstractAction]:
+    def get_actions(self) -> List[AbstractAction]:
         """Return the single fake action."""
         return [self._action]
 

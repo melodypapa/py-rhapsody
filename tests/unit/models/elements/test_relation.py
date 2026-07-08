@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.models.elements.relations.RPRelation."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import RPCollection, RPUnit, wrap
 from rhapsody_cli.models.elements.classifiers import RPClassifier
 from rhapsody_cli.models.elements.relations import RPRelation

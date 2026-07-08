@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.elements.diagram.RPDiagram."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import RPModelElement, RPUnit, wrap
 from rhapsody_cli.models.elements.diagrams import RPDiagram
 from tests.unit.models.fakes import make_fake_collection, make_fake_element

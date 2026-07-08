@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.elements.operation.RPOperation."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.classifiers import RPInterfaceItem, RPOperation
 from tests.unit.models.fakes import make_fake_element

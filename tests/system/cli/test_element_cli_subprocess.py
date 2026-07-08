@@ -7,8 +7,6 @@ installed CLI behavior end-to-end.
 For tests requiring a live Rhapsody instance, see test_element_cli_integration.py
 """
 
-from __future__ import annotations
-
 import subprocess
 import sys
 

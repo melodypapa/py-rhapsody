@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.application.RhapsodyApplication."""
 
-from __future__ import annotations
-
 from unittest.mock import MagicMock, patch
 
 import pytest

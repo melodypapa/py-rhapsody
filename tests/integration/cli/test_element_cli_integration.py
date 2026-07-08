@@ -10,8 +10,6 @@ To skip E2E tests in CI:
     pytest tests/integration/cli/test_element_cli_integration.py --co -q | head
 """
 
-from __future__ import annotations
-
 import time
 
 from rhapsody_cli.commands.element_command import ElementCommand

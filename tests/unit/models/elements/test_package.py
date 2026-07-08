@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.elements.package.RPPackage."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import RPUnit, wrap
 from rhapsody_cli.models.elements.containment import RPPackage
 from tests.unit.models.fakes import make_fake_element

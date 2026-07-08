@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.elements.actor.RPActor."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import wrap
 from rhapsody_cli.models.elements.classifiers import RPActor, RPClassifier
 from tests.unit.models.fakes import make_fake_element

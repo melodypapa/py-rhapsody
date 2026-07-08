@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli._core: call_com, RPModelElement, wrap()."""
 
-from __future__ import annotations
-
 from unittest.mock import MagicMock, call
 
 import pytest

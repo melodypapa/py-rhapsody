@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.models.elements.requirements.RPAnnotation."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models._core import RPCollection, RPUnit, wrap
 from rhapsody_cli.models.elements.requirements import RPAnnotation
 from tests.unit.models.fakes import make_fake_collection, make_fake_element

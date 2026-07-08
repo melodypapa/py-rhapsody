@@ -1,7 +1,5 @@
 """Tests for rhapsody_cli.elements.project.RPProject."""
 
-from __future__ import annotations
-
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 

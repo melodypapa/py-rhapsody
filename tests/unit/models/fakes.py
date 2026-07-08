@@ -4,9 +4,7 @@ These fakes stand in for real win32com dispatch objects so tests can run
 without a licensed Rhapsody installation.
 """
 
-from __future__ import annotations
-
-from typing import Any
+from typing import Any, List
 from unittest.mock import MagicMock
 
 import pywintypes
@@ -30,7 +28,7 @@ def make_fake_element(meta_class: str, **method_returns: Any) -> MagicMock:
     return fake
 
 
-def make_fake_collection(items: list[Any]) -> MagicMock:
+def make_fake_collection(items: List[Any]) -> MagicMock:
     """Build a fake COM object representing an IRPCollection."""
 
     def get_item(index: int) -> Any:

@@ -1,7 +1,5 @@
 """Tests for CLI components."""
 
-from __future__ import annotations
-
 import logging
 from collections.abc import Iterator
 from unittest.mock import MagicMock, patch
