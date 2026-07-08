@@ -16,7 +16,7 @@ class FakeAction(AbstractAction):
         super().__init__(command_id="run")
         self.executed_with: Optional[argparse.Namespace] = None
 
-    def init_arguments(self, sub_parser: argparse._SubParsersAction[argparse.ArgumentParser]) -> None:
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'run' subcommand and its arguments."""
         run_parser = sub_parser.add_parser("run", help="Run the fake action")
         run_parser.add_argument("--name", default="test")
