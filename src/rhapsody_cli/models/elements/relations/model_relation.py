@@ -1,18 +1,9 @@
-"""Relation-family wrappers: mirrors IRPRelation and IRPInstance from
-com.telelogic.rhapsody.core.
-"""
+"""Wraps ``com.telelogic.rhapsody.core.IRPRelation``."""
 
 from typing import Any, cast
 
-from rhapsody_cli.models._core import (
-    RPCollection,
-    RPModelElement,
-    RPUnit,
-    call_com,
-    register_wrapper,
-    wrap,
-)
-from rhapsody_cli.models.elements.classifiers import RPClassifier
+from rhapsody_cli.models._core import RPCollection, RPModelElement, RPUnit, call_com, wrap
+from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 
 class RPRelation(RPUnit):
@@ -265,54 +256,3 @@ class RPRelation(RPUnit):
             relation_type: The relation type string to set (e.g. ``"Association"``).
         """
         call_com(lambda: self._com.setRelationType(relation_type))
-
-
-class RPInstance(RPRelation):
-    """Wraps ``IRPInstance``: represents an instance in the model."""
-
-    def getAllNestedElements(self) -> RPCollection:
-        """Returns all nested elements within this instance.
-
-        Returns:
-            An ``RPCollection`` of nested model elements.
-        """
-        return RPCollection(call_com(lambda: self._com.getAllNestedElements()))
-
-    def getAttributeValue(self, attribute_name: str) -> str:
-        """Gets the value of an attribute on the instance.
-
-        Args:
-            attribute_name: The name of the attribute.
-
-        Returns:
-            The attribute value as a string.
-        """
-        return call_com(lambda: str(self._com.getAttributeValue(attribute_name)))
-
-    def setAttributeValue(self, attribute_name: str, attribute_value: str) -> None:
-        """Sets the value of an attribute on the instance.
-
-        Args:
-            attribute_name: The name of the attribute.
-            attribute_value: The new value to set.
-        """
-        call_com(lambda: self._com.setAttributeValue(attribute_name, attribute_value))
-
-    def getInLinks(self) -> RPCollection:
-        """Returns all incoming links to this instance.
-
-        Returns:
-            An ``RPCollection`` of incoming link elements.
-        """
-        return RPCollection(call_com(lambda: self._com.getInLinks()))
-
-    def getOutLinks(self) -> RPCollection:
-        """Returns all outgoing links from this instance.
-
-        Returns:
-            An ``RPCollection`` of outgoing link elements.
-        """
-        return RPCollection(call_com(lambda: self._com.getOutLinks()))
-
-
-register_wrapper("Instance", RPInstance)
