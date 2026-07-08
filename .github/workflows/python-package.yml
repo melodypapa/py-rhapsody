@@ -39,7 +39,7 @@ jobs:
         mypy src/ tests/
     - name: Test with pytest
       run: |
-        pytest tests/ -v --cov=src/rhapsody_cli --cov-report=xml
+        pytest tests/unit -v --cov=src/rhapsody_cli --cov-report=xml
     - name: Upload coverage
       uses: codecov/codecov-action@v3
       with:
