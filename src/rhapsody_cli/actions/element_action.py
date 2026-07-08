@@ -1,43 +1,34 @@
-"""Element-related CLI commands for argparse."""
+"""Element actions - each subcommand of `element` as its own Action class."""
 
-import logging
+import argparse
 import sys
-from typing import Optional
 
-from rhapsody_cli.cli.abstract_command import AbstractCommand
-from rhapsody_cli.cli.context import RhapsodyContext
+from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
-from rhapsody_cli.exceptions import RhapsodyConnectionError
-
-logger = logging.getLogger(__name__)
-
-_NO_ACTIVE_INSTANCE_MESSAGE = (
-    "No running Rhapsody instance found. Please open Rhapsody and a project first."
-)
 
 
-class AddElementCommand(AbstractCommand):
-    """Command: Add a new element to the project."""
+class ElementAddAction(ElementManagementAction):
+    """Add element action - handles adding new elements to the project."""
 
-    def execute(self, element_type: str, name: str) -> None:  # type: ignore[override]
-        """Execute the add command.
+    def __init__(self) -> None:
+        """Initialize the 'add' action."""
+        super().__init__(command_id="add")
 
-        Args:
-            element_type: Type of element to add (class, actor, package)
-            name: Name of the new element
-        """
-        ctx = RhapsodyContext()
-        try:
-            project = ctx.get_active_project()
-        except RhapsodyConnectionError as e:
-            logger.error("Failed to attach to Rhapsody: %s", e)
-            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
-            sys.exit(1)
+    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+        """Register the 'add' subcommand and its arguments."""
+        add_parser = sub_parser.add_parser("add", help="Add a new element")
+        add_parser.add_argument("--type", required=True, help="Element type (class, actor, package)")
+        add_parser.add_argument("--name", required=True, help="Element name")
+        self.add_verbose_argument(add_parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """Add a new element to the project."""
+        element_type = args.type
+        name = args.name
 
         try:
+            project = self._get_active_project()
             root = project.getRoot()
-
-            # Find or use a suitable container
             container = root
 
             # For classes and actors, try to use the Default package if it exists
@@ -58,37 +49,42 @@ class AddElementCommand(AbstractCommand):
                 print(f"Error: Unknown element type '{element_type}'", file=sys.stderr)
                 sys.exit(1)
 
-            logger.info("Created %s: %s", element_type, name)
+            self.logger.info("Created %s: %s", element_type, name)
             print(f"Created {element_type}: {name}")
+        except SystemExit:
+            raise
         except Exception as e:
-            logger.error("Failed to create %s '%s': %s", element_type, name, e)
-            print(f"Error: {e}", file=sys.stderr)
+            self._handle_execution_error(e, f"Failed to create {element_type} '{name}'")
             sys.exit(1)
 
 
-class ViewElementCommand(AbstractCommand):
-    """Command: View element details."""
+class ElementViewAction(ElementManagementAction):
+    """View element action - shows details for a single element."""
 
-    def execute(self, path: str) -> None:  # type: ignore[override]
-        """Execute the view command.
+    def __init__(self) -> None:
+        """Initialize the 'view' action."""
+        super().__init__(command_id="view")
 
-        Args:
-            path: Element path (e.g., Root::MyClass)
-        """
-        ctx = RhapsodyContext()
+    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+        """Register the 'view' subcommand and its arguments."""
+        view_parser = sub_parser.add_parser("view", help="View element details")
+        view_parser.add_argument("--path", required=True, help="Element path (e.g., Root::MyClass)")
+        self.add_verbose_argument(view_parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """View element details."""
+        path = args.path
         try:
-            ctx.get_active_project()
-        except RhapsodyConnectionError as e:
-            logger.error("Failed to attach to Rhapsody: %s", e)
-            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
-            sys.exit(1)
+            self._get_active_project()
 
-        try:
             data = {
                 "path": path,
                 "type": "unknown",
                 "properties": {"status": "read-only for demo"},
             }
+
+            from rhapsody_cli.cli.context import RhapsodyContext
+            ctx = RhapsodyContext()
 
             if ctx.output_format == "json":
                 output = OutputFormatter.json_format(data)
@@ -97,30 +93,30 @@ class ViewElementCommand(AbstractCommand):
                 output = OutputFormatter.table(["Property", "Value"], rows)
 
             print(output)
+        except SystemExit:
+            raise
         except Exception as e:
-            logger.error("Failed to view element '%s': %s", path, e)
-            print(f"Error: {e}", file=sys.stderr)
+            self._handle_execution_error(e, f"Failed to view element '{path}'")
             sys.exit(1)
 
 
-class QueryElementCommand(AbstractCommand):
-    """Command: Query elements in active project."""
+class ElementQueryAction(ElementManagementAction):
+    """Query element action - lists elements in the active project."""
 
-    def execute(self, pattern: Optional[str] = None) -> None:  # type: ignore[override]
-        """Execute the query command.
+    def __init__(self) -> None:
+        """Initialize the 'query' action."""
+        super().__init__(command_id="query")
 
-        Args:
-            pattern: Optional search pattern (not yet implemented)
-        """
-        ctx = RhapsodyContext()
+    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+        """Register the 'query' subcommand and its arguments."""
+        query_parser = sub_parser.add_parser("query", help="Query elements in active project")
+        query_parser.add_argument("pattern", nargs="?", default=None, help="Search pattern (optional)")
+        self.add_verbose_argument(query_parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """Query elements in active project."""
         try:
-            project = ctx.get_active_project()
-        except RhapsodyConnectionError as e:
-            logger.error("Failed to attach to Rhapsody: %s", e)
-            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
-            sys.exit(1)
-
-        try:
+            project = self._get_active_project()
             root = project.getRoot()
             elements = list(root.getNestedElements())
 
@@ -131,6 +127,9 @@ class QueryElementCommand(AbstractCommand):
                         elements.extend(list(elem.getNestedElements()))
                     except Exception:
                         pass  # If we can't get nested elements, just skip
+
+            from rhapsody_cli.cli.context import RhapsodyContext
+            ctx = RhapsodyContext()
 
             if ctx.output_format == "json":
                 data = {
@@ -148,30 +147,31 @@ class QueryElementCommand(AbstractCommand):
                 output = OutputFormatter.table(["Name", "Type"], rows)
 
             print(output)
+        except SystemExit:
+            raise
         except Exception as e:
-            logger.error("Failed to query elements: %s", e)
-            print(f"Error: {e}", file=sys.stderr)
+            self._handle_execution_error(e, "Failed to query elements")
             sys.exit(1)
 
 
-class DeleteElementCommand(AbstractCommand):
-    """Command: Delete an element from the project."""
+class ElementDeleteAction(ElementManagementAction):
+    """Delete element action - removes an element from the project."""
 
-    def execute(self, path: str) -> None:  # type: ignore[override]
-        """Execute the delete command.
+    def __init__(self) -> None:
+        """Initialize the 'delete' action."""
+        super().__init__(command_id="delete")
 
-        Args:
-            path: Element path to delete (e.g., Root::MyClass)
-        """
-        ctx = RhapsodyContext()
+    def init_arguments(self, sub_parser: 'argparse._SubParsersAction[argparse.ArgumentParser]') -> None:
+        """Register the 'delete' subcommand and its arguments."""
+        delete_parser = sub_parser.add_parser("delete", help="Delete an element")
+        delete_parser.add_argument("path", help="Element path to delete")
+        self.add_verbose_argument(delete_parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """Delete an element from the project."""
+        path = args.path
         try:
-            project = ctx.get_active_project()
-        except RhapsodyConnectionError as e:
-            logger.error("Failed to attach to Rhapsody: %s", e)
-            print(_NO_ACTIVE_INSTANCE_MESSAGE, file=sys.stderr)
-            sys.exit(1)
-
-        try:
+            project = self._get_active_project()
             root = project.getRoot()
 
             # Parse path to extract parent path and element name
@@ -247,9 +247,10 @@ class DeleteElementCommand(AbstractCommand):
                 print(f"Error: Unable to delete element of type '{meta_class}'", file=sys.stderr)
                 sys.exit(1)
 
-            logger.info("Deleted %s: %s", meta_class, element_name)
+            self.logger.info("Deleted %s: %s", meta_class, element_name)
             print(f"Deleted {meta_class.lower()}: {element_name}")
+        except SystemExit:
+            raise
         except Exception as e:
-            logger.error("Failed to delete element at path '%s': %s", path, e)
-            print(f"Error: {e}", file=sys.stderr)
+            self._handle_execution_error(e, f"Failed to delete element at path '{path}'")
             sys.exit(1)

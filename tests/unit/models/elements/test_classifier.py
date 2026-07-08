@@ -41,9 +41,7 @@ def test_classifier_add_operation_wraps_result() -> None:
 
 def test_classifier_get_attributes_returns_collection() -> None:
     fake = make_fake_element("Class")
-    fake.getAttributes.return_value = make_fake_collection(
-        [make_fake_element("Attribute", getName="count")]
-    )
+    fake.getAttributes.return_value = make_fake_collection([make_fake_element("Attribute", getName="count")])
     classifier = RPClassifier(fake)
 
     attributes = classifier.getAttributes()
@@ -54,9 +52,7 @@ def test_classifier_get_attributes_returns_collection() -> None:
 
 def test_classifier_get_operations_returns_collection() -> None:
     fake = make_fake_element("Class")
-    fake.getOperations.return_value = make_fake_collection(
-        [make_fake_element("Operation", getName="doIt")]
-    )
+    fake.getOperations.return_value = make_fake_collection([make_fake_element("Operation", getName="doIt")])
     classifier = RPClassifier(fake)
 
     operations = classifier.getOperations()

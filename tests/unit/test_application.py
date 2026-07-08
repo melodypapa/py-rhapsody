@@ -56,9 +56,7 @@ def test_launch_raises_connection_error_when_dispatch_fails(
 
 @patch("rhapsody_cli.application.win32com.client.Dispatch")
 @patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_prefers_attach_when_available(
-    mock_get_active_object: MagicMock, mock_dispatch: MagicMock
-) -> None:
+def test_connect_prefers_attach_when_available(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
     fake_app = MagicMock(name="FakeApplication")
     mock_get_active_object.return_value = fake_app
 
@@ -71,9 +69,7 @@ def test_connect_prefers_attach_when_available(
 
 @patch("rhapsody_cli.application.win32com.client.Dispatch")
 @patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_falls_back_to_launch_when_attach_fails(
-    mock_get_active_object: MagicMock, mock_dispatch: MagicMock
-) -> None:
+def test_connect_falls_back_to_launch_when_attach_fails(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
     mock_get_active_object.side_effect = make_com_error("no running instance")
     fake_app = MagicMock(name="FakeApplication")
     mock_dispatch.return_value = fake_app
@@ -86,9 +82,7 @@ def test_connect_falls_back_to_launch_when_attach_fails(
 
 @patch("rhapsody_cli.application.win32com.client.Dispatch")
 @patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_raises_connection_error_when_launch_fails(
-    mock_get_active_object: MagicMock, mock_dispatch: MagicMock
-) -> None:
+def test_connect_raises_connection_error_when_launch_fails(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
     mock_get_active_object.side_effect = make_com_error("no running instance")
     mock_dispatch.side_effect = make_com_error("launch failed")
 

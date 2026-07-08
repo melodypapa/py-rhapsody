@@ -1,114 +1,137 @@
-"""Tests for CLI dispatcher and command routing."""
+"""Tests for CLI dispatcher and command routing - PanGu style architecture."""
 
-from __future__ import annotations
+import pytest
 
-from rhapsody_cli.cli.cli import create_parser
+from rhapsody_cli.commands.element_command import ElementCommand
+from rhapsody_cli.commands.io_command import IOCommand
+from rhapsody_cli.commands.project_command import ProjectCommand
 
 
-class TestCliParser:
-    """Test CLI argument parser."""
-
-    def test_parser_help_works(self) -> None:
-        """Test that help is available."""
-        parser = create_parser()
-        assert parser is not None
+class TestElementCommandParsing:
+    """Test ElementCommand argument parsing."""
 
     def test_element_add_parsing(self) -> None:
         """Test element add command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "add", "--type", "class", "--name", "TestClass"])
-        assert args.command == "element"
-        assert args.element_subcommand == "add"
-        assert args.type == "class"
-        assert args.name == "TestClass"
+        cmd = ElementCommand(["add", "--type", "class", "--name", "TestClass"])
+        assert cmd._subcommand == "add"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.type == "class"
+        assert cmd._parsed_args.name == "TestClass"
 
     def test_element_query_parsing(self) -> None:
         """Test element query command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "query"])
-        assert args.command == "element"
-        assert args.element_subcommand == "query"
-        assert args.pattern is None
+        cmd = ElementCommand(["query"])
+        assert cmd._subcommand == "query"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.pattern is None
 
     def test_element_query_with_pattern(self) -> None:
         """Test element query with search pattern."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "query", "MyClass"])
-        assert args.pattern == "MyClass"
+        cmd = ElementCommand(["query", "MyClass"])
+        assert cmd._subcommand == "query"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.pattern == "MyClass"
 
     def test_element_delete_parsing(self) -> None:
         """Test element delete command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "delete", "Root::MyClass"])
-        assert args.command == "element"
-        assert args.element_subcommand == "delete"
-        assert args.path == "Root::MyClass"
+        cmd = ElementCommand(["delete", "Root::MyClass"])
+        assert cmd._subcommand == "delete"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.path == "Root::MyClass"
 
     def test_element_view_parsing(self) -> None:
         """Test element view command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "view", "--path", "Root::MyClass"])
-        assert args.command == "element"
-        assert args.element_subcommand == "view"
-        assert args.path == "Root::MyClass"
+        cmd = ElementCommand(["view", "--path", "Root::MyClass"])
+        assert cmd._subcommand == "view"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.path == "Root::MyClass"
 
-    def test_verbose_flag_on_element(self) -> None:
-        """Test --verbose flag on element group."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "--verbose", "query"])
-        assert args.verbose is True
-        assert args.command == "element"
+    def test_element_missing_subcommand(self) -> None:
+        """Test element with no subcommand exits."""
+        with pytest.raises(SystemExit):
+            ElementCommand([])
 
-    def test_verbose_short_flag_on_element(self) -> None:
-        """Test -v short flag on element group."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "-v", "query"])
-        assert args.verbose is True
+    def test_element_add_missing_args(self) -> None:
+        """Test element add without required args exits."""
+        with pytest.raises(SystemExit):
+            ElementCommand(["add", "--type", "class"])
+
+
+class TestIOCommandParsing:
+    """Test IOCommand argument parsing."""
 
     def test_io_import_parsing(self) -> None:
         """Test io import command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["io", "import", "model.xmi"])
-        assert args.command == "io"
-        assert args.io_subcommand == "import"
-        assert args.source == "model.xmi"
-        assert args.target == "Root"
+        cmd = IOCommand(["import", "model.xmi"])
+        assert cmd._subcommand == "import"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.source == "model.xmi"
+        assert cmd._parsed_args.target == "Root"
 
     def test_io_import_with_target(self) -> None:
         """Test io import with custom target."""
-        parser = create_parser()
-        args = parser.parse_args(["io", "import", "model.xmi", "--target", "MyPackage"])
-        assert args.target == "MyPackage"
+        cmd = IOCommand(["import", "model.xmi", "--target", "MyPackage"])
+        assert cmd._subcommand == "import"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.source == "model.xmi"
+        assert cmd._parsed_args.target == "MyPackage"
 
     def test_io_export_parsing(self) -> None:
         """Test io export command parsing."""
-        parser = create_parser()
-        args = parser.parse_args(["io", "export", "output.xmi"])
-        assert args.command == "io"
-        assert args.io_subcommand == "export"
-        assert args.output == "output.xmi"
-        assert args.format == "xmi"
+        cmd = IOCommand(["export", "output.xmi"])
+        assert cmd._subcommand == "export"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.output == "output.xmi"
+        assert cmd._parsed_args.format == "xmi"
 
     def test_io_export_with_format(self) -> None:
         """Test io export with custom format."""
-        parser = create_parser()
-        args = parser.parse_args(["io", "export", "output.json", "--format", "json"])
-        assert args.format == "json"
+        cmd = IOCommand(["export", "output.json", "--format", "json"])
+        assert cmd._subcommand == "export"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.output == "output.json"
+        assert cmd._parsed_args.format == "json"
 
-    def test_output_format_default(self) -> None:
-        """Test --output format defaults to table."""
-        parser = create_parser()
-        args = parser.parse_args(["element", "query"])
-        assert args.output == "table"
+    def test_io_missing_subcommand(self) -> None:
+        """Test io with no subcommand exits."""
+        with pytest.raises(SystemExit):
+            IOCommand([])
 
-    def test_output_format_json(self) -> None:
-        """Test --output format can be set to json."""
-        parser = create_parser()
-        args = parser.parse_args(["--output", "json", "element", "query"])
-        assert args.output == "json"
+    def test_io_import_missing_source(self) -> None:
+        """Test io import without source exits."""
+        with pytest.raises(SystemExit):
+            IOCommand(["import"])
 
-    def test_output_format_csv(self) -> None:
-        """Test --output format can be set to csv."""
-        parser = create_parser()
-        args = parser.parse_args(["--output", "csv", "element", "query"])
-        assert args.output == "csv"
+
+class TestProjectCommandParsing:
+    """Test ProjectCommand argument parsing."""
+
+    def test_project_open_parsing(self) -> None:
+        """Test project open command parsing."""
+        cmd = ProjectCommand(["open", "/path/to/project.rpy"])
+        assert cmd._subcommand == "open"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.project_path == "/path/to/project.rpy"
+
+    def test_project_list_parsing(self) -> None:
+        """Test project list command parsing."""
+        cmd = ProjectCommand(["list"])
+        assert cmd._subcommand == "list"
+
+    def test_project_close_parsing(self) -> None:
+        """Test project close command parsing."""
+        cmd = ProjectCommand(["close"])
+        assert cmd._subcommand == "close"
+
+    def test_project_new_parsing(self) -> None:
+        """Test project new command parsing."""
+        cmd = ProjectCommand(["new", "/location", "MyProject"])
+        assert cmd._subcommand == "new"
+        assert cmd._parsed_args is not None
+        assert cmd._parsed_args.project_location == "/location"
+        assert cmd._parsed_args.project_name == "MyProject"
+
+    def test_project_missing_subcommand(self) -> None:
+        """Test project with no subcommand exits."""
+        with pytest.raises(SystemExit):
+            ProjectCommand([])

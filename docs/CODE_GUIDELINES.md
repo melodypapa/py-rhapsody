@@ -4,16 +4,128 @@
 
 ## Table of Contents
 
-1. [TDD Methodology](#tdd-methodology)
-2. [Class-Based Architecture](#class-based-architecture)
-3. [CLI Commands](#cli-commands)
-4. [Utility Classes](#utility-classes)
-5. [Testing Patterns](#testing-patterns)
-6. [Code Review Checklist](#code-review-checklist)
+1. [Python Compatibility & Imports](#python-compatibility--imports)
+2. [Naming Conventions](#naming-conventions)
+3. [TDD Methodology](#tdd-methodology)
+4. [Class-Based Architecture](#class-based-architecture)
+5. [CLI Commands](#cli-commands)
+6. [Utility Classes](#utility-classes)
+7. [Testing Patterns](#testing-patterns)
+8. [Code Review Checklist](#code-review-checklist)
 
 ---
 
-## TDD Methodology
+## Naming Conventions
+
+### Constants Must Be UPPERCASE
+
+**All constants must use UPPERCASE with underscores (SCREAMING_SNAKE_CASE).**
+
+Constants are values that:
+- Never change after initialization
+- Are defined at module or class level
+- Apply globally or across multiple methods
+
+**✅ CORRECT: Constants in UPPERCASE**
+```python
+# Module-level constants
+DEFAULT_TIMEOUT = 30
+MAX_RETRIES = 3
+SUPPORTED_FORMATS = ("json", "csv", "xmi")
+
+# Class-level constants
+class RhapsodyContextAction(AbstractAction):
+    _NO_ACTIVE_INSTANCE_MESSAGE = "No running Rhapsody instance found. Please open Rhapsody and a project first."
+    BUFFER_SIZE = 1024
+    REQUIRED_PERMISSIONS = {"read", "write"}
+```
+
+**❌ WRONG: Constants not in UPPERCASE**
+```python
+default_timeout = 30  # ❌ Looks like a variable
+maxRetries = 3        # ❌ camelCase for constants
+supported_formats = ("json", "csv")  # ❌ Lowercase for constants
+```
+
+### Other Naming Rules
+
+- **Classes:** PascalCase (e.g., `ElementAddAction`, `RhapsodyContext`)
+- **Functions/Methods:** snake_case (e.g., `add_verbose_argument`, `_get_active_project`)
+- **Variables:** snake_case (e.g., `project_path`, `element_name`)
+- **Private members:** Prefix with `_` (e.g., `_handle_connection_error`, `_NO_ACTIVE_INSTANCE_MESSAGE`)
+- **Dunder methods:** Double underscores (e.g., `__init__`, `__str__`)
+
+---
+
+### ❌ DO NOT USE: `from __future__ import annotations`
+
+**This import is FORBIDDEN.** Remove it from all files immediately if found.
+
+### Why?
+
+- **Already fixed once:** This issue has been resolved across the entire codebase. Do not reintroduce it.
+- **Runtime overhead:** Defers all annotations, causing issues with type checkers and runtime reflection.
+- **Unnecessary complexity:** We support Python 3.8+ with explicit type hints—no need to defer evaluation.
+- **Breaks mypy strict mode:** Type checking becomes unreliable.
+
+### ❌ WRONG:
+```python
+from __future__ import annotations
+
+def my_function() -> str:
+    return "hello"
+```
+
+### ✅ CORRECT:
+```python
+def my_function() -> str:
+    return "hello"
+```
+
+### Handling Forward References (When Needed)
+
+If you need forward references to undefined types, use string quotes:
+
+```python
+class Node:
+    def __init__(self, value: int, next_node: 'Node | None' = None):
+        self.value = value
+        self.next_node = next_node
+```
+
+Or use conditional imports and `TYPE_CHECKING`:
+
+```python
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from rhapsody_cli.cli.context import RhapsodyContext
+
+class MyAction:
+    def __init__(self, ctx: 'RhapsodyContext'):
+        self.ctx = ctx
+```
+
+### Import Order & Organization
+
+```python
+# 1. Standard library
+import sys
+import argparse
+import logging
+from pathlib import Path
+
+# 2. Third-party
+import click
+from tabulate import tabulate
+
+# 3. Local application
+from rhapsody_cli.cli.context import RhapsodyContext
+from rhapsody_cli.exceptions import RhapsodyConnectionError
+from rhapsody_cli.models.elements.class_ import RPClass
+```
+
+---
 
 ### Principle: Tests First
 
@@ -158,6 +270,46 @@ All code should be organized as classes, not module-level functions:
 - **Organization:** Related functions grouped logically
 - **Type safety:** Better IDE support and type checking
 
+### Shared Attributes in Base Classes
+
+Base classes should define shared attributes (constants, loggers, utilities) to prevent duplication in subclasses:
+
+**✅ CORRECT: Share common resources in base class**
+```python
+import logging
+
+class AbstractAction:
+    """Base action class with shared logger."""
+    
+    name: str = ""
+    logger: logging.Logger = logging.getLogger(__name__)
+    
+    def execute(self) -> None:
+        self.logger.info("Action started")
+
+
+class MyAction(AbstractAction):
+    name = "myaction"
+    
+    def execute(self) -> None:
+        self.logger.info("MyAction executing")  # Uses inherited logger
+```
+
+**❌ WRONG: Duplicate logger in every subclass**
+```python
+class MyAction(AbstractAction):
+    logger = logging.getLogger(__name__)  # Redundant! Already in parent
+    
+    def execute(self) -> None:
+        self.logger.info("MyAction executing")
+```
+
+Benefits:
+- Single point of configuration
+- Consistent behavior across subclasses
+- Eliminates boilerplate code
+- Easier maintenance
+
 ### When to Use Functions
 
 Functions are acceptable only for:
@@ -295,6 +447,45 @@ def execute(self) -> None:
         # Generic error handler last
         click.echo(f"Unexpected error: {e}", err=True)
         raise click.Abort() from e
+```
+
+---
+
+## Utility Classes
+
+### Logger Pattern
+
+All action and utility classes should inherit or use a shared logger from their base class:
+
+```python
+class AbstractAction:
+    """Base class for CLI actions."""
+    
+    logger: logging.Logger = logging.getLogger(__name__)
+    
+    def execute(self, args: argparse.Namespace) -> None:
+        self.logger.info("Starting action")
+```
+
+**Why:**
+- Centralized logger configuration in one place
+- Consistent logging across all actions
+- Subclasses use `self.logger` without redeclaring
+- Reduces code duplication
+
+**DO NOT:** Create duplicate loggers in subclasses
+```python
+# ❌ WRONG - Duplicate logger in subclass
+class MyAction(AbstractAction):
+    logger = logging.getLogger(__name__)  # Redundant!
+```
+
+**DO:** Use inherited logger
+```python
+# ✅ CORRECT - Use inherited logger
+class MyAction(AbstractAction):
+    def execute(self, args: argparse.Namespace) -> None:
+        self.logger.info("Action executed")  # Uses parent's logger
 ```
 
 ---
@@ -515,6 +706,11 @@ def test_something_with_context(mock_context):
 
 All code reviews must verify:
 
+### Python Compatibility
+- [ ] **NO `from __future__ import annotations`** (this is forbidden)
+- [ ] All imports organized (stdlib → third-party → local)
+- [ ] No unused imports?
+
 ### TDD Requirements
 - [ ] Tests written BEFORE implementation?
 - [ ] All new behaviors have corresponding tests?
@@ -537,6 +733,14 @@ All code reviews must verify:
 - [ ] Private methods prefixed with `_`?
 - [ ] Constants in UPPER_CASE?
 - [ ] No unused imports or variables?
+
+### Naming Conventions
+- [ ] **CONSTANTS in UPPER_CASE** (e.g., `MAX_RETRIES`, `DEFAULT_TIMEOUT`, `SUPPORTED_FORMATS`)
+- [ ] **Classes in PascalCase** (e.g., `ElementAddAction`, `RhapsodyContext`)
+- [ ] **Functions/methods in snake_case** (e.g., `add_verbose_argument`, `_get_active_project`)
+- [ ] **Variables in snake_case** (e.g., `project_path`, `element_type`)
+- [ ] **Private members prefixed with `_`** (e.g., `_NO_ACTIVE_INSTANCE_MESSAGE`, `_handle_error`)
+- [ ] No camelCase outside of dunder methods?
 
 ### Specific to CLI Commands
 - [ ] Command inherits from `click.Command` or group?

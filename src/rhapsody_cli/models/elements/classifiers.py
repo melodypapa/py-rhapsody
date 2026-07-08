@@ -315,9 +315,7 @@ class RPOperation(RPInterfaceItem):
 class RPStatechart(RPClass):
     """Wraps ``IRPStatechart``: represents a statechart behavior."""
 
-    def addNewNodeByType(
-        self, meta_type: str, x_position: int, y_position: int, width: int, height: int
-    ) -> Any:
+    def addNewNodeByType(self, meta_type: str, x_position: int, y_position: int, width: int, height: int) -> Any:
         """Adds a new node to the statechart.
 
         Args:
@@ -330,11 +328,7 @@ class RPStatechart(RPClass):
         Returns:
             The wrapped node element created.
         """
-        return wrap(
-            call_com(
-                lambda: self._com.addNewNodeByType(meta_type, x_position, y_position, width, height)
-            )
-        )
+        return wrap(call_com(lambda: self._com.addNewNodeByType(meta_type, x_position, y_position, width, height)))
 
     def createGraphics(self) -> None:
         """Creates the graphics/diagram representation for the statechart."""

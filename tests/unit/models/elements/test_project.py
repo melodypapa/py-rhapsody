@@ -60,9 +60,7 @@ def test_project_get_packages_returns_collection() -> None:
     from rhapsody_cli.models._core import RPCollection
 
     fake = make_fake_element("Project")
-    fake.getPackages.return_value = make_fake_collection(
-        [make_fake_element("Package", getName="P1")]
-    )
+    fake.getPackages.return_value = make_fake_collection([make_fake_element("Package", getName="P1")])
     project = RPProject(fake)
 
     packages = project.getPackages()

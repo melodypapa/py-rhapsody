@@ -27,9 +27,7 @@ class RhapsodyApplication:
     @classmethod
     def attach(cls) -> "RhapsodyApplication":
         if win32com is None:
-            raise RhapsodyConnectionError(
-                "pywin32 is not available; Rhapsody automation requires Windows."
-            )
+            raise RhapsodyConnectionError("pywin32 is not available; Rhapsody automation requires Windows.")
         try:
             com_obj = call_com(lambda: win32com.client.GetActiveObject(_PROG_ID))
         except RhapsodyRuntimeException as exc:
@@ -39,9 +37,7 @@ class RhapsodyApplication:
     @classmethod
     def launch(cls) -> "RhapsodyApplication":
         if win32com is None:
-            raise RhapsodyConnectionError(
-                "pywin32 is not available; Rhapsody automation requires Windows."
-            )
+            raise RhapsodyConnectionError("pywin32 is not available; Rhapsody automation requires Windows.")
         try:
             com_obj = call_com(lambda: win32com.client.Dispatch(_PROG_ID))
         except RhapsodyRuntimeException as exc:

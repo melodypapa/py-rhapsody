@@ -40,18 +40,18 @@ include = ["rhapsody_cli*"]
 rhapsody_cli = ["py.typed"]
 
 [tool.black]
-line-length = 100
+line-length = 200
 target-version = ["py38"]
 
 [tool.ruff]
-line-length = 100
+line-length = 200
 target-version = "py38"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.8"
 strict = true
 warn_unused_ignores = true
 

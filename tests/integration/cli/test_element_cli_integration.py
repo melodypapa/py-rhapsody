@@ -14,11 +14,7 @@ from __future__ import annotations
 
 import time
 
-from rhapsody_cli.cli.commands.element import (
-    AddElementCommand,
-    DeleteElementCommand,
-    QueryElementCommand,
-)
+from rhapsody_cli.commands.element_command import ElementCommand
 
 
 class TestElementCLIIntegration:
@@ -37,33 +33,33 @@ class TestElementCLIIntegration:
         class_name = self._generate_unique_name("TestClass")
 
         # Step 1: Add a class
-        add_cmd = AddElementCommand(args=[])
+        add_cmd = ElementCommand(["add", "--type", "class", "--name", class_name])
         # This should not raise if Rhapsody is running
-        add_cmd.execute(element_type="class", name=class_name)
+        add_cmd.execute()
 
         # Step 2: Query and verify the class exists
-        query_cmd = QueryElementCommand(args=[])
+        query_cmd = ElementCommand(["query"])
         # This should succeed and list the class
-        query_cmd.execute(pattern=None)
+        query_cmd.execute()
 
         # Step 3: Delete the class
-        delete_cmd = DeleteElementCommand(args=[])
-        delete_cmd.execute(path=f"Root::{class_name}")
+        delete_cmd = ElementCommand(["delete", f"Root::{class_name}"])
+        delete_cmd.execute()
 
     def test_add_multiple_classes_and_clean_up(self) -> None:
         """E2E: Add multiple classes, clean them up one by one."""
         class_names = [self._generate_unique_name(f"TestClass{i}") for i in range(3)]
 
         # Add multiple classes
-        add_cmd = AddElementCommand(args=[])
         for class_name in class_names:
-            add_cmd.execute(element_type="class", name=class_name)
+            add_cmd = ElementCommand(["add", "--type", "class", "--name", class_name])
+            add_cmd.execute()
 
         # Query and verify all exist
-        query_cmd = QueryElementCommand(args=[])
-        query_cmd.execute(pattern=None)
+        query_cmd = ElementCommand(["query"])
+        query_cmd.execute()
 
         # Delete each one
-        delete_cmd = DeleteElementCommand(args=[])
         for class_name in class_names:
-            delete_cmd.execute(path=f"Root::{class_name}")
+            delete_cmd = ElementCommand(["delete", f"Root::{class_name}"])
+            delete_cmd.execute()

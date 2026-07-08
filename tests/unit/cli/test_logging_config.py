@@ -37,11 +37,7 @@ class TestCliLoggingConfigurator:
         logger = _reset_logger()
         CliLoggingConfigurator(verbose=False).configure()
 
-        stream_handlers = [
-            h
-            for h in logger.handlers
-            if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler)
-        ]
+        stream_handlers = [h for h in logger.handlers if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler)]
         file_handlers = [h for h in logger.handlers if isinstance(h, logging.FileHandler)]
 
         assert len(stream_handlers) == 1
@@ -55,9 +51,7 @@ class TestCliLoggingConfigurator:
 
         assert len(logger.handlers) == 2
 
-    def test_file_handler_targets_expected_log_file(
-        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    def test_file_handler_targets_expected_log_file(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
         """Test: FileHandler writes to rhapsody-cli.log in the current working directory."""
         monkeypatch.chdir(tmp_path)
         logger = _reset_logger()

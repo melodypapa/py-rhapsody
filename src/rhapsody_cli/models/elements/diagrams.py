@@ -19,9 +19,7 @@ class RPDiagram(RPUnit):
         """Closes the diagram."""
         call_com(lambda: self._com.closeDiagram())
 
-    def addTextBox(
-        self, text: str, x_position: int, y_position: int, width: int, height: int
-    ) -> Any:
+    def addTextBox(self, text: str, x_position: int, y_position: int, width: int, height: int) -> Any:
         """Adds a text box to the diagram.
 
         Args:
@@ -34,9 +32,7 @@ class RPDiagram(RPUnit):
         Returns:
             The wrapped text box element created.
         """
-        return wrap(
-            call_com(lambda: self._com.addTextBox(text, x_position, y_position, width, height))
-        )
+        return wrap(call_com(lambda: self._com.addTextBox(text, x_position, y_position, width, height)))
 
     def getCustomViews(self) -> RPCollection:
         """Returns all custom views defined on the diagram.
@@ -55,9 +51,7 @@ class RPDiagram(RPUnit):
         Returns:
             An ``RPCollection`` of graphic elements.
         """
-        return RPCollection(
-            call_com(lambda: self._com.getCorrespondingGraphicElements(model_element._com))
-        )
+        return RPCollection(call_com(lambda: self._com.getCorrespondingGraphicElements(model_element._com)))
 
 
 register_wrapper("ActivityDiagram", RPDiagram)
