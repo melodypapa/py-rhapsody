@@ -5,6 +5,7 @@ import sys
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
+from rhapsody_cli.models._core import call_com
 
 
 class ElementAddAction(ElementManagementAction):
@@ -231,18 +232,18 @@ class ElementDeleteAction(ElementManagementAction):
 
             # Try direct delete method first (if available)
             if hasattr(element_to_delete._com, "delete"):
-                element_to_delete._com.delete()
+                call_com(lambda: element_to_delete._com.delete())
                 deleted = True
             else:
                 # Fall back to parent container methods
                 if meta_class == "Class":
-                    parent._com.deleteClass(element_to_delete._com)
+                    call_com(lambda: parent._com.deleteClass(element_to_delete._com))
                     deleted = True
                 elif meta_class == "Actor":
-                    parent._com.deleteActor(element_to_delete._com)
+                    call_com(lambda: parent._com.deleteActor(element_to_delete._com))
                     deleted = True
                 elif meta_class == "Package":
-                    parent._com.deletePackage(element_to_delete._com)
+                    call_com(lambda: parent._com.deletePackage(element_to_delete._com))
                     deleted = True
 
             if not deleted:
