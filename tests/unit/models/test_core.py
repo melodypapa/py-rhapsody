@@ -6,6 +6,7 @@ import pytest
 
 from rhapsody_cli.exceptions import RhapsodyRuntimeException
 from rhapsody_cli.models._core import (
+    AddToModelMode,
     RPCollection,
     RPModelElement,
     RPUnit,
@@ -1409,3 +1410,239 @@ def test_model_element_synchronize_template_instantiation_delegates_to_com() -> 
     element.synchronizeTemplateInstantiation()
 
     fake.synchronizeTemplateInstantiation.assert_called_once_with()
+
+
+# ---------------------------------------------------------------------------
+# RPUnit: IRPUnit parity (Task 3)
+# ---------------------------------------------------------------------------
+
+
+def test_add_to_model_mode_constants_match_java_api() -> None:
+    assert int(AddToModelMode.AS_REFERENCE) == 0
+    assert int(AddToModelMode.AS_UNIT_WITH_COPY) == 1
+    assert int(AddToModelMode.AS_UNIT_WITHOUT_COPY) == 2
+    # IntEnum is int-compatible so callers can compare raw COM ints directly.
+    assert AddToModelMode.AS_REFERENCE == 0
+
+
+def test_unit_copy_to_another_project_unwraps_parent_and_wraps_result() -> None:
+    parent = RPModelElement(make_fake_element("Project"))
+    copied_fake = make_fake_element("Package", getName="Copied")
+    fake = make_fake_element("Package", copyToAnotherProject=copied_fake)
+    unit = RPUnit(fake)
+
+    result = unit.copyToAnotherProject(parent)
+
+    assert isinstance(result, RPModelElement)
+    assert result.getName() == "Copied"
+    fake.copyToAnotherProject.assert_called_once_with(parent._com)
+
+
+def test_unit_get_add_to_model_mode_returns_int() -> None:
+    fake = make_fake_element("Package", getAddToModelMode=2)
+    unit = RPUnit(fake)
+
+    assert unit.getAddToModelMode() == 2
+    fake.getAddToModelMode.assert_called_once_with()
+
+
+def test_unit_get_cm_header_returns_str() -> None:
+    fake = make_fake_element("Package", getCMHeader="// CM header")
+    unit = RPUnit(fake)
+
+    assert unit.getCMHeader() == "// CM header"
+    fake.getCMHeader.assert_called_once_with()
+
+
+def test_unit_get_cm_state_returns_int() -> None:
+    fake = make_fake_element("Package", getCMState=1)
+    unit = RPUnit(fake)
+
+    assert unit.getCMState() == 1
+    fake.getCMState.assert_called_once_with()
+
+
+def test_unit_get_current_directory_returns_str() -> None:
+    fake = make_fake_element("Package", getCurrentDirectory="C:\\proj")
+    unit = RPUnit(fake)
+
+    assert unit.getCurrentDirectory() == "C:\\proj"
+    fake.getCurrentDirectory.assert_called_once_with()
+
+
+def test_unit_get_include_in_next_load_returns_int() -> None:
+    fake = make_fake_element("Package", getIncludeInNextLoad=1)
+    unit = RPUnit(fake)
+
+    assert unit.getIncludeInNextLoad() == 1
+    fake.getIncludeInNextLoad.assert_called_once_with()
+
+
+def test_unit_get_is_stub_returns_int() -> None:
+    fake = make_fake_element("Package", getIsStub=0)
+    unit = RPUnit(fake)
+
+    assert unit.getIsStub() == 0
+    fake.getIsStub.assert_called_once_with()
+
+
+def test_unit_get_language_returns_str() -> None:
+    fake = make_fake_element("Package", getLanguage="C++")
+    unit = RPUnit(fake)
+
+    assert unit.getLanguage() == "C++"
+    fake.getLanguage.assert_called_once_with()
+
+
+def test_unit_get_last_modified_time_returns_str() -> None:
+    fake = make_fake_element("Package", getLastModifiedTime="20250731T120000")
+    unit = RPUnit(fake)
+
+    assert unit.getLastModifiedTime() == "20250731T120000"
+    fake.getLastModifiedTime.assert_called_once_with()
+
+
+def test_unit_get_nested_save_units_returns_collection() -> None:
+    coll = make_fake_collection([])
+    fake = make_fake_element("Package", getNestedSaveUnits=coll)
+    unit = RPUnit(fake)
+
+    result = unit.getNestedSaveUnits()
+
+    assert isinstance(result, RPCollection)
+    fake.getNestedSaveUnits.assert_called_once_with()
+
+
+def test_unit_get_nested_save_units_count_returns_int() -> None:
+    fake = make_fake_element("Package", getNestedSaveUnitsCount=3)
+    unit = RPUnit(fake)
+
+    assert unit.getNestedSaveUnitsCount() == 3
+    fake.getNestedSaveUnitsCount.assert_called_once_with()
+
+
+def test_unit_get_structure_diagrams_returns_collection() -> None:
+    coll = make_fake_collection([])
+    fake = make_fake_element("Package", getStructureDiagrams=coll)
+    unit = RPUnit(fake)
+
+    result = unit.getStructureDiagrams()
+
+    assert isinstance(result, RPCollection)
+    fake.getStructureDiagrams.assert_called_once_with()
+
+
+def test_unit_get_unit_path_passes_flag_and_returns_str() -> None:
+    fake = make_fake_element("Package", getUnitPath="C:\\proj\\foo.sbs")
+    unit = RPUnit(fake)
+
+    assert unit.getUnitPath(1) == "C:\\proj\\foo.sbs"
+    fake.getUnitPath.assert_called_once_with(1)
+
+
+def test_unit_is_reference_unit_returns_int() -> None:
+    fake = make_fake_element("Package", isReferenceUnit=1)
+    unit = RPUnit(fake)
+
+    assert unit.isReferenceUnit() == 1
+    fake.isReferenceUnit.assert_called_once_with()
+
+
+def test_unit_is_separate_save_unit_returns_int() -> None:
+    fake = make_fake_element("Package", isSeparateSaveUnit=0)
+    unit = RPUnit(fake)
+
+    assert unit.isSeparateSaveUnit() == 0
+    fake.isSeparateSaveUnit.assert_called_once_with()
+
+
+def test_unit_load_passes_flag_and_wraps_result() -> None:
+    loaded_fake = make_fake_element("Package", getName="Loaded")
+    fake = make_fake_element("Package", load=loaded_fake)
+    unit = RPUnit(fake)
+
+    result = unit.load(1)
+
+    assert isinstance(result, RPModelElement)
+    assert result.getName() == "Loaded"
+    fake.load.assert_called_once_with(1)
+
+
+def test_unit_move_to_another_project_leave_a_reference_unwraps_parent_and_wraps_result() -> None:
+    parent = RPModelElement(make_fake_element("Project"))
+    moved_fake = make_fake_element("Package", getName="Moved")
+    fake = make_fake_element("Package", moveToAnotherProjectLeaveAReference=moved_fake)
+    unit = RPUnit(fake)
+
+    result = unit.moveToAnotherProjectLeaveAReference(parent)
+
+    assert isinstance(result, RPModelElement)
+    assert result.getName() == "Moved"
+    fake.moveToAnotherProjectLeaveAReference.assert_called_once_with(parent._com)
+
+
+def test_unit_reference_to_another_project_unwraps_parent_and_wraps_result() -> None:
+    parent = RPModelElement(make_fake_element("Project"))
+    ref_fake = make_fake_element("Package", getName="Ref")
+    fake = make_fake_element("Package", referenceToAnotherProject=ref_fake)
+    unit = RPUnit(fake)
+
+    result = unit.referenceToAnotherProject(parent)
+
+    assert isinstance(result, RPModelElement)
+    assert result.getName() == "Ref"
+    fake.referenceToAnotherProject.assert_called_once_with(parent._com)
+
+
+def test_unit_set_cm_header_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setCMHeader("// CM header")
+
+    fake.setCMHeader.assert_called_once_with("// CM header")
+
+
+def test_unit_set_include_in_next_load_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setIncludeInNextLoad(1)
+
+    fake.setIncludeInNextLoad.assert_called_once_with(1)
+
+
+def test_unit_set_language_passes_language_and_recursive_flag() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setLanguage("cpp", 0)
+
+    fake.setLanguage.assert_called_once_with("cpp", 0)
+
+
+def test_unit_set_separate_save_unit_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setSeparateSaveUnit(1)
+
+    fake.setSeparateSaveUnit.assert_called_once_with(1)
+
+
+def test_unit_set_unit_path_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.setUnitPath("C:\\proj\\new")
+
+    fake.setUnitPath.assert_called_once_with("C:\\proj\\new")
+
+
+def test_unit_unload_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    unit = RPUnit(fake)
+
+    unit.unload()
+
+    fake.unload.assert_called_once_with()

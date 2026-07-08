@@ -7,6 +7,7 @@ element, mirroring ``com.telelogic.rhapsody.core.IRPModelElement``.
 wrapper class using a registry populated by each element module.
 """
 
+from enum import IntEnum
 from typing import Any, Callable, Dict, Iterator, Type, TypeVar
 
 from rhapsody_cli.exceptions import RhapsodyRuntimeException
@@ -1292,23 +1293,327 @@ class RPModelElement:
         return f"{type(self).__name__}(name={self.getName()!r})"
 
 
+class AddToModelMode(IntEnum):
+    """Constant values mirroring ``IRPApplication.AddToModel_Mode``.
+
+    Returned by :meth:`RPUnit.getAddToModelMode` to indicate how a unit was
+    added to the model. ``IntEnum`` so callers may compare the raw ``int``
+    returned by the COM call directly against these constants.
+    """
+
+    AS_REFERENCE = 0
+    AS_UNIT_WITH_COPY = 1
+    AS_UNIT_WITHOUT_COPY = 2
+
+
+# IRPUnit method parity checklist:
+# [x] copyToAnotherProject                [x] impl  [x] docstring  [x] test
+# [x] getAddToModelMode                   [x] impl  [x] docstring  [x] test
+# [x] getCMHeader                         [x] impl  [x] docstring  [x] test
+# [x] getCMState                          [x] impl  [x] docstring  [x] test
+# [x] getCurrentDirectory                 [x] impl  [x] docstring  [x] test
+# [x] getFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
+# [x] getIncludeInNextLoad                [x] impl  [x] docstring  [x] test
+# [x] getIsStub                           [x] impl  [x] docstring  [x] test
+# [x] getLanguage                         [x] impl  [x] docstring  [x] test
+# [x] getLastModifiedTime                 [x] impl  [x] docstring  [x] test
+# [x] getNestedSaveUnits                  [x] impl  [x] docstring  [x] test
+# [x] getNestedSaveUnitsCount             [x] impl  [x] docstring  [x] test
+# [x] getStructureDiagrams                [x] impl  [x] docstring  [x] test
+# [x] getUnitPath                         [x] impl  [x] docstring  [x] test
+# [x] isReadOnly                          [x] impl  [x] docstring  [x] test  (pre-existing)
+# [x] isReferenceUnit                     [x] impl  [x] docstring  [x] test
+# [x] isSeparateSaveUnit                  [x] impl  [x] docstring  [x] test
+# [x] load                                [x] impl  [x] docstring  [x] test
+# [x] moveToAnotherProjectLeaveAReference [x] impl  [x] docstring  [x] test
+# [x] referenceToAnotherProject           [x] impl  [x] docstring  [x] test
+# [x] save                                [x] impl  [x] docstring  [x] test  (pre-existing)
+# [x] setCMHeader                         [x] impl  [x] docstring  [x] test
+# [x] setFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
+# [x] setIncludeInNextLoad                [x] impl  [x] docstring  [x] test
+# [x] setLanguage                         [x] impl  [x] docstring  [x] test
+# [x] setReadOnly                         [x] impl  [x] docstring  [x] test  (pre-existing)
+# [x] setSeparateSaveUnit                 [x] impl  [x] docstring  [x] test
+# [x] setUnitPath                         [x] impl  [x] docstring  [x] test
+# [x] unload                              [x] impl  [x] docstring  [x] test
+# [inherited] getNestedElements - provided by RPModelElement
+# No deprecated IRPUnit methods.
 class RPUnit(RPModelElement):
     """Wraps ``IRPUnit``: model elements that can be saved as separate files."""
 
-    def save(self) -> None:
-        call_com(lambda: self._com.save())
+    def copyToAnotherProject(self, parent_in_target: "RPModelElement") -> "RPModelElement":
+        """Makes an editable copy of the unit in a different project.
+
+        Args:
+            parent_in_target: The model element that will be the parent of the
+                new unit in the target project.
+
+        Returns:
+            The wrapped unit that was created in the target project.
+        """
+        return wrap(call_com(lambda: self._com.copyToAnotherProject(parent_in_target._com)))
+
+    def getAddToModelMode(self) -> int:
+        """Returns an indication of how the unit was added to the model.
+
+        The returned value corresponds to one of the :class:`AddToModelMode`
+        constants.
+
+        Returns:
+            A value indicating how the unit was added to the model (see
+            :class:`AddToModelMode`).
+        """
+        return int(call_com(lambda: self._com.getAddToModelMode()))
+
+    def getCMHeader(self) -> str:
+        """Returns the header used by the Configuration Management tool for the unit.
+
+        Returns:
+            The Configuration Management tool header as a string.
+        """
+        return str(call_com(lambda: self._com.getCMHeader()))
+
+    def getCMState(self) -> int:
+        """Returns the configuration management state of the unit.
+
+        Returns:
+            The configuration management state of the unit.
+        """
+        return int(call_com(lambda: self._com.getCMState()))
+
+    def getCurrentDirectory(self) -> str:
+        """Gets the name of the directory that contains the file used to store the unit.
+
+        The string returned consists of the full path except for the name of
+        the file itself.
+
+        Returns:
+            The name of the directory that contains the file used to store the unit.
+        """
+        return str(call_com(lambda: self._com.getCurrentDirectory()))
 
     def getFilename(self) -> str:
+        """Gets the name of the file used to store the unit.
+
+        The string returned consists only of the filename, not the entire path.
+
+        Returns:
+            The name of the file used to store the unit.
+        """
         return str(_get_method_or_property(self._com, "getFilename", "filename"))
 
-    def setFilename(self, filename: str) -> None:
-        _set_method_or_property(self._com, "setFilename", "filename", filename)
+    def getIncludeInNextLoad(self) -> int:
+        """Checks whether the unit is going to be loaded the next time the model is loaded.
+
+        Returns:
+            ``1`` if the unit is going to be loaded the next time the model is
+            loaded, ``0`` if it is not.
+        """
+        return int(call_com(lambda: self._com.getIncludeInNextLoad()))
+
+    def getIsStub(self) -> int:
+        """Checks whether the unit is currently unloaded.
+
+        Returns:
+            ``1`` if the unit is not currently loaded, ``0`` if it is currently loaded.
+        """
+        return int(call_com(lambda: self._com.getIsStub()))
+
+    def getLanguage(self) -> str:
+        """Gets the language of the unit.
+
+        Returns:
+            The language of the unit as a string.
+        """
+        return str(call_com(lambda: self._com.getLanguage()))
+
+    def getLastModifiedTime(self) -> str:
+        """Returns the time at which the file representing the unit was last modified.
+
+        Returns:
+            The last modified time as a string.
+        """
+        return str(call_com(lambda: self._com.getLastModifiedTime()))
+
+    def getNestedSaveUnits(self) -> "RPCollection":
+        """Returns a collection of any sub-elements of the unit that were saved as individual files.
+
+        Returns:
+            An ``RPCollection`` of sub-elements that were saved as individual files.
+        """
+        return RPCollection(call_com(lambda: self._com.getNestedSaveUnits()))
+
+    def getNestedSaveUnitsCount(self) -> int:
+        """Returns the number of sub-elements of the unit that were saved as individual files.
+
+        Returns:
+            The number of sub-elements that were saved as individual files.
+        """
+        return int(call_com(lambda: self._com.getNestedSaveUnitsCount()))
+
+    def getStructureDiagrams(self) -> "RPCollection":
+        """Returns a collection of any structure diagrams that are sub-elements of the unit.
+
+        Used primarily for structure diagrams that belong to individual classes.
+
+        Returns:
+            An ``RPCollection`` of structure diagrams that are sub-elements of the unit.
+        """
+        return RPCollection(call_com(lambda: self._com.getStructureDiagrams()))
+
+    def getUnitPath(self, b_full_path: int) -> str:
+        """Returns the path of the unit, including the filename.
+
+        Args:
+            b_full_path: ``1`` to return the full path, ``0`` to return a
+                relative path. For relative paths, the path returned is relative
+                to the saved unit that owns this unit.
+
+        Returns:
+            The path of the unit, including the filename.
+        """
+        return str(call_com(lambda: self._com.getUnitPath(b_full_path)))
 
     def isReadOnly(self) -> bool:
+        """Checks whether the file used to store the unit is read-only.
+
+        Returns:
+            ``True`` if the file is read-only, ``False`` otherwise.
+        """
         return call_com(lambda: bool(self._com.isReadOnly()))
 
+    def isReferenceUnit(self) -> int:
+        """Checks whether the unit was added to the model as a reference.
+
+        Returns:
+            ``1`` if the unit was added to the model as a reference, ``0`` otherwise.
+        """
+        return int(call_com(lambda: self._com.isReferenceUnit()))
+
+    def isSeparateSaveUnit(self) -> int:
+        """Checks whether the current IRPUnit object is saved in its own file.
+
+        ``IRPUnit`` objects represent any element that can in theory be saved
+        as a separate file, even if this is not the case for a specific element
+        in your model.
+
+        Returns:
+            ``1`` if the unit is saved in its own file, ``0`` otherwise.
+        """
+        return int(call_com(lambda: self._com.isSeparateSaveUnit()))
+
+    def load(self, with_subs: int) -> "RPModelElement":
+        """Loads the unit.
+
+        Args:
+            with_subs: ``1`` to load the unit's subunits as well, ``0`` to load
+                only the unit itself.
+
+        Returns:
+            The wrapped unit that was loaded.
+        """
+        return wrap(call_com(lambda: self._com.load(with_subs)))
+
+    def moveToAnotherProjectLeaveAReference(self, parent_in_target: "RPModelElement") -> "RPModelElement":
+        """Moves the unit to a different project, and adds a reference to it in the original project.
+
+        Args:
+            parent_in_target: The model element that will be the parent of the
+                new unit in the target project.
+
+        Returns:
+            The wrapped unit that was created in the target project.
+        """
+        return wrap(call_com(lambda: self._com.moveToAnotherProjectLeaveAReference(parent_in_target._com)))
+
+    def referenceToAnotherProject(self, parent_in_target: "RPModelElement") -> "RPModelElement":
+        """Creates a reference to the unit in a different project.
+
+        Args:
+            parent_in_target: The model element that will be the parent of the
+                reference (read-only) unit created in the target project.
+
+        Returns:
+            The wrapped reference (read-only) unit that was created in the target project.
+        """
+        return wrap(call_com(lambda: self._com.referenceToAnotherProject(parent_in_target._com)))
+
+    def save(self) -> None:
+        """Saves the unit."""
+        call_com(lambda: self._com.save())
+
+    def setCMHeader(self, cm_header: str) -> None:
+        """Sets the Configuration Management tool header for the unit.
+
+        Args:
+            cm_header: The Configuration Management tool header to use for the unit.
+        """
+        call_com(lambda: self._com.setCMHeader(cm_header))
+
+    def setFilename(self, filename: str) -> None:
+        """Specifies the name that should be used for the file representing the unit.
+
+        The string should only include the first part of the filename;
+        Rhapsody handles the file extension. Note that if you change the
+        filename, the old file remains on disk.
+
+        Args:
+            filename: The name that should be used for the file representing the unit.
+        """
+        _set_method_or_property(self._com, "setFilename", "filename", filename)
+
+    def setIncludeInNextLoad(self, include_in_next_load: int) -> None:
+        """Toggles whether the unit is going to be loaded the next time the model is loaded.
+
+        Args:
+            include_in_next_load: ``1`` to load the unit the next time the model
+                is loaded, ``0`` to not load it.
+        """
+        call_com(lambda: self._com.setIncludeInNextLoad(include_in_next_load))
+
+    def setLanguage(self, new_language: str, recursive: int) -> None:
+        """Specifies the programming language that should be used when code is generated for the unit.
+
+        This method can be used for mixed-language models.
+
+        Args:
+            new_language: One of ``"C++"``/``"cpp"``, ``"C"``, ``"Java"``,
+                ``"Ada"``, or ``"C#"``.
+            recursive: ``1`` to set the language for all subunits of the
+                element, ``0`` otherwise.
+        """
+        call_com(lambda: self._com.setLanguage(new_language, recursive))
+
     def setReadOnly(self, read_only: bool) -> None:
+        """Toggles the read-only status of the file used to store the unit.
+
+        Args:
+            read_only: ``True`` to change the file to read-only, ``False`` to
+                change the file to read/write.
+        """
         call_com(lambda: self._com.setReadOnly(1 if read_only else 0))
+
+    def setSeparateSaveUnit(self, p_val: int) -> None:
+        """Specifies whether the current IRPUnit object should be saved in its own file.
+
+        Args:
+            p_val: ``1`` to save the element in its own file, ``0`` to not save
+                it in its own file.
+        """
+        call_com(lambda: self._com.setSeparateSaveUnit(p_val))
+
+    def setUnitPath(self, new_path: str) -> None:
+        """Specifies the path that should be used to locate the unit when it is added to a model "By Reference".
+
+        Args:
+            new_path: The path that should be used to locate the unit when it is
+                added to a model "By Reference".
+        """
+        call_com(lambda: self._com.setUnitPath(new_path))
+
+    def unload(self) -> None:
+        """Unloads the unit."""
+        call_com(lambda: self._com.unload())
 
 
 class RPCollection:
