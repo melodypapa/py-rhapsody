@@ -11,7 +11,7 @@ from rhapsody_cli.cli.context import RhapsodyContext
 class ImportCommand(AbstractCommand):
     """Command: Import model from file."""
 
-    def execute(self, source: str, target: str = "Root") -> None:
+    def execute(self, source: str, target: str = "Root") -> None:  # type: ignore[override]
         """Execute the import command."""
         ctx = RhapsodyContext()
         try:
@@ -32,7 +32,7 @@ class ImportCommand(AbstractCommand):
 class ExportCommand(AbstractCommand):
     """Command: Export model to file."""
 
-    def execute(self, output: str, export_format: str = "xmi") -> None:
+    def execute(self, output: str, export_format: str = "xmi") -> None:  # type: ignore[override]
         """Execute the export command."""
         ctx = RhapsodyContext()
         try:

@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
+
 import pytest
 
-from rhapsody_cli.cli.commands.io import ImportCommand, ExportCommand
+from rhapsody_cli.cli.commands.io import ExportCommand, ImportCommand
 from rhapsody_cli.cli.context import RhapsodyContext
 from rhapsody_cli.exceptions import RhapsodyConnectionError
 

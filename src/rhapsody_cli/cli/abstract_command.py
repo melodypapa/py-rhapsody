@@ -3,27 +3,26 @@
 from __future__ import annotations
 
 import sys
-from typing import List
 
 
 class AbstractCommand:
     """Base class for all CLI commands."""
 
-    def __init__(self, args: List[str]) -> None:
+    def __init__(self, args: list[str]) -> None:
         """Initialize command with raw arguments.
-        
+
         Args:
             args: Raw command-line arguments (excluding command name itself)
         """
         self._args = args
 
-    def execute(self) -> None:
+    def execute(self, **kwargs: object) -> None:
         """Execute the command. Must be overridden by subclasses."""
         raise NotImplementedError(f"{self.__class__.__name__}.execute() must be implemented")
 
     def usage(self, error: str = "") -> None:
         """Print usage message and exit.
-        
+
         Args:
             error: Optional error message to display before usage
         """

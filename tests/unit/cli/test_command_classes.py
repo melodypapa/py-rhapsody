@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
-import pytest
 
 from rhapsody_cli.cli.commands.project import (
-    OpenProjectCommand,
-    ListProjectsCommand,
     CloseProjectCommand,
+    ListProjectsCommand,
     NewProjectCommand,
+    OpenProjectCommand,
 )
 from rhapsody_cli.cli.context import RhapsodyContext
 
@@ -79,8 +78,6 @@ class TestNewProjectCommand:
         cmd = NewProjectCommand(args=[])
 
         with patch("rhapsody_cli.cli.context.RhapsodyContext.connect"):
-            with patch(
-                "rhapsody_cli.cli.context.RhapsodyContext.create_project"
-            ) as mock_create:
+            with patch("rhapsody_cli.cli.context.RhapsodyContext.create_project") as mock_create:
                 cmd.execute(project_location=".", project_name="MyNewProject")
                 mock_create.assert_called_once_with(".", "MyNewProject")

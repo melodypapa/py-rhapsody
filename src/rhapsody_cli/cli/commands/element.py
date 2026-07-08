@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import sys
 import logging
-from typing import Optional
+import sys
 
 from rhapsody_cli.cli.abstract_command import AbstractCommand
 from rhapsody_cli.cli.context import RhapsodyContext
@@ -21,9 +20,9 @@ _NO_ACTIVE_INSTANCE_MESSAGE = (
 class AddElementCommand(AbstractCommand):
     """Command: Add a new element to the project."""
 
-    def execute(self, element_type: str, name: str) -> None:
+    def execute(self, element_type: str, name: str) -> None:  # type: ignore[override]
         """Execute the add command.
-        
+
         Args:
             element_type: Type of element to add (class, actor, package)
             name: Name of the new element
@@ -37,11 +36,11 @@ class AddElementCommand(AbstractCommand):
             sys.exit(1)
 
         try:
-            root = project.getRoot()  # type: ignore[attr-defined]
-            
+            root = project.getRoot()
+
             # Find or use a suitable container
             container = root
-            
+
             # For classes and actors, try to use the Default package if it exists
             if element_type.lower() in ("class", "actor"):
                 nested_elements = root.getNestedElements()
@@ -49,7 +48,7 @@ class AddElementCommand(AbstractCommand):
                     if elem.getName() == "Default" and elem.getMetaClass() == "Package":
                         container = elem
                         break
-            
+
             if element_type.lower() == "class":
                 container.addClass(name)
             elif element_type.lower() == "actor":
@@ -71,9 +70,9 @@ class AddElementCommand(AbstractCommand):
 class ViewElementCommand(AbstractCommand):
     """Command: View element details."""
 
-    def execute(self, path: str) -> None:
+    def execute(self, path: str) -> None:  # type: ignore[override]
         """Execute the view command.
-        
+
         Args:
             path: Element path (e.g., Root::MyClass)
         """
@@ -108,9 +107,9 @@ class ViewElementCommand(AbstractCommand):
 class QueryElementCommand(AbstractCommand):
     """Command: Query elements in active project."""
 
-    def execute(self, pattern: Optional[str] = None) -> None:
+    def execute(self, pattern: str | None = None) -> None:  # type: ignore[override]
         """Execute the query command.
-        
+
         Args:
             pattern: Optional search pattern (not yet implemented)
         """
@@ -123,9 +122,9 @@ class QueryElementCommand(AbstractCommand):
             sys.exit(1)
 
         try:
-            root = project.getRoot()  # type: ignore[attr-defined]
+            root = project.getRoot()
             elements = list(root.getNestedElements())
-            
+
             # Also search in the Default package for classes
             for elem in root.getNestedElements():
                 if elem.getName() == "Default" and elem.getMetaClass() == "Package":
@@ -159,9 +158,9 @@ class QueryElementCommand(AbstractCommand):
 class DeleteElementCommand(AbstractCommand):
     """Command: Delete an element from the project."""
 
-    def execute(self, path: str) -> None:
+    def execute(self, path: str) -> None:  # type: ignore[override]
         """Execute the delete command.
-        
+
         Args:
             path: Element path to delete (e.g., Root::MyClass)
         """
@@ -174,7 +173,7 @@ class DeleteElementCommand(AbstractCommand):
             sys.exit(1)
 
         try:
-            root = project.getRoot()  # type: ignore[attr-defined]
+            root = project.getRoot()
 
             # Parse path to extract parent path and element name
             path_parts = path.split("::")
@@ -207,7 +206,7 @@ class DeleteElementCommand(AbstractCommand):
                 if elem.getName() == element_name:
                     element_to_delete = elem
                     break
-            
+
             # If not found in parent and parent is root, try Default package
             if not element_to_delete and parent == root:
                 for elem in parent.getNestedElements():
@@ -221,7 +220,8 @@ class DeleteElementCommand(AbstractCommand):
                         break
 
             if not element_to_delete:
-                print(f"Error: Element '{element_name}' not found at path '{path}'", file=sys.stderr)
+                error_msg = f"Error: Element '{element_name}' not found at path '{path}'"
+                print(error_msg, file=sys.stderr)
                 sys.exit(1)
 
             # Try to delete using different methods based on element type
@@ -254,4 +254,3 @@ class DeleteElementCommand(AbstractCommand):
             logger.error("Failed to delete element at path '%s': %s", path, e)
             print(f"Error: {e}", file=sys.stderr)
             sys.exit(1)
-

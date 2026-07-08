@@ -16,8 +16,8 @@ import time
 
 from rhapsody_cli.cli.commands.element import (
     AddElementCommand,
-    QueryElementCommand,
     DeleteElementCommand,
+    QueryElementCommand,
 )
 
 

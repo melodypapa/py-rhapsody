@@ -13,7 +13,7 @@ from rhapsody_cli.exceptions import RhapsodyConnectionError
 class OpenProjectCommand(AbstractCommand):
     """Command: Open a Rhapsody project file."""
 
-    def execute(self, project_path: str) -> None:
+    def execute(self, project_path: str) -> None:  # type: ignore[override]
         """Execute the open command."""
         try:
             ctx = RhapsodyContext()
@@ -31,7 +31,7 @@ class OpenProjectCommand(AbstractCommand):
 class ListProjectsCommand(AbstractCommand):
     """Command: List open projects."""
 
-    def execute(self) -> None:
+    def execute(self) -> None:  # type: ignore[override]
         """Execute the list command."""
         try:
             ctx = RhapsodyContext()
@@ -57,7 +57,7 @@ class ListProjectsCommand(AbstractCommand):
 class CloseProjectCommand(AbstractCommand):
     """Command: Close active project."""
 
-    def execute(self) -> None:
+    def execute(self) -> None:  # type: ignore[override]
         """Execute the close command."""
         try:
             ctx = RhapsodyContext()
@@ -74,7 +74,7 @@ class CloseProjectCommand(AbstractCommand):
 class NewProjectCommand(AbstractCommand):
     """Command: Create a new empty Rhapsody project."""
 
-    def execute(self, project_location: str, project_name: str) -> None:
+    def execute(self, project_location: str, project_name: str) -> None:  # type: ignore[override]
         """Execute the new command."""
         try:
             ctx = RhapsodyContext()
