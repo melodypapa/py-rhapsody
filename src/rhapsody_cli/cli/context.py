@@ -1,9 +1,12 @@
 """CLI session context management."""
 
+import logging
 from typing import Optional
 
 from rhapsody_cli import RhapsodyApplication
 from rhapsody_cli.models.elements.containment import RPProject
+
+logger = logging.getLogger(__name__)
 
 
 class RhapsodyContext:
@@ -41,6 +44,7 @@ class RhapsodyContext:
         self.connect("attach")
         assert self.app is not None  # For mypy type narrowing
         self.project = self.app.activeProject()
+        logger.info("Attached to project '%s'", self.project.getName())
         return self.project
 
     def create_project(self, project_location: str, project_name: str) -> RPProject:

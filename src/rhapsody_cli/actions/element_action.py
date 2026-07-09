@@ -39,6 +39,7 @@ class ElementAddAction(ElementManagementAction):
 
         if not name and not bulk_file:
             raise CliExecutionError("either --name or --bulk must be provided")
+
         if name and bulk_file:
             raise CliExecutionError("--name and --bulk cannot be used together")
 
