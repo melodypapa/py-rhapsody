@@ -56,164 +56,191 @@ Create `docs/requirements/swr_pkg_requirements.md`:
 
 ---
 
-## SWR_PKG_00001: Package Create Command
+## SWR_PKG_0001: Package Create Command
 
-**ID:** SWR_PKG_00001
+**ID:** SWR_PKG_0001
 **Title:** package create command creates one or multiple packages
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package create` command to create one or multiple packages.
-The command SHALL accept `--path <parent-path>` argument (required), `--input <json-file>`
-argument (optional), and positional `attributes` argument (inline JSON or file path).
-SHALL support bulk creation via JSON array. SHALL validate parent path resolves to
-Package element. SHALL create nested packages under parent. SHALL set validated
-attributes (name, description, properties, stereotypes, tags). SHALL skip unknown
-attributes with warning log.
+The CLI 
+- SHALL provide a `package create` command to create one or multiple packages.
+- SHALL accept `--path <parent-path>` argument (required)
+- SHALL accept `--input <json-file>` argument (optional)
+- SHALL accept positional `attributes` argument (inline JSON or file path)
+- SHALL support bulk creation via JSON array
+- SHALL validate parent path resolves to Package element
+- SHALL create nested packages under parent
+- SHALL set validated attributes (name, description, properties, stereotypes, tags)
+- SHALL skip unknown attributes with warning log
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00002: Package Delete Command
+## SWR_PKG_0002: Package Delete Command
 
-**ID:** SWR_PKG_00002
+**ID:** SWR_PKG_0002
 **Title:** package delete command deletes a package
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package delete` command to delete a package.
-SHALL accept `--path <package-path>` argument (required). SHALL validate path resolves
-to Package element. SHALL delete package and all contents. SHALL log deletion to stderr.
+The CLI 
+- SHALL provide a `package delete` command to delete a package.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL validate path resolves to Package element
+- SHALL delete package and all contents
+- SHALL log deletion to stderr
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageDeleteAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00003: Package View Command
+## SWR_PKG_0003: Package View Command
 
-**ID:** SWR_PKG_00003
+**ID:** SWR_PKG_0003
 **Title:** package view command displays package details
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package view` command to view package details.
-SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
-argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
-SHALL display package properties: name, GUID, description, metaClass, fullPath.
-SHALL support table, JSON, and CSV output formats. SHALL write to file if `--output`
-specified, else stdout.
+The CLI 
+- SHALL provide a `package view` command to view package details.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL accept `--format <format>` argument (table/json/csv, default: table)
+- SHALL accept `--output <file>` argument (optional)
+- SHALL display package properties: name, GUID, description, metaClass, fullPath
+- SHALL support table, JSON, and CSV output formats
+- SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00004: Package List Command
+## SWR_PKG_0004: Package List Command
 
-**ID:** SWR_PKG_00004
+**ID:** SWR_PKG_0004
 **Title:** package list command lists nested packages
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package list` command to list nested packages.
-SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
-argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
-SHALL list all nested packages under parent. SHALL support table, JSON, and CSV output
-formats. SHALL write to file if `--output` specified, else stdout.
+The CLI 
+- SHALL provide a `package list` command to list nested packages.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL accept `--format <format>` argument (table/json/csv, default: table)
+- SHALL accept `--output <file>` argument (optional)
+- SHALL list all nested packages under parent
+- SHALL support table, JSON, and CSV output formats
+- SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageListAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00005: Path Validation
+## SWR_PKG_0005: Path Validation
 
-**ID:** SWR_PKG_00005
+**ID:** SWR_PKG_0005
 **Title:** All package commands validate path before execution
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package commands SHALL validate path before execution.
-SHALL resolve path using PathResolver. SHALL verify element at path is Package type
-(metaClass == "Package"). SHALL raise error if path not found. SHALL raise error if
-path not Package.
+All package commands 
+- SHALL validate path before execution.
+- SHALL resolve path using PathResolver
+- SHALL verify element at path is Package type (metaClass == "Package")
+- SHALL raise error if path not found
+- SHALL raise error if path not Package
 **Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction._resolve_and_validate_package
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00006: External JSON File Support
+## SWR_PKG_0006: External JSON File Support
 
-**ID:** SWR_PKG_00006
+**ID:** SWR_PKG_0006
 **Title:** Package create supports external JSON files
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support external JSON files.
-SHALL accept `--input <file>` argument. SHALL accept file path as positional argument.
-SHALL detect inline JSON vs file path automatically. SHALL parse JSON file with UTF-8
-encoding. SHALL raise error if file not found. SHALL raise error if JSON invalid.
+Package create command 
+- SHALL support external JSON files.
+- SHALL accept `--input <file>` argument
+- SHALL accept file path as positional argument
+- SHALL detect inline JSON vs file path automatically
+- SHALL parse JSON file with UTF-8 encoding
+- SHALL raise error if file not found
+- SHALL raise error if JSON invalid
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._load_json_data
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00007: Stereotype and Tag Support
+## SWR_PKG_0007: Stereotype and Tag Support
 
-**ID:** SWR_PKG_00007
+**ID:** SWR_PKG_0007
 **Title:** Package create supports stereotypes and tags
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support stereotypes and tags.
-SHALL accept `stereotypes` array in JSON. SHALL apply stereotypes via addStereotype()
-method. SHALL accept `tags` object in JSON. SHALL set tags via setPropertyValue() method.
+Package create command 
+- SHALL support stereotypes and tags.
+- SHALL accept `stereotypes` array in JSON
+- SHALL apply stereotypes via addStereotype() method
+- SHALL accept `tags` object in JSON
+- SHALL set tags via setPropertyValue() method
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._set_stereotypes,_set_tags
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00008: Multi-Format Output
+## SWR_PKG_0008: Multi-Format Output
 
-**ID:** SWR_PKG_00008
+**ID:** SWR_PKG_0008
 **Title:** Package view and list support multiple output formats
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view and list commands SHALL support multiple output formats.
-SHALL support table format (default, human-readable). SHALL support JSON format
-(machine-parsable). SHALL support CSV format (spreadsheet-friendly). SHALL use
-horizontal layout for CSV (header row + data rows).
+Package view and list commands 
+- SHALL support multiple output formats.
+- SHALL support table format (default, human-readable)
+- SHALL support JSON format (machine-parsable)
+- SHALL support CSV format (spreadsheet-friendly)
+- SHALL use horizontal layout for CSV (header row + data rows)
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction._format_output,PackageListAction._format_output
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00009: View-to-Create Workflow
+## SWR_PKG_0009: View-to-Create Workflow
 
-**ID:** SWR_PKG_00009
+**ID:** SWR_PKG_0009
 **Title:** Package view JSON output reusable as package create input
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view JSON output SHALL be reusable as package create input.
-SHALL ignore unknown fields (guid, metaClass, fullPath) in create. SHALL only use
-validated attributes from view output. SHALL enable package cloning workflow.
+Package view JSON output 
+- SHALL be reusable as package create input.
+- SHALL ignore unknown fields (guid, metaClass, fullPath) in create
+- SHALL only use validated attributes from view output
+- SHALL enable package cloning workflow
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction.VALID_ATTRIBUTES
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00010: Error Handling and Logging
+## SWR_PKG_0010: Error Handling and Logging
 
-**ID:** SWR_PKG_00010
+**ID:** SWR_PKG_0010
 **Title:** All package actions follow consistent error handling patterns
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package actions SHALL follow consistent error handling patterns.
-SHALL use _handle_execution_error() for COM errors. SHALL raise CliExecutionError for
-validation failures. SHALL log INFO for successful operations. SHALL log WARNING for
-skipped attributes. SHALL log ERROR for failures.
+All package actions 
+- SHALL follow consistent error handling patterns.
+- SHALL use _handle_execution_error() for COM errors
+- SHALL raise CliExecutionError for validation failures
+- SHALL log INFO for successful operations
+- SHALL log WARNING for skipped attributes
+- SHALL log ERROR for failures
 **Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction
 **Last Changed:** 2026-07-09
 ```
@@ -226,7 +253,7 @@ Create `docs/requirements/swr_pkg_requirements.md` with the content above.
 
 ```bash
 git add docs/requirements/swr_pkg_requirements.md
-git commit -m "docs: Add SW requirements for package command (SWR_PKG_00001-00010)"
+git commit -m "docs: Add SW requirements for package command (SWR_PKG_0001-00010)"
 ```
 
 ---
@@ -332,7 +359,7 @@ logger = logging.getLogger(__name__)
 class AbstractPackageAction(ElementManagementAction):
     """Base class for package actions with common validation logic.
 
-    SWR_PKG_00005: Path Validation
+    SWR_PKG_0005: Path Validation
     SWR_PKG_00010: Error Handling and Logging
     """
 
@@ -598,9 +625,9 @@ logger = logging.getLogger(__name__)
 class PackageCreateAction(AbstractPackageAction):
     """Create one or multiple packages.
 
-    SWR_PKG_00001: Package Create Command
-    SWR_PKG_00006: External JSON File Support
-    SWR_PKG_00007: Stereotype and Tag Support
+    SWR_PKG_0001: Package Create Command
+    SWR_PKG_0006: External JSON File Support
+    SWR_PKG_0007: Stereotype and Tag Support
     SWR_PKG_00009: View-to-Create Workflow
     """
 
@@ -822,7 +849,7 @@ Add to `src/rhapsody_cli/actions/package_action.py`:
 class PackageDeleteAction(AbstractPackageAction):
     """Delete a package.
 
-    SWR_PKG_00002: Package Delete Command
+    SWR_PKG_0002: Package Delete Command
     """
 
     def init_arguments(self, sub_parser):
@@ -989,8 +1016,8 @@ from rhapsody_cli.cli.formatters import OutputFormatter
 class PackageViewAction(AbstractPackageAction):
     """View package details.
 
-    SWR_PKG_00003: Package View Command
-    SWR_PKG_00008: Multi-Format Output
+    SWR_PKG_0003: Package View Command
+    SWR_PKG_0008: Multi-Format Output
     """
 
     def init_arguments(self, sub_parser):
@@ -1205,8 +1232,8 @@ Add to `src/rhapsody_cli/actions/package_action.py`:
 class PackageListAction(AbstractPackageAction):
     """List nested packages.
 
-    SWR_PKG_00004: Package List Command
-    SWR_PKG_00008: Multi-Format Output
+    SWR_PKG_0004: Package List Command
+    SWR_PKG_0008: Multi-Format Output
     """
 
     def init_arguments(self, sub_parser):
@@ -1706,7 +1733,7 @@ Create `docs/tests/unit/uts_pkg_test-specs.md`:
 ## UTS_PKG_00001: Create single package with inline JSON
 
 **ID:** UTS_PKG_00001
-**Traces-To:** SWR_PKG_00001
+**Traces-To:** SWR_PKG_0001
 **Title:** Create single package with inline JSON
 **Type:** Unit
 **Priority:** High
@@ -1733,7 +1760,7 @@ Package created successfully with correct name and description.
 ## UTS_PKG_00002: Create multiple packages from JSON file
 
 **ID:** UTS_PKG_00002
-**Traces-To:** SWR_PKG_00001, SWR_PKG_00006
+**Traces-To:** SWR_PKG_0001, SWR_PKG_0006
 **Title:** Create multiple packages from JSON file
 **Type:** Unit
 **Priority:** High
@@ -1759,7 +1786,7 @@ All packages created, logs show count.
 ## UTS_PKG_00003: Create with stereotypes
 
 **ID:** UTS_PKG_00003
-**Traces-To:** SWR_PKG_00007
+**Traces-To:** SWR_PKG_0007
 **Title:** Create package with stereotypes
 **Type:** Unit
 **Priority:** Medium
@@ -1782,7 +1809,7 @@ All stereotypes applied correctly.
 ## UTS_PKG_00004: Create with tags
 
 **ID:** UTS_PKG_00004
-**Traces-To:** SWR_PKG_00007
+**Traces-To:** SWR_PKG_0007
 **Title:** Create package with tags
 **Type:** Unit
 **Priority:** Medium
@@ -1805,7 +1832,7 @@ All tags set correctly.
 ## UTS_PKG_00005: Create with properties
 
 **ID:** UTS_PKG_00005
-**Traces-To:** SWR_PKG_00001
+**Traces-To:** SWR_PKG_0001
 **Title:** Create package with custom properties
 **Type:** Unit
 **Priority:** Medium
@@ -1828,7 +1855,7 @@ All properties set correctly.
 ## UTS_PKG_00006: Create skips unknown attributes
 
 **ID:** UTS_PKG_00006
-**Traces-To:** SWR_PKG_00001
+**Traces-To:** SWR_PKG_0001
 **Title:** Unknown attributes are skipped with warning
 **Type:** Unit
 **Priority:** Medium
@@ -1852,7 +1879,7 @@ Package created, unknown fields skipped with warning.
 ## UTS_PKG_00007: Create fails without name
 
 **ID:** UTS_PKG_00007
-**Traces-To:** SWR_PKG_00001
+**Traces-To:** SWR_PKG_0001
 **Title:** Create fails without name field
 **Type:** Unit
 **Priority:** High
@@ -1875,7 +1902,7 @@ CliExecutionError raised with appropriate message.
 ## UTS_PKG_00008: Create from external file
 
 **ID:** UTS_PKG_00008
-**Traces-To:** SWR_PKG_00006
+**Traces-To:** SWR_PKG_0006
 **Title:** Create packages from external JSON file
 **Type:** Unit
 **Priority:** High
@@ -1899,7 +1926,7 @@ File read and packages created.
 ## UTS_PKG_00009: Create fails for invalid JSON
 
 **ID:** UTS_PKG_00009
-**Traces-To:** SWR_PKG_00006
+**Traces-To:** SWR_PKG_0006
 **Title:** Create fails for malformed JSON
 **Type:** Unit
 **Priority:** High
@@ -1922,7 +1949,7 @@ CliExecutionError raised with JSON parse error.
 ## UTS_PKG_00010: Create fails for missing file
 
 **ID:** UTS_PKG_00010
-**Traces-To:** SWR_PKG_00006
+**Traces-To:** SWR_PKG_0006
 **Title:** Create fails for non-existent file
 **Type:** Unit
 **Priority:** High
@@ -1945,7 +1972,7 @@ CliExecutionError raised with file not found message.
 ## UTS_PKG_00011: Delete package successfully
 
 **ID:** UTS_PKG_00011
-**Traces-To:** SWR_PKG_00002
+**Traces-To:** SWR_PKG_0002
 **Title:** Delete package successfully
 **Type:** Unit
 **Priority:** High
@@ -1994,7 +2021,7 @@ Exception handled, error logged.
 ## UTS_PKG_00013: View table output
 
 **ID:** UTS_PKG_00013
-**Traces-To:** SWR_PKG_00003, SWR_PKG_00008
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
 **Title:** View package in table format
 **Type:** Unit
 **Priority:** High
@@ -2017,7 +2044,7 @@ Table printed to stdout with all package properties.
 ## UTS_PKG_00014: View JSON output to file
 
 **ID:** UTS_PKG_00014
-**Traces-To:** SWR_PKG_00003, SWR_PKG_00008
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
 **Title:** View package in JSON format to file
 **Type:** Unit
 **Priority:** High
@@ -2042,7 +2069,7 @@ JSON file created with all package details.
 ## UTS_PKG_00015: View CSV output
 
 **ID:** UTS_PKG_00015
-**Traces-To:** SWR_PKG_00003, SWR_PKG_00008
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
 **Title:** View package in CSV format
 **Type:** Unit
 **Priority:** Medium
@@ -2066,7 +2093,7 @@ CSV printed with horizontal layout.
 ## UTS_PKG_00016: List nested packages
 
 **ID:** UTS_PKG_00016
-**Traces-To:** SWR_PKG_00004
+**Traces-To:** SWR_PKG_0004
 **Title:** List nested packages
 **Type:** Unit
 **Priority:** High
@@ -2089,7 +2116,7 @@ List of nested package names.
 ## UTS_PKG_00017: List empty package
 
 **ID:** UTS_PKG_00017
-**Traces-To:** SWR_PKG_00004
+**Traces-To:** SWR_PKG_0004
 **Title:** List empty package returns empty output
 **Type:** Unit
 **Priority:** Medium
@@ -2112,7 +2139,7 @@ Empty table/list shown.
 ## UTS_PKG_00018: List JSON output
 
 **ID:** UTS_PKG_00018
-**Traces-To:** SWR_PKG_00004, SWR_PKG_00008
+**Traces-To:** SWR_PKG_0004, SWR_PKG_0008
 **Title:** List nested packages in JSON format
 **Type:** Unit
 **Priority:** High
@@ -2135,7 +2162,7 @@ JSON array of package names.
 ## UTS_PKG_00019: Path validation - not found
 
 **ID:** UTS_PKG_00019
-**Traces-To:** SWR_PKG_00005
+**Traces-To:** SWR_PKG_0005
 **Title:** Path validation fails for non-existent path
 **Type:** Unit
 **Priority:** High
@@ -2158,7 +2185,7 @@ CliExecutionError raised with path not found message.
 ## UTS_PKG_00020: Path validation - not package
 
 **ID:** UTS_PKG_00020
-**Traces-To:** SWR_PKG_00005
+**Traces-To:** SWR_PKG_0005
 **Title:** Path validation fails for non-package element
 **Type:** Unit
 **Priority:** High
@@ -2207,7 +2234,7 @@ New package created with same attributes.
 ## UTS_PKG_00022: Bulk creation with errors
 
 **ID:** UTS_PKG_00022
-**Traces-To:** SWR_PKG_00001
+**Traces-To:** SWR_PKG_0001
 **Title:** Bulk creation handles partial failures
 **Type:** Unit
 **Priority:** Medium
@@ -2232,7 +2259,7 @@ Valid packages created, errors logged, summary shown.
 ## UTS_PKG_00023: File output handling
 
 **ID:** UTS_PKG_00023
-**Traces-To:** SWR_PKG_00003, SWR_PKG_00004
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0004
 **Title:** Output written to file when --output specified
 **Type:** Unit
 **Priority:** High
@@ -2280,7 +2307,7 @@ CliExecutionError raised with file write error.
 ## UTS_PKG_00025: Register all subcommands
 
 **ID:** UTS_PKG_00025
-**Traces-To:** SWR_PKG_00001-00004
+**Traces-To:** SWR_PKG_0001-00004
 **Title:** PackageCommand registers all subcommands
 **Type:** Unit
 **Priority:** High

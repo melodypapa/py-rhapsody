@@ -14,8 +14,8 @@
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI SHALL provide a `package create` command to create one or multiple packages.
-
+The package CLI
+- SHALL provide a `package create` command to create one or multiple packages.
 - SHALL accept `--path <parent-path>` argument (required)
 - SHALL accept `--input <json-file>` argument (optional)
 - SHALL accept positional `attributes` argument (inline JSON or file path)
@@ -36,8 +36,8 @@ The CLI SHALL provide a `package create` command to create one or multiple packa
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI SHALL provide a `package delete` command to delete a package.
-
+The package CLI
+- SHALL provide a `package delete` command to delete a package.
 - SHALL accept `--path <package-path>` argument (required)
 - SHALL validate path resolves to Package element
 - SHALL delete package and all contents
@@ -54,13 +54,15 @@ The CLI SHALL provide a `package delete` command to delete a package.
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI SHALL provide a `package view` command to view package details.
-
+The package CLI
+- SHALL provide a `package view` command to view package details.
 - SHALL accept `--path <package-path>` argument (required)
 - SHALL accept `--format <format>` argument (table/json/csv, default: table)
 - SHALL accept `--output <file>` argument (optional)
 - SHALL display package properties: name, GUID, description, metaClass, fullPath
-- SHALL support table, JSON, and CSV output formats
+- SHALL support table format with vertical key-value layout (Property | Value rows)
+- SHALL support JSON format as a single object with keys: name, guid, description, metaClass, fullPath
+- SHALL support CSV format with horizontal layout: header row (Name,GUID,Description,MetaClass,FullPath) followed by one data row
 - SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction
 **Last Changed:** 2026-07-09
@@ -74,13 +76,15 @@ The CLI SHALL provide a `package view` command to view package details.
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI SHALL provide a `package list` command to list nested packages.
-
+The package CLI
+- SHALL provide a `package list` command to list nested packages.
 - SHALL accept `--path <package-path>` argument (required)
 - SHALL accept `--format <format>` argument (table/json/csv, default: table)
 - SHALL accept `--output <file>` argument (optional)
 - SHALL list all nested packages under parent
-- SHALL support table, JSON, and CSV output formats
+- SHALL support table format with single column (Name) and one row per package
+- SHALL support JSON format as an array of package name strings
+- SHALL support CSV format with horizontal layout: header row (Name) followed by one data row per package
 - SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageListAction
 **Last Changed:** 2026-07-09
@@ -94,8 +98,8 @@ The CLI SHALL provide a `package list` command to list nested packages.
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package commands SHALL validate path before execution.
-
+All package commands
+- SHALL validate path before execution.
 - SHALL resolve path using PathResolver
 - SHALL verify element at path is Package type (metaClass == "Package")
 - SHALL raise error if path not found
@@ -112,8 +116,8 @@ All package commands SHALL validate path before execution.
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support external JSON files.
-
+Package create command
+- SHALL support external JSON files.
 - SHALL accept `--input <file>` argument
 - SHALL accept file path as positional argument
 - SHALL detect inline JSON vs file path automatically
@@ -132,8 +136,8 @@ Package create command SHALL support external JSON files.
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support stereotypes and tags.
-
+Package create command
+- SHALL support stereotypes and tags.
 - SHALL accept `stereotypes` array in JSON
 - SHALL apply stereotypes via addStereotype() method
 - SHALL accept `tags` object in JSON
@@ -150,12 +154,12 @@ Package create command SHALL support stereotypes and tags.
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view and list commands SHALL support multiple output formats.
-
-- SHALL support table format (default, human-readable)
-- SHALL support JSON format (machine-parsable)
-- SHALL support CSV format (spreadsheet-friendly)
-- SHALL use horizontal layout for CSV (header row + data rows)
+Package view and list commands
+- SHALL support multiple output formats.
+- SHALL support table format (default, human-readable, vertical key-value layout for view, single-column for list)
+- SHALL support JSON format (machine-parsable, single object for view, array of strings for list)
+- SHALL support CSV format (spreadsheet-friendly, horizontal layout with header row + data rows)
+- SHALL use horizontal layout for CSV (header row + data rows, not vertical key-value pairs)
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction._format_output,PackageListAction._format_output
 **Last Changed:** 2026-07-09
 
@@ -168,8 +172,8 @@ Package view and list commands SHALL support multiple output formats.
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view JSON output SHALL be reusable as package create input.
-
+Package view JSON output
+- SHALL be reusable as package create input.
 - SHALL ignore unknown fields (guid, metaClass, fullPath) in create
 - SHALL only use validated attributes from view output
 - SHALL enable package cloning workflow
@@ -185,8 +189,8 @@ Package view JSON output SHALL be reusable as package create input.
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package actions SHALL follow consistent error handling patterns.
-
+All package actions
+- SHALL follow consistent error handling patterns.
 - SHALL use _handle_execution_error() for COM errors
 - SHALL raise CliExecutionError for validation failures
 - SHALL log INFO for successful operations
