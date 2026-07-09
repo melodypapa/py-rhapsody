@@ -2,9 +2,11 @@
 
 import argparse
 import sys
+from typing import Any, List, Optional, Tuple
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
+from rhapsody_cli.cli.path_resolver import PathResolver, PathResolverError
 from rhapsody_cli.models.core import call_com
 
 
@@ -19,44 +21,111 @@ class ElementAddAction(ElementManagementAction):
         """Register the 'add' subcommand and its arguments."""
         add_parser = sub_parser.add_parser("add", help="Add a new element")
         add_parser.add_argument("--type", required=True, help="Element type (class, actor, package)")
-        add_parser.add_argument("--name", required=True, help="Element name")
+        add_parser.add_argument("--name", default=None, help="Element name (required unless --bulk is used)")
+        add_parser.add_argument("--bulk", default=None, help="Path to a file with one element name per line")
+        add_parser.add_argument(
+            "--path",
+            default=None,
+            help="Container path using '/' or '\\' separators (default: project root)",
+        )
         self.add_verbose_argument(add_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
-        """Add a new element to the project."""
+        """Add one or more new elements to the project."""
         element_type = args.type
         name = args.name
+        bulk_file = args.bulk
+        path = args.path
+
+        if not name and not bulk_file:
+            print("Error: either --name or --bulk must be provided", file=sys.stderr)
+            sys.exit(1)
+        if name and bulk_file:
+            print("Error: --name and --bulk cannot be used together", file=sys.stderr)
+            sys.exit(1)
 
         try:
             project = self._get_active_project()
             root = project.getRoot()
-            container = root
+            container = PathResolver.resolve_container(root, path)
+        except SystemExit:
+            raise
+        except PathResolverError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
+        except Exception as e:
+            self._handle_execution_error(e, "Failed to resolve container path")
+            sys.exit(1)
 
-            # For classes and actors, try to use the Default package if it exists
-            if element_type.lower() in ("class", "actor"):
-                nested_elements = root.getNestedElements()
-                for elem in nested_elements:
-                    if elem.getName() == "Default" and elem.getMetaClass() == "Package":
-                        container = elem
-                        break
+        if bulk_file:
+            self._execute_bulk(element_type, bulk_file, container, path)
+        else:
+            self._execute_single(element_type, name, container, path)
 
-            if element_type.lower() == "class":
-                container.addClass(name)
-            elif element_type.lower() == "actor":
-                container.addActor(name)
-            elif element_type.lower() == "package":
-                container.addNestedPackage(name) if container != root else root.addPackage(name)
-            else:
-                print(f"Error: Unknown element type '{element_type}'", file=sys.stderr)
-                sys.exit(1)
-
-            self.logger.info("Created %s: %s", element_type, name)
-            print(f"Created {element_type}: {name}")
+    def _execute_single(self, element_type: str, name: str, container: Any, path: Optional[str]) -> None:
+        """Create a single element under `container` and report the result."""
+        try:
+            self._create_element(element_type, name, container)
         except SystemExit:
             raise
         except Exception as e:
             self._handle_execution_error(e, f"Failed to create {element_type} '{name}'")
             sys.exit(1)
+
+        full_path = f"{path}/{name}" if path else name
+        self.logger.info("Created %s: %s", element_type, full_path)
+        print(f"Created {element_type}: {full_path}")
+
+    def _execute_bulk(self, element_type: str, bulk_file: str, container: Any, path: Optional[str]) -> None:
+        """Create one element per non-empty line of `bulk_file` under `container`."""
+        try:
+            with open(bulk_file, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+        except OSError as e:
+            print(f"Error: Could not read bulk file '{bulk_file}': {e}", file=sys.stderr)
+            sys.exit(1)
+
+        created: List[Tuple[str, str]] = []
+        errors: List[Tuple[int, str, str]] = []
+        for line_num, raw_line in enumerate(lines, start=1):
+            item_name = raw_line.strip()
+            if not item_name:
+                continue
+            try:
+                self._create_element(element_type, item_name, container)
+                full_path = f"{path}/{item_name}" if path else item_name
+                created.append((item_name, full_path))
+                self.logger.info("Created %s: %s", element_type, full_path)
+            except Exception as e:
+                errors.append((line_num, item_name, str(e)))
+
+        total = len(created) + len(errors)
+        if errors:
+            print(f"Added {len(created)}/{total} items. Errors:")
+            for line_num, item_name, reason in errors:
+                print(f"  Line {line_num} ({item_name}): {reason}")
+        else:
+            print(f"Added {len(created)} items:" if created else "Added 0 items")
+            for item_name, full_path in created:
+                print(f"  ✓ {item_name} created at {full_path}")
+
+        if errors and not created:
+            sys.exit(1)
+
+    def _create_element(self, element_type: str, name: str, container: Any) -> None:
+        """Dispatch element creation to the right container method by type."""
+        element_type_lower = element_type.lower()
+        if element_type_lower == "class":
+            container.addClass(name)
+        elif element_type_lower == "actor":
+            container.addActor(name)
+        elif element_type_lower == "package":
+            if hasattr(container, "addPackage"):
+                container.addPackage(name)
+            else:
+                container.addNestedPackage(name)
+        else:
+            raise ValueError(f"Unknown element type '{element_type}'")
 
 
 class ElementViewAction(ElementManagementAction):
@@ -69,37 +138,46 @@ class ElementViewAction(ElementManagementAction):
     def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'view' subcommand and its arguments."""
         view_parser = sub_parser.add_parser("view", help="View element details")
-        view_parser.add_argument("--path", required=True, help="Element path (e.g., Root::MyClass)")
+        view_parser.add_argument(
+            "--path",
+            required=True,
+            help="Element path using '/' or '\\' separators (e.g. pkg/subpkg/MyClass)",
+        )
         self.add_verbose_argument(view_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
         """View element details."""
         path = args.path
         try:
-            self._get_active_project()
-
-            data = {
-                "path": path,
-                "type": "unknown",
-                "properties": {"status": "read-only for demo"},
-            }
-
-            from rhapsody_cli.cli.context import RhapsodyContext
-
-            ctx = RhapsodyContext()
-
-            if ctx.output_format == "json":
-                output = OutputFormatter.json_format(data)
-            else:
-                rows = [["path", path], ["type", "unknown"]]
-                output = OutputFormatter.table(["Property", "Value"], rows)
-
-            print(output)
+            project = self._get_active_project()
+            root = project.getRoot()
+            element = PathResolver.resolve_element(root, path)
         except SystemExit:
             raise
+        except PathResolverError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to view element '{path}'")
             sys.exit(1)
+
+        data = {
+            "path": path,
+            "name": element.getName(),
+            "type": element.getMetaClass(),  # type: ignore[attr-defined]
+        }
+
+        from rhapsody_cli.cli.context import RhapsodyContext
+
+        ctx = RhapsodyContext()
+
+        if ctx.output_format == "json":
+            output = OutputFormatter.json_format(data)
+        else:
+            rows = [["path", path], ["name", data["name"]], ["type", data["type"]]]
+            output = OutputFormatter.table(["Property", "Value"], rows)
+
+        print(output)
 
 
 class ElementQueryAction(ElementManagementAction):
@@ -113,48 +191,71 @@ class ElementQueryAction(ElementManagementAction):
         """Register the 'query' subcommand and its arguments."""
         query_parser = sub_parser.add_parser("query", help="Query elements in active project")
         query_parser.add_argument("pattern", nargs="?", default=None, help="Search pattern (optional)")
+        query_parser.add_argument(
+            "--path",
+            default=None,
+            help="Container path using '/' or '\\' separators (default: project root)",
+        )
+        query_parser.add_argument(
+            "--recursive",
+            action="store_true",
+            help="Include elements nested at any depth below the container",
+        )
         self.add_verbose_argument(query_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
         """Query elements in active project."""
+        path = args.path
+        recursive = args.recursive
+
         try:
             project = self._get_active_project()
             root = project.getRoot()
-            elements = list(root.getNestedElements())
-
-            # Also search in the Default package for classes
-            for elem in root.getNestedElements():
-                if elem.getName() == "Default" and elem.getMetaClass() == "Package":
-                    try:
-                        elements.extend(list(elem.getNestedElements()))
-                    except Exception:
-                        pass  # If we can't get nested elements, just skip
-
-            from rhapsody_cli.cli.context import RhapsodyContext
-
-            ctx = RhapsodyContext()
-
-            if ctx.output_format == "json":
-                data = {
-                    "elements": [
-                        {
-                            "name": elem.getName(),
-                            "type": elem.getMetaClass(),
-                        }
-                        for elem in elements
-                    ]
-                }
-                output = OutputFormatter.json_format(data)
-            else:
-                rows = [[elem.getName(), elem.getMetaClass()] for elem in elements]
-                output = OutputFormatter.table(["Name", "Type"], rows)
-
-            print(output)
+            container = PathResolver.resolve_container(root, path)
         except SystemExit:
             raise
+        except PathResolverError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
         except Exception as e:
             self._handle_execution_error(e, "Failed to query elements")
             sys.exit(1)
+
+        base_path = path or ""
+        results = self._collect_elements(container, base_path, recursive)
+
+        from rhapsody_cli.cli.context import RhapsodyContext
+
+        ctx = RhapsodyContext()
+
+        if ctx.output_format == "json":
+            data = {
+                "elements": [
+                    {"name": name, "type": meta_class, "path": elem_path}
+                    for name, meta_class, elem_path in results
+                ]
+            }
+            output = OutputFormatter.json_format(data)
+        elif recursive:
+            rows = [[name, meta_class, elem_path] for name, meta_class, elem_path in results]
+            output = OutputFormatter.table(["Name", "Type", "Path"], rows)
+        else:
+            rows = [[name, meta_class] for name, meta_class, _ in results]
+            output = OutputFormatter.table(["Name", "Type"], rows)
+
+        print(output)
+
+    def _collect_elements(self, container: Any, base_path: str, recursive: bool) -> List[Tuple[str, str, str]]:
+        """Collect (name, meta_class, path) tuples for direct or recursive children."""
+        results: List[Tuple[str, str, str]] = []
+        for elem in container.getNestedElements():
+            name = elem.getName()
+            meta_class = elem.getMetaClass()
+            elem_path = f"{base_path}/{name}" if base_path else name
+            results.append((name, meta_class, elem_path))
+            if recursive:
+                results.extend(self._collect_elements(elem, elem_path, recursive))
+        return results
 
 
 class ElementDeleteAction(ElementManagementAction):
@@ -167,93 +268,66 @@ class ElementDeleteAction(ElementManagementAction):
     def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'delete' subcommand and its arguments."""
         delete_parser = sub_parser.add_parser("delete", help="Delete an element")
-        delete_parser.add_argument("path", help="Element path to delete")
+        delete_parser.add_argument("path", help="Element path using '/' or '\\' separators")
+        delete_parser.add_argument(
+            "--recursive",
+            action="store_true",
+            help="Delete the element and all elements nested within it",
+        )
+        delete_parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Skip the confirmation prompt when using --recursive",
+        )
         self.add_verbose_argument(delete_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
         """Delete an element from the project."""
         path = args.path
+        recursive = args.recursive
+        force = args.force
+
         try:
             project = self._get_active_project()
             root = project.getRoot()
-
-            # Parse path to extract parent path and element name
-            path_parts = path.split("::")
-            if len(path_parts) < 2:
-                msg = f"Error: Invalid path format '{path}'. Use 'Root::ElementName'"
-                print(msg, file=sys.stderr)
-                sys.exit(1)
-
-            element_name = path_parts[-1]
-            parent_path_parts = path_parts[:-1]
-
-            # Navigate to parent container
-            parent = root
-            for part in parent_path_parts[1:]:  # Skip 'Root'
-                nested = parent.getNestedElements()
-                found = None
-                for elem in nested:
-                    if elem.getName() == part:
-                        found = elem
-                        break
-                if not found:
-                    print(f"Error: Parent path not found: {part}", file=sys.stderr)
-                    sys.exit(1)
-                parent = found
-
-            # Find and delete the element
-            nested = parent.getNestedElements()
-            element_to_delete = None
-            for elem in nested:
-                if elem.getName() == element_name:
-                    element_to_delete = elem
-                    break
-
-            # If not found in parent and parent is root, try Default package
-            if not element_to_delete and parent == root:
-                for elem in parent.getNestedElements():
-                    if elem.getName() == "Default" and elem.getMetaClass() == "Package":
-                        parent = elem
-                        nested = parent.getNestedElements()
-                        for elem_in_default in nested:
-                            if elem_in_default.getName() == element_name:
-                                element_to_delete = elem_in_default
-                                break
-                        break
-
-            if not element_to_delete:
-                error_msg = f"Error: Element '{element_name}' not found at path '{path}'"
-                print(error_msg, file=sys.stderr)
-                sys.exit(1)
-
-            # Try to delete using different methods based on element type
-            meta_class = element_to_delete.getMetaClass()
-            deleted = False
-
-            # Try direct delete method first (if available)
-            if hasattr(element_to_delete._com, "delete"):
-                call_com(lambda: element_to_delete._com.delete())
-                deleted = True
-            else:
-                # Fall back to parent container methods
-                if meta_class == "Class":
-                    call_com(lambda: parent._com.deleteClass(element_to_delete._com))
-                    deleted = True
-                elif meta_class == "Actor":
-                    call_com(lambda: parent._com.deleteActor(element_to_delete._com))
-                    deleted = True
-                elif meta_class == "Package":
-                    call_com(lambda: parent._com.deletePackage(element_to_delete._com))
-                    deleted = True
-
-            if not deleted:
-                print(f"Error: Unable to delete element of type '{meta_class}'", file=sys.stderr)
-                sys.exit(1)
-
-            self.logger.info("Deleted %s: %s", meta_class, element_name)
-            print(f"Deleted {meta_class.lower()}: {element_name}")
+            element = PathResolver.resolve_element(root, path)
         except SystemExit:
             raise
+        except PathResolverError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete element at path '{path}'")
             sys.exit(1)
+
+        nested_count = 0
+        if recursive:
+            nested_count = self._count_nested(element)
+            if not force:
+                answer = input(f"This will delete '{path}' and {nested_count} nested element(s). Continue? [y/N] ")
+                if answer.strip().lower() not in ("y", "yes"):
+                    print("Aborted.")
+                    return
+
+        try:
+            call_com(lambda: element._com.delete())  # type: ignore[attr-defined]
+        except Exception as e:
+            self._handle_execution_error(e, f"Failed to delete element at path '{path}'")
+            sys.exit(1)
+
+        meta_class = element.getMetaClass()  # type: ignore[attr-defined]
+        if recursive:
+            self.logger.info("Deleted %s: %s (and %d nested elements)", meta_class, path, nested_count)
+            print(f"Deleted {meta_class.lower()}: {path} and {nested_count} nested element(s)")
+        else:
+            self.logger.info("Deleted %s: %s", meta_class, path)
+            print(f"Deleted {meta_class.lower()}: {path}")
+
+    def _count_nested(self, element: Any) -> int:
+        """Recursively count all elements nested within `element`."""
+        count = 0
+        for child in element.getNestedElements():
+            count += 1
+            count += self._count_nested(child)
+        return count
+
