@@ -443,8 +443,14 @@ VALID_ATTRIBUTES = {
 **Attribute setter implementation:**
 ```python
 def _set_attributes(self, package, attrs):
-    """Set validated attributes on package."""
-    # Basic attributes
+    """Set validated attributes on package using helper methods."""
+    self._set_basic_attributes(package, attrs)
+    self._set_properties(package, attrs)
+    self._set_stereotypes(package, attrs)
+    self._set_tags(package, attrs)
+
+def _set_basic_attributes(self, package, attrs):
+    """Set basic string attributes (description, display_name, etc.)."""
     if "description" in attrs:
         package.setDescription(attrs["description"])
     if "description_html" in attrs:
@@ -456,29 +462,40 @@ def _set_attributes(self, package, attrs):
     if "display_name_rtf" in attrs:
         package.setDisplayNameRTF(attrs["display_name_rtf"])
 
-    # Properties
-    if "properties" in attrs:
-        for key, val in attrs["properties"].items():
-            package.setPropertyValue(key, val)
+def _set_properties(self, package, attrs):
+    """Set custom properties."""
+    if "properties" not in attrs:
+        return
+    for key, val in attrs["properties"].items():
+        package.setPropertyValue(key, val)
 
-    # Stereotypes
-    if "stereotypes" in attrs:
-        for stereotype_name in attrs["stereotypes"]:
-            try:
-                package.addStereotype(stereotype_name, "Package")
-            except Exception as e:
-                self.logger.warning("Failed to add stereotype '%s': %s", stereotype_name, e)
+def _set_stereotypes(self, package, attrs):
+    """Apply stereotypes to package."""
+    if "stereotypes" not in attrs:
+        return
+    for stereotype_name in attrs["stereotypes"]:
+        try:
+            package.addStereotype(stereotype_name, "Package")
+        except Exception as e:
+            self.logger.warning("Failed to add stereotype '%s': %s", stereotype_name, e)
 
-    # Tags
-    if "tags" in attrs:
-        for tag_name, tag_value in attrs["tags"].items():
-            try:
-                # Note: setTagValue requires tag element, need to find or create tag first
-                # For simplicity, use setPropertyValue for simple tags
-                package.setPropertyValue(tag_name, str(tag_value))
-            except Exception as e:
-                self.logger.warning("Failed to set tag '%s': %s", tag_name, e)
+def _set_tags(self, package, attrs):
+    """Set tags on package."""
+    if "tags" not in attrs:
+        return
+    for tag_name, tag_value in attrs["tags"].items():
+        try:
+            package.setPropertyValue(tag_name, str(tag_value))
+        except Exception as e:
+            self.logger.warning("Failed to set tag '%s': %s", tag_name, e)
 ```
+
+**Benefits:**
+- Each method does one thing (single responsibility)
+- Easier to test each attribute type independently
+- Cleaner, more readable code
+- Better separation of concerns
+- Follows Python best practices for function length
 
 ## Path Validation
 
