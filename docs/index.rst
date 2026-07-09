@@ -171,6 +171,7 @@ Documentation Structure
    user_guide/connecting_to_rhapsody
    user_guide/working_with_projects
    user_guide/working_with_elements
+   user_guide/working_with_packages
    user_guide/cli_tools
 
 .. toctree::
