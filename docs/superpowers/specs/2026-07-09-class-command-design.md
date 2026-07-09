@@ -6,7 +6,7 @@
 
 ## Overview
 
-Implement a `class` command group for managing Rhapsody RPClass elements via CLI. The design mirrors the existing `package` command structure, with 5 subcommands: create, delete, view, list, and inherit.
+Implement a `class` command group for managing Rhapsody RPClass elements via CLI. The design mirrors the existing `package` command structure, with 5 subcommands: create, delete, view, list, and link.
 
 ## Architecture
 
@@ -17,7 +17,7 @@ Follows the package command pattern exactly:
 Base class with two path validation methods:
 
 - `_resolve_and_validate_package(path)` - Validates path resolves to Package (metaClass == "Package"). Used by create and list.
-- `_resolve_and_validate_class(path)` - Validates path resolves to Class (metaClass == "Class"). Used by delete, view, and inherit.
+- `_resolve_and_validate_class(path)` - Validates path resolves to Class (metaClass == "Class"). Used by delete, view, and link.
 
 Inherits from `ElementManagementAction`.
 
@@ -27,7 +27,7 @@ Inherits from `ElementManagementAction`.
 2. **ClassDeleteAction** - Delete a class via `deleteFromProject()`
 3. **ClassViewAction** - View class details in table/JSON/CSV formats
 4. **ClassListAction** - List classes in a package via `getClasses()`
-5. **ClassInheritAction** - Add/remove superclass relationships
+5. **ClassLinkAction** - Add/remove relationships between classes (generalization, association, unidirectional)
 
 ## Subcommands
 
@@ -53,7 +53,7 @@ Create one or multiple classes under a parent package.
 | `tags` | dict (key-value) | `setPropertyValue(key, val)` |
 | `operations` | array of strings | `addOperation(name)` |
 | `attributes` | array of strings | `addAttribute(name)` |
-| `superclasses` | array of strings | `addSuperclass(class)` (resolved by name lookup) |
+| `superclasses` | array of strings | `addGeneralization(class)` (resolved by name lookup) |
 
 **Bulk creation:** Supports JSON array for creating multiple classes at once.
 
@@ -86,7 +86,7 @@ Create one or multiple classes under a parent package.
 - `_set_stereotypes()` - Applies stereotypes
 - `_set_operations()` - Adds operations
 - `_set_attributes_list()` - Adds attributes
-- `_set_superclasses()` - Adds superclass relationships
+- `_set_superclasses()` - Adds generalization relationships
 
 ### delete
 
@@ -196,24 +196,34 @@ PressureSensor
 HumiditySensor
 ```
 
-### inherit
+### link
 
-Manage superclass relationships on an existing class.
+Manage relationships between classes on an existing class.
 
 **Arguments:**
 - `--path <class-path>` (required) - Class path to modify
-- `--add <class-name>` (optional) - Add a superclass by name
-- `--remove <class-name>` (optional) - Remove a superclass by name
+- `--add <class-name>` (optional) - Add a relationship to target class by name
+- `--remove <class-name>` (optional) - Remove a relationship to target class by name
+- `--type <generalization|association|unidirectional>` (optional, default: generalization) - Relationship type
+
+**Relationship Types:**
+
+| Type | COM Method (add) | COM Method (remove) |
+|------|-------------------|---------------------|
+| `generalization` | `addGeneralization(target)` | `deleteGeneralization(target)` |
+| `association` | `addRelation(target)` | `deleteRelation(target)` |
+| `unidirectional` | `addUnidirectionalRelation(target)` | `deleteRelation(target)` |
 
 **Behavior:**
-- `--add`: Resolves the superclass by name in the same package, calls `addSuperclass()`
-- `--remove`: Resolves the superclass by name, calls `deleteSuperclass()`
+- `--add`: Resolves the target class by name in the same package, calls the appropriate add method based on `--type`
+- `--remove`: Resolves the target class by name, calls the appropriate delete method based on `--type`
 - Exactly one of `--add` or `--remove` must be specified
 
 **Example:**
 ```
-rhapsody-cli class inherit --path Sensors/TemperatureSensor --add BaseSensor
-rhapsody-cli class inherit --path Sensors/TemperatureSensor --remove BaseSensor
+rhapsody-cli class link --path Sensors/TemperatureSensor --add BaseSensor
+rhapsody-cli class link --path Sensors/TemperatureSensor --add SensorInterface --type association
+rhapsody-cli class link --path Sensors/TemperatureSensor --remove BaseSensor
 ```
 
 ## Path Validation
@@ -221,7 +231,7 @@ rhapsody-cli class inherit --path Sensors/TemperatureSensor --remove BaseSensor
 All commands validate path before execution (SWR_CLS_0005):
 
 - **create, list**: Path must resolve to Package (metaClass == "Package")
-- **delete, view, inherit**: Path must resolve to Class (metaClass == "Class")
+- **delete, view, link**: Path must resolve to Class (metaClass == "Class")
 - Path resolution uses PathResolver for multi-level navigation
 - Errors raised via CliExecutionError with descriptive message
 
@@ -261,7 +271,7 @@ All class actions follow consistent error handling patterns (SWR_CLS_0010):
 - SWR_CLS_0008: Multi-Format Output
 - SWR_CLS_0009: View-to-Create Workflow
 - SWR_CLS_0010: Error Handling and Logging
-- SWR_CLS_0011: Class Inherit Command
+- SWR_CLS_0011: Class Link Command
 - SWR_CLS_0012: Boolean Flag Support
 
 ## Test Case IDs
