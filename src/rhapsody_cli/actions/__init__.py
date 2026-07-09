@@ -7,7 +7,6 @@ from rhapsody_cli.actions.element_action import (
     ElementQueryAction,
     ElementViewAction,
 )
-from rhapsody_cli.actions.io_action import IOExportAction, IOImportAction
 from rhapsody_cli.actions.project_action import (
     ProjectCloseAction,
     ProjectListAction,
@@ -21,8 +20,6 @@ __all__ = [
     "ElementDeleteAction",
     "ElementQueryAction",
     "ElementViewAction",
-    "IOExportAction",
-    "IOImportAction",
     "ProjectCloseAction",
     "ProjectListAction",
     "ProjectNewAction",

@@ -18,7 +18,7 @@ The `main()` function in `src/rhapsody_cli/cli/cli.py` shall be the main entry p
 the command-line tool. It shall read a `--output` option with choices `table`, `json`,
 `csv` (default `table`) and set the output format on a `RhapsodyContext`. It shall
 dispatch the first positional argument to one of the `AbstractCommand` subclasses:
-`ElementCommand`, `ProjectCommand`, or `IOCommand`.
+`ElementCommand` or `ProjectCommand`.
 **Implementation:** src/rhapsody_cli/cli/cli.py:main
 **Last Changed:** 2026-07-07
 
@@ -116,8 +116,8 @@ Otherwise it shall close the project via `ctx.close_project()` and print
 The `element add` command shall accept required `--type` and `--name` options and execute
 the `ElementAddAction.execute` method. It shall require an active project (else print an error and
 exit). It shall fetch the project root and dispatch on `element_type.lower()`:
-`"class"` -> `root.createClass(name)`, `"actor"` -> `root.createActor(name)`,
-`"package"` -> `root.createPackage(name)`. Unknown types shall print an error and exit.
+`"class"` -> `root.addClass(name)`, `"actor"` -> `root.addActor(name)`.
+Unknown types shall print an error and exit.
 On success it shall print `"Created {type}: {name}"`.
 **Implementation:** src/rhapsody_cli/actions/element_action.py:ElementAddAction
 **Last Changed:** 2026-07-07
@@ -155,40 +155,6 @@ with an `elements` array (each element having `name` and `type`). Otherwise it s
 a table with columns `Name` and `Type`. Exceptions are reported to stderr via
 `sys.exit(1)`.
 **Implementation:** src/rhapsody_cli/actions/element_action.py:ElementQueryAction
-**Last Changed:** 2026-07-07
-
----
-
-## SWR_CLI_00010: IO Import Command
-
-**ID:** SWR_CLI_00010
-**Title: io import command imports a model from a file
-**Status:** Implemented
-**Priority:** Low
-**Description:**
-The `io import` command shall accept a `source` argument (validated to exist) and a
-`--target` option (default `"Root"`) and execute the `IOImportAction.execute` method. It shall
-require an active project. It shall print progress messages
-(`"Importing from {source} into {target}..."`, a note about format dependency, and
-`"✓ Import completed"`). Exceptions are reported to stderr via `sys.exit(1)`.
-**Implementation:** src/rhapsody_cli/actions/io_action.py:IOImportAction
-**Last Changed:** 2026-07-07
-
----
-
-## SWR_CLI_00011: IO Export Command
-
-**ID:** SWR_CLI_00011
-**Title: io export command exports a model to a file
-**Status:** Implemented
-**Priority:** Low
-**Description:**
-The `io export` command shall accept an `output` argument (path) and a `--format` option
-(default `"xmi"`, help mentions `xmi, json`) and execute the `IOExportAction.execute` method. It
-shall require an active project. It shall print progress messages
-(`"Exporting to {output} as {format}..."`, a note about format dependency, and
-`"✓ Export completed: {output}"`). Exceptions are reported to stderr via `sys.exit(1)`.
-**Implementation:** src/rhapsody_cli/actions/io_action.py:IOExportAction
 **Last Changed:** 2026-07-07
 
 ---
@@ -262,7 +228,7 @@ Each CLI subcommand shall be implemented as a class extending `AbstractAction` (
 specialized base like `RhapsodyContextAction`, `ElementManagementAction`). Each action
 registers its own argparse subparser in `init_arguments()` and owns its execution in
 `execute(args)`. Actions shall be grouped under an `AbstractCommand` subclass
-(`ElementCommand`, `ProjectCommand`, `IOCommand`) that returns its actions from
+(`ElementCommand`, `ProjectCommand`) that returns its actions from
 `get_actions()`.
 **Implementation:** src/rhapsody_cli/actions/abstract_action.py:AbstractAction
 **Last Changed:** 2026-07-07

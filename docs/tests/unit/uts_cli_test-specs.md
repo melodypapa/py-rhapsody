@@ -485,23 +485,22 @@ Pass if exit code is 0, output is `"Project closed"`, and `close_project.call_co
 
 **ID:** UTS_CLI_00020
 **Traces-To:** SWR_CLI_00007
-**Title:** element add dispatches class/actor/package to the matching root.createX method
+**Title:** element add dispatches class/actor to the matching root.addX method
 **Type:** Unit
 **Priority:** High
 **Description:**
-Verifies that `element add --type {class|actor|package} --name N` calls `root.createClass(N)`, `root.createActor(N)`, or `root.createPackage(N)` respectively, and echoes `"Created {type}: {name}"`.
+Verifies that `element add --type {class|actor} --name N` calls `root.addClass(N)` or `root.addActor(N)` respectively, and echoes `"Created {type}: {name}"`.
 **Pre-conditions:**
-- `RhapsodyContext` patched to return a fake context whose `project` is a `MagicMock` exposing `getRoot()` returning a fake root with `createClass`/`createActor`/`createPackage` spies.
+- `RhapsodyContext` patched to return a fake context whose `project` is a `MagicMock` exposing `getRoot()` returning a fake root with `addClass`/`addActor` spies.
 - `CliRunner` available.
 **Test Steps:**
 1. Patch `RhapsodyContext` as above.
-2. Invoke `cli` with `["element","add","--type","class","--name","C1"]` and assert `root.createClass.call_args == call("C1")` and output contains `"Created class: C1"`.
-3. Invoke `cli` with `["element","add","--type","actor","--name","A1"]` and assert `root.createActor.call_args == call("A1")`.
-4. Invoke `cli` with `["element","add","--type","package","--name","P1"]` and assert `root.createPackage.call_args == call("P1")`.
+2. Invoke `cli` with `["element","add","--type","class","--name","C1"]` and assert `root.addClass.call_args == call("C1")` and output contains `"Created class: C1"`.
+3. Invoke `cli` with `["element","add","--type","actor","--name","A1"]` and assert `root.addActor.call_args == call("A1")`.
 **Expected Result:**
-Each invocation dispatches to the matching `createX` method with the supplied name and echoes the success message.
+Each invocation dispatches to the matching `addX` method with the supplied name and echoes the success message.
 **Verification Criteria:**
-Pass if all three create methods are called with the right names and the output contains the success messages.
+Pass if both add methods are called with the right names and the output contains the success messages.
 **Last Changed:** 2026-07-07
 
 ---
@@ -538,18 +537,18 @@ Pass if `createClass` is called with `"X"` then `"Y"`.
 **Type:** Unit
 **Priority:** High
 **Description:**
-Verifies that an `--type` value other than `class`/`actor`/`package` (case-insensitive) echoes `"Error: Unknown element type '{type}'"` to stderr and aborts with a non-zero exit code, without calling any `createX` method.
+Verifies that an `--type` value other than `class`/`actor` (case-insensitive) echoes `"Error: Unknown element type '{type}'"` to stderr and aborts with a non-zero exit code, without calling any `addX` method.
 **Pre-conditions:**
 - Same fake context as UTS_CLI_00020.
 - `CliRunner` available.
 **Test Steps:**
 1. Patch `RhapsodyContext` to return the fake context.
 2. Invoke `cli` with `["element","add","--type","widget","--name","X"]` via `CliRunner`.
-3. Inspect `result.exit_code` and error output; inspect call counts on `createClass`/`createActor`/`createPackage`.
+3. Inspect `result.exit_code` and error output; inspect call counts on `addClass`/`addActor`.
 **Expected Result:**
-`result.exit_code != 0`; error output contains `"Error: Unknown element type 'widget'"`; none of the `createX` methods were called.
+`result.exit_code != 0`; error output contains `"Error: Unknown element type 'widget'"`; none of the `addX` methods were called.
 **Verification Criteria:**
-Pass if exit code is non-zero, the error message matches, and no `createX` was called.
+Pass if exit code is non-zero, the error message matches, and no `addX` was called.
 **Last Changed:** 2026-07-07
 
 ---
@@ -744,153 +743,6 @@ Verifies that when `ctx.project is None`, `element query` echoes `"Error: No act
 **Test Steps:**
 1. Patch `RhapsodyContext` to return a fake context with `project = None`.
 2. Invoke `cli` with `["element","query"]` via `CliRunner`.
-3. Inspect `result.exit_code` and error output.
-**Expected Result:**
-`result.exit_code != 0`; error output contains `"No active project"`.
-**Verification Criteria:**
-Pass if exit code is non-zero and the error output contains the substring.
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00031: io import Command Happy Path
-
-**ID:** UTS_CLI_00031
-**Traces-To:** SWR_CLI_00010
-**Title:** io import echoes progress messages and "✓ Import completed"
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that `io import SOURCE [--target T]` echoes `"Importing from {source} into {target}..."`, a note about format dependency, and `"✓ Import completed"`, in order.
-**Pre-conditions:**
-- `RhapsodyContext` patched to return a fake context with `project = MagicMock()` (truthy).
-- A temp file path that exists on disk (for `click.Path(exists=True)`).
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return the fake context.
-2. Invoke `cli` with `["io","import",temp_path]` via `CliRunner`.
-3. Inspect `result.exit_code` and `result.output`.
-**Expected Result:**
-`result.exit_code == 0`; output contains `"Importing from {temp_path} into Root..."`, the format-dependency note, and `"✓ Import completed"`.
-**Verification Criteria:**
-Pass if exit code is 0 and the output contains all three expected lines (with `Root` as the default target).
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00032: io import Command Honors --target Option
-
-**ID:** UTS_CLI_00032
-**Traces-To:** SWR_CLI_00010
-**Title:** io import uses the --target value in its progress message
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that supplying `--target Packages` changes the first progress message to `"Importing from {source} into Packages..."`.
-**Pre-conditions:**
-- Same fake context as UTS_CLI_00031.
-- A temp file path that exists on disk.
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return the fake context.
-2. Invoke `cli` with `["io","import",temp_path,"--target","Packages"]` via `CliRunner`.
-3. Inspect `result.output` for the first progress message.
-**Expected Result:**
-`result.exit_code == 0`; output contains `"Importing from {temp_path} into Packages..."`.
-**Verification Criteria:**
-Pass if exit code is 0 and the output contains the expected target in the first progress message.
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00033: io import Command Requires an Active Project
-
-**ID:** UTS_CLI_00033
-**Traces-To:** SWR_CLI_00010
-**Title:** io import aborts with an error when no active project exists
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that when `ctx.project is None`, `io import` echoes `"Error: No active project"` to stderr and aborts.
-**Pre-conditions:**
-- `RhapsodyContext` patched to return a fake context with `project = None`.
-- A temp file path that exists on disk.
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return a fake context with `project = None`.
-2. Invoke `cli` with `["io","import",temp_path]` via `CliRunner`.
-3. Inspect `result.exit_code` and error output.
-**Expected Result:**
-`result.exit_code != 0`; error output contains `"No active project"`.
-**Verification Criteria:**
-Pass if exit code is non-zero and the error output contains the substring.
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00034: io export Command Happy Path
-
-**ID:** UTS_CLI_00034
-**Traces-To:** SWR_CLI_00011
-**Title:** io export echoes progress messages and "✓ Export completed: {output}"
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that `io export OUTPUT [--format F]` echoes `"Exporting to {output} as {format}..."`, a note about format dependency, and `"✓ Export completed: {output}"`, in order.
-**Pre-conditions:**
-- `RhapsodyContext` patched to return a fake context with `project = MagicMock()` (truthy).
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return the fake context.
-2. Invoke `cli` with `["io","export","out.xmi"]` via `CliRunner`.
-3. Inspect `result.exit_code` and `result.output`.
-**Expected Result:**
-`result.exit_code == 0`; output contains `"Exporting to out.xmi as xmi..."`, the format-dependency note, and `"✓ Export completed: out.xmi"`.
-**Verification Criteria:**
-Pass if exit code is 0 and the output contains all three expected lines (with `xmi` as the default format).
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00035: io export Command Honors --format Option
-
-**ID:** UTS_CLI_00035
-**Traces-To:** SWR_CLI_00011
-**Title:** io export uses the --format value in its progress message
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that supplying `--format json` changes the first progress message to `"Exporting to {output} as json..."`.
-**Pre-conditions:**
-- Same fake context as UTS_CLI_00034.
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return the fake context.
-2. Invoke `cli` with `["io","export","out.json","--format","json"]` via `CliRunner`.
-3. Inspect `result.output` for the first progress message.
-**Expected Result:**
-`result.exit_code == 0`; output contains `"Exporting to out.json as json..."`.
-**Verification Criteria:**
-Pass if exit code is 0 and the output contains the expected format in the first progress message.
-**Last Changed:** 2026-07-07
-
----
-
-## UTS_CLI_00036: io export Command Requires an Active Project
-
-**ID:** UTS_CLI_00036
-**Traces-To:** SWR_CLI_00011
-**Title:** io export aborts with an error when no active project exists
-**Type:** Unit
-**Priority:** Low
-**Description:**
-Verifies that when `ctx.project is None`, `io export` echoes `"Error: No active project"` to stderr and aborts.
-**Pre-conditions:**
-- `RhapsodyContext` patched to return a fake context with `project = None`.
-- `CliRunner` available.
-**Test Steps:**
-1. Patch `RhapsodyContext` to return a fake context with `project = None`.
-2. Invoke `cli` with `["io","export","out.xmi"]` via `CliRunner`.
 3. Inspect `result.exit_code` and error output.
 **Expected Result:**
 `result.exit_code != 0`; error output contains `"No active project"`.
@@ -1099,13 +951,13 @@ Pass if `table` is called three times with the expected headers/rows in each cas
 **Type:** Unit
 **Priority:** Medium
 **Description:**
-Verifies that every concrete command class (`OpenProjectCommand`, `ListProjectsCommand`, `CloseProjectCommand`, `AddElementCommand`, `ViewElementCommand`, `QueryElementCommand`, `ImportCommand`, `ExportCommand`) is a subclass of `click.Command` (directly or via `BaseProjectCommand`/`BaseElementCommand`/`BaseIOCommand`), and that those base classes themselves subclass `click.Command`.
+Verifies that every concrete command class (`OpenProjectCommand`, `ListProjectsCommand`, `CloseProjectCommand`, `AddElementCommand`, `ViewElementCommand`, `QueryElementCommand`) is a subclass of `click.Command` (directly or via `BaseProjectCommand`/`BaseElementCommand`), and that those base classes themselves subclass `click.Command`.
 **Pre-conditions:**
 - All command modules imported.
 **Test Steps:**
-1. Import each command class and the three base classes.
-2. Assert `issubclass(BaseProjectCommand, click.Command)`, `issubclass(BaseElementCommand, click.Command)`, `issubclass(BaseIOCommand, click.Command)`.
-3. Assert each of the eight concrete command classes is a subclass of `click.Command` (and the appropriate base).
+1. Import each command class and the two base classes.
+2. Assert `issubclass(BaseProjectCommand, click.Command)`, `issubclass(BaseElementCommand, click.Command)`.
+3. Assert each of the six concrete command classes is a subclass of `click.Command` (and the appropriate base).
 **Expected Result:**
 All base classes subclass `click.Command`; all concrete commands subclass their respective base (and transitively `click.Command`).
 **Verification Criteria:**
