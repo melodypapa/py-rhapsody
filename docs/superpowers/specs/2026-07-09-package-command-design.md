@@ -141,18 +141,43 @@ class PackageDeleteAction(AbstractPackageAction):
 
 **Arguments:**
 - `--path <parent-path>` - Parent package path (required, must be Package)
-- `attributes` - JSON hash or array (positional argument, required)
+- `attributes` - JSON data: inline JSON string OR path to external JSON file (required)
+
+**Detection logic:**
+- If argument starts with `{` or `[`: treated as inline JSON
+- If argument is a file path (exists on disk): read and parse as JSON
+- Otherwise: raise error
 
 **Examples:**
 ```bash
-# Single package
+# Inline JSON - single package
 package create --path Sensors '{"name":"TempSensors","description":"Temperature sensors"}'
 
-# Multiple packages (bulk)
+# Inline JSON - multiple packages (bulk)
 package create --path Sensors '[{"name":"TempSensors","description":"Temperature"},{"name":"PressureSensors","description":"Pressure"}]'
 
-# With properties
-package create --path Main '{"name":"Subsystem","description":"Main subsystem","properties":{"visibility":"public"}}'
+# External JSON file - single package
+package create --path Sensors --file packages.json
+
+# External JSON file - multiple packages
+package create --path Main --file subsystems.json
+```
+
+**External JSON file format:**
+```json
+[
+  {
+    "name": "TempSensors",
+    "description": "Temperature sensors package",
+    "properties": {
+      "visibility": "public"
+    }
+  },
+  {
+    "name": "PressureSensors",
+    "description": "Pressure sensors package"
+  }
+]
 ```
 
 **Implementation:**
@@ -166,15 +191,12 @@ class PackageCreateAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("create", help="Create a package")
         parser.add_argument("--path", required=True, help="Parent package path")
-        parser.add_argument("attributes", help="JSON hash or array with package attributes (name required)")
+        parser.add_argument("attributes", help="JSON data (inline JSON string or path to JSON file)")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
-        # Parse JSON
-        try:
-            data = json.loads(args.attributes)
-        except json.JSONDecodeError as e:
-            raise CliExecutionError(f"Invalid JSON: {e}")
+        # Parse JSON data (inline or from file)
+        data = self._load_json_data(args.attributes)
 
         packages_data = data if isinstance(data, list) else [data]
 
@@ -214,6 +236,38 @@ class PackageCreateAction(AbstractPackageAction):
             raise CliExecutionError(f"Created 0/{len(packages_data)} packages; all failed")
         elif errors:
             self.logger.info("Created %d/%d packages with %d error(s)", len(created), len(packages_data), len(errors))
+
+    def _load_json_data(self, attributes_input: str) -> Any:
+        """Load JSON data from inline string or external file.
+
+        Args:
+            attributes_input: Inline JSON string or file path
+
+        Returns:
+            Parsed JSON data (hash or array)
+
+        Raises:
+            CliExecutionError: If JSON invalid or file not found
+        """
+        # Check if inline JSON (starts with { or [)
+        if attributes_input.startswith("{") or attributes_input.startswith("["):
+            try:
+                return json.loads(attributes_input)
+            except json.JSONDecodeError as e:
+                raise CliExecutionError(f"Invalid inline JSON: {e}")
+
+        # Otherwise treat as file path
+        import os
+        if not os.path.exists(attributes_input):
+            raise CliExecutionError(f"File not found: {attributes_input}")
+
+        try:
+            with open(attributes_input, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError as e:
+            raise CliExecutionError(f"Invalid JSON in file '{attributes_input}': {e}")
+        except OSError as e:
+            raise CliExecutionError(f"Failed to read file '{attributes_input}': {e}")
 ```
 
 ### 2. package delete
@@ -511,11 +565,17 @@ digraph errors {
 **Test structure:**
 ```python
 class TestPackageCreateAction:
-    def test_create_single_package(self, mock_project):
-        # Test single package creation
+    def test_create_single_package_inline_json(self, mock_project):
+        # Test single package creation with inline JSON
 
-    def test_create_bulk_packages(self, mock_project):
-        # Test array of packages
+    def test_create_bulk_packages_inline_json(self, mock_project):
+        # Test array of packages with inline JSON
+
+    def test_create_single_package_from_file(self, mock_project, tmp_path):
+        # Test single package creation from external JSON file
+
+    def test_create_bulk_packages_from_file(self, mock_project, tmp_path):
+        # Test array of packages from external JSON file
 
     def test_create_with_attributes(self, mock_project):
         # Test attribute setting
@@ -529,8 +589,14 @@ class TestPackageCreateAction:
     def test_create_missing_name(self, mock_project):
         # Test error when name not in attributes
 
-    def test_create_invalid_json(self, mock_project):
-        # Test JSON parse error
+    def test_create_invalid_inline_json(self, mock_project):
+        # Test inline JSON parse error
+
+    def test_create_file_not_found(self, mock_project):
+        # Test error when external file not found
+
+    def test_create_invalid_json_in_file(self, mock_project, tmp_path):
+        # Test JSON parse error in external file
 
 class TestPackageDeleteAction:
     def test_delete_package(self, mock_project):
