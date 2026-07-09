@@ -45,15 +45,11 @@ class AbstractPackageAction(ElementManagementAction):
             CliExecutionError: If path not found or not a Package.
         """
         root = self._get_active_root()
-        container = self._resolve_container_or_element(
-            root, path, resolve_element=False, operation=f"resolve package path '{path}'"
-        )
+        container = self._resolve_container_or_element(root, path, resolve_element=False, operation=f"resolve package path '{path}'")
 
         meta_class = container.getMetaClass()
         if meta_class != "Package":
-            raise CliExecutionError(
-                f"Path '{path}' does not resolve to a Package (found {meta_class})"
-            )
+            raise CliExecutionError(f"Path '{path}' does not resolve to a Package (found {meta_class})")
 
         return container
 
@@ -68,9 +64,15 @@ class PackageCreateAction(AbstractPackageAction):
     """
 
     VALID_ATTRIBUTES = {
-        "name", "description", "description_html", "description_rtf",
-        "display_name", "display_name_rtf", "properties",
-        "stereotypes", "tags",
+        "name",
+        "description",
+        "description_html",
+        "description_rtf",
+        "display_name",
+        "display_name_rtf",
+        "properties",
+        "stereotypes",
+        "tags",
     }
 
     def __init__(self) -> None:
