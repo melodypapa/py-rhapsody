@@ -141,11 +141,13 @@ class PackageDeleteAction(AbstractPackageAction):
 
 **Arguments:**
 - `--path <parent-path>` - Parent package path (required, must be Package)
-- `attributes` - JSON data: inline JSON string OR path to external JSON file (required)
+- `--input <json-file>` - JSON file with package attributes (optional, can also use inline JSON)
+- `attributes` - JSON data: inline JSON string OR path to external JSON file (required if --input not specified)
 
 **Detection logic:**
-- If argument starts with `{` or `[`: treated as inline JSON
-- If argument is a file path (exists on disk): read and parse as JSON
+- If `--input` specified: read from file
+- If positional argument starts with `{` or `[`: treated as inline JSON
+- If positional argument is a file path (exists on disk): read and parse as JSON
 - Otherwise: raise error
 
 **Examples:**
@@ -156,11 +158,14 @@ rhapsody-cli package create --path Sensors '{"name":"TempSensors","description":
 # Inline JSON - multiple packages (bulk)
 rhapsody-cli package create --path Sensors '[{"name":"TempSensors","description":"Temperature"},{"name":"PressureSensors","description":"Pressure"}]'
 
-# External JSON file
+# External JSON file (positional)
 rhapsody-cli package create --path Sensors packages.json
 
+# External JSON file (--input flag)
+rhapsody-cli package create --path Sensors --input packages.json
+
 # Reuse exported package JSON
-rhapsody-cli package view --path Sensors/TempSensors --output json --file package.json
+rhapsody-cli package view --path Sensors/TempSensors --format json --output package.json
 rhapsody-cli package create --path NewSensors package.json
 ```
 
@@ -195,12 +200,18 @@ class PackageCreateAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("create", help="Create a package")
         parser.add_argument("--path", required=True, help="Parent package path")
-        parser.add_argument("attributes", help="JSON data (inline JSON string or path to JSON file)")
+        parser.add_argument("--input", help="JSON file with package attributes")
+        parser.add_argument("attributes", nargs="?", help="Inline JSON or JSON file path (if --input not specified)")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
-        # Parse JSON data (inline or from file)
-        data = self._load_json_data(args.attributes)
+        # Load JSON data (from --input flag or positional argument)
+        if args.input:
+            data = self._load_json_data(args.input)
+        elif args.attributes:
+            data = self._load_json_data(args.attributes)
+        else:
+            raise CliExecutionError("Either --input or attributes argument must be provided")
 
         packages_data = data if isinstance(data, list) else [data]
 
@@ -312,7 +323,8 @@ class PackageDeleteAction(AbstractPackageAction):
 
 **Arguments:**
 - `--path <package-path>` - Package path to view (required, must be Package)
-- `--file <output-file>` - Write output to file instead of stdout (optional)
+- `--format <format>` - Output format: table, json, csv (optional, default: table)
+- `--output <output-file>` - Write output to file instead of stdout (optional)
 
 **Example:**
 ```bash
@@ -320,22 +332,22 @@ class PackageDeleteAction(AbstractPackageAction):
 rhapsody-cli package view --path Sensors
 
 # JSON output to file
-rhapsody-cli package view --path Sensors --output json --file package.json
+rhapsody-cli package view --path Sensors --format json --output package.json
 
 # CSV output to file
-rhapsody-cli package view --path Sensors/TemperatureSensors --output csv --file package.csv
+rhapsody-cli package view --path Sensors/TemperatureSensors --format csv --output package.csv
 ```
 
 **Output formats:**
 - **Default**: Table format (human-readable)
-- **JSON**: Via global `--output json` flag (machine-parsable)
-- **CSV**: Via global `--output csv` flag (spreadsheet-friendly)
+- **JSON**: Via `--format json` (machine-parsable)
+- **CSV**: Via `--format csv` (spreadsheet-friendly)
 
 **Workflow: View → Create**
 The JSON output from `view` can be used as input for `create`:
 ```bash
 # Export package to JSON file
-rhapsody-cli package view --path Sensors/TempSensors --output json --file package.json
+rhapsody-cli package view --path Sensors/TempSensors --format json --output package.json
 
 # Edit package.json (modify name, description, etc.)
 
@@ -347,7 +359,7 @@ The create command ignores extra fields from view output (guid, metaClass, fullP
 
 **Output behavior:**
 - Default: Output to stdout (console)
-- With `--file`: Write to specified file (creates/overwrites)
+- With `--output`: Write to specified file (creates/overwrites)
 - All output goes to stdout or file (not logger) for safe use in scripts
 
 **Implementation:**
@@ -356,7 +368,8 @@ class PackageViewAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("view", help="View package details")
         parser.add_argument("--path", required=True, help="Package path to view")
-        parser.add_argument("--file", help="Write output to file instead of stdout")
+        parser.add_argument("--format", choices=["table", "json", "csv"], default="table", help="Output format")
+        parser.add_argument("--output", help="Write output to file instead of stdout")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
@@ -389,22 +402,23 @@ class PackageViewAction(AbstractPackageAction):
             ]
 
             # Format output
-            output = self._format_output(data, table_rows)
+            output = self._format_output(data, table_rows, args.format)
 
             # Write to file or stdout
-            if args.file:
-                self._write_to_file(args.file, output)
-                self.logger.info("Wrote package details to: %s", args.file)
+            if args.output:
+                self._write_to_file(args.output, output)
+                self.logger.info("Wrote package details to: %s", args.output)
             else:
                 print(output)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to view package '{args.path}'")
 
-    def _format_output(self, data, table_rows):
-        """Format output based on global --output flag."""
-        ctx = self._context
-        if ctx.output_format == "json":
+    def _format_output(self, data, table_rows, format_type):
+        """Format output based on format parameter."""
+        if format_type == "json":
             return OutputFormatter.json_format(data)
+        elif format_type == "csv":
+            return OutputFormatter.csv_format(["Property", "Value"], table_rows)
         else:
             return OutputFormatter.table(["Property", "Value"], table_rows)
 
@@ -423,7 +437,8 @@ class PackageViewAction(AbstractPackageAction):
 
 **Arguments:**
 - `--path <package-path>` - Package path (required, must be Package)
-- `--file <output-file>` - Write output to file instead of stdout (optional)
+- `--format <format>` - Output format: table, json, csv (optional, default: table)
+- `--output <output-file>` - Write output to file instead of stdout (optional)
 
 **Example:**
 ```bash
@@ -431,20 +446,20 @@ class PackageViewAction(AbstractPackageAction):
 rhapsody-cli package items --path Sensors
 
 # JSON output to file
-rhapsody-cli package items --path Sensors --output json --file items.json
+rhapsody-cli package items --path Sensors --format json --output items.json
 
 # CSV output to file
-rhapsody-cli package items --path Sensors --output csv --file items.csv
+rhapsody-cli package items --path Sensors --format csv --output items.csv
 ```
 
 **Output formats:**
 - **Default**: Table format (Type, Name columns)
-- **JSON**: Array of objects with type and name fields
-- **CSV**: Type,Name columns
+- **JSON**: Via `--format json` - Array of objects with type and name fields
+- **CSV**: Via `--format csv` - Type,Name columns
 
 **Output behavior:**
 - Default: Output to stdout (console)
-- With `--file`: Write to specified file (creates/overwrites)
+- With `--output`: Write to specified file (creates/overwrites)
 - All output goes to stdout or file (not logger) for safe use in scripts
 
 **Implementation:**
@@ -453,7 +468,8 @@ class PackageItemsAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("items", help="List children items in a package")
         parser.add_argument("--path", required=True, help="Package path")
-        parser.add_argument("--file", help="Write output to file instead of stdout")
+        parser.add_argument("--format", choices=["table", "json", "csv"], default="table", help="Output format")
+        parser.add_argument("--output", help="Write output to file instead of stdout")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
@@ -478,22 +494,23 @@ class PackageItemsAction(AbstractPackageAction):
             table_rows = [[item["type"], item["name"]] for item in items]
 
             # Format output
-            output = self._format_output(items, table_rows)
+            output = self._format_output(items, table_rows, args.format)
 
             # Write to file or stdout
-            if args.file:
-                self._write_to_file(args.file, output)
-                self.logger.info("Wrote %d items to: %s", len(items), args.file)
+            if args.output:
+                self._write_to_file(args.output, output)
+                self.logger.info("Wrote %d items to: %s", len(items), args.output)
             else:
                 print(output)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to list items in package '{args.path}'")
 
-    def _format_output(self, items, table_rows):
-        """Format output based on global --output flag."""
-        ctx = self._context
-        if ctx.output_format == "json":
+    def _format_output(self, items, table_rows, format_type):
+        """Format output based on format parameter."""
+        if format_type == "json":
             return OutputFormatter.json_format(items)
+        elif format_type == "csv":
+            return OutputFormatter.csv_format(["Type", "Name"], table_rows)
         else:
             return OutputFormatter.table(["Type", "Name"], table_rows)
 
