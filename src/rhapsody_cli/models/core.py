@@ -31,10 +31,10 @@ class AbstractRPModelElement:
     #: wrapper class that should represent it. Populated by each element module
     #: at import time via ``register_wrapper``. Unmapped meta classes fall back
     #: to ``RPModelElement`` in ``wrap()``.
-    _WRAPPER_REGISTRY: Dict[str, Type["AbstractRPModelElement"]] = {}
+    _WRAPPER_REGISTRY: Dict[str, Type["RPModelElement"]] = {}
 
     @classmethod
-    def register_wrapper(cls, meta_class: str, wrapper_cls: Type["AbstractRPModelElement"]) -> None:
+    def register_wrapper(cls, meta_class: str, wrapper_cls: Type["RPModelElement"]) -> None:
         """Register ``wrapper_cls`` as the wrapper for COM objects of ``meta_class``."""
         cls._WRAPPER_REGISTRY[meta_class] = wrapper_cls
 
@@ -58,7 +58,7 @@ class AbstractRPModelElement:
         return value
 
     @classmethod
-    def wrap(cls, com_obj: Any) -> "AbstractRPModelElement":
+    def wrap(cls, com_obj: Any) -> "RPModelElement":
         """Wrap a raw Rhapsody COM model element in its matching wrapper class."""
         meta_class = str(cls._get_method_or_property(com_obj, "getMetaClass", "metaClass"))
         wrapper_cls = cls._WRAPPER_REGISTRY.get(meta_class, RPModelElement)
@@ -92,7 +92,7 @@ class AbstractRPModelElement:
 
 
 # Module-level convenience functions for backward compatibility
-def register_wrapper(meta_class: str, wrapper_cls: Type["AbstractRPModelElement"]) -> None:
+def register_wrapper(meta_class: str, wrapper_cls: Type["RPModelElement"]) -> None:
     """Register ``wrapper_cls`` as the wrapper for COM objects of ``meta_class``.
 
     Backward compatibility wrapper that delegates to AbstractRPModelElement.register_wrapper().
@@ -116,7 +116,7 @@ def _wrap_if_element(value: Any) -> Any:
     return AbstractRPModelElement._wrap_if_element(value)
 
 
-def wrap(com_obj: Any) -> "AbstractRPModelElement":
+def wrap(com_obj: Any) -> "RPModelElement":
     """Wrap a raw Rhapsody COM model element in its matching wrapper class.
 
     Backward compatibility wrapper that delegates to AbstractRPModelElement.wrap().
