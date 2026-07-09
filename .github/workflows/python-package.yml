@@ -35,11 +35,6 @@ jobs:
       run: |
         black --check src/ tests/
     - name: Type check with mypy
-      # Run once, on the interpreter matching pyproject.toml's [tool.mypy] python_version.
-      # Newer mypy releases refuse to type-check as an unsupported target version, and pip
-      # resolves a different mypy version per interpreter, so running this on every matrix
-      # leg is both redundant and version-fragile.
-      if: matrix.python-version == '3.9'
       run: |
         mypy src/ tests/
     - name: Test with pytest
