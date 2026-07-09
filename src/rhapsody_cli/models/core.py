@@ -1,10 +1,11 @@
 """Core wrapping machinery shared by all rhapsody_cli element wrappers.
 
 ``call_com`` translates COM failures into ``RhapsodyRuntimeException``.
-``RPModelElement`` is the base class for every wrapped Rhapsody model
+``AbstractRPModelElement`` is the abstract base class providing common utilities.
+``RPModelElement`` is the base interface for every wrapped Rhapsody model
 element, mirroring ``com.telelogic.rhapsody.core.IRPModelElement``.
-``wrap()`` (added in Task 5) dispatches a raw COM object to its matching
-wrapper class using a registry populated by each element module.
+``wrap()`` dispatches a raw COM object to its matching wrapper class using
+a registry populated by each element module at import time.
 """
 
 from enum import IntEnum
@@ -19,71 +20,127 @@ except ImportError:  # pragma: no cover - pywintypes is Windows-only
 
 T = TypeVar("T")
 
-#: Maps a Rhapsody ``getMetaClass()`` string (e.g. "Class", "Package") to the
-#: wrapper class that should represent it. Populated by each element module
-#: at import time via ``register_wrapper``. Unmapped meta classes fall back
-#: to ``RPModelElement`` in ``wrap()`` (Task 5).
-_WRAPPER_REGISTRY: Dict[str, Type["RPModelElement"]] = {}
+
+class AbstractRPModelElement:
+    """Abstract base class providing common utilities for all Rhapsody element wrappers.
+
+    Implements class methods for COM interaction, element wrapping, and registry management.
+    """
+
+    #: Maps a Rhapsody ``getMetaClass()`` string (e.g. "Class", "Package") to the
+    #: wrapper class that should represent it. Populated by each element module
+    #: at import time via ``register_wrapper``. Unmapped meta classes fall back
+    #: to ``RPModelElement`` in ``wrap()``.
+    _WRAPPER_REGISTRY: Dict[str, Type["AbstractRPModelElement"]] = {}
+
+    @classmethod
+    def register_wrapper(cls, meta_class: str, wrapper_cls: Type["AbstractRPModelElement"]) -> None:
+        """Register ``wrapper_cls`` as the wrapper for COM objects of ``meta_class``."""
+        cls._WRAPPER_REGISTRY[meta_class] = wrapper_cls
+
+    @classmethod
+    def call_com(cls, func: Callable[[], T]) -> T:
+        """Invoke a COM call, translating COM errors into RhapsodyRuntimeException."""
+        try:
+            return func()
+        except Exception as exc:
+            # pywintypes is Windows-only; on other platforms there is no live COM
+            # connection so a com_error cannot occur here.
+            if pywintypes is not None and isinstance(exc, pywintypes.com_error):
+                raise RhapsodyRuntimeException(str(exc)) from exc
+            raise
+
+    @classmethod
+    def _wrap_if_element(cls, value: Any) -> Any:
+        """Wrap ``value`` if it looks like a Rhapsody model element."""
+        if hasattr(value, "getMetaClass") or hasattr(value, "metaClass"):
+            return cls.wrap(value)
+        return value
+
+    @classmethod
+    def wrap(cls, com_obj: Any) -> "AbstractRPModelElement":
+        """Wrap a raw Rhapsody COM model element in its matching wrapper class."""
+        meta_class = str(cls._get_method_or_property(com_obj, "getMetaClass", "metaClass"))
+        wrapper_cls = cls._WRAPPER_REGISTRY.get(meta_class, RPModelElement)
+        return wrapper_cls(com_obj)
+
+    @classmethod
+    def _get_method_or_property(cls, com_obj: Any, method_name: str, prop_name: str) -> Any:
+        """Read a value from ``com_obj``, preferring the Java-style method.
+
+        Some Rhapsody COM automation Prog IDs (e.g. the Java-mirroring
+        ``Rhapsody.Application``) expose model element attributes as methods
+        (``getName()``, ``getGUID()``, ...), while others (e.g.
+        ``Rhapsody2.Application.1``) expose the same data as bare COM
+        properties (``name``, ``GUID``, ...). Prefer the method when present,
+        and fall back to the bare property otherwise.
+        """
+        if hasattr(com_obj, method_name):
+            return cls.call_com(lambda: getattr(com_obj, method_name)())
+        return cls.call_com(lambda: getattr(com_obj, prop_name))
+
+    @classmethod
+    def _set_method_or_property(cls, com_obj: Any, method_name: str, prop_name: str, value: Any) -> None:
+        """Write a value to ``com_obj``, preferring the Java-style setter method.
+
+        See :func:`_get_method_or_property` for why both forms exist.
+        """
+        if hasattr(com_obj, method_name):
+            cls.call_com(lambda: getattr(com_obj, method_name)(value))
+        else:
+            cls.call_com(lambda: setattr(com_obj, prop_name, value))
 
 
-def register_wrapper(meta_class: str, wrapper_cls: Type["RPModelElement"]) -> None:
-    """Register ``wrapper_cls`` as the wrapper for COM objects of ``meta_class``."""
-    _WRAPPER_REGISTRY[meta_class] = wrapper_cls
+# Module-level convenience functions for backward compatibility
+def register_wrapper(meta_class: str, wrapper_cls: Type["AbstractRPModelElement"]) -> None:
+    """Register ``wrapper_cls`` as the wrapper for COM objects of ``meta_class``.
+
+    Backward compatibility wrapper that delegates to AbstractRPModelElement.register_wrapper().
+    """
+    AbstractRPModelElement.register_wrapper(meta_class, wrapper_cls)
 
 
 def call_com(func: Callable[[], T]) -> T:
-    """Invoke a COM call, translating COM errors into RhapsodyRuntimeException."""
-    try:
-        return func()
-    except Exception as exc:
-        # pywintypes is Windows-only; on other platforms there is no live COM
-        # connection so a com_error cannot occur here.
-        if pywintypes is not None and isinstance(exc, pywintypes.com_error):
-            raise RhapsodyRuntimeException(str(exc)) from exc
-        raise
+    """Invoke a COM call, translating COM errors into RhapsodyRuntimeException.
+
+    Backward compatibility wrapper that delegates to AbstractRPModelElement.call_com().
+    """
+    return AbstractRPModelElement.call_com(func)
 
 
 def _wrap_if_element(value: Any) -> Any:
-    """Wrap ``value`` if it looks like a Rhapsody model element."""
-    if hasattr(value, "getMetaClass") or hasattr(value, "metaClass"):
-        return wrap(value)
-    return value
+    """Wrap ``value`` if it looks like a Rhapsody model element.
+
+    Backward compatibility wrapper that delegates to AbstractRPModelElement._wrap_if_element().
+    """
+    return AbstractRPModelElement._wrap_if_element(value)
 
 
-def wrap(com_obj: Any) -> "RPModelElement":
-    """Wrap a raw Rhapsody COM model element in its matching wrapper class."""
-    meta_class = str(_get_method_or_property(com_obj, "getMetaClass", "metaClass"))
-    wrapper_cls = _WRAPPER_REGISTRY.get(meta_class, RPModelElement)
-    return wrapper_cls(com_obj)
+def wrap(com_obj: Any) -> "AbstractRPModelElement":
+    """Wrap a raw Rhapsody COM model element in its matching wrapper class.
+
+    Backward compatibility wrapper that delegates to AbstractRPModelElement.wrap().
+    """
+    return AbstractRPModelElement.wrap(com_obj)
 
 
 def _get_method_or_property(com_obj: Any, method_name: str, prop_name: str) -> Any:
     """Read a value from ``com_obj``, preferring the Java-style method.
 
-    Some Rhapsody COM automation Prog IDs (e.g. the Java-mirroring
-    ``Rhapsody.Application``) expose model element attributes as methods
-    (``getName()``, ``getGUID()``, ...), while others (e.g.
-    ``Rhapsody2.Application.1``) expose the same data as bare COM
-    properties (``name``, ``GUID``, ...). Prefer the method when present,
-    and fall back to the bare property otherwise.
+    Backward compatibility wrapper that delegates to AbstractRPModelElement._get_method_or_property().
     """
-    if hasattr(com_obj, method_name):
-        return call_com(lambda: getattr(com_obj, method_name)())
-    return call_com(lambda: getattr(com_obj, prop_name))
+    return AbstractRPModelElement._get_method_or_property(com_obj, method_name, prop_name)
 
 
 def _set_method_or_property(com_obj: Any, method_name: str, prop_name: str, value: Any) -> None:
     """Write a value to ``com_obj``, preferring the Java-style setter method.
 
-    See :func:`_get_method_or_property` for why both forms exist.
+    Backward compatibility wrapper that delegates to AbstractRPModelElement._set_method_or_property().
     """
-    if hasattr(com_obj, method_name):
-        call_com(lambda: getattr(com_obj, method_name)(value))
-    else:
-        call_com(lambda: setattr(com_obj, prop_name, value))
+    AbstractRPModelElement._set_method_or_property(com_obj, method_name, prop_name, value)
 
 
-class RPModelElement:
+class RPModelElement(AbstractRPModelElement):
     """Wraps ``IRPModelElement``: the base interface for all model elements.
 
     Method names mirror the Rhapsody Java API exactly (``getName``,
