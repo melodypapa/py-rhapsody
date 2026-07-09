@@ -6,7 +6,7 @@
 
 **Architecture:** Follows existing element/project command patterns. Uses AbstractPackageAction base class for common path validation and error handling. Supports bulk operations, external JSON input, and multi-format output.
 
-**Tech Stack:** Python 3.8+, click CLI framework, Rhapsody COM API wrapper, pytest for testing, Sphinx for documentation.
+**Tech Stack:** Python 3.8+, argparse CLI framework, Rhapsody COM API wrapper, pytest for testing.
 
 ## Global Constraints
 
@@ -40,134 +40,193 @@
 ### Task 1: Document Package Command Requirements
 
 **Files:**
-- Modify: `docs/requirements.rst`
+- Create: `docs/requirements/swr_pkg_requirements.md`
 
 **Requirement IDs to add:**
 
-```restructuredtext
-Package Command Requirements
-=============================
+Create `docs/requirements/swr_pkg_requirements.md`:
 
-REQ-PKG-001: Package Create Command
------------------------------------
-The CLI shall provide a ``package create`` command to create one or multiple packages.
+```markdown
+# Software Requirements - Package Command
 
-- SHALL accept ``--path <parent-path>`` argument (required)
-- SHALL accept ``--input <json-file>`` argument (optional)
-- SHALL accept positional ``attributes`` argument (inline JSON or file path)
-- SHALL support bulk creation via JSON array
-- SHALL validate parent path resolves to Package element
-- SHALL create nested packages under parent
-- SHALL set validated attributes (name, description, properties, stereotypes, tags)
-- SHALL skip unknown attributes with warning log
-- SHALL log created packages to stderr
-- SHALL report errors if any package creation fails
+**Category:** Package Command
+**Prefix:** SWR_PKG
+**Source:** Extracted from spec
+**Last Validated:** 2026-07-09
 
-REQ-PKG-002: Package Delete Command
------------------------------------
-The CLI shall provide a ``package delete`` command to delete a package.
+---
 
-- SHALL accept ``--path <package-path>`` argument (required)
-- SHALL validate path resolves to Package element
-- SHALL delete package and all contents
-- SHALL log deletion to stderr
+## SWR_PKG_00001: Package Create Command
 
-REQ-PKG-003: Package View Command
-----------------------------------
-The CLI shall provide a ``package view`` command to view package details.
+**ID:** SWR_PKG_00001
+**Title:** package create command creates one or multiple packages
+**Status:** Planned
+**Priority:** High
+**Description:**
+The CLI shall provide a `package create` command to create one or multiple packages.
+The command SHALL accept `--path <parent-path>` argument (required), `--input <json-file>`
+argument (optional), and positional `attributes` argument (inline JSON or file path).
+SHALL support bulk creation via JSON array. SHALL validate parent path resolves to
+Package element. SHALL create nested packages under parent. SHALL set validated
+attributes (name, description, properties, stereotypes, tags). SHALL skip unknown
+attributes with warning log.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction
+**Last Changed:** 2026-07-09
 
-- SHALL accept ``--path <package-path>`` argument (required)
-- SHALL accept ``--format <format>`` argument (table/json/csv, default: table)
-- SHALL accept ``--output <file>`` argument (optional)
-- SHALL display package properties: name, GUID, description, metaClass, fullPath
-- SHALL support table, JSON, and CSV output formats
-- SHALL write to file if ``--output`` specified, else stdout
+---
 
-REQ-PKG-004: Package List Command
-----------------------------------
-The CLI shall provide a ``package list`` command to list nested packages.
+## SWR_PKG_00002: Package Delete Command
 
-- SHALL accept ``--path <package-path>`` argument (required)
-- SHALL accept ``--format <format>`` argument (table/json/csv, default: table)
-- SHALL accept ``--output <file>`` argument (optional)
-- SHALL list all nested packages under parent
-- SHALL support table, JSON, and CSV output formats
-- SHALL write to file if ``--output`` specified, else stdout
+**ID:** SWR_PKG_00002
+**Title:** package delete command deletes a package
+**Status:** Planned
+**Priority:** High
+**Description:**
+The CLI shall provide a `package delete` command to delete a package.
+SHALL accept `--path <package-path>` argument (required). SHALL validate path resolves
+to Package element. SHALL delete package and all contents. SHALL log deletion to stderr.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageDeleteAction
+**Last Changed:** 2026-07-09
 
-REQ-PKG-005: Path Validation
------------------------------
+---
+
+## SWR_PKG_00003: Package View Command
+
+**ID:** SWR_PKG_00003
+**Title:** package view command displays package details
+**Status:** Planned
+**Priority:** High
+**Description:**
+The CLI shall provide a `package view` command to view package details.
+SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
+argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
+SHALL display package properties: name, GUID, description, metaClass, fullPath.
+SHALL support table, JSON, and CSV output formats. SHALL write to file if `--output`
+specified, else stdout.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction
+**Last Changed:** 2026-07-09
+
+---
+
+## SWR_PKG_00004: Package List Command
+
+**ID:** SWR_PKG_00004
+**Title:** package list command lists nested packages
+**Status:** Planned
+**Priority:** High
+**Description:**
+The CLI shall provide a `package list` command to list nested packages.
+SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
+argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
+SHALL list all nested packages under parent. SHALL support table, JSON, and CSV output
+formats. SHALL write to file if `--output` specified, else stdout.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageListAction
+**Last Changed:** 2026-07-09
+
+---
+
+## SWR_PKG_00005: Path Validation
+
+**ID:** SWR_PKG_00005
+**Title:** All package commands validate path before execution
+**Status:** Planned
+**Priority:** High
+**Description:**
 All package commands SHALL validate path before execution.
+SHALL resolve path using PathResolver. SHALL verify element at path is Package type
+(metaClass == "Package"). SHALL raise error if path not found. SHALL raise error if
+path not Package.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction._resolve_and_validate_package
+**Last Changed:** 2026-07-09
 
-- SHALL resolve path using PathResolver
-- SHALL verify element at path is Package type (metaClass == "Package")
-- SHALL raise error if path not found
-- SHALL raise error if path not Package
+---
 
-REQ-PKG-006: External JSON File Support
----------------------------------------
+## SWR_PKG_00006: External JSON File Support
+
+**ID:** SWR_PKG_00006
+**Title:** Package create supports external JSON files
+**Status:** Planned
+**Priority:** Medium
+**Description:**
 Package create command SHALL support external JSON files.
+SHALL accept `--input <file>` argument. SHALL accept file path as positional argument.
+SHALL detect inline JSON vs file path automatically. SHALL parse JSON file with UTF-8
+encoding. SHALL raise error if file not found. SHALL raise error if JSON invalid.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._load_json_data
+**Last Changed:** 2026-07-09
 
-- SHALL accept ``--input <file>`` argument
-- SHALL accept file path as positional argument
-- SHALL detect inline JSON vs file path automatically
-- SHALL parse JSON file with UTF-8 encoding
-- SHALL raise error if file not found
-- SHALL raise error if JSON invalid
+---
 
-REQ-PKG-007: Stereotype and Tag Support
-----------------------------------------
+## SWR_PKG_00007: Stereotype and Tag Support
+
+**ID:** SWR_PKG_00007
+**Title:** Package create supports stereotypes and tags
+**Status:** Planned
+**Priority:** Medium
+**Description:**
 Package create command SHALL support stereotypes and tags.
+SHALL accept `stereotypes` array in JSON. SHALL apply stereotypes via addStereotype()
+method. SHALL accept `tags` object in JSON. SHALL set tags via setPropertyValue() method.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._set_stereotypes,_set_tags
+**Last Changed:** 2026-07-09
 
-- SHALL accept ``stereotypes`` array in JSON
-- SHALL apply stereotypes via addStereotype() method
-- SHALL accept ``tags`` object in JSON
-- SHALL set tags via setPropertyValue() method
+---
 
-REQ-PKG-008: Multi-Format Output
----------------------------------
+## SWR_PKG_00008: Multi-Format Output
+
+**ID:** SWR_PKG_00008
+**Title:** Package view and list support multiple output formats
+**Status:** Planned
+**Priority:** Medium
+**Description:**
 Package view and list commands SHALL support multiple output formats.
+SHALL support table format (default, human-readable). SHALL support JSON format
+(machine-parsable). SHALL support CSV format (spreadsheet-friendly). SHALL use
+horizontal layout for CSV (header row + data rows).
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction._format_output,PackageListAction._format_output
+**Last Changed:** 2026-07-09
 
-- SHALL support table format (default, human-readable)
-- SHALL support JSON format (machine-parsable)
-- SHALL support CSV format (spreadsheet-friendly)
-- SHALL use horizontal layout for CSV (header row + data rows)
+---
 
-REQ-PKG-009: View-to-Create Workflow
--------------------------------------
+## SWR_PKG_00009: View-to-Create Workflow
+
+**ID:** SWR_PKG_00009
+**Title:** Package view JSON output reusable as package create input
+**Status:** Planned
+**Priority:** Medium
+**Description:**
 Package view JSON output SHALL be reusable as package create input.
+SHALL ignore unknown fields (guid, metaClass, fullPath) in create. SHALL only use
+validated attributes from view output. SHALL enable package cloning workflow.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction.VALID_ATTRIBUTES
+**Last Changed:** 2026-07-09
 
-- SHALL ignore unknown fields (guid, metaClass, fullPath) in create
-- SHALL only use validated attributes from view output
-- SHALL enable package cloning workflow
+---
 
-REQ-PKG-010: Error Handling and Logging
----------------------------------------
+## SWR_PKG_00010: Error Handling and Logging
+
+**ID:** SWR_PKG_00010
+**Title:** All package actions follow consistent error handling patterns
+**Status:** Planned
+**Priority:** High
+**Description:**
 All package actions SHALL follow consistent error handling patterns.
-
-- SHALL use _handle_execution_error() for COM errors
-- SHALL raise CliExecutionError for validation failures
-- SHALL log INFO for successful operations
-- SHALL log WARNING for skipped attributes
-- SHALL log ERROR for failures
+SHALL use _handle_execution_error() for COM errors. SHALL raise CliExecutionError for
+validation failures. SHALL log INFO for successful operations. SHALL log WARNING for
+skipped attributes. SHALL log ERROR for failures.
+**Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction
+**Last Changed:** 2026-07-09
 ```
 
-- [ ] **Step 1: Add requirements to docs/requirements.rst**
+- [ ] **Step 1: Create requirements file**
+
+Create `docs/requirements/swr_pkg_requirements.md` with the content above.
+
+- [ ] **Step 2: Commit requirements**
 
 ```bash
-# Add the above requirements section to docs/requirements.rst
-# Insert after existing requirements sections
-```
-
-- [ ] **Step 2: Verify requirements are properly formatted**
-
-Run: `cd docs && make html`
-Expected: No warnings, requirements section visible in HTML output
-
-- [ ] **Step 3: Commit requirements**
-
-```bash
-git add docs/requirements.rst
-git commit -m "docs: Add SW requirements for package command"
+git add docs/requirements/swr_pkg_requirements.md
+git commit -m "docs: Add SW requirements for package command (SWR_PKG_00001-00010)"
 ```
 
 ---
