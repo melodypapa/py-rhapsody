@@ -56,164 +56,191 @@ Create `docs/requirements/swr_pkg_requirements.md`:
 
 ---
 
-## SWR_PKG_00001: Package Create Command
+## SWR_PKG_0001: Package Create Command
 
-**ID:** SWR_PKG_00001
+**ID:** SWR_PKG_0001
 **Title:** package create command creates one or multiple packages
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package create` command to create one or multiple packages.
-The command SHALL accept `--path <parent-path>` argument (required), `--input <json-file>`
-argument (optional), and positional `attributes` argument (inline JSON or file path).
-SHALL support bulk creation via JSON array. SHALL validate parent path resolves to
-Package element. SHALL create nested packages under parent. SHALL set validated
-attributes (name, description, properties, stereotypes, tags). SHALL skip unknown
-attributes with warning log.
+The CLI 
+- SHALL provide a `package create` command to create one or multiple packages.
+- SHALL accept `--path <parent-path>` argument (required)
+- SHALL accept `--input <json-file>` argument (optional)
+- SHALL accept positional `attributes` argument (inline JSON or file path)
+- SHALL support bulk creation via JSON array
+- SHALL validate parent path resolves to Package element
+- SHALL create nested packages under parent
+- SHALL set validated attributes (name, description, properties, stereotypes, tags)
+- SHALL skip unknown attributes with warning log
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00002: Package Delete Command
+## SWR_PKG_0002: Package Delete Command
 
-**ID:** SWR_PKG_00002
+**ID:** SWR_PKG_0002
 **Title:** package delete command deletes a package
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package delete` command to delete a package.
-SHALL accept `--path <package-path>` argument (required). SHALL validate path resolves
-to Package element. SHALL delete package and all contents. SHALL log deletion to stderr.
+The CLI 
+- SHALL provide a `package delete` command to delete a package.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL validate path resolves to Package element
+- SHALL delete package and all contents
+- SHALL log deletion to stderr
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageDeleteAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00003: Package View Command
+## SWR_PKG_0003: Package View Command
 
-**ID:** SWR_PKG_00003
+**ID:** SWR_PKG_0003
 **Title:** package view command displays package details
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package view` command to view package details.
-SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
-argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
-SHALL display package properties: name, GUID, description, metaClass, fullPath.
-SHALL support table, JSON, and CSV output formats. SHALL write to file if `--output`
-specified, else stdout.
+The CLI 
+- SHALL provide a `package view` command to view package details.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL accept `--format <format>` argument (table/json/csv, default: table)
+- SHALL accept `--output <file>` argument (optional)
+- SHALL display package properties: name, GUID, description, metaClass, fullPath
+- SHALL support table, JSON, and CSV output formats
+- SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00004: Package List Command
+## SWR_PKG_0004: Package List Command
 
-**ID:** SWR_PKG_00004
+**ID:** SWR_PKG_0004
 **Title:** package list command lists nested packages
 **Status:** Planned
 **Priority:** High
 **Description:**
-The CLI shall provide a `package list` command to list nested packages.
-SHALL accept `--path <package-path>` argument (required). SHALL accept `--format <format>`
-argument (table/json/csv, default: table). SHALL accept `--output <file>` argument (optional).
-SHALL list all nested packages under parent. SHALL support table, JSON, and CSV output
-formats. SHALL write to file if `--output` specified, else stdout.
+The CLI 
+- SHALL provide a `package list` command to list nested packages.
+- SHALL accept `--path <package-path>` argument (required)
+- SHALL accept `--format <format>` argument (table/json/csv, default: table)
+- SHALL accept `--output <file>` argument (optional)
+- SHALL list all nested packages under parent
+- SHALL support table, JSON, and CSV output formats
+- SHALL write to file if `--output` specified, else stdout
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageListAction
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00005: Path Validation
+## SWR_PKG_0005: Path Validation
 
-**ID:** SWR_PKG_00005
+**ID:** SWR_PKG_0005
 **Title:** All package commands validate path before execution
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package commands SHALL validate path before execution.
-SHALL resolve path using PathResolver. SHALL verify element at path is Package type
-(metaClass == "Package"). SHALL raise error if path not found. SHALL raise error if
-path not Package.
+All package commands 
+- SHALL validate path before execution.
+- SHALL resolve path using PathResolver
+- SHALL verify element at path is Package type (metaClass == "Package")
+- SHALL raise error if path not found
+- SHALL raise error if path not Package
 **Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction._resolve_and_validate_package
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00006: External JSON File Support
+## SWR_PKG_0006: External JSON File Support
 
-**ID:** SWR_PKG_00006
+**ID:** SWR_PKG_0006
 **Title:** Package create supports external JSON files
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support external JSON files.
-SHALL accept `--input <file>` argument. SHALL accept file path as positional argument.
-SHALL detect inline JSON vs file path automatically. SHALL parse JSON file with UTF-8
-encoding. SHALL raise error if file not found. SHALL raise error if JSON invalid.
+Package create command 
+- SHALL support external JSON files.
+- SHALL accept `--input <file>` argument
+- SHALL accept file path as positional argument
+- SHALL detect inline JSON vs file path automatically
+- SHALL parse JSON file with UTF-8 encoding
+- SHALL raise error if file not found
+- SHALL raise error if JSON invalid
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._load_json_data
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00007: Stereotype and Tag Support
+## SWR_PKG_0007: Stereotype and Tag Support
 
-**ID:** SWR_PKG_00007
+**ID:** SWR_PKG_0007
 **Title:** Package create supports stereotypes and tags
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package create command SHALL support stereotypes and tags.
-SHALL accept `stereotypes` array in JSON. SHALL apply stereotypes via addStereotype()
-method. SHALL accept `tags` object in JSON. SHALL set tags via setPropertyValue() method.
+Package create command 
+- SHALL support stereotypes and tags.
+- SHALL accept `stereotypes` array in JSON
+- SHALL apply stereotypes via addStereotype() method
+- SHALL accept `tags` object in JSON
+- SHALL set tags via setPropertyValue() method
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction._set_stereotypes,_set_tags
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00008: Multi-Format Output
+## SWR_PKG_0008: Multi-Format Output
 
-**ID:** SWR_PKG_00008
+**ID:** SWR_PKG_0008
 **Title:** Package view and list support multiple output formats
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view and list commands SHALL support multiple output formats.
-SHALL support table format (default, human-readable). SHALL support JSON format
-(machine-parsable). SHALL support CSV format (spreadsheet-friendly). SHALL use
-horizontal layout for CSV (header row + data rows).
+Package view and list commands 
+- SHALL support multiple output formats.
+- SHALL support table format (default, human-readable)
+- SHALL support JSON format (machine-parsable)
+- SHALL support CSV format (spreadsheet-friendly)
+- SHALL use horizontal layout for CSV (header row + data rows)
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction._format_output,PackageListAction._format_output
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00009: View-to-Create Workflow
+## SWR_PKG_0009: View-to-Create Workflow
 
-**ID:** SWR_PKG_00009
+**ID:** SWR_PKG_0009
 **Title:** Package view JSON output reusable as package create input
 **Status:** Planned
 **Priority:** Medium
 **Description:**
-Package view JSON output SHALL be reusable as package create input.
-SHALL ignore unknown fields (guid, metaClass, fullPath) in create. SHALL only use
-validated attributes from view output. SHALL enable package cloning workflow.
+Package view JSON output 
+- SHALL be reusable as package create input.
+- SHALL ignore unknown fields (guid, metaClass, fullPath) in create
+- SHALL only use validated attributes from view output
+- SHALL enable package cloning workflow
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageCreateAction.VALID_ATTRIBUTES
 **Last Changed:** 2026-07-09
 
 ---
 
-## SWR_PKG_00010: Error Handling and Logging
+## SWR_PKG_0010: Error Handling and Logging
 
-**ID:** SWR_PKG_00010
+**ID:** SWR_PKG_0010
 **Title:** All package actions follow consistent error handling patterns
 **Status:** Planned
 **Priority:** High
 **Description:**
-All package actions SHALL follow consistent error handling patterns.
-SHALL use _handle_execution_error() for COM errors. SHALL raise CliExecutionError for
-validation failures. SHALL log INFO for successful operations. SHALL log WARNING for
-skipped attributes. SHALL log ERROR for failures.
+All package actions 
+- SHALL follow consistent error handling patterns.
+- SHALL use _handle_execution_error() for COM errors
+- SHALL raise CliExecutionError for validation failures
+- SHALL log INFO for successful operations
+- SHALL log WARNING for skipped attributes
+- SHALL log ERROR for failures
 **Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction
 **Last Changed:** 2026-07-09
 ```
@@ -226,7 +253,7 @@ Create `docs/requirements/swr_pkg_requirements.md` with the content above.
 
 ```bash
 git add docs/requirements/swr_pkg_requirements.md
-git commit -m "docs: Add SW requirements for package command (SWR_PKG_00001-00010)"
+git commit -m "docs: Add SW requirements for package command (SWR_PKG_0001-00010)"
 ```
 
 ---
@@ -330,7 +357,11 @@ logger = logging.getLogger(__name__)
 
 
 class AbstractPackageAction(ElementManagementAction):
-    """Base class for package actions with common validation logic."""
+    """Base class for package actions with common validation logic.
+
+    SWR_PKG_0005: Path Validation
+    SWR_PKG_00010: Error Handling and Logging
+    """
 
     def _resolve_and_validate_package(self, path: str) -> Any:
         """Resolve path and validate it's a Package element.
@@ -404,10 +435,18 @@ Add to `tests/unit/actions/test_package_action.py`:
 
 ```python
 class TestPackageCreateAction:
-    """Test PackageCreateAction."""
+    """Test PackageCreateAction.
+
+    UTS_PKG_00001: Create single package with inline JSON
+    UTS_PKG_00002: Create multiple packages from JSON file
+    UTS_PKG_00003: Create with stereotypes
+    UTS_PKG_00004: Create with tags
+    UTS_PKG_00006: Create skips unknown attributes
+    UTS_PKG_00007: Create fails without name
+    """
 
     def test_create_single_package_inline_json(self, tmp_path):
-        """Test creating single package with inline JSON."""
+        """UTS_PKG_00001: Test creating single package with inline JSON."""
         from rhapsody_cli.actions.package_action import PackageCreateAction
 
         action = PackageCreateAction()
@@ -584,7 +623,13 @@ logger = logging.getLogger(__name__)
 
 
 class PackageCreateAction(AbstractPackageAction):
-    """Create one or multiple packages."""
+    """Create one or multiple packages.
+
+    SWR_PKG_0001: Package Create Command
+    SWR_PKG_0006: External JSON File Support
+    SWR_PKG_0007: Stereotype and Tag Support
+    SWR_PKG_00009: View-to-Create Workflow
+    """
 
     VALID_ATTRIBUTES = {
         "name", "description", "description_html", "description_rtf",
@@ -802,7 +847,10 @@ Add to `src/rhapsody_cli/actions/package_action.py`:
 
 ```python
 class PackageDeleteAction(AbstractPackageAction):
-    """Delete a package."""
+    """Delete a package.
+
+    SWR_PKG_0002: Package Delete Command
+    """
 
     def init_arguments(self, sub_parser):
         """Define CLI arguments."""
@@ -966,7 +1014,11 @@ from rhapsody_cli.cli.formatters import OutputFormatter
 
 
 class PackageViewAction(AbstractPackageAction):
-    """View package details."""
+    """View package details.
+
+    SWR_PKG_0003: Package View Command
+    SWR_PKG_0008: Multi-Format Output
+    """
 
     def init_arguments(self, sub_parser):
         """Define CLI arguments."""
@@ -1178,7 +1230,11 @@ Add to `src/rhapsody_cli/actions/package_action.py`:
 
 ```python
 class PackageListAction(AbstractPackageAction):
-    """List nested packages."""
+    """List nested packages.
+
+    SWR_PKG_0004: Package List Command
+    SWR_PKG_0008: Multi-Format Output
+    """
 
     def init_arguments(self, sub_parser):
         """Define CLI arguments."""
@@ -1651,156 +1707,632 @@ git commit -m "docs: Add comprehensive user guide for package command"
 
 ---
 
-## Phase 9: Test Cases Documentation
+## Phase 9: Test Case Documentation
 
 ### Task 9: Document Test Cases
 
 **Files:**
-- Modify: `docs/requirements.rst`
+- Create: `docs/tests/unit/uts_pkg_test-specs.md`
 
 **Test case IDs to add:**
 
-- [ ] **Step 1: Add test cases section to requirements**
+- [ ] **Step 1: Create test spec file**
 
-Add to `docs/requirements.rst`:
+Create `docs/tests/unit/uts_pkg_test-specs.md`:
 
-```restructuredtext
-Package Command Test Cases
-===========================
+```markdown
+# Unit Test Specifications - Package Command
 
-TC-PKG-001: Create single package with inline JSON
----------------------------------------------------
-**Input:** Inline JSON with name and description
-**Expected:** Package created, description set, log message shown
-**Verification:** Check package exists, check description
+**Category:** Package Command
+**Prefix:** UTS_PKG
+**Source:** SWR_PKG Requirements
+**Last Updated:** 2026-07-09
 
-TC-PKG-002: Create multiple packages from JSON file
-----------------------------------------------------
-**Input:** JSON file with array of package definitions
-**Expected:** All packages created, logs show count
-**Verification:** Check all packages exist
+---
 
-TC-PKG-003: Create with stereotypes
-------------------------------------
-**Input:** JSON with stereotypes array
-**Expected:** Stereotypes applied to package
-**Verification:** Check stereotypes via addStereotype calls
+## UTS_PKG_00001: Create single package with inline JSON
 
-TC-PKG-004: Create with tags
------------------------------
-**Input:** JSON with tags object
-**Expected:** Tags set on package
-**Verification:** Check setPropertyValue calls for each tag
+**ID:** UTS_PKG_00001
+**Traces-To:** SWR_PKG_0001
+**Title:** Create single package with inline JSON
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that a single package can be created with inline JSON containing name and description.
+**Pre-conditions:**
+- Rhapsody application is mocked
+- Parent package exists at specified path
+- Valid inline JSON provided
+**Test Steps:**
+1. Call PackageCreateAction with inline JSON
+2. Verify package created via addNestedPackage
+3. Verify description set via setDescription
+**Expected Result:**
+Package created successfully with correct name and description.
+**Verification Criteria:**
+- addNestedPackage called once with correct name
+- setDescription called with correct value
+- Logger shows INFO message
+**Last Changed:** 2026-07-09
 
-TC-PKG-005: Create with properties
------------------------------------
-**Input:** JSON with custom properties
-**Expected:** Properties set on package
-**Verification:** Check setPropertyValue calls
+---
 
-TC-PKG-006: Create skips unknown attributes
--------------------------------------------
-**Input:** JSON with unknown fields
-**Expected:** Unknown fields skipped, warning logged
-**Verification:** Check warning log contains field name
+## UTS_PKG_00002: Create multiple packages from JSON file
 
-TC-PKG-007: Create fails without name
--------------------------------------
-**Input:** JSON without name field
-**Expected:** CliExecutionError raised
-**Verification:** Check error message contains "name is required"
+**ID:** UTS_PKG_00002
+**Traces-To:** SWR_PKG_0001, SWR_PKG_0006
+**Title:** Create multiple packages from JSON file
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test bulk creation of packages from external JSON file with array of package definitions.
+**Pre-conditions:**
+- JSON file exists with valid array of package definitions
+- Parent package exists
+**Test Steps:**
+1. Call PackageCreateAction with --input pointing to JSON file
+2. Verify file read with UTF-8 encoding
+3. Verify all packages created
+**Expected Result:**
+All packages created, logs show count.
+**Verification Criteria:**
+- File opened with UTF-8 encoding
+- addNestedPackage called for each package
+- Logger shows total count
+**Last Changed:** 2026-07-09
 
-TC-PKG-008: Create from external file
--------------------------------------
-**Input:** Path to JSON file
-**Expected:** File read, packages created
-**Verification:** Check file opened with UTF-8 encoding
+---
 
-TC-PKG-009: Create fails for invalid JSON
------------------------------------------
-**Input:** Malformed JSON string
-**Expected:** CliExecutionError raised
-**Verification:** Check error message contains "Invalid JSON"
+## UTS_PKG_00003: Create with stereotypes
 
-TC-PKG-010: Create fails for missing file
------------------------------------------
-**Input:** Non-existent file path
-**Expected:** CliExecutionError raised
-**Verification:** Check error message contains "File not found"
+**ID:** UTS_PKG_00003
+**Traces-To:** SWR_PKG_0007
+**Title:** Create package with stereotypes
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that stereotypes are applied to package during creation.
+**Pre-conditions:**
+- JSON contains stereotypes array
+**Test Steps:**
+1. Call PackageCreateAction with JSON containing stereotypes
+2. Verify addStereotype called for each stereotype
+**Expected Result:**
+All stereotypes applied correctly.
+**Verification Criteria:**
+- addStereotype called once per stereotype
+- Correct stereotype name and "Package" type passed
+**Last Changed:** 2026-07-09
 
-TC-PKG-011: Delete package successfully
----------------------------------------
-**Input:** Valid package path
-**Expected:** Package deleted, log message shown
-**Verification:** Check deleteFromProject called
+---
 
-TC-PKG-012: Delete handles COM error
-------------------------------------
-**Input:** Package path where deletion fails
-**Expected:** Exception handled, error logged
-**Verification:** Check _handle_execution_error called
+## UTS_PKG_00004: Create with tags
 
-TC-PKG-013: View table output
------------------------------
-**Input:** Package path, format=table
-**Expected:** Table printed to stdout
-**Verification:** Check table contains Name, GUID, etc.
+**ID:** UTS_PKG_00004
+**Traces-To:** SWR_PKG_0007
+**Title:** Create package with tags
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that tags are set on package during creation.
+**Pre-conditions:**
+- JSON contains tags object
+**Test Steps:**
+1. Call PackageCreateAction with JSON containing tags
+2. Verify setPropertyValue called for each tag
+**Expected Result:**
+All tags set correctly.
+**Verification Criteria:**
+- setPropertyValue called once per tag
+- Correct key-value pairs passed
+**Last Changed:** 2026-07-09
 
-TC-PKG-014: View JSON output to file
-------------------------------------
-**Input:** Package path, format=json, output file
-**Expected:** JSON file created with package details
-**Verification:** Parse JSON, check all fields present
+---
 
-TC-PKG-015: View CSV output
----------------------------
-**Input:** Package path, format=csv
-**Expected:** CSV printed with header + data row
-**Verification:** Check 2 lines, horizontal layout
+## UTS_PKG_00005: Create with properties
 
-TC-PKG-016: List nested packages
---------------------------------
-**Input:** Package path with nested packages
-**Expected:** List of package names
-**Verification:** Check all nested packages shown
+**ID:** UTS_PKG_00005
+**Traces-To:** SWR_PKG_0001
+**Title:** Create package with custom properties
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that custom properties are set on package during creation.
+**Pre-conditions:**
+- JSON contains properties object
+**Test Steps:**
+1. Call PackageCreateAction with JSON containing properties
+2. Verify setPropertyValue called for each property
+**Expected Result:**
+All properties set correctly.
+**Verification Criteria:**
+- setPropertyValue called once per property
+- Correct key-value pairs passed
+**Last Changed:** 2026-07-09
 
-TC-PKG-017: List empty package
-------------------------------
-**Input:** Package path with no nested packages
-**Expected:** Empty list/table
-**Verification:** Check empty output
+---
 
-TC-PKG-018: List JSON output
-----------------------------
-**Input:** Package path, format=json
-**Expected:** JSON array of package names
-**Verification:** Parse JSON, verify array
+## UTS_PKG_00006: Create skips unknown attributes
 
-TC-PKG-019: Path validation - not found
----------------------------------------
-**Input:** Non-existent path
-**Expected:** CliExecutionError raised
-**Verification:** Check error message contains "not found"
+**ID:** UTS_PKG_00006
+**Traces-To:** SWR_PKG_0001
+**Title:** Unknown attributes are skipped with warning
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that unknown attributes in JSON are skipped and logged as warning.
+**Pre-conditions:**
+- JSON contains unknown fields
+**Test Steps:**
+1. Call PackageCreateAction with JSON containing unknown fields
+2. Verify package still created
+3. Verify warning logged
+**Expected Result:**
+Package created, unknown fields skipped with warning.
+**Verification Criteria:**
+- Package created successfully
+- Logger.warning called with unknown field names
+**Last Changed:** 2026-07-09
 
-TC-PKG-020: Path validation - not package
------------------------------------------
-**Input:** Path to Class element
-**Expected:** CliExecutionError raised
-**Verification:** Check error message contains "does not resolve to a Package"
+---
 
-TC-PKG-021: View-to-create workflow
------------------------------------
-**Input:** View output JSON, then use as create input
-**Expected:** New package created with same attributes
-**Verification:** Check package created with attributes from view
+## UTS_PKG_00007: Create fails without name
 
-TC-PKG-022: Bulk creation with errors
--------------------------------------
-**Input:** JSON array with some invalid packages
-**Expected:** Valid packages created, errors logged
-**Verification:** Check partial success handling
+**ID:** UTS_PKG_00007
+**Traces-To:** SWR_PKG_0001
+**Title:** Create fails without name field
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that creation fails when name field is missing from JSON.
+**Pre-conditions:**
+- JSON does not contain name field
+**Test Steps:**
+1. Call PackageCreateAction with JSON without name
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with appropriate message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "'name' is required"
+**Last Changed:** 2026-07-09
 
-TC-PKG-023: File output handling
+---
+
+## UTS_PKG_00008: Create from external file
+
+**ID:** UTS_PKG_00008
+**Traces-To:** SWR_PKG_0006
+**Title:** Create packages from external JSON file
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that packages can be created from external JSON file.
+**Pre-conditions:**
+- Valid JSON file exists
+**Test Steps:**
+1. Call PackageCreateAction with --input parameter
+2. Verify file read with UTF-8
+3. Verify packages created
+**Expected Result:**
+File read and packages created.
+**Verification Criteria:**
+- File opened with UTF-8 encoding
+- Packages created from file content
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00009: Create fails for invalid JSON
+
+**ID:** UTS_PKG_00009
+**Traces-To:** SWR_PKG_0006
+**Title:** Create fails for malformed JSON
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that creation fails gracefully for malformed JSON.
+**Pre-conditions:**
+- Malformed JSON string provided
+**Test Steps:**
+1. Call PackageCreateAction with malformed JSON
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with JSON parse error.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "Invalid JSON"
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00010: Create fails for missing file
+
+**ID:** UTS_PKG_00010
+**Traces-To:** SWR_PKG_0006
+**Title:** Create fails for non-existent file
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that creation fails for non-existent file path.
+**Pre-conditions:**
+- File does not exist
+**Test Steps:**
+1. Call PackageCreateAction with non-existent file path
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with file not found message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "File not found"
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00011: Delete package successfully
+
+**ID:** UTS_PKG_00011
+**Traces-To:** SWR_PKG_0002
+**Title:** Delete package successfully
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package is deleted successfully.
+**Pre-conditions:**
+- Package exists at specified path
+**Test Steps:**
+1. Call PackageDeleteAction with valid path
+2. Verify deleteFromProject called
+3. Verify log message shown
+**Expected Result:**
+Package deleted with log message.
+**Verification Criteria:**
+- deleteFromProject called once
+- Logger shows INFO message
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00012: Delete handles COM error
+
+**ID:** UTS_PKG_00012
+**Traces-To:** SWR_PKG_00010
+**Title:** Delete handles COM error gracefully
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that COM errors during deletion are handled properly.
+**Pre-conditions:**
+- deleteFromProject raises exception
+**Test Steps:**
+1. Call PackageDeleteAction
+2. Simulate COM error in deleteFromProject
+3. Verify error handled
+**Expected Result:**
+Exception handled, error logged.
+**Verification Criteria:**
+- Exception caught
+- _handle_execution_error called
+- Error logged
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00013: View table output
+
+**ID:** UTS_PKG_00013
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
+**Title:** View package in table format
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package details are displayed in table format.
+**Pre-conditions:**
+- Package exists at specified path
+**Test Steps:**
+1. Call PackageViewAction with format=table
+2. Verify table output contains all properties
+**Expected Result:**
+Table printed to stdout with all package properties.
+**Verification Criteria:**
+- Table contains Name, GUID, Description, etc.
+- OutputFormatter.table called
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00014: View JSON output to file
+
+**ID:** UTS_PKG_00014
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
+**Title:** View package in JSON format to file
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package details are written to JSON file.
+**Pre-conditions:**
+- Package exists at specified path
+- Output file path provided
+**Test Steps:**
+1. Call PackageViewAction with format=json and --output
+2. Verify JSON file created
+3. Verify JSON contains all fields
+**Expected Result:**
+JSON file created with all package details.
+**Verification Criteria:**
+- File created at specified path
+- JSON parseable and contains all fields
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00015: View CSV output
+
+**ID:** UTS_PKG_00015
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0008
+**Title:** View package in CSV format
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that package details are displayed in CSV format with horizontal layout.
+**Pre-conditions:**
+- Package exists at specified path
+**Test Steps:**
+1. Call PackageViewAction with format=csv
+2. Verify CSV output has header + data row
+**Expected Result:**
+CSV printed with horizontal layout.
+**Verification Criteria:**
+- Output has exactly 2 lines
+- Header row present
+- Data row present
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00016: List nested packages
+
+**ID:** UTS_PKG_00016
+**Traces-To:** SWR_PKG_0004
+**Title:** List nested packages
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that nested packages are listed correctly.
+**Pre-conditions:**
+- Package has nested packages
+**Test Steps:**
+1. Call PackageListAction with parent package path
+2. Verify all nested packages shown
+**Expected Result:**
+List of nested package names.
+**Verification Criteria:**
+- getNestedPackages called
+- All nested package names shown
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00017: List empty package
+
+**ID:** UTS_PKG_00017
+**Traces-To:** SWR_PKG_0004
+**Title:** List empty package returns empty output
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that empty output is shown for package with no nested packages.
+**Pre-conditions:**
+- Package has no nested packages
+**Test Steps:**
+1. Call PackageListAction
+2. Verify empty output
+**Expected Result:**
+Empty table/list shown.
+**Verification Criteria:**
+- getNestedPackages returns empty
+- Output is empty
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00018: List JSON output
+
+**ID:** UTS_PKG_00018
+**Traces-To:** SWR_PKG_0004, SWR_PKG_0008
+**Title:** List nested packages in JSON format
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that nested packages are listed in JSON array format.
+**Pre-conditions:**
+- Package has nested packages
+**Test Steps:**
+1. Call PackageListAction with format=json
+2. Verify JSON array output
+**Expected Result:**
+JSON array of package names.
+**Verification Criteria:**
+- Output is valid JSON array
+- Array contains all package names
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00019: Path validation - not found
+
+**ID:** UTS_PKG_00019
+**Traces-To:** SWR_PKG_0005
+**Title:** Path validation fails for non-existent path
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that path validation raises error for non-existent path.
+**Pre-conditions:**
+- Path does not exist in model
+**Test Steps:**
+1. Call any package action with non-existent path
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with path not found message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "not found"
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00020: Path validation - not package
+
+**ID:** UTS_PKG_00020
+**Traces-To:** SWR_PKG_0005
+**Title:** Path validation fails for non-package element
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that path validation raises error when path resolves to non-package element.
+**Pre-conditions:**
+- Path resolves to Class or other non-package element
+**Test Steps:**
+1. Call any package action with path to Class
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with "does not resolve to a Package" message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "does not resolve to a Package"
+- Error message shows actual element type
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00021: View-to-create workflow
+
+**ID:** UTS_PKG_00021
+**Traces-To:** SWR_PKG_00009
+**Title:** View output can be reused as create input
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package view JSON output can be used as package create input.
+**Pre-conditions:**
+- Package view JSON output available
+**Test Steps:**
+1. Export package via view --format json
+2. Use JSON as create input
+3. Verify new package created
+**Expected Result:**
+New package created with same attributes.
+**Verification Criteria:**
+- Unknown fields (guid, metaClass) ignored
+- Only validated attributes used
+- Package created successfully
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00022: Bulk creation with errors
+
+**ID:** UTS_PKG_00022
+**Traces-To:** SWR_PKG_0001
+**Title:** Bulk creation handles partial failures
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that bulk creation continues on errors and reports results.
+**Pre-conditions:**
+- JSON array contains some invalid package definitions
+**Test Steps:**
+1. Call PackageCreateAction with mixed valid/invalid packages
+2. Verify valid packages created
+3. Verify errors logged
+**Expected Result:**
+Valid packages created, errors logged, summary shown.
+**Verification Criteria:**
+- Valid packages created
+- Invalid packages logged as errors
+- Summary shows count
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00023: File output handling
+
+**ID:** UTS_PKG_00023
+**Traces-To:** SWR_PKG_0003, SWR_PKG_0004
+**Title:** Output written to file when --output specified
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that output is written to file instead of stdout when --output specified.
+**Pre-conditions:**
+- --output parameter provided
+**Test Steps:**
+1. Call view/list action with --output
+2. Verify file created
+3. Verify content matches expected format
+**Expected Result:**
+Content written to file, not stdout.
+**Verification Criteria:**
+- File exists at specified path
+- File content matches expected output
+- Nothing printed to stdout
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00024: File output error handling
+
+**ID:** UTS_PKG_00024
+**Traces-To:** SWR_PKG_00010
+**Title:** File output handles permission errors
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that file output errors are handled gracefully.
+**Pre-conditions:**
+- Invalid file path (no write permission)
+**Test Steps:**
+1. Call view/list action with invalid --output path
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError raised with file write error.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error message contains "Failed to write"
+**Last Changed:** 2026-07-09
+
+---
+
+## UTS_PKG_00025: Register all subcommands
+
+**ID:** UTS_PKG_00025
+**Traces-To:** SWR_PKG_0001-00004
+**Title:** PackageCommand registers all subcommands
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that PackageCommand registers all 4 subcommands.
+**Pre-conditions:**
+- PackageCommand initialized
+**Test Steps:**
+1. Create PackageCommand
+2. Call register_subcommands
+3. Verify 4 subcommands registered
+**Expected Result:**
+All 4 subcommands (create, delete, view, list) registered.
+**Verification Criteria:**
+- subparser.add_parser called 4 times
+- All subcommand names present
+**Last Changed:** 2026-07-09
+```
+
+- [ ] **Step 2: Commit test spec**
+
+```bash
+git add docs/tests/unit/uts_pkg_test-specs.md
+git commit -m "docs: Add unit test specifications for package command (UTS_PKG_00001-00025)"
+```
 --------------------------------
 **Input:** --output parameter with valid path
 **Expected:** Content written to file, not stdout
