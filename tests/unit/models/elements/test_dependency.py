@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.models.elements.relations.RPDependency."""
 
-from rhapsody_cli.models._core import RPModelElement, wrap
+from rhapsody_cli.models.core import RPModelElement, wrap
 from rhapsody_cli.models.elements.relations import RPDependency
 from tests.unit.models.fakes import make_fake_element
 

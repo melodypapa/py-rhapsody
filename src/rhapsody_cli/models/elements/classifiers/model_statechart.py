@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from rhapsody_cli.models._core import RPModelElement, call_com, register_wrapper, wrap
+from rhapsody_cli.models.core import RPModelElement, call_com, register_wrapper, wrap
 from rhapsody_cli.models.elements.classifiers.model_class import RPClass
 
 

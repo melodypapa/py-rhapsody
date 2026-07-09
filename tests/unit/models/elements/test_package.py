@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.elements.package.RPPackage."""
 
-from rhapsody_cli.models._core import RPUnit, wrap
+from rhapsody_cli.models.core import RPUnit, wrap
 from rhapsody_cli.models.elements.containment import RPPackage
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
@@ -70,7 +70,7 @@ def test_package_is_registered_for_meta_class_package() -> None:
 
 
 def test_package_get_nested_packages_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Package")
     nested1 = make_fake_element("Package", getName="Nested1")
@@ -88,7 +88,7 @@ def test_package_get_nested_packages_returns_collection() -> None:
 
 
 def test_package_get_classes_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Package")
     class1 = make_fake_element("Class", getName="Class1")
@@ -104,7 +104,7 @@ def test_package_get_classes_returns_collection() -> None:
 
 
 def test_package_get_actors_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Package")
     actor1 = make_fake_element("Actor", getName="Actor1")
@@ -119,7 +119,7 @@ def test_package_get_actors_returns_collection() -> None:
 
 
 def test_package_get_use_cases_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Package")
     uc1 = make_fake_element("UseCase", getName="UC1")
@@ -190,7 +190,7 @@ def test_package_add_enumeration_returns_wrapped_element() -> None:
 
 
 def test_package_get_enumerations_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Package")
     enum1 = make_fake_element("Classifier", getName="Enum1")

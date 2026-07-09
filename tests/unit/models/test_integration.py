@@ -1,6 +1,6 @@
 """Cross-wrapper integration tests: factory methods return correct subclasses."""
 
-from rhapsody_cli.models._core import RPCollection, RPModelElement, wrap
+from rhapsody_cli.models.core import RPCollection, RPModelElement, wrap
 from rhapsody_cli.models.elements.classifiers import RPClass, RPClassifier, RPStereotype
 from rhapsody_cli.models.elements.containment import (
     RPComponent,
@@ -8,7 +8,7 @@ from rhapsody_cli.models.elements.containment import (
     RPPackage,
     RPProfile,
 )
-from rhapsody_cli.models.elements.misc import RPComment, RPConstraint, RPEnumerationLiteral
+from rhapsody_cli.models.elements.model_misc import RPComment, RPConstraint, RPEnumerationLiteral
 from rhapsody_cli.models.elements.relations import (
     RPAssociationRole,
     RPDependency,
@@ -140,7 +140,7 @@ def test_wrap_dispatches_association_class_to_rpassociation_class() -> None:
 
 
 def test_wrap_dispatches_tag_to_rptag() -> None:
-    from rhapsody_cli.models.elements.variables import RPTag
+    from rhapsody_cli.models.elements.model_variables import RPTag
 
     fake = make_fake_element("Tag", getName="MyTag")
 
@@ -173,18 +173,18 @@ def test_all_new_wrappers_exist() -> None:
         RPModule,
         RPNode,
     )
-    from rhapsody_cli.models.elements.misc import (
+    from rhapsody_cli.models.elements.model_misc import (
         RPComment,
         RPConstraint,
         RPEnumerationLiteral,
     )
+    from rhapsody_cli.models.elements.model_variables import RPTag
     from rhapsody_cli.models.elements.relations import (
         RPAssociationRole,
         RPDependency,
         RPGeneralization,
         RPHyperLink,
     )
-    from rhapsody_cli.models.elements.variables import RPTag
 
     # All imports should succeed
     assert RPAssociationClass is not None

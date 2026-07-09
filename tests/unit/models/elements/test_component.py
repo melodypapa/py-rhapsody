@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.models.elements.containment.RPComponent."""
 
-from rhapsody_cli.models._core import RPUnit, wrap
+from rhapsody_cli.models.core import RPUnit, wrap
 from rhapsody_cli.models.elements.containment import RPComponent
 from tests.unit.models.fakes import make_fake_element
 

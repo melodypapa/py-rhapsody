@@ -5,7 +5,7 @@ import sys
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
-from rhapsody_cli.models._core import call_com
+from rhapsody_cli.models.core import call_com
 
 
 class ElementAddAction(ElementManagementAction):

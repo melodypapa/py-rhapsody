@@ -1,7 +1,7 @@
 """Tests for the public rhapsody_cli package API surface."""
 
 import rhapsody_cli
-from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.core import wrap
 from tests.unit.models.fakes import make_fake_element
 
 

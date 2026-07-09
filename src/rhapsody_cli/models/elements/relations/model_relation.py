@@ -2,7 +2,7 @@
 
 from typing import Any, cast
 
-from rhapsody_cli.models._core import RPCollection, RPModelElement, RPUnit, call_com, wrap
+from rhapsody_cli.models.core import RPCollection, RPModelElement, RPUnit, call_com, wrap
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 # IRPRelation method parity checklist:

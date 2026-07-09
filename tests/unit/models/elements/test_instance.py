@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.elements.instance.RPInstance."""
 
-from rhapsody_cli.models._core import RPCollection, wrap
+from rhapsody_cli.models.core import RPCollection, wrap
 from rhapsody_cli.models.elements.relations import RPInstance, RPRelation
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 

@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.models.elements.containment.RPProfile."""
 
-from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.core import wrap
 from rhapsody_cli.models.elements.containment import RPPackage, RPProfile
 from tests.unit.models.fakes import make_fake_element
 

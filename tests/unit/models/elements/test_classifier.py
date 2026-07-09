@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.elements.classifier.RPClassifier."""
 
-from rhapsody_cli.models._core import RPModelElement, RPUnit
+from rhapsody_cli.models.core import RPModelElement, RPUnit
 from rhapsody_cli.models.elements.classifiers import RPClassifier
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 

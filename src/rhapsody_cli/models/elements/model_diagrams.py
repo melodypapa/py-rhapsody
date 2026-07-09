@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from rhapsody_cli.models._core import (
+from rhapsody_cli.models.core import (
     RPCollection,
     RPModelElement,
     RPUnit,

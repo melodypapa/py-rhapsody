@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from rhapsody_cli.models._core import RPCollection, RPModelElement, call_com, register_wrapper, wrap
+from rhapsody_cli.models.core import RPCollection, RPModelElement, call_com, register_wrapper, wrap
 from rhapsody_cli.models.elements.relations.model_relation import RPRelation
 
 # IRPInstance method parity checklist:

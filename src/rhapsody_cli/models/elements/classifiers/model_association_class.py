@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPAssociationClass``."""
 
-from rhapsody_cli.models._core import register_wrapper
+from rhapsody_cli.models.core import register_wrapper
 from rhapsody_cli.models.elements.classifiers.model_class import RPClass
 
 

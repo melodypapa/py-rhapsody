@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPConfiguration``."""
 
-from rhapsody_cli.models._core import RPUnit, register_wrapper
+from rhapsody_cli.models.core import RPUnit, register_wrapper
 
 
 class RPConfiguration(RPUnit):

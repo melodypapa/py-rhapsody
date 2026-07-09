@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPComponent``."""
 
-from rhapsody_cli.models._core import RPUnit, register_wrapper
+from rhapsody_cli.models.core import RPUnit, register_wrapper
 
 
 class RPComponent(RPUnit):

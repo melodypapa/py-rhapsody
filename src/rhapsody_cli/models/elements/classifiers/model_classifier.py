@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from rhapsody_cli.models._core import RPCollection, RPModelElement, RPUnit, call_com, wrap
+from rhapsody_cli.models.core import RPCollection, RPModelElement, RPUnit, call_com, wrap
 
 # IRPClassifier method parity checklist:
 # [x] addActivityDiagram              [x] impl  [x] docstring  [x] test

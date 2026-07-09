@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPProfile``."""
 
-from rhapsody_cli.models._core import register_wrapper
+from rhapsody_cli.models.core import register_wrapper
 from rhapsody_cli.models.elements.containment.model_package import RPPackage
 
 

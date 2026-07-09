@@ -55,7 +55,7 @@ def test_project_find_component_wraps_result() -> None:
 
 
 def test_project_get_packages_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Project")
     fake.getPackages.return_value = make_fake_collection([make_fake_element("Package", getName="P1")])
@@ -69,7 +69,7 @@ def test_project_get_packages_returns_collection() -> None:
 
 
 def test_project_is_registered_for_meta_class_project() -> None:
-    from rhapsody_cli.models._core import wrap
+    from rhapsody_cli.models.core import wrap
 
     fake = make_fake_element("Project", getName="MyProject")
 
@@ -103,7 +103,7 @@ def test_project_add_actor_returns_wrapped_element() -> None:
 
 
 def test_project_get_components_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Project")
     comp1 = make_fake_element("Component", getName="Comp1")
@@ -128,7 +128,7 @@ def test_project_find_by_name_returns_wrapped_element() -> None:
 
 
 def test_project_find_by_meta_class_returns_collection() -> None:
-    from rhapsody_cli.models._core import RPCollection
+    from rhapsody_cli.models.core import RPCollection
 
     fake = make_fake_element("Project")
     cls1 = make_fake_element("Class", getName="Class1")

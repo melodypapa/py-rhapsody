@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, call
 import pytest
 
 from rhapsody_cli.exceptions import RhapsodyRuntimeException
-from rhapsody_cli.models._core import (
+from rhapsody_cli.models.core import (
     AddToModelMode,
     RPCollection,
     RPModelElement,
@@ -107,7 +107,7 @@ def test_wrap_falls_back_to_meta_class_property_when_method_missing() -> None:
     fake = MagicMock(spec=["metaClass"])
     fake.metaClass = "Class"
 
-    from rhapsody_cli.models._core import wrap
+    from rhapsody_cli.models.core import wrap
 
     element = wrap(fake)
 
@@ -295,7 +295,7 @@ def test_wrap_dispatches_to_registered_wrapper() -> None:
     register_wrapper("FakeMetaType", _FakeClassWrapper)
     fake = make_fake_element("FakeMetaType", getName="Thing")
 
-    from rhapsody_cli.models._core import wrap
+    from rhapsody_cli.models.core import wrap
 
     wrapped = wrap(fake)
 
@@ -306,7 +306,7 @@ def test_wrap_dispatches_to_registered_wrapper() -> None:
 def test_wrap_falls_back_to_model_element_for_unregistered_type() -> None:
     fake = make_fake_element("SomeUnmappedType", getName="Mystery")
 
-    from rhapsody_cli.models._core import wrap
+    from rhapsody_cli.models.core import wrap
 
     wrapped = wrap(fake)
 

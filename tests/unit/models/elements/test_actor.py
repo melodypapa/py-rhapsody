@@ -1,6 +1,6 @@
 """Tests for rhapsody_cli.elements.actor.RPActor."""
 
-from rhapsody_cli.models._core import wrap
+from rhapsody_cli.models.core import wrap
 from rhapsody_cli.models.elements.classifiers import RPActor, RPClassifier
 from tests.unit.models.fakes import make_fake_element
 
@@ -20,7 +20,7 @@ def test_actor_add_event_reception_with_event_wraps_result() -> None:
     fake.addEventReceptionWithEvent.return_value = reception
     actor = RPActor(fake)
 
-    from rhapsody_cli.models._core import RPModelElement
+    from rhapsody_cli.models.core import RPModelElement
 
     result = actor.addEventReceptionWithEvent("onStart", RPModelElement(event))
 

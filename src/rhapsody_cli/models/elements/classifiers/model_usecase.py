@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPUseCase``."""
 
-from rhapsody_cli.models._core import RPCollection, call_com, register_wrapper
+from rhapsody_cli.models.core import RPCollection, call_com, register_wrapper
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 
