@@ -343,6 +343,42 @@ rhapsody-cli package view --path Sensors/TemperatureSensors --format csv --outpu
 - **JSON**: Via `--format json` (machine-parsable)
 - **CSV**: Via `--format csv` (spreadsheet-friendly)
 
+**Output examples:**
+
+**Table format:**
+```
++-----------+--------------------------------------+
+| Property  | Value                                |
++-----------+--------------------------------------+
+| Name      | TempSensors                          |
+| GUID      | {12345678-1234-1234-1234-1234567890} |
+| Desc      | Temperature sensors package          |
+| MetaClass | Package                              |
+| FullPath  | Sensors/TempSensors                  |
++-----------+--------------------------------------+
+```
+
+**JSON format:**
+```json
+{
+  "name": "TempSensors",
+  "guid": "{12345678-1234-1234-1234-1234567890}",
+  "description": "Temperature sensors package",
+  "metaClass": "Package",
+  "fullPath": "Sensors/TempSensors"
+}
+```
+
+**CSV format:**
+```csv
+Property,Value
+Name,TempSensors
+GUID,{12345678-1234-1234-1234-1234567890}
+Desc,Temperature sensors package
+MetaClass,Package
+FullPath,Sensors/TempSensors
+```
+
 **Workflow: View → Create**
 The JSON output from `view` can be used as input for `create`:
 ```bash
@@ -456,6 +492,32 @@ rhapsody-cli package list --path Sensors --format csv --output packages.csv
 - **Default**: Table format (Name column)
 - **JSON**: Via `--format json` - Array of package names
 - **CSV**: Via `--format csv` - Name column
+
+**Output examples:**
+
+**Table format:**
+```
++----------------+
+| Name           |
++----------------+
+| TempSensors    |
+| PressureSensors|
+| FlowSensors    |
++----------------+
+```
+
+**JSON format:**
+```json
+["TempSensors", "PressureSensors", "FlowSensors"]
+```
+
+**CSV format:**
+```csv
+Name
+TempSensors
+PressureSensors
+FlowSensors
+```
 
 **Output behavior:**
 - Default: Output to stdout (console)
