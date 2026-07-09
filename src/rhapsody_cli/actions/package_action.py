@@ -1,6 +1,14 @@
 """Package-related CLI actions.
 
+SWR_PKG_0001: Package Create Command
+SWR_PKG_0002: Package Delete Command
+SWR_PKG_0003: Package View Command
+SWR_PKG_0004: Package List Command
 SWR_PKG_0005: Path Validation
+SWR_PKG_0006: External JSON File Support
+SWR_PKG_0007: Stereotype and Tag Support
+SWR_PKG_0008: Multi-Format Output
+SWR_PKG_0009: View-to-Create Workflow
 SWR_PKG_0010: Error Handling and Logging
 """
 
@@ -8,7 +16,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Any, List
+from typing import Any, Dict, List
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
@@ -48,3 +56,141 @@ class AbstractPackageAction(ElementManagementAction):
             )
 
         return container
+
+
+class PackageCreateAction(AbstractPackageAction):
+    """Create one or multiple packages.
+
+    SWR_PKG_0001: Package Create Command
+    SWR_PKG_0006: External JSON File Support
+    SWR_PKG_0007: Stereotype and Tag Support
+    SWR_PKG_0009: View-to-Create Workflow
+    """
+
+    VALID_ATTRIBUTES = {
+        "name", "description", "description_html", "description_rtf",
+        "display_name", "display_name_rtf", "properties",
+        "stereotypes", "tags",
+    }
+
+    def __init__(self) -> None:
+        """Initialize the 'create' action."""
+        super().__init__(command_id="create")
+
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
+        """Register the 'create' subcommand and its arguments."""
+        parser = sub_parser.add_parser("create", help="Create a package")
+        self.add_path_argument(parser, required=True, help_text="Parent package path")
+        parser.add_argument("--input", default=None, help="JSON file with package attributes")
+        parser.add_argument("attributes", nargs="?", default=None, help="Inline JSON or JSON file path")
+        self.add_verbose_argument(parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """Execute package creation."""
+        input_data = args.input if args.input else args.attributes
+        if not input_data:
+            raise CliExecutionError("Either --input or attributes argument must be provided")
+
+        data = self._load_json_data(input_data)
+        packages_data = data if isinstance(data, list) else [data]
+
+        container = self._resolve_and_validate_package(args.path)
+
+        created: List[str] = []
+        errors: List[str] = []
+        for pkg_attrs in packages_data:
+            try:
+                name = self._create_single_package(container, pkg_attrs, args.path)
+                created.append(name)
+            except CliExecutionError:
+                raise
+            except Exception as e:
+                pkg_name = pkg_attrs.get("name", "unknown")
+                self.logger.error("Failed to create package '%s': %s", pkg_name, e)
+                errors.append(pkg_name)
+
+        self._report_results(created, errors, len(packages_data))
+
+    def _create_single_package(self, container: Any, pkg_attrs: Dict[str, Any], parent_path: str) -> str:
+        """Create a single package and set its attributes. Returns the package name."""
+        name = pkg_attrs.get("name")
+        if not name:
+            raise CliExecutionError("'name' is required in attributes")
+
+        unknown = set(pkg_attrs.keys()) - self.VALID_ATTRIBUTES
+        if unknown:
+            self.logger.warning("Skipping unknown attributes: %s", unknown)
+
+        package = container.addNestedPackage(name)
+        self._set_attributes(package, pkg_attrs)
+
+        full_path = f"{parent_path}/{name}"
+        self.logger.info("Created package: %s", full_path)
+        return name
+
+    def _report_results(self, created: List[str], errors: List[str], total: int) -> None:
+        """Log summary of creation results."""
+        if errors and not created:
+            raise CliExecutionError(f"Created 0/{total} packages; all failed")
+        if errors:
+            self.logger.info("Created %d/%d packages with %d error(s)", len(created), total, len(errors))
+
+    def _load_json_data(self, attributes_input: str) -> Any:
+        """Load JSON data from inline string or external file.
+
+        SWR_PKG_0006: External JSON File Support
+        """
+        if attributes_input.startswith("{") or attributes_input.startswith("["):
+            try:
+                return json.loads(attributes_input)
+            except json.JSONDecodeError as e:
+                raise CliExecutionError(f"Invalid JSON: {e}") from e
+
+        if not Path(attributes_input).exists():
+            raise CliExecutionError(f"File not found: {attributes_input}")
+
+        try:
+            with open(attributes_input, encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError as e:
+            raise CliExecutionError(f"Invalid JSON in file: {e}") from e
+        except OSError as e:
+            raise CliExecutionError(f"Failed to read file: {e}") from e
+
+    def _set_attributes(self, package: Any, attrs: Dict[str, Any]) -> None:
+        """Set validated attributes on package."""
+        self._set_basic_attributes(package, attrs)
+        self._set_properties(package, attrs)
+        self._set_stereotypes(package, attrs)
+        self._set_tags(package, attrs)
+
+    def _set_basic_attributes(self, package: Any, attrs: Dict[str, Any]) -> None:
+        """Set basic attributes."""
+        if "description" in attrs:
+            package.setDescription(attrs["description"])
+        if "description_html" in attrs:
+            package.setDescriptionHTML(attrs["description_html"])
+        if "description_rtf" in attrs:
+            package.setDescriptionRTF(attrs["description_rtf"])
+        if "display_name" in attrs:
+            package.setDisplayName(attrs["display_name"])
+        if "display_name_rtf" in attrs:
+            package.setDisplayNameRTF(attrs["display_name_rtf"])
+
+    def _set_properties(self, package: Any, attrs: Dict[str, Any]) -> None:
+        """Set custom properties."""
+        if "properties" in attrs:
+            for key, val in attrs["properties"].items():
+                package.setPropertyValue(key, val)
+
+    def _set_stereotypes(self, package: Any, attrs: Dict[str, Any]) -> None:
+        """Apply stereotypes."""
+        if "stereotypes" in attrs:
+            for stereotype in attrs["stereotypes"]:
+                package.addStereotype(stereotype, "Package")
+
+    def _set_tags(self, package: Any, attrs: Dict[str, Any]) -> None:
+        """Set tags."""
+        if "tags" in attrs:
+            for key, val in attrs["tags"].items():
+                package.setPropertyValue(key, val)
