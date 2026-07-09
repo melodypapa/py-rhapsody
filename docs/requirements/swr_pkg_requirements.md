@@ -68,6 +68,36 @@ The package CLI
 - SHALL support CSV format with horizontal layout: header row `Name,GUID,Description,MetaClass,FullPath` followed by one data row
 - SHALL write to file if `--output` specified, else stdout
 - SHALL output to stdout or file (not logger) for safe use in scripts
+
+**Table format example:**
+```
++-----------+--------------------------------------+
+| Property  | Value                                |
++-----------+--------------------------------------+
+| Name      | TempSensors                          |
+| GUID      | {12345678-1234-1234-1234-1234567890} |
+| Description| Temperature sensors package         |
+| MetaClass | Package                              |
+| FullPath  | Sensors/TempSensors                  |
++-----------+--------------------------------------+
+```
+
+**JSON format example:**
+```json
+{
+  "name": "TempSensors",
+  "guid": "{12345678-1234-1234-1234-1234567890}",
+  "description": "Temperature sensors package",
+  "metaClass": "Package",
+  "fullPath": "Sensors/TempSensors"
+}
+```
+
+**CSV format example:**
+```csv
+Name,GUID,Description,MetaClass,FullPath
+TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
+```
 **Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction
 **Last Changed:** 2026-07-09
 
@@ -204,4 +234,88 @@ All package actions
 - SHALL log WARNING for skipped attributes
 - SHALL log ERROR for failures
 **Implementation:** src/rhapsody_cli/actions/package_action.py:AbstractPackageAction
+**Last Changed:** 2026-07-09
+
+---
+
+## SWR_PKG_0011: Package View Output Format Examples
+
+**ID:** SWR_PKG_0011
+**Title:** Package view output format examples for table, JSON, and CSV
+**Status:** Planned
+**Priority:** Medium
+**Description:**
+Package view command
+- SHALL produce the following output formats.
+
+Table format (default):
+```
++-----------+--------------------------------------+
+| Property  | Value                                |
++-----------+--------------------------------------+
+| Name      | TempSensors                          |
+| GUID      | {12345678-1234-1234-1234-1234567890} |
+| Description| Temperature sensors package         |
+| MetaClass | Package                              |
+| FullPath  | Sensors/TempSensors                  |
++-----------+--------------------------------------+
+```
+
+JSON format:
+```json
+{
+  "name": "TempSensors",
+  "guid": "{12345678-1234-1234-1234-1234567890}",
+  "description": "Temperature sensors package",
+  "metaClass": "Package",
+  "fullPath": "Sensors/TempSensors"
+}
+```
+
+CSV format:
+```csv
+Name,GUID,Description,MetaClass,FullPath
+TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
+```
+
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageViewAction._format_output
+**Last Changed:** 2026-07-09
+
+---
+
+## SWR_PKG_0012: Package List Output Format Examples
+
+**ID:** SWR_PKG_0012
+**Title:** Package list output format examples for table, JSON, and CSV
+**Status:** Planned
+**Priority:** Medium
+**Description:**
+Package list command
+- SHALL produce the following output formats.
+
+Table format (default):
+```
++----------------+
+| Name           |
++----------------+
+| TempSensors    |
+| PressureSensors|
+| FlowSensors    |
++----------------+
+```
+
+JSON format:
+```json
+["TempSensors", "PressureSensors", "FlowSensors"]
+```
+
+CSV format:
+```csv
+Name
+TempSensors
+PressureSensors
+FlowSensors
+```
+
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageListAction._format_output
 **Last Changed:** 2026-07-09
