@@ -138,7 +138,7 @@ Use kebab-case with a type prefix:
 3. **CLI Layer** (`src/rhapsody_cli/cli/` + `src/rhapsody_cli/commands/` + `src/rhapsody_cli/actions/`)
    - argparse-based (stdlib) CLI using a class-based command/action architecture
    - `main()` dispatches on the first argv token to an `AbstractCommand` subclass
-   - Command groups (`ElementCommand`, `ProjectCommand`, `IOCommand`) each own a set of `AbstractAction` subcommands
+   - Command groups (`ElementCommand`, `ProjectCommand`) each own a set of `AbstractAction` subcommands
    - Each action registers its own argparse subparser (`init_arguments`) and owns its execution (`execute`)
    - Context: `RhapsodyContext` manages the current Rhapsody state
    - Formatters: `OutputFormatter` handles table/JSON/CSV output
@@ -291,14 +291,12 @@ src/rhapsody_cli/
 │   ├── __init__.py
 │   ├── abstract_command.py       # AbstractCommand base class
 │   ├── element_command.py        # ElementCommand
-│   ├── project_command.py        # ProjectCommand
-│   └── io_command.py             # IOCommand
+│   └── project_command.py        # ProjectCommand
 ├── actions/                       # CLI subcommand actions (argparse, class-based)
 │   ├── __init__.py
 │   ├── abstract_action.py        # AbstractAction, RhapsodyContextAction, ElementManagementAction
 │   ├── element_action.py         # ElementAddAction, ElementViewAction, ElementQueryAction, ElementDeleteAction
-│   ├── project_action.py         # Project subcommand actions
-│   └── io_action.py              # Import/export actions
+│   └── project_action.py         # Project subcommand actions
 ├── cli/                           # CLI entry point and support
 │   ├── main.py                   # Entry point (re-exports cli.main)
 │   ├── cli.py                    # main() dispatcher

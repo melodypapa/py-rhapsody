@@ -23,7 +23,6 @@ View Subcommand Help
 
    rhapsody-cli project --help
    rhapsody-cli element --help
-   rhapsody-cli io --help
 
 Output Formats
 --------------
@@ -235,39 +234,6 @@ for confirmation showing how many nested elements will be removed.
 
    # Same, but skip the confirmation prompt
    rhapsody-cli element delete pkg/subpkg --recursive --force
-
-IO Commands
------------
-
-``io import`` - Import Model
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   rhapsody-cli io import <FILE_PATH>
-
-Import a model from a file.
-
-**Example:**
-
-.. code-block:: bash
-
-   rhapsody-cli io import model.xml
-
-``io export`` - Export Model
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   rhapsody-cli io export <FILE_PATH>
-
-Export the active model to a file.
-
-**Example:**
-
-.. code-block:: bash
-
-   rhapsody-cli io export exported_model.xml
 
 Common Use Cases
 ----------------

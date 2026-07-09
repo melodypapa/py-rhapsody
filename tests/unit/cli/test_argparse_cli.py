@@ -3,7 +3,6 @@
 import pytest
 
 from rhapsody_cli.commands.element_command import ElementCommand
-from rhapsody_cli.commands.io_command import IOCommand
 from rhapsody_cli.commands.project_command import ProjectCommand
 from rhapsody_cli.exceptions import CliExecutionError
 
@@ -57,52 +56,6 @@ class TestElementCommandParsing:
         cmd = ElementCommand(["add", "--type", "class"])
         with pytest.raises(CliExecutionError):
             cmd.execute()
-
-
-class TestIOCommandParsing:
-    """Test IOCommand argument parsing."""
-
-    def test_io_import_parsing(self) -> None:
-        """Test io import command parsing."""
-        cmd = IOCommand(["import", "model.xmi"])
-        assert cmd._subcommand == "import"
-        assert cmd._parsed_args is not None
-        assert cmd._parsed_args.source == "model.xmi"
-        assert cmd._parsed_args.target == "Root"
-
-    def test_io_import_with_target(self) -> None:
-        """Test io import with custom target."""
-        cmd = IOCommand(["import", "model.xmi", "--target", "MyPackage"])
-        assert cmd._subcommand == "import"
-        assert cmd._parsed_args is not None
-        assert cmd._parsed_args.source == "model.xmi"
-        assert cmd._parsed_args.target == "MyPackage"
-
-    def test_io_export_parsing(self) -> None:
-        """Test io export command parsing."""
-        cmd = IOCommand(["export", "output.xmi"])
-        assert cmd._subcommand == "export"
-        assert cmd._parsed_args is not None
-        assert cmd._parsed_args.output == "output.xmi"
-        assert cmd._parsed_args.format == "xmi"
-
-    def test_io_export_with_format(self) -> None:
-        """Test io export with custom format."""
-        cmd = IOCommand(["export", "output.json", "--format", "json"])
-        assert cmd._subcommand == "export"
-        assert cmd._parsed_args is not None
-        assert cmd._parsed_args.output == "output.json"
-        assert cmd._parsed_args.format == "json"
-
-    def test_io_missing_subcommand(self) -> None:
-        """Test io with no subcommand raises CliExecutionError."""
-        with pytest.raises(CliExecutionError):
-            IOCommand([])
-
-    def test_io_import_missing_source(self) -> None:
-        """Test io import without source exits."""
-        with pytest.raises(SystemExit):
-            IOCommand(["import"])
 
 
 class TestProjectCommandParsing:

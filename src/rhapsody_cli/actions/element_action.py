@@ -18,7 +18,7 @@ class ElementAddAction(ElementManagementAction):
     def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'add' subcommand and its arguments."""
         add_parser = sub_parser.add_parser("add", help="Add a new element")
-        add_parser.add_argument("--type", required=True, help="Element type (class, actor, package)")
+        add_parser.add_argument("--type", required=True, help="Element type (class, actor)")
         add_parser.add_argument("--name", default=None, help="Element name (required unless --bulk is used)")
         add_parser.add_argument("--bulk", default=None, help="Path to a file with one element name per line")
         self.add_path_argument(add_parser)
@@ -94,11 +94,6 @@ class ElementAddAction(ElementManagementAction):
             container.addClass(name)
         elif element_type_lower == "actor":
             container.addActor(name)
-        elif element_type_lower == "package":
-            if hasattr(container, "addPackage"):
-                container.addPackage(name)
-            else:
-                container.addNestedPackage(name)
         else:
             raise ValueError(f"Unknown element type '{element_type}'")
 

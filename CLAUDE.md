@@ -43,7 +43,7 @@ ruff check src/ tests/       # Lint (E, F, I, UP, B rule sets)
 ruff check src/ tests/ --fix # Auto-fix
 black --check src/ tests/    # Format check (line-length 200, py38 target)
 black src/ tests/            # Auto-format
-mypy src/ tests/             # Type checking (strict mode, python 3.8)
+mypy src/ tests/             # Type checking (strict mode, python 3.9)
 ```
 
 Full quality gate:
@@ -67,13 +67,13 @@ Three layers, each building on the one below:
 
 ### Layer 1 — Core Model Wrapping (`src/rhapsody_cli/models/`)
 
-Base infrastructure in `_core.py`:
-- `RPModelElement` (`models/_core.py:85`) — base class for all wrapped COM objects. Mirrors `IRPModelElement`. Method names match Java API exactly (`getName`, `setName`, `getMetaClass`, `getGUID`).
-- `RPUnit` (`models/_core.py:121`) — elements that can be saved as files (`save()`, `getFilename()`, `getNestedElements()`).
-- `RPCollection` (`models/_core.py:148`) — iterable/indexable wrapper over `IRPCollection`. 1-based COM indexing is translated to 0-based Python indexing in `__getitem__`.
-- `call_com(func)` (`models/_core.py:33`) — invokes a COM call, translating `pywintypes.com_error` into `RhapsodyRuntimeException`. **All COM calls must go through `call_com(lambda: ...)`** or through the helper accessors.
-- `wrap(com_obj)` (`models/_core.py:52`) — factory that dispatches a raw COM object to the correct wrapper subclass using `_WRAPPER_REGISTRY`.
-- `register_wrapper(meta_class, cls)` (`models/_core.py:28`) — registers a wrapper class for a given `getMetaClass()` string.
+Base infrastructure in `core.py`:
+- `RPModelElement` (`models/core.py:94`) — base class for all wrapped COM objects. Mirrors `IRPModelElement`. Method names match Java API exactly (`getName`, `setName`, `getMetaClass`, `getGUID`).
+- `RPUnit` (`models/core.py:1349`) — elements that can be saved as files (`save()`, `getFilename()`, `getNestedElements()`).
+- `RPCollection` (`models/core.py:1627`) — iterable/indexable wrapper over `IRPCollection`. 1-based COM indexing is translated to 0-based Python indexing in `__getitem__`.
+- `call_com(func)` (`models/core.py:42`) — invokes a COM call, translating `pywintypes.com_error` into `RhapsodyRuntimeException`. **All COM calls must go through `call_com(lambda: ...)`** or through the helper accessors.
+- `wrap(com_obj)` (`models/core.py:61`) — factory that dispatches a raw COM object to the correct wrapper subclass using `_WRAPPER_REGISTRY`.
+- `register_wrapper(meta_class, cls)` (`models/core.py:37`) — registers a wrapper class for a given `getMetaClass()` string.
 - `_get_method_or_property` / `_set_method_or_property` — helpers that prefer Java-style methods (`getName()`) but fall back to bare COM properties (`name`) because different Rhapsody Prog IDs expose attributes differently. The app uses `Rhapsody2.Application.1` (property-style).
 
 Concrete element wrappers live in `models/elements/` and register themselves at import time:
@@ -139,13 +139,13 @@ New element types must register at module import time:
 
 ```python
 # src/rhapsody_cli/models/elements/myclass.py
-from rhapsody_cli.models._core import RPModelElement, register_wrapper
+from rhapsody_cli.models.core import RPModelElement, AbstractRPModelElement
 
 class RPMyClass(RPModelElement):
     """Wraps IRPMyClass."""
     pass
 
-register_wrapper("MyClass", RPMyClass)
+AbstractRPModelElement.register_wrapper("MyClass", RPMyClass)
 ```
 
 Then add the import to `models/elements/__init__.py` so registration fires on package import.

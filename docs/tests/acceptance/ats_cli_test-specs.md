@@ -78,7 +78,7 @@ next `project list` exits non-zero with a stderr message.
 
 **ID:** ATS_CLI_00003
 **Traces-To:** SWR_CLI_00007
-**Title:** Run `element add --type <T> --name <N>` to create a class, actor, or package
+**Title:** Run `element add --type <T> --name <N>` to create a class or actor
 **Type:** Acceptance
 **Priority:** High
 **Description:**
@@ -86,22 +86,18 @@ As a CLI user, I want to create a new model element from the command line by spe
 type and name, so that I can script model construction without writing Python.
 **Acceptance Criteria:**
 - Given an active project is open, When I run
-  `rhapsody-cli element add --type class --name Vehicle`, Then `root.createClass("Vehicle")`
+  `rhapsody-cli element add --type class --name Vehicle`, Then `root.addClass("Vehicle")`
   is invoked and the command prints `Created class: Vehicle` with exit code 0.
 - Given an active project is open, When I run
-  `rhapsody-cli element add --type actor --name Driver`, Then `root.createActor("Driver")`
+  `rhapsody-cli element add --type actor --name Driver`, Then `root.addActor("Driver")`
   is invoked and the command prints `Created actor: Driver` with exit code 0.
-- Given an active project is open, When I run
-  `rhapsody-cli element add --type package --name Domain`, Then
-  `root.createPackage("Domain")` is invoked and the command prints
-  `Created package: Domain` with exit code 0.
-- Given no active project is open, When I run `rhapsody-cli element add ...`, Then the
+- Given no active project is open, When I run `element add ...`, Then the
   command prints an error about the missing active project and aborts with a non-zero exit
   code.
 - Given an unknown `--type` (e.g., `--type widget`), When I run the command, Then it
   prints an error about the unknown type and aborts with a non-zero exit code.
 **Verification Criteria:**
-With a fixture project open, run each of the three valid `element add` invocations and
+With a fixture project open, run each of the two valid `element add` invocations and
 assert the printed `Created <type>: <name>` line and exit code 0; then verify each element
 exists in the model (e.g., via `element query` or by re-opening the project in the GUI).
 Run `element add` with no active project and assert a non-zero exit code and an error
@@ -148,42 +144,6 @@ message.
 
 ---
 
-## ATS_CLI_00005: Import and Export Models
-
-**ID:** ATS_CLI_00005
-**Traces-To:** SWR_CLI_00010, SWR_CLI_00011
-**Title:** Run `io import <source>` and `io export <output>` to round-trip a model
-**Type:** Acceptance
-**Priority:** Low
-**Description:**
-As a CLI user, I want to import a model from a file and export a model to a file, so that
-I can exchange models with other tools or archive snapshots.
-**Acceptance Criteria:**
-- Given an active project and a valid `source` file on disk, When I run
-  `rhapsody-cli io import <source> --target Root`, Then the command prints
-  `Importing from <source> into Root...`, a note about format dependency, and
-  `✓ Import completed`, with exit code 0.
-- Given an active project, When I run
-  `rhapsody-cli io export <output> --format xmi`, Then the command prints
-  `Exporting to <output> as xmi...`, a note about format dependency, and
-  `✓ Export completed: <output>`, with exit code 0.
-- Given no active project, When I run `io import` or `io export`, Then the command aborts
-  with a non-zero exit code and an error message about the missing project.
-- Given a `source` path that does not exist, When I run `io import <source>`, Then the
-  argument validation rejects it and the command exits non-zero before any import attempt.
-- Given any exception during import/export, When it propagates, Then it is reported to
-  stderr and the command aborts with a non-zero exit code.
-**Verification Criteria:**
-Open a fixture project, run `io export /tmp/out.xmi --format xmi`, and assert stdout
-contains `✓ Export completed: /tmp/out.xmi` and the exit code is 0. Then run
-`io import /tmp/out.xmi --target Root` (on a fresh project) and assert stdout contains
-`✓ Import completed` with exit code 0. Run `io import /nonexistent` and assert a non-zero
-exit code due to path validation. Run `io export` with no active project and assert a
-non-zero exit code with an error about the missing project.
-**Last Changed:** 2026-07-07
-
----
-
 ## ATS_CLI_00006: Select Output Format and Receive Consistent Errors
 
 **ID:** ATS_CLI_00006
@@ -212,7 +172,7 @@ when there is no data, and rely on non-zero exit codes to detect failures in scr
 - Given any command raises an exception, When it propagates to the CLI, Then the message
   is echoed to stderr and the process exits with a non-zero exit code (Click `Abort`).
 - Given the CLI architecture, When I inspect the command classes, Then each command is a
-  class extending `click.Command` (or a `BaseProjectCommand`/`BaseElementCommand`/`BaseIOCommand`
+  class extending `click.Command` (or a `BaseProjectCommand`/`BaseElementCommand`
   base) grouped under a `click.Group` subclass.
 **Verification Criteria:**
 Run `rhapsody-cli --output xml project list` and assert Click rejects `xml` with a non-zero

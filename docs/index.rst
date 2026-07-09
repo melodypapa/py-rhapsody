@@ -224,14 +224,12 @@ Project Structure
    │   ├── __init__.py
    │   ├── abstract_command.py       # AbstractCommand base class
    │   ├── element_command.py        # ElementCommand
-   │   ├── project_command.py        # ProjectCommand
-   │   └── io_command.py             # IOCommand
+   │   └── project_command.py        # ProjectCommand
    ├── actions/                       # CLI subcommand actions (argparse, class-based)
    │   ├── __init__.py
    │   ├── abstract_action.py        # AbstractAction, RhapsodyContextAction, ElementManagementAction
    │   ├── element_action.py         # ElementAddAction, ElementViewAction, ElementQueryAction, ElementDeleteAction
-   │   ├── project_action.py         # Project subcommand actions
-   │   └── io_action.py              # Import/export actions
+   │   └── project_action.py         # Project subcommand actions
    └── cli/                           # CLI entry point and support
        ├── main.py                   # Entry point (re-exports cli.main)
        ├── cli.py                    # main() dispatcher
