@@ -156,11 +156,12 @@ rhapsody-cli package create --path Sensors '{"name":"TempSensors","description":
 # Inline JSON - multiple packages (bulk)
 rhapsody-cli package create --path Sensors '[{"name":"TempSensors","description":"Temperature"},{"name":"PressureSensors","description":"Pressure"}]'
 
-# External JSON file - single package
+# External JSON file
 rhapsody-cli package create --path Sensors packages.json
 
-# External JSON file - multiple packages
-rhapsody-cli package create --path Main subsystems.json
+# Reuse exported package JSON
+rhapsody-cli package view --path Sensors/TempSensors --output json > package.json
+rhapsody-cli package create --path NewSensors package.json
 ```
 
 **External JSON file format:**
@@ -179,6 +180,8 @@ rhapsody-cli package create --path Main subsystems.json
   }
 ]
 ```
+
+**Output:** INFO logs to stderr showing created packages. No structured output format.
 
 **Implementation:**
 ```python
@@ -327,7 +330,21 @@ rhapsody-cli package view --path Sensors/TemperatureSensors --output csv
 - **JSON**: Via global `--output json` flag (machine-parsable)
 - **CSV**: Via global `--output csv` flag (spreadsheet-friendly)
 
-All output goes to stdout (not logger) for safe piping/redirection.
+**Workflow: View → Create**
+The JSON output from `view` can be used as input for `create`:
+```bash
+# Export package to JSON
+rhapsody-cli package view --path Sensors/TempSensors --output json > package.json
+
+# Edit package.json (modify name, description, etc.)
+
+# Create new package from exported JSON
+rhapsody-cli package create --path Sensors package.json
+```
+
+The create command ignores extra fields from view output (guid, metaClass, fullPath) and only uses validated attributes (name, description, properties, stereotypes, tags).
+
+All output goes to stdout for safe piping/redirection.
 
 **Implementation:**
 ```python
