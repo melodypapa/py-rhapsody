@@ -160,3 +160,12 @@ class RPAttribute(RPVariable):
 
 
 register_wrapper("Attribute", RPAttribute)
+
+
+class RPTag(RPVariable):
+    """Wraps ``IRPTag``: a tag that extends ``IRPVariable``."""
+
+    pass
+
+
+register_wrapper("Tag", RPTag)
