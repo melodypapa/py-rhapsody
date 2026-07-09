@@ -40,10 +40,11 @@ package (command group)
    - Registers 4 actions: PackageCreateAction, PackageDeleteAction, PackageViewAction, PackageItemsAction
 
 2. **src/rhapsody_cli/actions/package_action.py**
-   - `PackageCreateAction` - handles `package create`
-   - `PackageDeleteAction` - handles `package delete`
-   - `PackageViewAction` - handles `package view`
-   - `PackageItemsAction` - handles `package items`
+   - `AbstractPackageAction` - Base class with common functionality (path validation, logging, error handling)
+   - `PackageCreateAction` - handles `package create` (extends AbstractPackageAction)
+   - `PackageDeleteAction` - handles `package delete` (extends AbstractPackageAction)
+   - `PackageViewAction` - handles `package view` (extends AbstractPackageAction)
+   - `PackageItemsAction` - handles `package items` (extends AbstractPackageAction)
 
 3. **Register in src/rhapsody_cli/cli/main.py**
    - Add `package` command to CLI dispatcher
@@ -54,6 +55,83 @@ package (command group)
 - **OutputFormatter** - Table/JSON/CSV output formatting (already exists)
 - **ElementManagementAction** - Base class with logging and error handling (already exists)
 - **RPPackage wrapper** - addNestedPackage(), getNestedPackages(), etc. (already exists)
+
+### AbstractPackageAction Base Class
+
+**Purpose:** Common functionality for all package actions to reduce code duplication.
+
+**Common functionality:**
+- Package path validation (resolve + check metaClass == "Package")
+- Error handling for path resolution failures
+- Logging integration for path validation errors
+
+**Implementation:**
+```python
+class AbstractPackageAction(ElementManagementAction):
+    """Base class for package actions with common path validation."""
+
+    def _resolve_and_validate_package(self, path: str) -> Any:
+        """Resolve path and validate it's a Package element.
+
+        Args:
+            path: Package path to resolve
+
+        Returns:
+            RPPackage wrapper if validation succeeds
+
+        Raises:
+            CliExecutionError: If path not found or not a Package
+        """
+        try:
+            project = self._get_active_project()
+            root = project.getRoot()
+            element = PathResolver.resolve_container(root, path)
+
+            # VALIDATE: Must be Package
+            meta_class = element.getMetaClass()
+            if meta_class != "Package":
+                raise CliExecutionError(
+                    f"Path '{path}' does not resolve to a Package (found {meta_class})"
+                )
+
+            return element
+
+        except PathResolverError as e:
+            self.logger.error("Path resolution failed: %s", e)
+            raise CliExecutionError(str(e)) from e
+        except Exception as e:
+            self._handle_execution_error(e, f"Failed to resolve path '{path}'")
+
+    def add_path_argument(self, parser: argparse.ArgumentParser) -> None:
+        """Add standard --path argument for package actions."""
+        parser.add_argument("--path", required=True, help="Package path")
+```
+
+**Usage in actions:**
+```python
+class PackageCreateAction(AbstractPackageAction):
+    def execute(self, args):
+        # Resolve and validate parent package
+        container = self._resolve_and_validate_package(args.path)
+
+        # Now create packages under validated container
+        ...
+
+class PackageDeleteAction(AbstractPackageAction):
+    def execute(self, args):
+        # Resolve and validate package to delete
+        package = self._resolve_and_validate_package(args.path)
+
+        # Delete package
+        package.deleteFromProject()
+        ...
+```
+
+**Benefits:**
+- Single point for path validation logic
+- Consistent error messages across all actions
+- Reduced code duplication
+- Easier maintenance and testing
 
 ## Subcommands
 
@@ -79,7 +157,12 @@ package create --path Main '{"name":"Subsystem","description":"Main subsystem","
 
 **Implementation:**
 ```python
-class PackageCreateAction(ElementManagementAction):
+class PackageCreateAction(AbstractPackageAction):
+    VALID_ATTRIBUTES = {
+        "name", "description", "description_html", "description_rtf",
+        "display_name", "display_name_rtf", "properties"
+    }
+
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("create", help="Create a package")
         parser.add_argument("--path", required=True, help="Parent package path")
@@ -95,23 +178,8 @@ class PackageCreateAction(ElementManagementAction):
 
         packages_data = data if isinstance(data, list) else [data]
 
-        # Resolve and validate parent package FIRST
-        try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            container = PathResolver.resolve_container(root, args.path)
-
-            # VALIDATE: Must be Package
-            meta_class = container.getMetaClass()
-            if meta_class != "Package":
-                raise CliExecutionError(
-                    f"Path '{args.path}' does not resolve to a Package (found {meta_class})"
-                )
-        except PathResolverError as e:
-            self.logger.error("Path resolution failed: %s", e)
-            raise CliExecutionError(str(e)) from e
-        except Exception as e:
-            self._handle_execution_error(e, f"Failed to resolve path '{args.path}'")
+        # Resolve and validate parent package (using base class method)
+        container = self._resolve_and_validate_package(args.path)
 
         # Create packages
         created = []
@@ -162,32 +230,20 @@ package delete --path Sensors/OldPackage
 
 **Implementation:**
 ```python
-class PackageDeleteAction(ElementManagementAction):
+class PackageDeleteAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("delete", help="Delete a package")
         parser.add_argument("--path", required=True, help="Package path to delete")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
+        # Resolve and validate package (using base class method)
+        package = self._resolve_and_validate_package(args.path)
+
+        # Delete package
         try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            package = PathResolver.resolve_container(root, args.path)
-
-            # VALIDATE: Must be Package
-            meta_class = package.getMetaClass()
-            if meta_class != "Package":
-                raise CliExecutionError(
-                    f"Path '{args.path}' does not resolve to a Package (found {meta_class})"
-                )
-
-            # Delete package
             package.deleteFromProject()
             self.logger.info("Deleted package: %s", args.path)
-
-        except PathResolverError as e:
-            self.logger.error("Path resolution failed: %s", e)
-            raise CliExecutionError(str(e)) from e
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete package '{args.path}'")
 ```
@@ -210,26 +266,18 @@ Table/JSON/CSV via global `--output` flag.
 
 **Implementation:**
 ```python
-class PackageViewAction(ElementManagementAction):
+class PackageViewAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("view", help="View package details")
         parser.add_argument("--path", required=True, help="Package path to view")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
+        # Resolve and validate package (using base class method)
+        package = self._resolve_and_validate_package(args.path)
+
+        # Get package details
         try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            package = PathResolver.resolve_container(root, args.path)
-
-            # VALIDATE: Must be Package
-            meta_class = package.getMetaClass()
-            if meta_class != "Package":
-                raise CliExecutionError(
-                    f"Path '{args.path}' does not resolve to a Package (found {meta_class})"
-                )
-
-            # Get package details
             details = {
                 "Name": package.getName(),
                 "GUID": package.getGUID(),
@@ -241,10 +289,6 @@ class PackageViewAction(ElementManagementAction):
             # Format output
             output = OutputFormatter.table(["Property", "Value"], [[k, v] for k, v in details.items()])
             print(output)
-
-        except PathResolverError as e:
-            self.logger.error("Path resolution failed: %s", e)
-            raise CliExecutionError(str(e)) from e
         except Exception as e:
             self._handle_execution_error(e, f"Failed to view package '{args.path}'")
 ```
@@ -266,26 +310,18 @@ Table showing type and name for each child element (nested packages, classes, ac
 
 **Implementation:**
 ```python
-class PackageItemsAction(ElementManagementAction):
+class PackageItemsAction(AbstractPackageAction):
     def init_arguments(self, sub_parser):
         parser = sub_parser.add_parser("items", help="List children items in a package")
         parser.add_argument("--path", required=True, help="Package path")
         self.add_verbose_argument(parser)
 
     def execute(self, args):
+        # Resolve and validate package (using base class method)
+        package = self._resolve_and_validate_package(args.path)
+
+        # Get all children items
         try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            package = PathResolver.resolve_container(root, args.path)
-
-            # VALIDATE: Must be Package
-            meta_class = package.getMetaClass()
-            if meta_class != "Package":
-                raise CliExecutionError(
-                    f"Path '{args.path}' does not resolve to a Package (found {meta_class})"
-                )
-
-            # Get all children items
             items = []
             for nested_pkg in package.getNestedPackages():
                 items.append(["Package", nested_pkg.getName()])
@@ -301,10 +337,6 @@ class PackageItemsAction(ElementManagementAction):
             # Format output
             output = OutputFormatter.table(["Type", "Name"], items)
             print(output)
-
-        except PathResolverError as e:
-            self.logger.error("Path resolution failed: %s", e)
-            raise CliExecutionError(str(e)) from e
         except Exception as e:
             self._handle_execution_error(e, f"Failed to list items in package '{args.path}'")
 ```
@@ -536,14 +568,15 @@ class TestPackageItemsAction:
 
 ### Phase 1: Core Infrastructure
 - [ ] Create `package_command.py` with PackageCommand dispatcher
-- [ ] Create `package_action.py` with 4 Action classes
+- [ ] Create `package_action.py` with AbstractPackageAction base class
+- [ ] Implement `AbstractPackageAction._resolve_and_validate_package()` method
 - [ ] Register `package` command in `main.py`
 
 ### Phase 2: Implementation
-- [ ] Implement PackageCreateAction with bulk support and validation
-- [ ] Implement PackageDeleteAction with path validation
-- [ ] Implement PackageViewAction with output formatting
-- [ ] Implement PackageItemsAction with children listing
+- [ ] Implement PackageCreateAction (extends AbstractPackageAction) with bulk support and validation
+- [ ] Implement PackageDeleteAction (extends AbstractPackageAction) using base class validation
+- [ ] Implement PackageViewAction (extends AbstractPackageAction) with output formatting
+- [ ] Implement PackageItemsAction (extends AbstractPackageAction) with children listing
 
 ### Phase 3: Testing
 - [ ] Write unit tests for all 4 actions

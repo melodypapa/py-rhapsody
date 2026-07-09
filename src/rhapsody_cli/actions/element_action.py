@@ -4,8 +4,6 @@ import argparse
 from typing import Any, List, Optional, Tuple
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
-from rhapsody_cli.cli.formatters import OutputFormatter
-from rhapsody_cli.cli.path_resolver import PathResolver, PathResolverError
 from rhapsody_cli.exceptions import CliExecutionError
 from rhapsody_cli.models.core import AbstractRPModelElement
 
@@ -23,11 +21,7 @@ class ElementAddAction(ElementManagementAction):
         add_parser.add_argument("--type", required=True, help="Element type (class, actor, package)")
         add_parser.add_argument("--name", default=None, help="Element name (required unless --bulk is used)")
         add_parser.add_argument("--bulk", default=None, help="Path to a file with one element name per line")
-        add_parser.add_argument(
-            "--path",
-            default=None,
-            help="Container path using '/' or '\\' separators (default: project root)",
-        )
+        self.add_path_argument(add_parser)
         self.add_verbose_argument(add_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
@@ -43,15 +37,8 @@ class ElementAddAction(ElementManagementAction):
         if name and bulk_file:
             raise CliExecutionError("--name and --bulk cannot be used together")
 
-        try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            container = PathResolver.resolve_container(root, path)
-        except PathResolverError as e:
-            self.logger.error("%s", e)
-            raise CliExecutionError(str(e)) from e
-        except Exception as e:
-            self._handle_execution_error(e, "Failed to resolve container path")
+        root = self._get_active_root()
+        container = self._resolve_container_or_element(root, path, resolve_element=False, operation="resolve container path")
 
         if bulk_file:
             self._execute_bulk(element_type, bulk_file, container, path)
@@ -126,46 +113,31 @@ class ElementViewAction(ElementManagementAction):
     def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
         """Register the 'view' subcommand and its arguments."""
         view_parser = sub_parser.add_parser("view", help="View element details")
-        view_parser.add_argument(
-            "--path",
+        self.add_path_argument(
+            view_parser,
             required=True,
-            help="Element path using '/' or '\\' separators (e.g. pkg/subpkg/MyClass)",
+            help_text="Element path using '/' or '\\' separators (e.g. pkg/subpkg/MyClass)",
         )
         self.add_verbose_argument(view_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
         """View element details."""
         path = args.path
-        try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            element = PathResolver.resolve_element(root, path)
-        except PathResolverError as e:
-            self.logger.error("%s", e)
-            raise CliExecutionError(str(e)) from e
-        except Exception as e:
-            self._handle_execution_error(e, f"Failed to view element '{path}'")
+        root = self._get_active_root()
+        element = self._resolve_container_or_element(root, path, resolve_element=True, operation=f"view element '{path}'")
 
-        data = {
-            "path": path,
-            "name": element.getName(),
-            "type": element.getMetaClass(),  # type: ignore[attr-defined]
-        }
-
-        from rhapsody_cli.cli.context import RhapsodyContext
-
-        ctx = RhapsodyContext()
+        name = element.getName()
+        meta_class = element.getMetaClass()  # type: ignore[attr-defined]
+        data = {"path": path, "name": name, "type": meta_class}
 
         # NOTE: This is the command's result data (not a status/log message),
         # so it is written directly to stdout via print() rather than the
         # logger, to keep it safe for piping/redirection (e.g. `> out.json`).
-        if ctx.output_format == "json":
-            output = OutputFormatter.json_format(data)
-        else:
-            rows = [["path", path], ["name", data["name"]], ["type", data["type"]]]
-            output = OutputFormatter.table(["Property", "Value"], rows)
-
-        print(output)
+        self._print_formatted_output(
+            data=data,
+            headers=["Property", "Value"],
+            table_rows=[["path", path], ["name", name], ["type", meta_class]],
+        )
 
 
 class ElementQueryAction(ElementManagementAction):
@@ -179,16 +151,8 @@ class ElementQueryAction(ElementManagementAction):
         """Register the 'query' subcommand and its arguments."""
         query_parser = sub_parser.add_parser("query", help="Query elements in active project")
         query_parser.add_argument("pattern", nargs="?", default=None, help="Search pattern (optional)")
-        query_parser.add_argument(
-            "--path",
-            default=None,
-            help="Container path using '/' or '\\' separators (default: project root)",
-        )
-        query_parser.add_argument(
-            "--recursive",
-            action="store_true",
-            help="Include elements nested at any depth below the container",
-        )
+        self.add_path_argument(query_parser)
+        self.add_recursive_argument(query_parser, help_text=self._RECURSIVE_QUERY_HELP)
         self.add_verbose_argument(query_parser)
 
     def execute(self, args: argparse.Namespace) -> None:
@@ -196,37 +160,20 @@ class ElementQueryAction(ElementManagementAction):
         path = args.path
         recursive = args.recursive
 
-        try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            container = PathResolver.resolve_container(root, path)
-        except PathResolverError as e:
-            self.logger.error("%s", e)
-            raise CliExecutionError(str(e)) from e
-        except Exception as e:
-            self._handle_execution_error(e, "Failed to query elements")
+        root = self._get_active_root()
+        container = self._resolve_container_or_element(root, path, resolve_element=False, operation="query elements")
 
         base_path = path or ""
         results = self._collect_elements(container, base_path, recursive)
 
-        from rhapsody_cli.cli.context import RhapsodyContext
-
-        ctx = RhapsodyContext()
+        data = {"elements": [{"name": n, "type": m, "path": p} for n, m, p in results]}
+        headers = ["Name", "Type", "Path"] if recursive else ["Name", "Type"]
+        table_rows = [list(row) for row in ([n, m, p] if recursive else [n, m] for n, m, p in results)]
 
         # NOTE: This is the command's result data (not a status/log message),
         # so it is written directly to stdout via print() rather than the
         # logger, to keep it safe for piping/redirection (e.g. `> out.json`).
-        if ctx.output_format == "json":
-            data = {"elements": [{"name": name, "type": meta_class, "path": elem_path} for name, meta_class, elem_path in results]}
-            output = OutputFormatter.json_format(data)
-        elif recursive:
-            rows = [[name, meta_class, elem_path] for name, meta_class, elem_path in results]
-            output = OutputFormatter.table(["Name", "Type", "Path"], rows)
-        else:
-            rows = [[name, meta_class] for name, meta_class, _ in results]
-            output = OutputFormatter.table(["Name", "Type"], rows)
-
-        print(output)
+        self._print_formatted_output(data=data, headers=headers, table_rows=table_rows)
 
     def _collect_elements(self, container: Any, base_path: str, recursive: bool) -> List[Tuple[str, str, str]]:
         """Collect (name, meta_class, path) tuples for direct or recursive children."""
@@ -252,11 +199,7 @@ class ElementDeleteAction(ElementManagementAction):
         """Register the 'delete' subcommand and its arguments."""
         delete_parser = sub_parser.add_parser("delete", help="Delete an element")
         delete_parser.add_argument("path", help="Element path using '/' or '\\' separators")
-        delete_parser.add_argument(
-            "--recursive",
-            action="store_true",
-            help="Delete the element and all elements nested within it",
-        )
+        self.add_recursive_argument(delete_parser, help_text=self._RECURSIVE_DELETE_HELP)
         delete_parser.add_argument(
             "--force",
             action="store_true",
@@ -270,15 +213,8 @@ class ElementDeleteAction(ElementManagementAction):
         recursive = args.recursive
         force = args.force
 
-        try:
-            project = self._get_active_project()
-            root = project.getRoot()
-            element = PathResolver.resolve_element(root, path)
-        except PathResolverError as e:
-            self.logger.error("%s", e)
-            raise CliExecutionError(str(e)) from e
-        except Exception as e:
-            self._handle_execution_error(e, f"Failed to delete element at path '{path}'")
+        root = self._get_active_root()
+        element = self._resolve_container_or_element(root, path, resolve_element=True, operation=f"delete element at path '{path}'")
 
         nested_count = 0
         if recursive:

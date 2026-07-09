@@ -3,8 +3,6 @@
 import argparse
 
 from rhapsody_cli.actions.abstract_action import RhapsodyContextAction
-from rhapsody_cli.cli.context import RhapsodyContext
-from rhapsody_cli.cli.formatters import OutputFormatter
 from rhapsody_cli.exceptions import RhapsodyConnectionError
 
 
@@ -25,7 +23,7 @@ class ProjectOpenAction(RhapsodyContextAction):
         """Open a project file."""
         project_path = args.project_path
         try:
-            ctx = RhapsodyContext()
+            ctx = self._context
             ctx.connect("attach")
             ctx.open_project(project_path)
             self.logger.info("Opened project: %s", project_path)
@@ -50,7 +48,7 @@ class ProjectListAction(RhapsodyContextAction):
     def execute(self, args: argparse.Namespace) -> None:
         """List open projects."""
         try:
-            ctx = RhapsodyContext()
+            ctx = self._context
             ctx.connect("attach")
             assert ctx.app is not None
             projects = ctx.app.getProjects()
@@ -59,15 +57,14 @@ class ProjectListAction(RhapsodyContextAction):
                 self.logger.info("No open projects")
                 return
 
-            rows = []
-            for proj in projects:
-                rows.append([proj.getName(), proj.getFilename()])
+            rows = [[proj.getName(), proj.getFilename()] for proj in projects]
 
             # NOTE: This is the command's result data (not a status/log
             # message), so it is written directly to stdout via print()
             # rather than the logger, to keep it safe for piping/redirection.
-            output = OutputFormatter.table(["Name", "Path"], rows)
-            print(output)
+            # force_table=True preserves the table-only contract; JSON output
+            # for `project list` is a separate future enhancement.
+            self._print_formatted_output(data={}, headers=["Name", "Path"], table_rows=rows, force_table=True)
         except Exception as e:
             self._handle_execution_error(e, "Failed to list projects")
 
@@ -87,7 +84,7 @@ class ProjectCloseAction(RhapsodyContextAction):
     def execute(self, args: argparse.Namespace) -> None:
         """Close active project."""
         try:
-            ctx = RhapsodyContext()
+            ctx = self._context
             if ctx.project is None:
                 self.logger.info("No active project")
                 return
@@ -116,7 +113,7 @@ class ProjectNewAction(RhapsodyContextAction):
         project_location = args.project_location
         project_name = args.project_name
         try:
-            ctx = RhapsodyContext()
+            ctx = self._context
             ctx.connect("attach")
             ctx.create_project(project_location, project_name)
             self.logger.info("Created project: %s at %s", project_name, project_location)
