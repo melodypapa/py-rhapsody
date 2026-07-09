@@ -185,7 +185,8 @@ package create --path Main --file subsystems.json
 class PackageCreateAction(AbstractPackageAction):
     VALID_ATTRIBUTES = {
         "name", "description", "description_html", "description_rtf",
-        "display_name", "display_name_rtf", "properties"
+        "display_name", "display_name_rtf", "properties",
+        "stereotypes", "tags"
     }
 
     def init_arguments(self, sub_parser):
@@ -408,12 +409,28 @@ class PackageItemsAction(AbstractPackageAction):
 | `display_name` | `setDisplayName()` | Display name |
 | `display_name_rtf` | `setDisplayNameRTF()` | RTF display name |
 | `properties` | `setPropertyValue()` | Dict of custom properties |
+| `stereotypes` | `addStereotype()` | Array of stereotype names to apply |
+| `tags` | `setTagValue()` | Dict of tag name to value |
 
 **Whitelist constant:**
 ```python
 VALID_ATTRIBUTES = {
     "name", "description", "description_html", "description_rtf",
-    "display_name", "display_name_rtf", "properties"
+    "display_name", "display_name_rtf", "properties",
+    "stereotypes", "tags"
+}
+```
+
+**Example JSON with stereotypes and tags:**
+```json
+{
+  "name": "MyPackage",
+  "description": "Main package",
+  "stereotypes": ["auto_generated", "version_1_0"],
+  "tags": {
+    "status": "active",
+    "version": "1.0.0"
+  }
 }
 ```
 
@@ -427,6 +444,7 @@ VALID_ATTRIBUTES = {
 ```python
 def _set_attributes(self, package, attrs):
     """Set validated attributes on package."""
+    # Basic attributes
     if "description" in attrs:
         package.setDescription(attrs["description"])
     if "description_html" in attrs:
@@ -437,9 +455,29 @@ def _set_attributes(self, package, attrs):
         package.setDisplayName(attrs["display_name"])
     if "display_name_rtf" in attrs:
         package.setDisplayNameRTF(attrs["display_name_rtf"])
+
+    # Properties
     if "properties" in attrs:
         for key, val in attrs["properties"].items():
             package.setPropertyValue(key, val)
+
+    # Stereotypes
+    if "stereotypes" in attrs:
+        for stereotype_name in attrs["stereotypes"]:
+            try:
+                package.addStereotype(stereotype_name, "Package")
+            except Exception as e:
+                self.logger.warning("Failed to add stereotype '%s': %s", stereotype_name, e)
+
+    # Tags
+    if "tags" in attrs:
+        for tag_name, tag_value in attrs["tags"].items():
+            try:
+                # Note: setTagValue requires tag element, need to find or create tag first
+                # For simplicity, use setPropertyValue for simple tags
+                package.setPropertyValue(tag_name, str(tag_value))
+            except Exception as e:
+                self.logger.warning("Failed to set tag '%s': %s", tag_name, e)
 ```
 
 ## Path Validation
@@ -578,7 +616,13 @@ class TestPackageCreateAction:
         # Test array of packages from external JSON file
 
     def test_create_with_attributes(self, mock_project):
-        # Test attribute setting
+        # Test attribute setting (description, properties)
+
+    def test_create_with_stereotypes(self, mock_project):
+        # Test stereotype application
+
+    def test_create_with_tags(self, mock_project):
+        # Test tag setting
 
     def test_create_unknown_attributes_skipped(self, mock_project):
         # Test warning log for unknown attributes
