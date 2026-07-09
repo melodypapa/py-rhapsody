@@ -348,7 +348,7 @@ rhapsody-cli package view --path Sensors/TemperatureSensors --format csv --outpu
 **Table format:**
 ```
 +-----------+--------------------------------------+
-| Property  | Value                                |
+| Key       | Value                                |
 +-----------+--------------------------------------+
 | Name      | TempSensors                          |
 | GUID      | {12345678-1234-1234-1234-1234567890} |
@@ -371,12 +371,8 @@ rhapsody-cli package view --path Sensors/TemperatureSensors --format csv --outpu
 
 **CSV format:**
 ```csv
-Property,Value
-Name,TempSensors
-GUID,{12345678-1234-1234-1234-1234567890}
-Desc,Temperature sensors package
-MetaClass,Package
-FullPath,Sensors/TempSensors
+Name,GUID,Description,MetaClass,FullPath
+TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
 ```
 
 **Workflow: View → Create**
@@ -454,7 +450,10 @@ class PackageViewAction(AbstractPackageAction):
         if format_type == "json":
             return OutputFormatter.json_format(data)
         elif format_type == "csv":
-            return OutputFormatter.csv_format(["Property", "Value"], table_rows)
+            # CSV: header row + data row
+            headers = ["Name", "GUID", "Description", "MetaClass", "FullPath"]
+            data_row = [data["name"], data["guid"], data["description"], data["metaClass"], data["fullPath"]]
+            return OutputFormatter.csv_format(headers, [data_row])
         else:
             return OutputFormatter.table(["Property", "Value"], table_rows)
 
