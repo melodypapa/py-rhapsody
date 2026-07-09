@@ -1422,7 +1422,7 @@ def test_add_to_model_mode_constants_match_java_api() -> None:
     assert int(AddToModelMode.AS_UNIT_WITH_COPY) == 1
     assert int(AddToModelMode.AS_UNIT_WITHOUT_COPY) == 2
     # IntEnum is int-compatible so callers can compare raw COM ints directly.
-    assert AddToModelMode.AS_REFERENCE == 0
+    assert AddToModelMode.AS_REFERENCE == 0  # type: ignore[comparison-overlap]
 
 
 def test_unit_copy_to_another_project_unwraps_parent_and_wraps_result() -> None:
