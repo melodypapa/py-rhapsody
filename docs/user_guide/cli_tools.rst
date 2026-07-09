@@ -116,59 +116,125 @@ Closes the currently active project.
 Element Commands
 ----------------
 
+Multi-Level Paths
+~~~~~~~~~~~~~~~~~~
+
+The ``--path`` option (on ``add`` and ``query``) and the ``path`` argument
+(on ``view`` and ``delete``) accept "/" or "\\"-separated paths to navigate
+nested packages, e.g. ``parent-pkg/pkg/child-pkg``. An optional leading
+``Root`` segment is accepted and ignored. When ``--path`` is omitted on
+``add`` or ``query``, the project root is used.
+
+``element add`` - Add New Element(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   rhapsody-cli element add --type TYPE --name NAME [--path PATH]
+   rhapsody-cli element add --type TYPE --bulk FILE [--path PATH]
+
+Create one new element (``--name``) or many elements at once (``--bulk``)
+in the active project. ``--path`` selects the destination container;
+defaults to the project root.
+
+**Examples:**
+
+.. code-block:: bash
+
+   # Single element at the root
+   rhapsody-cli element add --type class --name MyClass
+
+   # Single element in a nested package
+   rhapsody-cli element add --type class --name MyClass --path parent-pkg/pkg
+
+   # Bulk-create classes from a file
+   rhapsody-cli element add --type class --bulk items.txt --path pkg
+
+``items.txt`` contains one element name per line, blank lines are skipped::
+
+   Class1
+   Class2
+   Class3
+
+Output on success::
+
+   Added 3 items:
+     ✓ Class1 created at pkg/Class1
+     ✓ Class2 created at pkg/Class2
+     ✓ Class3 created at pkg/Class3
+
+Output with per-item errors (creation continues past failures)::
+
+   Added 2/3 items. Errors:
+     Line 2 (Class2): duplicate name
+
 ``element view`` - View Element Details
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   rhapsody-cli element view <ELEMENT_ID>
+   rhapsody-cli element view --path PATH
 
-Display detailed information about a specific element.
+Display detailed information about a specific element addressed by a
+multi-level path.
 
 **Example:**
 
 .. code-block:: bash
 
-   rhapsody-cli element view MyClass
-   rhapsody-cli --output json element view MyClass
+   rhapsody-cli element view --path pkg/subpkg/MyClass
+   rhapsody-cli --output json element view --path pkg/subpkg/MyClass
 
 ``element query`` - Query Model Elements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   rhapsody-cli element query [FILTER]
+   rhapsody-cli element query [PATTERN] [--path PATH] [--recursive]
 
-Query and list elements from the active project.
+Query and list elements directly under ``--path`` (default: project root).
+Add ``--recursive`` to include elements nested at any depth; recursive
+output includes each element's full path.
 
 **Example:**
 
 .. code-block:: bash
 
-   # List all elements
+   # List direct children of the root
    rhapsody-cli element query
 
-   # With filter (if supported)
-   rhapsody-cli element query --type Class
+   # List direct children of a nested package
+   rhapsody-cli element query --path pkg/subpkg
+
+   # List the entire hierarchy under a package
+   rhapsody-cli element query --path pkg --recursive
 
    # JSON output
-   rhapsody-cli --output json element query
+   rhapsody-cli --output json element query --recursive
 
-``element add`` - Add New Element
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``element delete`` - Delete Element(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   rhapsody-cli element add <ELEMENT_TYPE> [OPTIONS]
+   rhapsody-cli element delete PATH [--recursive] [--force]
 
-Create a new element in the active project.
+Delete the element addressed by ``PATH``. Add ``--recursive`` to also
+delete every element nested within it; without ``--force`` this prompts
+for confirmation showing how many nested elements will be removed.
 
 **Example:**
 
 .. code-block:: bash
 
-   rhapsody-cli element add Class --name MyClass
-   rhapsody-cli element add Package --name MyPackage
+   # Delete a single element
+   rhapsody-cli element delete pkg/subpkg/MyClass
+
+   # Delete a package and everything inside it (with confirmation prompt)
+   rhapsody-cli element delete pkg/subpkg --recursive
+
+   # Same, but skip the confirmation prompt
+   rhapsody-cli element delete pkg/subpkg --recursive --force
 
 IO Commands
 -----------

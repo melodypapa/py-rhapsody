@@ -113,6 +113,25 @@ Find Elements by Name
    # Find class in package
    cls = package.findClassByName("MyClass")
 
+Find Elements by CLI Path
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``rhapsody-cli element`` commands accept "/" or "\\"-separated paths
+to address elements nested arbitrarily deep, instead of requiring
+Python calls like ``findNestedPackageByName``:
+
+.. code-block:: bash
+
+   # Equivalent to: project.findNestedPackageByName("pkg").findClassByName("MyClass")
+   rhapsody-cli element view --path pkg/MyClass
+
+   # Nested two levels deep
+   rhapsody-cli element view --path parent-pkg/pkg/MyClass
+
+A path segment is matched by ``getName()`` against each level's
+``getNestedElements()``. An optional leading ``Root`` segment is
+accepted and ignored.
+
 Get All Elements of Type
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
