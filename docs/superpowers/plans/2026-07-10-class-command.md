@@ -16,8 +16,8 @@
 - Follow existing CLI patterns (PackageCommand, PackageCreateAction, etc.) — see `src/rhapsody_cli/actions/package_action.py` and `src/rhapsody_cli/commands/package_command.py`
 - Use existing infrastructure: `PathResolver`, `OutputFormatter`, `ElementManagementAction`, `RhapsodyContext`
 - TDD approach: write failing test first, then implementation
-- Requirement IDs use 5-digit format: `SWR_CLS_00001` through `SWR_CLS_00013`
-- Test case IDs use 5-digit format: `UTS_CLS_00001` through `UTS_CLS_00029`
+- Requirement IDs use 5-digit format: `SWR_CLS_00001` through `SWR_CLS_00015`
+- Test case IDs use 5-digit format: `UTS_CLS_00001` through `UTS_CLS_00035`
 - Class create accepts path resolving to Package **or Project** (metaClass in `{"Package", "Project"}`) since `RPProject` inherits `addClass`/`getClasses` from `RPPackage`
 - `link` subcommand v1 supports only `generalization` type; `--type` flag is reserved for future expansion
 - The `view` command's JSON output must round-trip cleanly into `create` (unknown fields `guid`, `isComposite`, `isReactive`, `metaClass`, `fullPath` are skipped during create with a warning)
@@ -49,7 +49,7 @@
 - Create: `docs/requirements/swr_cls_requirements.md`
 
 **Interfaces:**
-- Produces: SWR_CLS_00001 through SWR_CLS_00013 (referenced by implementation docstrings and test specs)
+- Produces: SWR_CLS_00001 through SWR_CLS_00015 (referenced by implementation docstrings and test specs)
 
 - [ ] **Step 1: Create requirements file**
 
@@ -325,6 +325,82 @@ Class view, delete, and link commands
 - SHALL validate located element is Class (metaClass == "Class")
 - SHALL raise CliExecutionError if GUID not found
 **Implementation:** src/rhapsody_cli/actions/class_action.py:AbstractClassAction._resolve_class_by_guid
+**Last Changed:** 2026-07-10
+
+---
+
+## SWR_CLS_00014: Class Command Execution Logging
+
+**ID:** SWR_CLS_00014
+**Title:** class commands log execution steps at INFO level
+**Status:** Planned
+**Priority:** Medium
+**Description:**
+The class commands SHALL emit INFO-level log messages showing execution progress, enabling end-users to understand what the CLI is doing at each stage (mirrors SWR_PKG_0014 for the package command):
+
+**Class Create Logging:**
+- SHALL log "Starting class creation..." at operation start
+- SHALL log "Resolving parent path 'X'..." before path resolution
+- SHALL log "Creating class 'Y'..." for each class being created
+- SHALL log "Setting attributes for class 'Y'..." when attributes (beyond name) are being set
+- SHALL log "Created class: Z" for each successfully created class
+- SHALL log "Successfully created N class(es)" with count summary at completion
+
+**Class Delete Logging:**
+- SHALL log "Starting class deletion..." at operation start
+- SHALL log "Resolving class path/GUID 'X'..." before path resolution
+- SHALL log "Deleting class 'X'..." before deletion
+- SHALL log "Successfully deleted class 'X'" after successful deletion
+
+**Class View Logging:**
+- SHALL log "Starting class view operation..." at operation start
+- SHALL log "Resolving class path/GUID 'X'..." before path resolution
+- SHALL log "Retrieving class details..." before data collection
+- SHALL log "Writing output to file 'X'" when writing to file (when --output specified)
+
+**Class List Logging:**
+- SHALL log "Starting class list operation..." at operation start
+- SHALL log "Resolving package path 'X'..." before path resolution
+- SHALL log "Listing classes..." before collection
+- SHALL log "Found N class(es)" or "No classes found" with count
+- SHALL log "Writing output to file 'X'" when writing to file (when --output specified)
+
+**Class Link Logging:**
+- SHALL log "Starting class link operation..." at operation start
+- SHALL log "Resolving source class path/GUID 'X'..." before path resolution
+- SHALL log "Resolving target class 'Y'..." before target lookup
+- SHALL log "Adding generalization to 'Y'..." or "Removing generalization from 'Y'..." before the operation
+- SHALL log "Successfully updated generalization for class 'X'" after success
+
+**Common Requirements:**
+- All execution-step logs SHALL use INFO level (visible by default, not requiring --verbose flag)
+- Error logs for operation failures SHALL use ERROR level (already in place per SWR_CLS_00010)
+- Logs SHALL be emitted to the standard logger for the class_action module
+**Implementation:** src/rhapsody_cli/actions/class_action.py (all 5 action classes)
+**Last Changed:** 2026-07-10
+
+---
+
+## SWR_CLS_00015: Class Create Duplicate Detection
+
+**ID:** SWR_CLS_00015
+**Title:** class create detects and reports duplicate class names
+**Status:** Planned
+**Priority:** High
+**Description:**
+The class CLI (mirrors SWR_PKG_0015 for the package command)
+- SHALL detect when a class with the given name already exists in the target parent (Package or Project) before attempting creation
+- SHALL report a user-friendly error message when a duplicate class name is detected
+- Error message SHALL follow the format: `"Class 'X' already exists in [project root|package 'Y']"`
+- Duplicate detection SHALL use case-sensitive name comparison (matching Rhapsody behavior)
+- Duplicate detection SHALL be performed by iterating through existing classes via `getClasses()` on the parent
+- When a duplicate is detected, SHALL raise `CliExecutionError` with the user-friendly message (not allow COM exception to bubble up)
+- Duplicate check SHALL occur before attempting the `addClass()` COM call (fail-fast approach)
+- Logging SHALL include "Checking if class 'X' already exists..." before the check
+- If the duplicate check itself fails (e.g., `getClasses()` COM error), SHALL log at DEBUG level and continue with creation attempt (duplicate check is a convenience, not a hard blocker)
+- SHALL also detect the underlying COM error code (`-2147221495`) as a fallback signal if `addClass()` fails after a duplicate check that could not confirm existence, converting it to the same user-friendly message rather than letting the raw COM exception propagate
+- Attribute-setting failures after successful `addClass()` SHALL NOT be treated as creation failures: SHALL wrap attribute-setting calls in try/except, log WARNING on failure, and still report the class as created (mirrors the fix applied to `PackageCreateAction._create_single_package`)
+**Implementation:** src/rhapsody_cli/actions/class_action.py:ClassCreateAction._check_class_not_exists
 **Last Changed:** 2026-07-10
 ```
 
@@ -3169,9 +3245,226 @@ git commit -m "docs: Add unit test specifications for class command (UTS_CLS_000
 
 ---
 
-## Phase 11: Final Integration and Verification
+## Phase 11: Parity Enhancements (Execution Logging & Duplicate Detection)
 
-### Task 11: Final Integration and Verification
+### Task 12: Add Execution-Step Logging to All Class Actions
+
+**Files:**
+- Modify: `src/rhapsody_cli/actions/class_action.py`
+- Modify: `tests/unit/actions/test_class_action.py`
+
+**Interfaces:**
+- Consumes: `self.logger` (already present via `AbstractAction`/`ElementManagementAction`)
+- Produces: INFO-level log calls at each execution stage in `ClassCreateAction`, `ClassDeleteAction`, `ClassViewAction`, `ClassListAction`, `ClassLinkAction` (mirrors `package_action.py` pattern)
+
+- [ ] **Step 1: Write failing tests for execution-step logging**
+
+Add to `tests/unit/actions/test_class_action.py` (one test per action, using `caplog` at INFO level), e.g.:
+
+```python
+class TestClassActionLogging:
+    """Test execution-step logging across class actions.
+
+    UTS_CLS_00030: ClassCreateAction logs execution steps
+    UTS_CLS_00031: ClassDeleteAction logs execution steps
+    UTS_CLS_00032: ClassViewAction logs execution steps
+    UTS_CLS_00033: ClassListAction logs execution steps
+    UTS_CLS_00034: ClassLinkAction logs execution steps
+    """
+
+    def test_create_logs_execution_steps(self, caplog) -> None:
+        """UTS_CLS_00030: create logs start/resolve/create/success at INFO."""
+        import logging
+
+        from rhapsody_cli.actions.class_action import ClassCreateAction
+
+        action = ClassCreateAction()
+        mock_parent = MagicMock()
+        mock_parent.getMetaClass.return_value = "Package"
+        mock_parent.getClasses.return_value = []
+        mock_class = MagicMock()
+        mock_parent.addClass.return_value = mock_class
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_parent):
+            with caplog.at_level(logging.INFO):
+                args = MagicMock()
+                args.path = "Sensors"
+                args.input = None
+                args.attributes = '{"name":"TemperatureSensor"}'
+                action.execute(args)
+
+        messages = [r.message for r in caplog.records]
+        assert any("Starting class creation" in m for m in messages)
+        assert any("Creating class 'TemperatureSensor'" in m for m in messages)
+        assert any("Created class" in m for m in messages)
+
+    # Similar tests for delete/view/list/link follow the same pattern used in
+    # test_package_action.py's logging test class.
+```
+
+- [ ] **Step 2: Run tests to verify they fail**
+
+Run: `pytest tests/unit/actions/test_class_action.py::TestClassActionLogging -v`
+Expected: FAIL (logging not yet implemented)
+
+- [ ] **Step 3: Implement execution-step logging**
+
+Add `self.logger.info(...)` calls at each stage described in SWR_CLS_00014, in `execute()` of each of the 5 action classes. Follow `package_action.py`'s exact placement pattern:
+- Log "Starting X operation..." as the first line of `execute()`
+- Log "Resolving ... path 'X'..." immediately before calling `_resolve_and_validate_package`/`_resolve_and_validate_class`/`_resolve_class_by_guid`
+- Log stage-specific messages (creating/deleting/retrieving/listing/linking) before the corresponding COM call
+- Log success/summary message after the operation completes
+
+- [ ] **Step 4: Run tests to verify they pass**
+
+Run: `pytest tests/unit/actions/test_class_action.py::TestClassActionLogging -v`
+Expected: PASS (5 tests)
+
+- [ ] **Step 5: Run linters**
+
+Run: `ruff check src/rhapsody_cli/actions/class_action.py ; mypy src/rhapsody_cli/actions/class_action.py`
+Expected: No errors
+
+- [ ] **Step 6: Commit logging enhancement**
+
+```bash
+git add src/rhapsody_cli/actions/class_action.py tests/unit/actions/test_class_action.py
+git commit -m "feat: Add execution-step logging to class command (SWR_CLS_00014)"
+```
+
+---
+
+### Task 13: Add Duplicate Class-Name Detection
+
+**Files:**
+- Modify: `src/rhapsody_cli/actions/class_action.py`
+- Modify: `tests/unit/actions/test_class_action.py`
+- Create: `tests/integration/cli/test_class_cli_integration.py` (live-Rhapsody verification, mirrors `test_package_cli_integration.py`)
+
+**Interfaces:**
+- Produces:
+  - `ClassCreateAction._check_class_not_exists(parent, name) -> None` — raises `CliExecutionError` if a class named `name` already exists among `parent.getClasses()`
+  - Updated `ClassCreateAction._create_single_class()` — calls `_check_class_not_exists()` before `addClass()`; wraps `addClass()` in try/except detecting COM error code `-2147221495` as a duplicate fallback signal; wraps attribute-setting in try/except that logs WARNING instead of failing the whole operation
+
+- [ ] **Step 1: Write failing unit tests for duplicate detection**
+
+Add to `tests/unit/actions/test_class_action.py`:
+
+```python
+class TestClassCreateDuplicateDetection:
+    """Test duplicate class-name detection.
+
+    UTS_CLS_00035: Create duplicate class raises user-friendly error
+    """
+
+    def test_create_duplicate_class_raises_error(self) -> None:
+        """UTS_CLS_00035: Duplicate class name raises CliExecutionError with friendly message."""
+        from rhapsody_cli.actions.class_action import ClassCreateAction
+        from rhapsody_cli.exceptions import CliExecutionError
+
+        action = ClassCreateAction()
+        mock_parent = MagicMock()
+        mock_parent.getMetaClass.return_value = "Package"
+
+        existing_class = MagicMock()
+        existing_class.getName.return_value = "TemperatureSensor"
+        mock_parent.getClasses.return_value = [existing_class]
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_parent):
+            args = MagicMock()
+            args.path = "Sensors"
+            args.input = None
+            args.attributes = '{"name":"TemperatureSensor"}'
+
+            with pytest.raises(CliExecutionError, match="already exists"):
+                action.execute(args)
+
+            mock_parent.addClass.assert_not_called()
+
+    def test_create_attribute_failure_does_not_undo_creation(self) -> None:
+        """Attribute-setting failure after successful addClass() is logged as WARNING, not fatal."""
+        from rhapsody_cli.actions.class_action import ClassCreateAction
+
+        action = ClassCreateAction()
+        mock_parent = MagicMock()
+        mock_parent.getMetaClass.return_value = "Package"
+        mock_parent.getClasses.return_value = []
+        mock_class = MagicMock()
+        mock_class.setDescription.side_effect = Exception("COM failure")
+        mock_parent.addClass.return_value = mock_class
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_parent):
+            args = MagicMock()
+            args.path = "Sensors"
+            args.input = None
+            args.attributes = '{"name":"X","description":"desc"}'
+
+            # Should not raise; class was created successfully
+            action.execute(args)
+            mock_parent.addClass.assert_called_once_with("X")
+```
+
+- [ ] **Step 2: Run tests to verify they fail**
+
+Run: `pytest tests/unit/actions/test_class_action.py::TestClassCreateDuplicateDetection -v`
+Expected: FAIL
+
+- [ ] **Step 3: Implement `_check_class_not_exists` and safe attribute-setting**
+
+In `class_action.py`, add to `ClassCreateAction`:
+
+```python
+def _check_class_not_exists(self, parent: Any, name: str) -> None:
+    """Check if a class with the given name already exists in the parent.
+
+    SWR_CLS_00015: Duplicate detection.
+    """
+    self.logger.info("Checking if class '%s' already exists...", name)
+    try:
+        existing_classes = parent.getClasses()
+        parent_desc = "project root" if parent.getMetaClass() == "Project" else f"package '{parent.getName()}'"
+        for cls in existing_classes:
+            if cls.getName() == name:
+                raise CliExecutionError(f"Class '{name}' already exists in {parent_desc}")
+    except CliExecutionError:
+        raise
+    except Exception as e:
+        self.logger.debug("Could not enumerate existing classes to check for duplicates: %s", e)
+```
+
+Update `_create_single_class()`:
+- Call `self._check_class_not_exists(parent, name)` before `parent.addClass(name)`
+- Wrap `parent.addClass(name)` in try/except; on failure, check if the error string contains `"already"`, `"duplicate"`, or the COM code `-2147221495`/`2147221495` and raise the friendly `CliExecutionError` message; otherwise raise a generic `CliExecutionError` with context
+- Wrap the `self._set_attributes(parent, cls, cls_attrs)` call in try/except that logs `self.logger.warning(...)` on failure instead of propagating (class is already created)
+
+- [ ] **Step 4: Run tests to verify they pass**
+
+Run: `pytest tests/unit/actions/test_class_action.py -v`
+Expected: All pass
+
+- [ ] **Step 5: Add live-Rhapsody integration tests**
+
+Create `tests/integration/cli/test_class_cli_integration.py` mirroring `test_package_cli_integration.py`:
+- `test_create_and_delete_class_workflow` — create then delete a class under `integration_test_pkg`
+- `test_duplicate_class_detection_with_friendly_error` — create a class, attempt to create the same name again, assert `CliExecutionError` message contains "already exists" and does NOT contain `-2147` or "Exception occurred"
+
+- [ ] **Step 6: Run linters and full test suite**
+
+Run: `ruff check src/ tests/ ; black --check src/ tests/ ; mypy src/ tests/ ; pytest tests/unit -v`
+Expected: No errors, all tests pass
+
+- [ ] **Step 7: Commit duplicate detection enhancement**
+
+```bash
+git add src/rhapsody_cli/actions/class_action.py tests/unit/actions/test_class_action.py tests/integration/cli/test_class_cli_integration.py
+git commit -m "feat: Add duplicate class-name detection with user-friendly errors (SWR_CLS_00015)"
+```
+
+---
+
+## Phase 12: Final Integration and Verification
+
+### Task 14: Final Integration and Verification
 
 **Files:**
 - All files from previous tasks
@@ -3209,8 +3502,8 @@ git status
 
 **Implementation complete!** The class command provides:
 
-- SW Requirements (SWR_CLS_00001-00013)
-- Test Cases (UTS_CLS_00001-00029)
+- SW Requirements (SWR_CLS_00001-00015)
+- Test Cases (UTS_CLS_00001-00035)
 - 5 Subcommands (create, delete, view, list, link)
 - Bulk creation with 8 attribute setters
 - External JSON file support
@@ -3220,12 +3513,16 @@ git status
 - GUID lookup support for delete/view/link
 - Generalization relationship management (link)
 - View-to-Create workflow (round-trip JSON)
-- Comprehensive test coverage
+- Execution-step INFO logging across all 5 actions (parity with package command, SWR_CLS_00014)
+- Duplicate class-name detection with user-friendly errors (parity with package command, SWR_CLS_00015)
+- Comprehensive test coverage (unit + live-Rhapsody integration)
 - User documentation
 
 **Files created:**
 - 2 implementation files (class_command.py, class_action.py)
-- 2 test files (test_class_command.py, test_class_action.py)
+- 3 test files (test_class_command.py, test_class_action.py, test_class_cli_integration.py)
 - 3 documentation files (swr_cls_requirements.md, uts_cls_test-specs.md, working_with_classes.rst)
 
-**Test coverage:** 29 test cases covering all functionality
+**Test coverage:** 35 test cases covering all functionality
+
+**Note on scope decision:** Unlike the package command's SWR_PKG_0013 (root-default `--path`), no equivalent enhancement was added for class create — `_resolve_and_validate_package` already accepts both `Package` and `Project` metaClasses for `--path` (SWR_CLS_00001), so root-level class creation is already reachable via `--path <ProjectRootName>` without needing a default-to-root branch.
