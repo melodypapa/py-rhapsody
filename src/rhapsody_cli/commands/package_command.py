@@ -7,6 +7,7 @@ from rhapsody_cli.actions.package_action import (
     PackageCreateAction,
     PackageDeleteAction,
     PackageListAction,
+    PackageUpdateAction,
     PackageViewAction,
 )
 from rhapsody_cli.commands.abstract_command import AbstractCommand
@@ -31,4 +32,5 @@ class PackageCommand(AbstractCommand):
             PackageDeleteAction(),
             PackageViewAction(),
             PackageListAction(),
+            PackageUpdateAction(),
         ]

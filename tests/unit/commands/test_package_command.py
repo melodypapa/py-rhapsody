@@ -22,8 +22,8 @@ class TestPackageCommand:
         with pytest.raises(CliExecutionError):
             PackageCommand([])
 
-    def test_registers_all_four_subcommands(self) -> None:
-        """UTS_PKG_00025: Test that all 4 subcommands are registered."""
+    def test_registers_all_five_subcommands(self) -> None:
+        """UTS_PKG_00025: Test that all 5 subcommands are registered."""
         cmd = PackageCommand(["create", "--path", "Sensors", '{"name":"Test"}'])
         actions = cmd.get_actions()
         command_ids = [a.command_id for a in actions]
@@ -32,4 +32,5 @@ class TestPackageCommand:
         assert "delete" in command_ids
         assert "view" in command_ids
         assert "list" in command_ids
-        assert len(actions) == 4
+        assert "update" in command_ids
+        assert len(actions) == 5
