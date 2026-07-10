@@ -16,11 +16,80 @@ Create three new CLI command groups for managing operations, attributes, and por
 
 | Command | Subcommands | Parent Element |
 |---------|-------------|----------------|
+| `package` | create, delete, view, list, **update** | Package/Project |
+| `class` | create, delete, view, list, link, **update** | Package/Project |
 | `operation` | create, delete, view, list, update | Classifier (Class/Actor) |
 | `attribute` | create, delete, view, list, update | Classifier |
 | `port` | create, delete, view, list, update | Classifier |
 
-### Common Patterns (inherited from class/package commands)
+---
+
+## Package Update Command (New)
+
+Add `package update` subcommand to modify attributes of an existing package.
+
+### `package update`
+
+**Arguments:**
+- `--path <package-path>` (required) - package to update
+- `--input <json-file>` (optional) - external JSON file
+- `attributes` (positional) - inline JSON with fields to update
+
+**JSON fields (validated, partial update):**
+| Field | Type | Setter Method |
+|-------|------|---------------|
+| `name` | string | `setName(val)` |
+| `description` | string | `setDescription(val)` |
+| `display_name` | string | `setDisplayName(val)` |
+| `stereotypes` | array | `addStereotype(name, "Package")` |
+| `tags` | object | `setPropertyValue(key, val)` |
+| `properties` | object | `setPropertyValue(key, val)` |
+
+**Behavior:** Partial update - only specified fields are modified. Unknown fields are skipped with warning.
+
+**Example:**
+```bash
+rhapsody-cli package update --path Sensors '{"description":"Updated sensor package","tags":{"version":"2.0"}}'
+```
+
+---
+
+## Class Update Command (New)
+
+Add `class update` subcommand to modify attributes of an existing class.
+
+### `class update`
+
+**Arguments:**
+- `--path <class-path>` (optional) - class to update
+- `--guid <guid>` (optional) - class GUID
+- Requires exactly one of `--path` or `--guid`
+- `--input <json-file>` (optional) - external JSON file
+- `attributes` (positional) - inline JSON with fields to update
+
+**JSON fields (validated, partial update):**
+| Field | Type | Setter Method |
+|-------|------|---------------|
+| `name` | string | `setName(val)` |
+| `description` | string | `setDescription(val)` |
+| `isAbstract` | bool | `setIsAbstract(1/0)` |
+| `isFinal` | bool | `setIsFinal(1/0)` |
+| `isActive` | bool | `setIsActive(1/0)` |
+| `stereotypes` | array | `addStereotype(name, "Class")` |
+| `tags` | object | `setPropertyValue(key, val)` |
+
+**Behavior:** Partial update - only specified fields are modified. Unknown fields are skipped with warning.
+
+**Note:** For modifying operations, attributes, or superclasses, use the dedicated operation/attribute/link commands.
+
+**Example:**
+```bash
+rhapsody-cli class update --path Sensors/TemperatureSensor '{"description":"Temperature sensor class","isAbstract":true}'
+```
+
+---
+
+## Common Patterns (inherited from class/package commands)
 
 - **Path format:** `--path <class-path>` identifies the parent classifier
 - **Element identification:** `--name <element-name>` for delete/view/update
@@ -278,36 +347,50 @@ Update attributes of an existing port.
 
 ```
 src/rhapsody_cli/actions/
+  package_action.py      - ADD: PackageUpdateAction (6 actions total)
+  class_action.py        - ADD: ClassUpdateAction (6 actions total)
   operation_action.py    - AbstractOperationAction + 5 concrete actions
   attribute_action.py    - AbstractAttributeAction + 5 concrete actions
   port_action.py         - AbstractPortAction + 5 concrete actions
 
 src/rhapsody_cli/commands/
+  package_command.py     - UPDATE: register update subcommand (5 actions)
+  class_command.py       - UPDATE: register update subcommand (6 actions)
   operation_command.py   - OperationCommand dispatcher
   attribute_command.py   - AttributeCommand dispatcher
   port_command.py        - PortCommand dispatcher
 
 tests/unit/actions/
+  test_package_action.py  - ADD: TestPackageUpdateAction
+  test_class_action.py    - ADD: TestClassUpdateAction
   test_operation_action.py
   test_attribute_action.py
   test_port_action.py
 
 tests/unit/commands/
+  test_package_command.py - UPDATE: verify 5 subcommands
+  test_class_command.py   - UPDATE: verify 6 subcommands
   test_operation_command.py
   test_attribute_command.py
   test_port_command.py
 
 docs/requirements/
+  swr_pkg_requirements.md  - ADD: SWR_PKG_0013 (Package Update)
+  swr_cls_requirements.md  - ADD: SWR_CLS_00014 (Class Update)
   swr_op_requirements.md   - SW requirements (SWR_OP_00001-...)
   swr_attr_requirements.md - SW requirements (SWR_ATTR_00001-...)
   swr_port_requirements.md - SW requirements (SWR_PORT_00001-...)
 
 docs/tests/unit/
+  uts_pkg_test-specs.md    - ADD: UTS_PKG_000xx (Package Update)
+  uts_cls_test-specs.md    - ADD: UTS_CLS_000xx (Class Update)
   uts_op_test-specs.md     - Unit test specs
   uts_attr_test-specs.md   - Unit test specs
   uts_port_test-specs.md   - Unit test specs
 
 docs/user_guide/
+  working_with_packages.rst - UPDATE: add update subcommand docs
+  working_with_classes.rst  - UPDATE: add update subcommand docs
   working_with_operations.rst
   working_with_attributes.rst
   working_with_ports.rst
@@ -379,6 +462,8 @@ Each action class gets unit tests covering:
 
 ## Success Criteria
 
+- Package update command implemented (5 subcommands total: create, delete, view, list, update)
+- Class update command implemented (6 subcommands total: create, delete, view, list, link, update)
 - All 3 commands (operation, attribute, port) implemented with 5 subcommands each
 - Element command removed
 - 624+ tests passing (after adding new tests)
