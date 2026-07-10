@@ -323,6 +323,35 @@ FlowSensors
 
 ---
 
+## SWR_PKG_0016: Package Update Command
+
+**ID:** SWR_PKG_0016
+**Title:** package update command modifies package attributes
+**Status:** Planned
+**Priority:** High
+**Description:**
+The package CLI
+- SHALL provide a `package update` command to modify attributes of an existing package.
+- SHALL accept `--path <package-path>` argument (optional) - full path to package (including name, e.g. Sensors/TempSensors)
+- SHALL accept `--guid <guid>` argument (optional) - package GUID
+- SHALL require exactly one of `--path` or `--guid`
+- SHALL accept `--input <json-file>` argument (optional) - external JSON file
+- SHALL accept positional `attributes` argument (inline JSON with fields to update)
+- SHALL validate path/guid resolves to Package element (metaClass == "Package")
+- SHALL validate type when using --guid (metaClass == "Package", raise CliExecutionError if mismatch)
+- SHALL perform partial update - only specified fields are modified
+- SHALL support validated attributes: name, description, display_name, stereotypes, tags, properties
+- SHALL apply name via `setName(val)`, description via `setDescription(val)`, display_name via `setDisplayName(val)`
+- SHALL apply stereotypes via `addStereotype(name, "Package")`
+- SHALL apply tags and properties via `setPropertyValue(key, val)`
+- SHALL skip unknown attributes with warning log
+- SHALL detect inline JSON (starts with `{`) vs file path automatically
+- SHALL parse JSON file with UTF-8 encoding
+- SHALL log INFO for successful updates
+- SHALL log WARNING for skipped attributes
+**Implementation:** src/rhapsody_cli/actions/package_action.py:PackageUpdateAction
+**Last Changed:** 2026-07-10
+
 ## SWR_PKG_0013: Package Create with Default Root
 
 **ID:** SWR_PKG_0013
