@@ -6,8 +6,10 @@ from typing import Optional
 
 from rhapsody_cli.cli.context import RhapsodyContext
 from rhapsody_cli.cli.logging_config import CliLoggingConfigurator
+from rhapsody_cli.commands.attribute_command import AttributeCommand
 from rhapsody_cli.commands.class_command import ClassCommand
 from rhapsody_cli.commands.element_command import ElementCommand
+from rhapsody_cli.commands.operation_command import OperationCommand
 from rhapsody_cli.commands.package_command import PackageCommand
 from rhapsody_cli.commands.project_command import ProjectCommand
 from rhapsody_cli.exceptions import CliExecutionError
@@ -49,8 +51,12 @@ def main() -> None:
             cmd = ElementCommand(command_args)
         elif command_name == "class":
             cmd = ClassCommand(command_args)
+        elif command_name == "attribute":
+            cmd = AttributeCommand(command_args)
         elif command_name == "package":
             cmd = PackageCommand(command_args)
+        elif command_name == "operation":
+            cmd = OperationCommand(command_args)
         elif command_name == "project":
             cmd = ProjectCommand(command_args)
         else:
@@ -78,8 +84,9 @@ def main() -> None:
 
 def _usage(error: str) -> None:
     """Print usage message and exit."""
-    commands_text = "Commands:\n  class      Manage classes\n"
+    commands_text = "Commands:\n  attribute  Manage attributes\n  class      Manage classes\n"
     commands_text += "  element    Manage model elements\n"
+    commands_text += "  operation  Manage operations\n"
     commands_text += "  package    Manage packages\n  project    Manage projects\n"
     options_text = "Global Options:\n  --output <format>   Output format (table, json, csv)."
     options_text += " Default: table\n  -v|--verbose        Enable debug logging\n"
