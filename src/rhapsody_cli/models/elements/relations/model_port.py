@@ -31,7 +31,7 @@ class RPPort(RPInstance):
         Returns:
             ``1`` if the port is behavioral, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsBehavioral()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehavioral", "isBehavioral"))
 
     def setIsBehavioral(self, is_behavioral: int) -> None:
         """Specifies whether the port should be a behavioral port.
@@ -39,7 +39,7 @@ class RPPort(RPInstance):
         Args:
             is_behavioral: ``1`` to make the port behavioral, ``0`` otherwise.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsBehavioral(is_behavioral))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsBehavioral", "isBehavioral", is_behavioral)
 
     def getIsReversed(self) -> int:
         """Checks whether the port's direction is reversed.
@@ -47,7 +47,7 @@ class RPPort(RPInstance):
         Returns:
             ``1`` if the port is reversed, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsReversed()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsReversed", "isReversed"))
 
     def setIsReversed(self, is_reversed: int) -> None:
         """Specifies whether the port's direction should be reversed.
@@ -55,7 +55,7 @@ class RPPort(RPInstance):
         Args:
             is_reversed: ``1`` to reverse the port, ``0`` otherwise.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsReversed(is_reversed))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsReversed", "isReversed", is_reversed)
 
     def getPortContract(self) -> Any:
         """Returns the contract defined for the port.
@@ -63,7 +63,7 @@ class RPPort(RPInstance):
         Returns:
             The wrapped ``IRPClass`` used as the port's contract.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getPortContract()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getPortContract", "portContract"))
 
     def setPortContract(self, port_contract: RPModelElement) -> None:
         """Specifies the contract to use for the port.
@@ -71,7 +71,7 @@ class RPPort(RPInstance):
         Args:
             port_contract: The class (``IRPClass``) to use as the port's contract.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setPortContract(port_contract._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setPortContract", "portContract", port_contract._com)
 
     def getProvidedInterfaces(self) -> RPCollection:
         """Returns the interfaces provided by the port.
@@ -79,7 +79,7 @@ class RPPort(RPInstance):
         Returns:
             An ``RPCollection`` of provided interface classes.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getProvidedInterfaces()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getProvidedInterfaces", "providedInterfaces"))
 
     def addProvidedInterface(self, new_val: RPModelElement) -> None:
         """Adds a provided interface to the port.
@@ -103,7 +103,7 @@ class RPPort(RPInstance):
         Returns:
             An ``RPCollection`` of required interface classes.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRequiredInterfaces()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRequiredInterfaces", "requiredInterfaces"))
 
     def addRequiredInterface(self, new_val: RPModelElement) -> None:
         """Adds a required interface to the port.
@@ -131,7 +131,7 @@ class RPPort(RPInstance):
         Returns:
             The wrapped ``IRPClass`` used as the port's contract.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getContract()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getContract", "contract"))
 
     def setContract(self, contract: RPModelElement) -> None:
         """Specifies the contract to use for the port.
@@ -143,7 +143,7 @@ class RPPort(RPInstance):
         Args:
             contract: The class (``IRPClass``) to use as the port's contract.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setContract(contract._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setContract", "contract", contract._com)
 
 
 AbstractRPModelElement.register_wrapper("Port", RPPort)

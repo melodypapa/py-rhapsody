@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RhapsodyArchive>
+	<MagicNumber></MagicNumber>
+	<CODE-PAGE>936</CODE-PAGE>
+	<version>109.0.2</version>
+	<lang>C++</lang>
+	<BuildNo>202507311556</BuildNo>
+	<RMMMinimumClientVersion>100.0</RMMMinimumClientVersion>
+	
+	<RHAPSODY-MODEL>
+	<ISubsystem type="e">
+			<_id type="a">GUID b113d749-453e-4273-9aff-2be4d19fdcbd</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">Domain</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:28</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Core domain model for the rhapsody-cli demos.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:28</_modifiedTime>
+			<weakCGTime type="a">7.11.2026::10:42:28</weakCGTime>
+			<strongCGTime type="a">1.2.1990::0:0:0</strongCGTime>
+			<_defaultComposite type="s">GUID 0302bdc0-5a4f-4126-80ca-79fd43c620e2</_defaultComposite>
+			<_eventsBaseID type="a">-1</_eventsBaseID>
+			<_configurationRelatedTime type="a">1.1.1970::8:0:0</_configurationRelatedTime>
+			<AggregatesList type="e">
+				<value>GUID 0302bdc0-5a4f-4126-80ca-79fd43c620e2</value>
+				<value>GUID cb0f10f4-70bb-4e28-95d4-2b01128199cc</value>
+			</AggregatesList>
+		</ISubsystem>
+		<IClass type="e">
+			<_id type="a">GUID 0302bdc0-5a4f-4126-80ca-79fd43c620e2</_id>
+			<_myState type="a">40960</_myState>
+			<_name type="a">TopLevel</_name>
+			<_modifiedTimeWeak type="a">1.2.1990::0:0:0</_modifiedTimeWeak>
+			<_modifiedTime type="a">1.1.1970::8:0:0</_modifiedTime>
+			<weakCGTime type="a">1.2.1990::0:0:0</weakCGTime>
+			<strongCGTime type="a">1.2.1990::0:0:0</strongCGTime>
+			<_itsStateChart type="r">
+				<IHandle type="e">
+				</IHandle>
+			</_itsStateChart>
+			<_classModifier type="a">Unspecified</_classModifier>
+		</IClass>
+		<IClass type="e">
+			<_id type="a">GUID cb0f10f4-70bb-4e28-95d4-2b01128199cc</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">User</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Represents a user in the system.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<weakCGTime type="a">7.11.2026::10:42:29</weakCGTime>
+			<strongCGTime type="a">7.11.2026::10:42:28</strongCGTime>
+			<_itsStateChart type="r">
+				<IHandle type="e">
+				</IHandle>
+			</_itsStateChart>
+			<_classModifier type="a">Unspecified</_classModifier>
+			<AggregatesList type="e">
+				<value>GUID c40c77d9-5d31-470c-9458-4182c24285cc</value>
+				<value>GUID 05984175-8f54-416f-a29b-1237edab9157</value>
+				<value>GUID ed93875d-685d-43ea-91f5-aac3908b30a5</value>
+				<value>GUID 7f537a85-56f7-45f0-a21f-55ea10e48f88</value>
+				<value>GUID b226589b-70d4-482b-8b66-59f5b896e54a</value>
+				<value>GUID 4bf767ea-07f1-4064-a20b-d78811f0415b</value>
+			</AggregatesList>
+		</IClass>
+		<IPrimitiveOperation type="e">
+			<_id type="a">GUID c40c77d9-5d31-470c-9458-4182c24285cc</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">getId</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Get the unique identifier.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_virtual type="a">0</_virtual>
+			<Args type="c">
+				<IRPYRawContainer type="e">
+				</IRPYRawContainer>
+			</Args>
+			<_returnType type="r">
+				<IHandle type="e">
+					<_hm2Class type="a">IType</_hm2Class>
+					<_hsubsystem type="a">PredefinedTypes</_hsubsystem>
+					<_hname type="a">int</_hname>
+					<_hid type="a">GUID 6024c6ab-fe9e-402e-954f-27aca6d3b5e4</_hid>
+				</IHandle>
+			</_returnType>
+			<_abstract type="a">0</_abstract>
+			<_final type="a">0</_final>
+			<_concurrency type="a">Sequential</_concurrency>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_constant type="a">0</_constant>
+		</IPrimitiveOperation>
+		<IPrimitiveOperation type="e">
+			<_id type="a">GUID 05984175-8f54-416f-a29b-1237edab9157</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">getName</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Get the name of the user.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_virtual type="a">0</_virtual>
+			<Args type="c">
+				<IRPYRawContainer type="e">
+				</IRPYRawContainer>
+			</Args>
+			<_abstract type="a">0</_abstract>
+			<_final type="a">0</_final>
+			<_concurrency type="a">Sequential</_concurrency>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_constant type="a">0</_constant>
+			<AggregatesList type="e">
+				<value>GUID 3b6dc8d4-0fd5-4950-83b1-44e73e2fd264</value>
+			</AggregatesList>
+		</IPrimitiveOperation>
+		<IType type="e">
+			<_id type="a">GUID 3b6dc8d4-0fd5-4950-83b1-44e73e2fd264</_id>
+			<_myState type="a">8192</_myState>
+			<_modifiedTimeWeak type="a">1.2.1990::0:0:0</_modifiedTimeWeak>
+			<_modifiedTime type="a">1.1.1970::8:0:0</_modifiedTime>
+			<_declaration type="a">String</_declaration>
+			<_kind type="a">Language</_kind>
+		</IType>
+		<IPrimitiveOperation type="e">
+			<_id type="a">GUID ed93875d-685d-43ea-91f5-aac3908b30a5</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">isActive</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Check if the user is active.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_virtual type="a">0</_virtual>
+			<Args type="c">
+				<IRPYRawContainer type="e">
+				</IRPYRawContainer>
+			</Args>
+			<_abstract type="a">0</_abstract>
+			<_final type="a">0</_final>
+			<_concurrency type="a">Sequential</_concurrency>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_constant type="a">0</_constant>
+			<AggregatesList type="e">
+				<value>GUID 7ef47101-aedd-41a4-a50e-1fe5dda6cfd8</value>
+			</AggregatesList>
+		</IPrimitiveOperation>
+		<IType type="e">
+			<_id type="a">GUID 7ef47101-aedd-41a4-a50e-1fe5dda6cfd8</_id>
+			<_myState type="a">8192</_myState>
+			<_modifiedTimeWeak type="a">1.2.1990::0:0:0</_modifiedTimeWeak>
+			<_modifiedTime type="a">1.1.1970::8:0:0</_modifiedTime>
+			<_declaration type="a">boolean</_declaration>
+			<_kind type="a">Language</_kind>
+		</IType>
+		<IAttribute type="e">
+			<_id type="a">GUID 7f537a85-56f7-45f0-a21f-55ea10e48f88</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">id</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Unique identifier.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_typeOf type="r">
+				<IHandle type="e">
+					<_hm2Class type="a">IType</_hm2Class>
+					<_hsubsystem type="a">PredefinedTypes</_hsubsystem>
+					<_hname type="a">int</_hname>
+					<_hid type="a">GUID 6024c6ab-fe9e-402e-954f-27aca6d3b5e4</_hid>
+				</IHandle>
+			</_typeOf>
+			<_isOrdered type="a">0</_isOrdered>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_isReferenceAttr type="a">0</_isReferenceAttr>
+			<_isConstant type="a">0</_isConstant>
+			<AggregatesList type="e">
+				<value>GUID f732a807-934e-47cd-858e-355e9f694b3d</value>
+			</AggregatesList>
+		</IAttribute>
+		<ILiteralSpecification type="e">
+			<_id type="a">GUID f732a807-934e-47cd-858e-355e9f694b3d</_id>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_value type="a">0</_value>
+		</ILiteralSpecification>
+		<IAttribute type="e">
+			<_id type="a">GUID b226589b-70d4-482b-8b66-59f5b896e54a</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">name</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Name of the user.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_typeOf type="r">
+				<IHandle type="e">
+					<_hm2Class type="a">IType</_hm2Class>
+					<_hsubsystem type="a">PredefinedTypes</_hsubsystem>
+					<_hname type="a">RhpString</_hname>
+					<_hid type="a">GUID ae5e3720-4e3e-40f1-9346-9a8b4e501f35</_hid>
+				</IHandle>
+			</_typeOf>
+			<_isOrdered type="a">0</_isOrdered>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_isReferenceAttr type="a">0</_isReferenceAttr>
+			<_isConstant type="a">0</_isConstant>
+		</IAttribute>
+		<IAttribute type="e">
+			<_id type="a">GUID 4bf767ea-07f1-4064-a20b-d78811f0415b</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">active</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Active status flag.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_typeOf type="r">
+				<IHandle type="e">
+					<_hm2Class type="a">IType</_hm2Class>
+					<_hsubsystem type="a">PredefinedTypes</_hsubsystem>
+					<_hname type="a">RhpBoolean</_hname>
+					<_hid type="a">GUID f19b56f2-78ab-44fa-860e-6ead487ecb07</_hid>
+				</IHandle>
+			</_typeOf>
+			<_isOrdered type="a">0</_isOrdered>
+			<_protection type="a">iPublic</_protection>
+			<_static type="a">0</_static>
+			<_isReferenceAttr type="a">0</_isReferenceAttr>
+			<_isConstant type="a">0</_isConstant>
+			<AggregatesList type="e">
+				<value>GUID e6e96149-7185-4320-ae42-155c4017cb05</value>
+			</AggregatesList>
+		</IAttribute>
+		<ILiteralSpecification type="e">
+			<_id type="a">GUID e6e96149-7185-4320-ae42-155c4017cb05</_id>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<_value type="a">true</_value>
+		</ILiteralSpecification>
+		
+	</RHAPSODY-MODEL>
+	<OslcLinks type="c">
+		<IRPYRawContainer type="e">
+		</IRPYRawContainer>
+	</OslcLinks>
+
+<INCLUDES-RHAPSODY-INDEX>false</INCLUDES-RHAPSODY-INDEX>
+</RhapsodyArchive>
+

@@ -38,7 +38,7 @@ class RPDiagram(RPUnit):
         Returns:
             An ``RPCollection`` of custom view elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getCustomViews()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getCustomViews", "customViews"))
 
     def getCorrespondingGraphicElements(self, model_element: RPModelElement) -> RPCollection:
         """Gets the graphic elements corresponding to a model element on the diagram.

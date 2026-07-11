@@ -74,7 +74,7 @@ class RPClass(RPClassifier):
         Returns:
             ``True`` if the class is abstract, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.getIsAbstract()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsAbstract", "isAbstract"))
 
     def addClass(self, name: str) -> Any:
         """Adds a nested class to this class.
@@ -253,7 +253,7 @@ class RPClass(RPClassifier):
         Returns:
             ``1`` if the class is "active", ``0`` if it is "sequential".
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsActive()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsActive", "isActive"))
 
     def getIsBehaviorOverriden(self) -> int:
         """Checks whether a class does not inherit the behavior of its base class statechart.
@@ -261,7 +261,7 @@ class RPClass(RPClassifier):
         Returns:
             ``1`` if the class does not inherit this behavior, ``0`` if it does.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsBehaviorOverriden()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehaviorOverriden", "isBehaviorOverriden"))
 
     def getIsComposite(self) -> int:
         """Checks whether the class is a composite class.
@@ -269,7 +269,7 @@ class RPClass(RPClassifier):
         Returns:
             ``1`` if the class is a composite class, ``0`` if it is not.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsComposite()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsComposite", "isComposite"))
 
     def getIsFinal(self) -> int:
         """Checks whether the class is a final class.
@@ -279,7 +279,7 @@ class RPClass(RPClassifier):
         Returns:
             ``1`` if the class is final, ``0`` if not.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsFinal()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsFinal", "isFinal"))
 
     def getIsReactive(self) -> int:
         """Checks whether the class is a reactive class.
@@ -290,7 +290,7 @@ class RPClass(RPClassifier):
         Returns:
             ``1`` if the class is reactive, ``0`` if it is not.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsReactive()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsReactive", "isReactive"))
 
     def setIsAbstract(self, is_abstract: int) -> None:
         """Specifies that the class should be abstract.
@@ -298,7 +298,7 @@ class RPClass(RPClassifier):
         Args:
             is_abstract: ``1`` to make the class abstract, ``0`` to make it non-abstract.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsAbstract(is_abstract))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsAbstract", "isAbstract", is_abstract)
 
     def setIsActive(self, is_active: int) -> None:
         """Specifies that the class should be defined as "active".
@@ -306,7 +306,7 @@ class RPClass(RPClassifier):
         Args:
             is_active: ``1`` for "active", ``0`` for "sequential".
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsActive(is_active))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsActive", "isActive", is_active)
 
     def setIsBehaviorOverriden(self, is_behavior_overriden: int) -> None:
         """Specifies whether a class should inherit the statechart behavior of its base class.
@@ -314,7 +314,7 @@ class RPClass(RPClassifier):
         Args:
             is_behavior_overriden: ``1`` to not inherit, ``0`` to inherit.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsBehaviorOverriden(is_behavior_overriden))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsBehaviorOverriden", "isBehaviorOverriden", is_behavior_overriden)
 
     def setIsFinal(self, new_val: int) -> None:
         """Specifies that the class should be a final class.
@@ -324,7 +324,7 @@ class RPClass(RPClassifier):
         Args:
             new_val: ``1`` to make the class final, ``0`` to make it non-final.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsFinal(new_val))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsFinal", "isFinal", new_val)
 
     def updateContainedDiagramsOnServer(self, enforce_update: int) -> int:
         """Updates the views on the Rhapsody Model Manager server for all diagrams.

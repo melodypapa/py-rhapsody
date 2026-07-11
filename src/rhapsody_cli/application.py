@@ -131,3 +131,32 @@ class RhapsodyApplication:
         This closes all projects and exits the Rhapsody process.
         """
         AbstractRPModelElement.call_com(lambda: self._com.quit())
+
+    def getIsHiddenUI(self) -> bool:
+        """Get whether the Rhapsody GUI is hidden (mirrors ``IRPApplication.getIsHiddenUI()``).
+
+        Returns:
+            True if the Rhapsody UI is hidden, False if it is visible.
+        """
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsHiddenUI", "isHiddenUI"))
+
+    def setHiddenUI(self, hidden: bool) -> None:
+        """Set whether the Rhapsody GUI is hidden (mirrors ``IRPApplication.setHiddenUI()``).
+
+        Rhapsody instances launched via COM automation (``Dispatch()``) start
+        with the UI hidden by default. Call ``setHiddenUI(False)`` after
+        connecting to make the Rhapsody window visible.
+
+        Args:
+            hidden: False to show the GUI window, True to hide it.
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setHiddenUI", "isHiddenUI", hidden)
+
+    def bringWindowToTop(self) -> None:
+        """Bring the Rhapsody application window to the top (mirrors ``IRPApplication.bringWindowToTop()``).
+
+        Note: this brings an already-visible window to the foreground; it does
+        not make a hidden window visible. Use :meth:`setHiddenUI` with ``False``
+        to show the GUI first.
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.bringWindowToTop())

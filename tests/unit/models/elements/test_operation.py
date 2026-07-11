@@ -53,6 +53,32 @@ def test_operation_get_returns_wraps_result() -> None:
     assert result.getName() == "int"
 
 
+def test_operation_get_return_type_declaration_delegates_to_com() -> None:
+    fake = make_fake_element("Operation", getReturnTypeDeclaration="int")
+    operation = RPOperation(fake)
+
+    assert operation.getReturnTypeDeclaration() == "int"
+
+
+def test_operation_set_returns_delegates_to_com() -> None:
+    fake = make_fake_element("Operation")
+    operation = RPOperation(fake)
+    return_type = RPOperation(make_fake_element("Class", getName="int"))
+
+    operation.setReturns(return_type)
+
+    fake.setReturns.assert_called_once_with(return_type._com)
+
+
+def test_operation_set_return_type_declaration_delegates_to_com() -> None:
+    fake = make_fake_element("Operation")
+    operation = RPOperation(fake)
+
+    operation.setReturnTypeDeclaration("int")
+
+    fake.setReturnTypeDeclaration.assert_called_once_with("int")
+
+
 def test_operation_create_auto_flow_chart_delegates_to_com() -> None:
     fake = make_fake_element("Operation")
     operation = RPOperation(fake)

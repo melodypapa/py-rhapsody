@@ -21,7 +21,7 @@ class RPUseCase(RPClassifier):
         Returns:
             An ``RPCollection`` of extension point strings.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getExtensionPoints()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getExtensionPoints", "extensionPoints"))
 
     def getEntryPoints(self) -> RPCollection:
         """Returns all entry points defined on the use case.
@@ -29,7 +29,7 @@ class RPUseCase(RPClassifier):
         Returns:
             An ``RPCollection`` of entry point strings.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getEntryPoints()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getEntryPoints", "entryPoints"))
 
     def getDescribingDiagrams(self) -> RPCollection:
         """Returns all diagrams that describe this use case.
@@ -37,7 +37,7 @@ class RPUseCase(RPClassifier):
         Returns:
             An ``RPCollection`` of ``IRPDiagram`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getDescribingDiagrams()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDescribingDiagrams", "describingDiagrams"))
 
 
 AbstractRPModelElement.register_wrapper("UseCase", RPUseCase)

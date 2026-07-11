@@ -163,3 +163,51 @@ def test_quit_delegates_to_com() -> None:
     app.quit()
 
     fake_app.quit.assert_called_once_with()
+
+
+def test_get_is_hidden_ui_calls_method_when_present() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_app.getIsHiddenUI.return_value = 1
+    app = RhapsodyApplication(fake_app)
+
+    result = app.getIsHiddenUI()
+
+    fake_app.getIsHiddenUI.assert_called_once_with()
+    assert result is True
+
+
+def test_get_is_hidden_ui_falls_back_to_property_when_method_missing() -> None:
+    fake_app = MagicMock(spec=["isHiddenUI"])
+    fake_app.isHiddenUI = 0
+    app = RhapsodyApplication(fake_app)
+
+    result = app.getIsHiddenUI()
+
+    assert result is False
+
+
+def test_set_hidden_ui_calls_method_when_present() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.setHiddenUI(False)
+
+    fake_app.setHiddenUI.assert_called_once_with(False)
+
+
+def test_set_hidden_ui_falls_back_to_property_when_method_missing() -> None:
+    fake_app = MagicMock(spec=["isHiddenUI"])
+    app = RhapsodyApplication(fake_app)
+
+    app.setHiddenUI(False)
+
+    assert fake_app.isHiddenUI is False
+
+
+def test_bring_window_to_top_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.bringWindowToTop()
+
+    fake_app.bringWindowToTop.assert_called_once_with()

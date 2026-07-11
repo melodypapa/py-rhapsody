@@ -90,7 +90,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPAttribute`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAttributes()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributes", "attributes"))
 
     def getOperations(self) -> RPCollection:
         """Returns all operations defined on the classifier.
@@ -98,7 +98,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPOperation`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getOperations()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOperations", "operations"))
 
     def addGeneralization(self, base_classifier: "RPClassifier") -> None:
         """Adds a generalization relationship from this classifier to another.
@@ -511,7 +511,7 @@ class RPClassifier(RPUnit):
         Returns:
             The wrapped ``IRPFlowchart`` activity diagram.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getActivityDiagram()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getActivityDiagram", "activityDiagram"))
 
     def getAttributesIncludingBases(self) -> RPCollection:
         """Returns all the classifier's attributes, including inherited ones.
@@ -520,7 +520,7 @@ class RPClassifier(RPUnit):
             An ``RPCollection`` of ``IRPAttribute`` objects, including those
             inherited from the classifier's base classifiers.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAttributesIncludingBases()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributesIncludingBases", "attributesIncludingBases"))
 
     def getBaseClassifiers(self) -> RPCollection:
         """Returns the classifiers that serve as base classifiers for this classifier.
@@ -528,7 +528,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` base classifiers.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getBaseClassifiers()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBaseClassifiers", "baseClassifiers"))
 
     def getBehavioralDiagrams(self) -> RPCollection:
         """Returns all the statecharts and activities defined for the classifier.
@@ -538,7 +538,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPStatechart`` statecharts and activities.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getBehavioralDiagrams()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBehavioralDiagrams", "behavioralDiagrams"))
 
     def getDerivedClassifiers(self) -> RPCollection:
         """Returns all the classifiers derived from this classifier.
@@ -546,7 +546,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` derived classifiers.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getDerivedClassifiers()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDerivedClassifiers", "derivedClassifiers"))
 
     def getFlowItems(self) -> RPCollection:
         """Returns all the classifier's item flows.
@@ -554,7 +554,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPFlowItem`` item flows.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getFlowItems()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlowItems", "flowItems"))
 
     def getFlows(self) -> RPCollection:
         """Returns all the classifier's flows.
@@ -562,7 +562,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPFlow`` flows.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getFlows()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlows", "flows"))
 
     def getGeneralizations(self) -> RPCollection:
         """Returns all the classifier's generalization relationships.
@@ -570,7 +570,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPGeneralization`` generalization relationships.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getGeneralizations()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getGeneralizations", "generalizations"))
 
     def getInterfaceItems(self) -> RPCollection:
         """Returns the classifier's elements of type IRPInterfaceItem.
@@ -580,7 +580,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPInterfaceItem`` elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getInterfaceItems()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItems", "interfaceItems"))
 
     def getInterfaceItemsIncludingBases(self) -> RPCollection:
         """Returns the classifier's IRPInterfaceItem elements, including inherited ones.
@@ -592,7 +592,7 @@ class RPClassifier(RPUnit):
             An ``RPCollection`` of ``IRPInterfaceItem`` elements, including
             those inherited from the base classifier.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getInterfaceItemsIncludingBases()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItemsIncludingBases", "interfaceItemsIncludingBases"))
 
     def getLinks(self) -> RPCollection:
         """Returns all the classifier's link relationships.
@@ -600,7 +600,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of link relationships.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getLinks()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getLinks", "links"))
 
     def getNestedClassifiers(self) -> RPCollection:
         """Returns the classifiers nested below the current classifier.
@@ -611,7 +611,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` nested classifiers.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getNestedClassifiers()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedClassifiers", "nestedClassifiers"))
 
     def getPorts(self) -> RPCollection:
         """Returns all the classifier's ports.
@@ -619,7 +619,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPPort`` ports.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPorts()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPorts", "ports"))
 
     def addPort(self, name: str) -> Any:
         """Adds a new port to this classifier.
@@ -643,7 +643,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPRelation`` associations.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRelations()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelations", "relations"))
 
     def getRelationsIncludingBases(self) -> RPCollection:
         """Returns all the classifier's associations, including inherited ones.
@@ -652,7 +652,7 @@ class RPClassifier(RPUnit):
             An ``RPCollection`` of ``IRPRelation`` associations, including those
             inherited from the classifier's base classifier.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRelationsIncludingBases()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelationsIncludingBases", "relationsIncludingBases"))
 
     def getSequenceDiagrams(self) -> RPCollection:
         """Returns the classifier's sequence diagrams.
@@ -660,7 +660,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of sequence diagrams.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getSequenceDiagrams()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSequenceDiagrams", "sequenceDiagrams"))
 
     def getSourceArtifacts(self) -> RPCollection:
         """Gets the source artifacts for the classifier.
@@ -668,7 +668,7 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPFile`` source artifacts.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getSourceArtifacts()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSourceArtifacts", "sourceArtifacts"))
 
     def getStatechart(self) -> Any:
         """Returns the statechart defined for the classifier.
@@ -680,4 +680,4 @@ class RPClassifier(RPUnit):
         Returns:
             The wrapped ``IRPStatechart`` statechart.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getStatechart()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getStatechart", "statechart"))

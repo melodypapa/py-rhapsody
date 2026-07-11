@@ -59,7 +59,13 @@ class AbstractRPModelElement:
 
     @classmethod
     def wrap(cls, com_obj: Any) -> "RPModelElement":
-        """Wrap a raw Rhapsody COM model element in its matching wrapper class."""
+        """Wrap a raw Rhapsody COM model element in its matching wrapper class.
+
+        Returns an RPModelElement wrapping a None COM object if com_obj is None
+        (e.g., when findNestedElement returns no result).
+        """
+        if com_obj is None:
+            return RPModelElement(None)
         meta_class = str(cls._get_method_or_property(com_obj, "getMetaClass", "metaClass"))
         wrapper_cls = cls._WRAPPER_REGISTRY.get(meta_class, RPModelElement)
         return wrapper_cls(com_obj)
@@ -527,7 +533,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of the element's tags.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAllTags()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAllTags", "allTags"))
 
     def getAnnotations(self) -> "RPCollection":
         """Returns all of the element's annotations.
@@ -535,7 +541,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of the element's annotations.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAnnotations()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAnnotations", "annotations"))
 
     def getAssociationClasses(self) -> "RPCollection":
         """Returns a collection of all the association classes directly beneath this model element.
@@ -543,7 +549,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of association classes.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAssociationClasses()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAssociationClasses", "associationClasses"))
 
     def getBinaryID(self) -> bytes:
         """Returns the GUID of the model element as an array of bytes.
@@ -553,7 +559,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's GUID as bytes.
         """
-        return bytes(AbstractRPModelElement.call_com(lambda: self._com.getBinaryID()))
+        return bytes(AbstractRPModelElement._get_method_or_property(self._com, "getBinaryID", "binaryID"))
 
     def getConstraints(self) -> "RPCollection":
         """Returns all of the element's constraints.
@@ -561,7 +567,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of the element's constraints.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getConstraints()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getConstraints", "constraints"))
 
     def getConstraintsByHim(self) -> "RPCollection":
         """Returns all of the element's constraints (for internal use only).
@@ -569,7 +575,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of constraints.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getConstraintsByHim()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getConstraintsByHim", "constraintsByHim"))
 
     def getControlledFiles(self) -> "RPCollection":
         """Returns a collection of all the element's controlled files.
@@ -577,7 +583,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of controlled files.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getControlledFiles()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getControlledFiles", "controlledFiles"))
 
     def getDecorationStyle(self) -> str:
         """Returns the name of the decoration style currently associated with the model element.
@@ -585,7 +591,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The decoration style name as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDecorationStyle()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDecorationStyle", "decorationStyle"))
 
     def getDependencies(self) -> "RPCollection":
         """Returns all of the element's dependencies.
@@ -593,7 +599,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of the element's dependencies.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getDependencies()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDependencies", "dependencies"))
 
     def getDescription(self) -> str:
         """Returns the description defined for the element.
@@ -601,7 +607,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's description as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDescription()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDescription", "description"))
 
     def getDescriptionHTML(self) -> str:
         """Returns HTML representation of the element description.
@@ -609,7 +615,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's description as an HTML string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDescriptionHTML()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDescriptionHTML", "descriptionHTML"))
 
     def getDescriptionPlainText(self) -> str:
         """Returns the description defined for the element in plain text format.
@@ -617,7 +623,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's description as plain text.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDescriptionPlainText()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDescriptionPlainText", "descriptionPlainText"))
 
     def getDescriptionRTF(self) -> str:
         """Returns the description defined for the element in RTF format.
@@ -625,7 +631,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's description as an RTF string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDescriptionRTF()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDescriptionRTF", "descriptionRTF"))
 
     def getDisplayName(self) -> str:
         """Returns the label of the model element.
@@ -633,7 +639,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's display label as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDisplayName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDisplayName", "displayName"))
 
     def getDisplayNameRTF(self) -> str:
         """Returns the label of the model element as an RTF string.
@@ -641,7 +647,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's display label as an RTF string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getDisplayNameRTF()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getDisplayNameRTF", "displayNameRTF"))
 
     def getErrorMessage(self) -> str:
         """Returns error message for last method called.
@@ -649,7 +655,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The error message as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getErrorMessage()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getErrorMessage", "errorMessage"))
 
     def getFullPathName(self) -> str:
         """Returns the full path name of the model element.
@@ -657,7 +663,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's full path name as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getFullPathName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getFullPathName", "fullPathName"))
 
     def getFullPathNameIn(self) -> str:
         """Retrieves the full path name of the element as ``(class) in (package)``.
@@ -665,7 +671,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The element's full path name as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getFullPathNameIn()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getFullPathNameIn", "fullPathNameIn"))
 
     def getHyperLinks(self) -> "RPCollection":
         """Returns a collection of all the hyperlinks associated with the element.
@@ -673,7 +679,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of hyperlinks.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getHyperLinks()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getHyperLinks", "hyperLinks"))
 
     def getIconFileName(self) -> str:
         """Returns the full path of the graphic file used to represent elements of this type in the browser.
@@ -681,7 +687,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The icon file path as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getIconFileName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getIconFileName", "iconFileName"))
 
     def getInterfaceName(self) -> str:
         """Returns the name of the API interface corresponding to the current element.
@@ -692,7 +698,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The API interface name as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getInterfaceName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceName", "interfaceName"))
 
     def getIsExternal(self) -> int:
         """Checks whether the element is an "external" element.
@@ -702,7 +708,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the element is external, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsExternal()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsExternal", "isExternal"))
 
     def getIsOfMetaClass(self, meta_class: str) -> int:
         """Indicates whether the model element is based on the metaclass provided as a parameter.
@@ -721,7 +727,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the label is shown, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsShowDisplayName()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsShowDisplayName", "isShowDisplayName"))
 
     def getIsUnresolved(self) -> int:
         """Checks if the element is an element that can't be resolved by Rhapsody.
@@ -729,7 +735,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the element is unresolved, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsUnresolved()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsUnresolved", "isUnresolved"))
 
     def getLocalTags(self) -> "RPCollection":
         """Returns a collection of the tags that were created locally for this model element.
@@ -737,7 +743,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of locally created tags.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getLocalTags()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getLocalTags", "localTags"))
 
     def getMainDiagram(self) -> "RPModelElement":
         """Returns the "main" diagram for the element.
@@ -745,7 +751,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped main diagram.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getMainDiagram()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getMainDiagram", "mainDiagram"))
 
     def getNestedElements(self) -> "RPCollection":
         """Gets a collection of all the model elements that are directly under the current element.
@@ -753,7 +759,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of nested model elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getNestedElements()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedElements", "nestedElements"))
 
     def getNestedElementsByMetaClass(self, meta_class: str, recursive: int) -> "RPCollection":
         """Retrieves all of the model elements of the specified type below the current element.
@@ -773,7 +779,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of this element and all nested elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getNestedElementsRecursive()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedElementsRecursive", "nestedElementsRecursive"))
 
     def getNewTermStereotype(self) -> "RPModelElement":
         """If a "new term" stereotype has been applied to the element, returns the stereotype.
@@ -781,7 +787,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped "new term" stereotype.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getNewTermStereotype()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNewTermStereotype", "newTermStereotype"))
 
     def getOfTemplate(self) -> "RPModelElement":
         """If the element is an instantiation of a template, returns the template that it instantiates.
@@ -789,7 +795,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped template that this element instantiates.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getOfTemplate()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOfTemplate", "ofTemplate"))
 
     def getOSLCLinks(self) -> "RPCollection":
         """Returns a collection of all the element's OSLC links.
@@ -812,7 +818,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The overlay icon file path as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getOverlayIconFileName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getOverlayIconFileName", "overlayIconFileName"))
 
     def getOverriddenProperties(self, recursive: int) -> "RPCollection":
         """Returns a collection of all the properties whose value was overridden for this model element.
@@ -846,7 +852,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of owned dependencies.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getOwnedDependencies()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOwnedDependencies", "ownedDependencies"))
 
     def getOwner(self) -> "RPModelElement":
         """Returns the model element that owns this model element.
@@ -854,7 +860,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped owner element.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getOwner()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOwner", "owner"))
 
     def getProject(self) -> "RPModelElement":
         """Returns the project that the current element belongs to.
@@ -862,7 +868,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped project element.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getProject()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getProject", "project"))
 
     def getPropertyValue(self, property_key: str) -> str:
         """Returns the value of the specified property for the model element.
@@ -918,7 +924,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of redefine relationships.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRedefines()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRedefines", "redefines"))
 
     def getReferences(self) -> "RPCollection":
         """Returns a collection of all the model elements that point to this model element.
@@ -926,7 +932,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of referencing elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getReferences()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getReferences", "references"))
 
     def getRemoteDependencies(self) -> "RPCollection":
         """For Rhapsody Model Manager projects, returns the dependencies on remote artifacts.
@@ -934,7 +940,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of remote dependencies.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRemoteDependencies()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRemoteDependencies", "remoteDependencies"))
 
     def getRemoteURI(self) -> str:
         """For elements that are remote resources, returns the URI of the resource.
@@ -942,7 +948,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The remote URI as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getRemoteURI()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRemoteURI", "remoteURI"))
 
     def getRequirementTraceabilityHandle(self) -> int:
         """Returns the ID used by DOORS to refer to this requirement.
@@ -950,7 +956,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The DOORS traceability handle as an int.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getRequirementTraceabilityHandle()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getRequirementTraceabilityHandle", "requirementTraceabilityHandle"))
 
     def getRmmUrl(self) -> str:
         """Returns the Rhapsody Model Manager url for the model element.
@@ -958,7 +964,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The RMM URL as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getRmmUrl()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRmmUrl", "rmmUrl"))
 
     def getSaveUnit(self) -> "RPModelElement":
         """Returns the unit that the model element is saved in.
@@ -966,7 +972,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped save unit.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getSaveUnit()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getSaveUnit", "saveUnit"))
 
     def getStereotypes(self) -> "RPCollection":
         """Returns a collection of the stereotypes that have been applied to the element.
@@ -974,7 +980,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of applied stereotypes.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getStereotypes()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getStereotypes", "stereotypes"))
 
     def getTag(self, name: str) -> "RPModelElement":
         """Returns the tag specified.
@@ -993,7 +999,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             An ``RPCollection`` of template parameters.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getTemplateParameters()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getTemplateParameters", "templateParameters"))
 
     def getTi(self) -> "RPModelElement":
         """For template instantiations, returns an object containing the template instantiation parameters.
@@ -1001,7 +1007,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The wrapped template instantiation.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getTi()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTi", "ti"))
 
     def getToolTipHTML(self) -> str:
         """Returns the HTML that would be used to display the tooltip for the element in the user interface.
@@ -1009,7 +1015,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The tooltip HTML as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getToolTipHTML()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getToolTipHTML", "toolTipHTML"))
 
     def getUserDefinedMetaClass(self) -> str:
         """Gets the name of the New Term on which the model element is based.
@@ -1017,7 +1023,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             The user-defined metaclass name as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getUserDefinedMetaClass()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getUserDefinedMetaClass", "userDefinedMetaClass"))
 
     def hasNestedElements(self) -> int:
         """Checks whether the model element contains other elements.
@@ -1045,7 +1051,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the element is a template, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isATemplate()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isATemplate", "aTemplate"))
 
     def isDescriptionRTF(self) -> int:
         """Checks whether the description for the element is in RTF format.
@@ -1053,7 +1059,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the description is RTF, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isDescriptionRTF()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isDescriptionRTF", "descriptionRTF"))
 
     def isDisplayNameRTF(self) -> int:
         """Checks whether the label of the element is in RTF format.
@@ -1061,7 +1067,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the label is RTF, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isDisplayNameRTF()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isDisplayNameRTF", "displayNameRTF"))
 
     def isModified(self) -> int:
         """Checks if the element was modified since the model was last saved.
@@ -1069,7 +1075,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the element was modified, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isModified()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isModified", "modified"))
 
     def isRemote(self) -> int:
         """Checks whether the model element is a remote resource such as a DOORS/DOORS Next requirement.
@@ -1077,7 +1083,7 @@ class RPModelElement(AbstractRPModelElement):
         Returns:
             ``1`` if the element is remote, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isRemote()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isRemote", "remote"))
 
     def locateInBrowser(self) -> int:
         """Locates the model element in the Rhapsody browser.
@@ -1125,7 +1131,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             new_val: The decoration style name to associate.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDecorationStyle(new_val))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDecorationStyle", "decorationStyle", new_val)
 
     def setDescription(self, description: str) -> None:
         """Sets the specified string as the description of the element.
@@ -1133,7 +1139,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             description: The description text to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDescription(description))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDescription", "description", description)
 
     def setDescriptionAndHyperlinks(self, rtf_text: str, targets: "RPCollection") -> None:
         """Specifies an RTF description for the element and a collection of elements to hyperlink.
@@ -1152,7 +1158,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             description_html: The HTML description to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDescriptionHTML(description_html))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDescriptionHTML", "descriptionHTML", description_html)
 
     def setDescriptionRTF(self, description_rtf: str) -> None:
         """Specifies the RTF string to use for the description of the model element.
@@ -1160,7 +1166,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             description_rtf: The RTF description to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDescriptionRTF(description_rtf))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDescriptionRTF", "descriptionRTF", description_rtf)
 
     def setDisplayName(self, display_name: str) -> None:
         """Specifies the text to use for the label of the model element.
@@ -1168,7 +1174,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             display_name: The label text to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDisplayName(display_name))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDisplayName", "displayName", display_name)
 
     def setDisplayNameRTF(self, new_val: str) -> None:
         """Specifies the RTF string to use for the label of the model element.
@@ -1176,7 +1182,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             new_val: The RTF label text to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDisplayNameRTF(new_val))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDisplayNameRTF", "displayNameRTF", new_val)
 
     def setGUID(self, guid: str) -> None:
         """Sets a new GUID for the model element.
@@ -1184,7 +1190,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             guid: The new GUID to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setGUID(guid))
+        AbstractRPModelElement._set_method_or_property(self._com, "setGUID", "GUID", guid)
 
     def setIsShowDisplayName(self, is_show_display_name: int) -> None:
         """Specifies whether the label of the element should be displayed instead of the element name in diagrams.
@@ -1192,7 +1198,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             is_show_display_name: ``1`` to show the label, ``0`` to show the name.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsShowDisplayName(is_show_display_name))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsShowDisplayName", "isShowDisplayName", is_show_display_name)
 
     def setMainDiagram(self, main_diagram: "RPModelElement") -> None:
         """Specifies the "main" diagram for the element.
@@ -1200,7 +1206,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             main_diagram: The wrapped diagram to set as the main diagram.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setMainDiagram(main_diagram._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setMainDiagram", "mainDiagram", main_diagram._com)
 
     def setOfTemplate(self, of_template: "RPModelElement") -> None:
         """Makes the current model element a template instantiation of the specified template.
@@ -1208,7 +1214,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             of_template: The wrapped template to instantiate.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setOfTemplate(of_template._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setOfTemplate", "ofTemplate", of_template._com)
 
     def setOwner(self, owner: "RPModelElement") -> None:
         """Specifies the model element that should be the owner of this element.
@@ -1216,7 +1222,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             owner: The wrapped element that should own this element.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setOwner(owner._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setOwner", "owner", owner._com)
 
     def setPropertyValue(self, property_key: str, property_value: str) -> None:
         """Sets the value of a property for the model element.
@@ -1233,7 +1239,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             requirement_traceability_handle: The new DOORS traceability handle.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRequirementTraceabilityHandle(requirement_traceability_handle))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRequirementTraceabilityHandle", "requirementTraceabilityHandle", requirement_traceability_handle)
 
     def setTagContextValue(self, tag: "RPModelElement", elements: "RPCollection", multiplicities: "RPCollection") -> "RPModelElement":
         """Applies the specified tag and sets its value to a specific instance of another model element.
@@ -1278,7 +1284,7 @@ class RPModelElement(AbstractRPModelElement):
         Args:
             ti: The wrapped template instantiation to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setTi(ti._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setTi", "ti", ti._com)
 
     def synchronizeTemplateInstantiation(self) -> None:
         """Updates the instantiation to match changes made to its template.
@@ -1371,7 +1377,7 @@ class RPUnit(RPModelElement):
             A value indicating how the unit was added to the model (see
             :class:`AddToModelMode`).
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getAddToModelMode()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getAddToModelMode", "addToModelMode"))
 
     def getCMHeader(self) -> str:
         """Returns the header used by the Configuration Management tool for the unit.
@@ -1379,7 +1385,7 @@ class RPUnit(RPModelElement):
         Returns:
             The Configuration Management tool header as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getCMHeader()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getCMHeader", "cMHeader"))
 
     def getCMState(self) -> int:
         """Returns the configuration management state of the unit.
@@ -1387,7 +1393,7 @@ class RPUnit(RPModelElement):
         Returns:
             The configuration management state of the unit.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getCMState()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getCMState", "cMState"))
 
     def getCurrentDirectory(self) -> str:
         """Gets the name of the directory that contains the file used to store the unit.
@@ -1398,7 +1404,7 @@ class RPUnit(RPModelElement):
         Returns:
             The name of the directory that contains the file used to store the unit.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getCurrentDirectory()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getCurrentDirectory", "currentDirectory"))
 
     def getFilename(self) -> str:
         """Gets the name of the file used to store the unit.
@@ -1417,7 +1423,7 @@ class RPUnit(RPModelElement):
             ``1`` if the unit is going to be loaded the next time the model is
             loaded, ``0`` if it is not.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIncludeInNextLoad()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIncludeInNextLoad", "includeInNextLoad"))
 
     def getIsStub(self) -> int:
         """Checks whether the unit is currently unloaded.
@@ -1425,7 +1431,7 @@ class RPUnit(RPModelElement):
         Returns:
             ``1`` if the unit is not currently loaded, ``0`` if it is currently loaded.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsStub()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsStub", "isStub"))
 
     def getLanguage(self) -> str:
         """Gets the language of the unit.
@@ -1433,7 +1439,7 @@ class RPUnit(RPModelElement):
         Returns:
             The language of the unit as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getLanguage()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getLanguage", "language"))
 
     def getLastModifiedTime(self) -> str:
         """Returns the time at which the file representing the unit was last modified.
@@ -1441,7 +1447,7 @@ class RPUnit(RPModelElement):
         Returns:
             The last modified time as a string.
         """
-        return str(AbstractRPModelElement.call_com(lambda: self._com.getLastModifiedTime()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getLastModifiedTime", "lastModifiedTime"))
 
     def getNestedSaveUnits(self) -> "RPCollection":
         """Returns a collection of any sub-elements of the unit that were saved as individual files.
@@ -1449,7 +1455,7 @@ class RPUnit(RPModelElement):
         Returns:
             An ``RPCollection`` of sub-elements that were saved as individual files.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getNestedSaveUnits()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedSaveUnits", "nestedSaveUnits"))
 
     def getNestedSaveUnitsCount(self) -> int:
         """Returns the number of sub-elements of the unit that were saved as individual files.
@@ -1457,7 +1463,7 @@ class RPUnit(RPModelElement):
         Returns:
             The number of sub-elements that were saved as individual files.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getNestedSaveUnitsCount()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getNestedSaveUnitsCount", "nestedSaveUnitsCount"))
 
     def getStructureDiagrams(self) -> "RPCollection":
         """Returns a collection of any structure diagrams that are sub-elements of the unit.
@@ -1467,7 +1473,7 @@ class RPUnit(RPModelElement):
         Returns:
             An ``RPCollection`` of structure diagrams that are sub-elements of the unit.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getStructureDiagrams()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getStructureDiagrams", "structureDiagrams"))
 
     def getUnitPath(self, b_full_path: int) -> str:
         """Returns the path of the unit, including the filename.
@@ -1488,7 +1494,7 @@ class RPUnit(RPModelElement):
         Returns:
             ``True`` if the file is read-only, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.isReadOnly()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "isReadOnly", "readOnly"))
 
     def isReferenceUnit(self) -> int:
         """Checks whether the unit was added to the model as a reference.
@@ -1496,7 +1502,7 @@ class RPUnit(RPModelElement):
         Returns:
             ``1`` if the unit was added to the model as a reference, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isReferenceUnit()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isReferenceUnit", "referenceUnit"))
 
     def isSeparateSaveUnit(self) -> int:
         """Checks whether the current IRPUnit object is saved in its own file.
@@ -1508,7 +1514,7 @@ class RPUnit(RPModelElement):
         Returns:
             ``1`` if the unit is saved in its own file, ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.isSeparateSaveUnit()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isSeparateSaveUnit", "separateSaveUnit"))
 
     def load(self, with_subs: int) -> "RPModelElement":
         """Loads the unit.
@@ -1556,7 +1562,7 @@ class RPUnit(RPModelElement):
         Args:
             cm_header: The Configuration Management tool header to use for the unit.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setCMHeader(cm_header))
+        AbstractRPModelElement._set_method_or_property(self._com, "setCMHeader", "cMHeader", cm_header)
 
     def setFilename(self, filename: str) -> None:
         """Specifies the name that should be used for the file representing the unit.
@@ -1577,7 +1583,7 @@ class RPUnit(RPModelElement):
             include_in_next_load: ``1`` to load the unit the next time the model
                 is loaded, ``0`` to not load it.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIncludeInNextLoad(include_in_next_load))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIncludeInNextLoad", "includeInNextLoad", include_in_next_load)
 
     def setLanguage(self, new_language: str, recursive: int) -> None:
         """Specifies the programming language that should be used when code is generated for the unit.
@@ -1599,7 +1605,7 @@ class RPUnit(RPModelElement):
             read_only: ``True`` to change the file to read-only, ``False`` to
                 change the file to read/write.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setReadOnly(1 if read_only else 0))
+        AbstractRPModelElement._set_method_or_property(self._com, "setReadOnly", "readOnly", 1 if read_only else 0)
 
     def setSeparateSaveUnit(self, p_val: int) -> None:
         """Specifies whether the current IRPUnit object should be saved in its own file.
@@ -1608,7 +1614,7 @@ class RPUnit(RPModelElement):
             p_val: ``1`` to save the element in its own file, ``0`` to not save
                 it in its own file.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setSeparateSaveUnit(p_val))
+        AbstractRPModelElement._set_method_or_property(self._com, "setSeparateSaveUnit", "separateSaveUnit", p_val)
 
     def setUnitPath(self, new_path: str) -> None:
         """Specifies the path that should be used to locate the unit when it is added to a model "By Reference".
@@ -1617,7 +1623,7 @@ class RPUnit(RPModelElement):
             new_path: The path that should be used to locate the unit when it is
                 added to a model "By Reference".
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setUnitPath(new_path))
+        AbstractRPModelElement._set_method_or_property(self._com, "setUnitPath", "unitPath", new_path)
 
     def unload(self) -> None:
         """Unloads the unit."""
@@ -1646,7 +1652,9 @@ class RPCollection:
     def __len__(self) -> int:
         return self.getCount()
 
-    def __getitem__(self, index: int) -> Any:
+    def __getitem__(self, index: Any) -> Any:
+        if isinstance(index, slice):
+            return [self.getItem(i + 1) for i in range(*index.indices(len(self)))]
         if index < 0:
             raise IndexError("negative indices are not supported")
         return self.getItem(index + 1)

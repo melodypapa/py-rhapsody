@@ -8,17 +8,21 @@ This demo demonstrates how to create basic model elements:
 - Adding attributes to classes
 - Adding operations to classes
 - Setting element properties (names, descriptions)
-- Saving and verifying creation
+- Cleaning up created elements before saving
 
 Author: rhapsody-cli
-Requirements: Windows with IBM Rhapsody installation and an open project
+Requirements: Windows with IBM Rhapsody installation
 """
 
+import os
 import sys
+import time
 from typing import Any
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
+
+DEMO_PROJECT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_project", "DemoProject.rpyx")
 
 
 def demo_create_package(project: Any) -> Any:
@@ -40,13 +44,13 @@ def demo_create_package(project: Any) -> Any:
 
         # Create the package
         new_package = project.addPackage(package_name)
-        print("✓ Package created successfully")
+        print("[OK] Package created successfully")
 
         print("\nPackage Details:")
         print(f"  - Name: {new_package.getName()}")
         print(f"  - Type: {new_package.getMetaClass()}")
         print(f"  - GUID: {new_package.getGUID()}")
-        print(f"  - Full name: {new_package.getFullName()}")
+        print(f"  - Full path name: {new_package.getFullPathName()}")
 
         # Set description
         description = "Package created by rhapsody-cli demo"
@@ -56,7 +60,7 @@ def demo_create_package(project: Any) -> Any:
         return new_package
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to create package: {e}")
+        print(f"[-] Failed to create package: {e}")
         print("  Hint: Ensure you have write permissions to the project")
         return None
 
@@ -75,7 +79,7 @@ def demo_create_class(package: Any) -> Any:
     print("=" * 60)
 
     if not package:
-        print("✗ No package available - cannot create class")
+        print("[-] No package available - cannot create class")
         return None
 
     try:
@@ -84,13 +88,13 @@ def demo_create_class(package: Any) -> Any:
 
         # Create the class
         new_class = package.addClass(class_name)
-        print("✓ Class created successfully")
+        print("[OK] Class created successfully")
 
         print("\nClass Details:")
         print(f"  - Name: {new_class.getName()}")
         print(f"  - Type: {new_class.getMetaClass()}")
         print(f"  - GUID: {new_class.getGUID()}")
-        print(f"  - Full name: {new_class.getFullName()}")
+        print(f"  - Full path name: {new_class.getFullPathName()}")
 
         # Set properties
         description = "Class created by rhapsody-cli demo"
@@ -104,7 +108,7 @@ def demo_create_class(package: Any) -> Any:
         return new_class
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to create class: {e}")
+        print(f"[-] Failed to create class: {e}")
         return None
 
 
@@ -119,7 +123,7 @@ def demo_add_attributes(cls: Any) -> None:
     print("=" * 60)
 
     if not cls:
-        print("✗ No class available - cannot add attributes")
+        print("[-] No class available - cannot add attributes")
         return
 
     try:
@@ -136,28 +140,28 @@ def demo_add_attributes(cls: Any) -> None:
         for attr_name, attr_type, attr_desc in attributes:
             # Create attribute
             attribute = cls.addAttribute(attr_name)
-            attribute.setType(attr_type)
+            attribute.setTypeDeclaration(attr_type)
 
             # Set default value and description
             if attr_type == "int":
-                attribute.setDefault("0")
+                attribute.setDefaultValue("0")
             elif attr_type == "bool":
-                attribute.setDefault("false")
+                attribute.setDefaultValue("false")
 
             attribute.setDescription(attr_desc)
 
-            print(f"  ✓ Added: {attr_name} ({attr_type})")
+            print(f"  [OK] Added: {attr_name} ({attr_type})")
 
         # Display all attributes
         print(f"\nVerifying attributes in {cls.getName()}:")
         all_attributes = cls.getAttributes()
         for i, attr in enumerate(all_attributes, 1):
-            print(f"  {i}. {attr.getName()}: {attr.getType()}")
-            print(f"     Default: {attr.getDefault()}")
-            print(f"     Description: {attr.getDescription()}")
+            type_decl = attr.getDeclaration()
+            default = attr.getDefaultValue()
+            print(f"  {i}. {attr.getName()}: {type_decl} (default: {default})")
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to add attributes: {e}")
+        print(f"[-] Failed to add attributes: {e}")
 
 
 def demo_add_operations(cls: Any) -> None:
@@ -171,7 +175,7 @@ def demo_add_operations(cls: Any) -> None:
     print("=" * 60)
 
     if not cls:
-        print("✗ No class available - cannot add operations")
+        print("[-] No class available - cannot add operations")
         return
 
     try:
@@ -189,26 +193,27 @@ def demo_add_operations(cls: Any) -> None:
         for op_name, return_type, op_desc, parameters in operations:
             # Create operation
             operation = cls.addOperation(op_name)
-            operation.setReturnResult(return_type)
+            operation.setReturnTypeDeclaration(return_type)
             operation.setDescription(op_desc)
 
             # Add parameters
             for param_name, param_type in parameters:
-                parameter = operation.addParameter(param_name)
-                parameter.setType(param_type)
+                parameter = operation.addArgument(param_name)
+                parameter.setTypeDeclaration(param_type)
 
-            print(f"  ✓ Added: {op_name}({', '.join([p[0] for p in parameters])}) -> {return_type}")
+            print(f"  [OK] Added: {op_name}({', '.join([p[0] for p in parameters])}) -> {return_type}")
 
         # Display all operations
         print(f"\nVerifying operations in {cls.getName()}:")
         all_operations = cls.getOperations()
         for i, op in enumerate(all_operations, 1):
-            params = op.getParameters()
-            param_list = ", ".join([f"{p.getName()}: {p.getType()}" for p in params])
-            print(f"  {i}. {op.getName()}({param_list}): {op.getReturnResult()}")
+            params = op.getArguments()
+            param_list = ", ".join([f"{p.getName()}: {p.getDeclaration()}" for p in params])
+            return_decl = op.getReturnTypeDeclaration()
+            print(f"  {i}. {op.getName()}({param_list}): {return_decl}")
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to add operations: {e}")
+        print(f"[-] Failed to add operations: {e}")
 
 
 def demo_create_multiple_classes(package: Any) -> list[Any]:
@@ -225,7 +230,7 @@ def demo_create_multiple_classes(package: Any) -> list[Any]:
     print("=" * 60)
 
     if not package:
-        print("✗ No package available - cannot create classes")
+        print("[-] No package available - cannot create classes")
         return []
 
     try:
@@ -246,7 +251,7 @@ def demo_create_multiple_classes(package: Any) -> list[Any]:
             new_class.setDescription(description)
 
             created_classes.append(new_class)
-            print(f"  ✓ Created: {class_name}")
+            print(f"  [OK] Created: {class_name}")
 
         # Create a simple inheritance relationship
         if len(created_classes) >= 2:
@@ -262,7 +267,7 @@ def demo_create_multiple_classes(package: Any) -> list[Any]:
         return created_classes
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to create classes: {e}")
+        print(f"[-] Failed to create classes: {e}")
         return []
 
 
@@ -279,7 +284,7 @@ def demo_save_and_verify(project: Any) -> None:
     try:
         print("Saving project...")
         project.save()
-        print("✓ Project saved successfully")
+        print("[OK] Project saved successfully")
 
         # Verify created elements still exist
         print("\nVerifying created elements...")
@@ -287,18 +292,18 @@ def demo_save_and_verify(project: Any) -> None:
         # Check for our demo package
         demo_package = project.findNestedElement("DemoPackage", "Package")
         if demo_package:
-            print("✓ DemoPackage verified")
+            print("[OK] DemoPackage verified")
         else:
-            print("✗ DemoPackage not found")
+            print("[-] DemoPackage not found")
 
         # Check for our demo class
         demo_class = project.findNestedElement("DemoClass", "Class")
         if demo_class:
-            print("✓ DemoClass verified")
+            print("[OK] DemoClass verified")
             print(f"  - Attributes: {len(demo_class.getAttributes())}")
             print(f"  - Operations: {len(demo_class.getOperations())}")
         else:
-            print("✗ DemoClass not found")
+            print("[-] DemoClass not found")
 
         # Count total elements
         total_classes = project.getNestedElementsByMetaClass("Class", 1)
@@ -308,7 +313,7 @@ def demo_save_and_verify(project: Any) -> None:
         print(f"  - Total packages: {len(total_packages)}")
 
     except RhapsodyRuntimeException as e:
-        print(f"✗ Failed to save/verify: {e}")
+        print(f"[-] Failed to save/verify: {e}")
 
 
 def main() -> None:
@@ -316,68 +321,77 @@ def main() -> None:
     print("=" * 60)
     print("Demo: Basic Rhapsody Element Creation")
     print("=" * 60)
-    print("\nThis demo creates new elements in your Rhapsody project.")
-    print("⚠ Note: This will modify your active project!")
+    print("\nThis demo creates and cleans up demo elements in demos/demo_project.")
 
     # Connect to Rhapsody
     print("\nConnecting to Rhapsody...")
     try:
         app = RhapsodyApplication.connect()
-        print("✓ Connected successfully")
+        print("[OK] Connected successfully")
     except RhapsodyConnectionError as e:
-        print(f"✗ Failed to connect: {e}")
+        print(f"[-] Failed to connect: {e}")
         sys.exit(1)
 
     try:
-        # Get active project
-        print("Getting active project...")
-        project = app.activeProject()
+        # Open the shipped demo project
+        print(f"Opening project: {DEMO_PROJECT_PATH}...")
+        project = app.openProject(DEMO_PROJECT_PATH)
 
-        if not project:
-            print("✗ No active project found")
-            print("  Hint: Open a project in Rhapsody before running this demo")
+        if not project or not project._com:
+            print("[-] Failed to open demos/demo_project")
             sys.exit(1)
 
         project_name = project.getName()
-        print(f"✓ Active project: {project_name}")
+        print(f"[OK] Active project: {project_name}")
 
-        # Ask for user confirmation
-        user_input = input(f"\nDo you want to create demo elements in '{project_name}'? (y/n): ")
-        if user_input.lower() != "y":
-            print("Demo cancelled by user")
-            sys.exit(0)
+        # Track created elements for cleanup
+        created_elements = []
 
         # Run creation demos
         new_package = demo_create_package(project)
-
         if new_package:
-            new_class = demo_create_class(new_package)
+            created_elements.append(new_package)
 
+            new_class = demo_create_class(new_package)
             if new_class:
+                created_elements.append(new_class)
                 demo_add_attributes(new_class)
                 demo_add_operations(new_class)
 
-            demo_create_multiple_classes(new_package)
+            created_classes = demo_create_multiple_classes(new_package)
+            created_elements.extend(created_classes if created_classes else [])
 
-            demo_save_and_verify(project)
-
+        # Clean up: delete all created elements before save/close
         print("\n" + "=" * 60)
-        print("Element Creation Summary")
+        print("Cleanup: Removing Demo Elements")
         print("=" * 60)
-        print("✓ Demo elements created successfully")
-        print("  Check your Rhapsody project to see the new elements:")
-        print("  - DemoPackage")
-        print("    - DemoClass (with attributes and operations)")
-        print("    - User, UserService, UserRepository")
+
+        for element in created_elements:
+            try:
+                element_name = element.getName()
+                print(f"Deleting {element.getMetaClass()}: {element_name}...")
+                element.deleteFromProject()
+                print(f"[OK] Deleted {element_name}")
+            except Exception as e:
+                print(f"[!] Could not delete element: {e}")
+
+        # Save project
+        try:
+            print("Saving project...")
+            project.save()
+            print("[OK] Project saved")
+        except Exception as e:
+            print(f"[-] Could not save project: {e}")
 
     finally:
         # Clean up
         print("\n" + "=" * 60)
-        print("Cleanup")
+        print("Cleanup: Disconnecting")
         print("=" * 60)
         print("Disconnecting from Rhapsody...")
-        app.disconnect()  # type: ignore[attr-defined]
-        print("✓ Disconnected successfully")
+        app.quit()
+        time.sleep(2)  # Allow COM object lifecycle to complete
+        print("[OK] Disconnected successfully")
 
     print("\n" + "=" * 60)
     print("Demo completed successfully!")

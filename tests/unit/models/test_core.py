@@ -248,6 +248,15 @@ def test_collection_negative_index_raises_index_error() -> None:
         _ = collection[-1]
 
 
+def test_collection_getitem_supports_slicing() -> None:
+    fake = make_fake_collection(["a", "b", "c", "d"])
+    collection = RPCollection(fake)
+
+    assert collection[:2] == ["a", "b"]
+    assert collection[1:3] == ["b", "c"]
+    assert collection[:] == ["a", "b", "c", "d"]
+
+
 def test_collection_iter_yields_all_items() -> None:
     inner_a = make_fake_element("Class", getName="A")
     inner_b = make_fake_element("Class", getName="B")
@@ -318,6 +327,13 @@ def test_wrap_falls_back_to_model_element_for_unregistered_type() -> None:
 
     assert type(wrapped) is RPModelElement
     assert wrapped.getName() == "Mystery"
+
+
+def test_wrap_handles_none_com_object() -> None:
+    wrapped = AbstractRPModelElement.wrap(None)
+
+    assert type(wrapped) is RPModelElement
+    assert wrapped._com is None
 
 
 # ---------------------------------------------------------------------------
