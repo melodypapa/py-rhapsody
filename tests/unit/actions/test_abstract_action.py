@@ -151,7 +151,7 @@ class TestElementManagementActionGetActiveProject:
             raise RhapsodyConnectionError("no running instance")
 
         action = _FakeElementAction(command_id="fake")
-        action._connect_app = raise_connection_error  # type: ignore[method-assign]
+        action._connect_app = raise_connection_error  # type: ignore[assignment]
 
         with pytest.raises(CliExecutionError):
             action._get_active_project()

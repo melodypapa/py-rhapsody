@@ -121,7 +121,7 @@ The CLI uses **argparse** (stdlib) with a class-based, two-tier command/action a
 - Base hierarchy: `AbstractAction` → `RhapsodyContextAction` (adds connection/error handling) → `ElementManagementAction` (adds `_get_active_project()` helper)
 
 **Support classes:**
-- `RhapsodyContext` (`cli/context.py:9`) — singleton-style session state: `app`, `project`, `output_format`. Provides `connect()`, `open_project()`, `get_active_project()`, `create_project()`, `close_project()`.
+- `RhapsodyContextAction` (`actions/abstract_action.py`) — holds per-action Rhapsody connection state directly: `self._app` (a `RhapsodyApplication`, lazily connected via `_connect_app()`), `self._project` (the active `RPProject`), and `self.output_format` (set by `AbstractCommand.execute(output_format=...)` from the global `--format` CLI flag).
 - `OutputFormatter` (`cli/formatters.py`) — table/JSON/CSV output rendering
 - `CliLoggingConfigurator` (`cli/logging_config.py`) — configures logging; `-v`/`--verbose` enables DEBUG
 
@@ -129,7 +129,7 @@ The CLI uses **argparse** (stdlib) with a class-based, two-tier command/action a
 
 ```
 CLI argv → main() → AbstractCommand (argparse) → AbstractAction.execute()
-    → RhapsodyContext → RhapsodyApplication → call_com() → COM API
+    → RhapsodyApplication → call_com() → COM API
     → wrap() dispatches to RPModelElement subclass
     → OutputFormatter (table/json/csv)
 ```
