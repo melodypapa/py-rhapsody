@@ -34,8 +34,8 @@ def demo_attach() -> bool:
 
         # Display application information
         print("\nApplication Information:")
-        print(f"  - Version: {app.getVersion()}")  # type: ignore[attr-defined]
-        print(f"  - Install path: {app.getRhapsodyDir()}")  # type: ignore[attr-defined]
+        # print(f"  - Version: {app.getVersion()}")  # type: ignore[attr-defined]
+        # print(f"  - Install path: {app.getRhapsodyDir()}")  # type: ignore[attr-defined]
 
         # Get active project if available
         try:
@@ -49,7 +49,7 @@ def demo_attach() -> bool:
 
         # Clean up
         print("\nDisconnecting from Rhapsody...")
-        app.disconnect()  # type: ignore[attr-defined]
+        app.quit() 
         print("✓ Disconnected successfully")
 
         return True
@@ -75,10 +75,11 @@ def demo_launch() -> bool:
         app = RhapsodyApplication.launch()
         print("✓ Successfully launched Rhapsody!")
 
+        app.openProject("C:\\Path\\To\\Your\\Project.rpy")  # Replace with a valid project path
+
         # Display application information
         print("\nApplication Information:")
-        print(f"  - Version: {app.getVersion()}")  # type: ignore[attr-defined]
-        print(f"  - Install path: {app.getRhapsodyDir()}")  # type: ignore[attr-defined]
+        print(f"  - Project: {app.activeProject().getName()}")
 
         # Clean up
         print("\nClosing Rhapsody...")
@@ -125,12 +126,11 @@ def demo_connect() -> bool:
 
         # Display application information
         print("\nApplication Information:")
-        print(f"  - Version: {app.getVersion()}")  # type: ignore[attr-defined]
-        print(f"  - Install path: {app.getRhapsodyDir()}")  # type: ignore[attr-defined]
+        print(f"  - Project: {app.activeProject().getName()}")
 
         # Clean up
         print("\nDisconnecting from Rhapsody...")
-        app.disconnect()  # type: ignore[attr-defined]
+        app.quit()
         print("✓ Disconnected successfully")
 
         return True
@@ -151,7 +151,10 @@ def main() -> None:
     print("2. launch() - Launch new instance")
     print("3. connect() - Smart connection (recommended)")
 
-    results = {"attach": demo_attach(), "launch": demo_launch(), "connect": demo_connect()}
+    results = {}
+    # results["attach"] = demo_attach()
+    results["launch"] = demo_launch()
+    # results["connect"] = demo_connect()
 
     # Summary
     print("\n" + "=" * 60)
