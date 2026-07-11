@@ -1,5 +1,6 @@
 """Tests for attribute actions."""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -106,7 +107,7 @@ class TestAttributeCreateAction:
     SWR_ATTR_00013: Bulk Creation Support
     """
 
-    def _make_action_with_classifier(self) -> tuple:
+    def _make_action_with_classifier(self) -> tuple[Any, Any]:
         """Helper: build action and mock parent classifier."""
         from rhapsody_cli.actions.attribute_action import AttributeCreateAction
 
@@ -131,7 +132,7 @@ class TestAttributeCreateAction:
             mock_classifier.addAttribute.assert_called_once_with("threshold")
             mock_attr.setDescription.assert_called_once_with("Temperature threshold")
 
-    def test_create_bulk_attributes_from_file(self, tmp_path) -> None:
+    def test_create_bulk_attributes_from_file(self, tmp_path: Any) -> None:
         """UTS_ATTR_00002: Test creating multiple attributes from JSON file."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_attr = MagicMock()
@@ -336,7 +337,7 @@ class TestAttributeViewAction:
 
         return mock_attr
 
-    def test_view_table_output(self, capsys) -> None:
+    def test_view_table_output(self, capsys: Any) -> None:
         """UTS_ATTR_00011: Test table format output."""
         from rhapsody_cli.actions.attribute_action import AttributeViewAction
 
@@ -359,7 +360,7 @@ class TestAttributeViewAction:
                 assert "Property" in captured.out
                 assert "Temperature" in captured.out
 
-    def test_view_json_output_to_file(self, tmp_path) -> None:
+    def test_view_json_output_to_file(self, tmp_path: Any) -> None:
         """UTS_ATTR_00012: Test JSON output to file."""
         import json as json_module
 
@@ -393,7 +394,7 @@ class TestAttributeViewAction:
                 assert data["metaClass"] == "Attribute"
                 assert data["fullPath"] == "Sensors/TemperatureSensor/threshold"
 
-    def test_view_csv_output(self, capsys) -> None:
+    def test_view_csv_output(self, capsys: Any) -> None:
         """UTS_ATTR_00013: Test CSV format output."""
         from rhapsody_cli.actions.attribute_action import AttributeViewAction
 
@@ -417,7 +418,7 @@ class TestAttributeViewAction:
                 assert "Name,GUID" in lines[0]
                 assert "threshold" in lines[1]
 
-    def test_view_by_guid(self, capsys) -> None:
+    def test_view_by_guid(self, capsys: Any) -> None:
         """UTS_ATTR_00014: Test viewing attribute by GUID."""
         from rhapsody_cli.actions.attribute_action import AttributeViewAction
 
@@ -445,7 +446,7 @@ class TestAttributeListAction:
     SWR_ATTR_00008: Multi-Format Output
     """
 
-    def test_list_attributes(self, capsys) -> None:
+    def test_list_attributes(self, capsys: Any) -> None:
         """UTS_ATTR_00015: Test listing attributes on a classifier."""
         from rhapsody_cli.actions.attribute_action import AttributeListAction
 
@@ -469,7 +470,7 @@ class TestAttributeListAction:
             assert "threshold" in captured.out
             assert "sampleRate" in captured.out
 
-    def test_list_empty(self, capsys) -> None:
+    def test_list_empty(self, capsys: Any) -> None:
         """UTS_ATTR_00016: Test listing classifier with no attributes."""
         from rhapsody_cli.actions.attribute_action import AttributeListAction
 
@@ -487,7 +488,7 @@ class TestAttributeListAction:
 
             capsys.readouterr()  # Should produce empty table (no data)
 
-    def test_list_json_output(self, capsys) -> None:
+    def test_list_json_output(self, capsys: Any) -> None:
         """UTS_ATTR_00017: Test JSON output format."""
         import json as json_module
 

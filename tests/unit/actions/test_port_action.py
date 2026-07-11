@@ -1,5 +1,6 @@
 """Tests for port actions."""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -125,7 +126,7 @@ class TestPortCreateAction:
     SWR_PORT_00013: Bulk Creation Support
     """
 
-    def _make_action_with_classifier(self) -> tuple:
+    def _make_action_with_classifier(self) -> tuple[Any, Any]:
         """Helper: build action and mock parent classifier."""
         from rhapsody_cli.actions.port_action import PortCreateAction
 
@@ -150,7 +151,7 @@ class TestPortCreateAction:
             mock_classifier.addPort.assert_called_once_with("clientPort")
             mock_port.setDescription.assert_called_once_with("Client interface")
 
-    def test_create_bulk_ports_from_file(self, tmp_path) -> None:
+    def test_create_bulk_ports_from_file(self, tmp_path: Any) -> None:
         """UTS_PORT_00002: Test creating multiple ports from JSON file."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_port = MagicMock()
@@ -353,7 +354,7 @@ class TestPortViewAction:
 
         return mock_port
 
-    def test_view_table_output(self, capsys) -> None:
+    def test_view_table_output(self, capsys: Any) -> None:
         """UTS_PORT_00011: Test table format output with 8 fields."""
         from rhapsody_cli.actions.port_action import PortViewAction
 
@@ -379,7 +380,7 @@ class TestPortViewAction:
             assert "Property" in captured.out
             assert "IClient" in captured.out
 
-    def test_view_json_output_to_file(self, tmp_path) -> None:
+    def test_view_json_output_to_file(self, tmp_path: Any) -> None:
         """UTS_PORT_00012: Test JSON output to file with 8 keys."""
         import json as json_module
 
@@ -412,7 +413,7 @@ class TestPortViewAction:
             assert data["metaClass"] == "Port"
             assert data["fullPath"] == "Sensors/TemperatureSensor/clientPort"
 
-    def test_view_csv_output(self, capsys) -> None:
+    def test_view_csv_output(self, capsys: Any) -> None:
         """UTS_PORT_00013: Test CSV format output with 8 columns."""
         from rhapsody_cli.actions.port_action import PortViewAction
 
@@ -438,7 +439,7 @@ class TestPortViewAction:
             assert "Name,GUID" in lines[0]
             assert "clientPort" in lines[1]
 
-    def test_view_by_guid(self, capsys) -> None:
+    def test_view_by_guid(self, capsys: Any) -> None:
         """UTS_PORT_00014: Test viewing port by GUID."""
         from rhapsody_cli.actions.port_action import PortViewAction
 
@@ -466,7 +467,7 @@ class TestPortListAction:
     SWR_PORT_00008: Multi-Format Output
     """
 
-    def test_list_ports(self, capsys) -> None:
+    def test_list_ports(self, capsys: Any) -> None:
         """UTS_PORT_00015: Test listing ports on a classifier."""
         from rhapsody_cli.actions.port_action import PortListAction
 
@@ -490,7 +491,7 @@ class TestPortListAction:
             assert "inputPort" in captured.out
             assert "outputPort" in captured.out
 
-    def test_list_empty(self, capsys) -> None:
+    def test_list_empty(self, capsys: Any) -> None:
         """UTS_PORT_00016: Test listing classifier with no ports."""
         from rhapsody_cli.actions.port_action import PortListAction
 
@@ -508,7 +509,7 @@ class TestPortListAction:
 
             capsys.readouterr()  # Should produce empty table (no data)
 
-    def test_list_json_output(self, capsys) -> None:
+    def test_list_json_output(self, capsys: Any) -> None:
         """UTS_PORT_00017: Test JSON output format."""
         import json as json_module
 

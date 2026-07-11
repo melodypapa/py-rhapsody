@@ -1,5 +1,6 @@
 """Tests for operation actions."""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -106,7 +107,7 @@ class TestOperationCreateAction:
     SWR_OP_00013: Bulk Creation Support
     """
 
-    def _make_action_with_classifier(self) -> tuple:
+    def _make_action_with_classifier(self) -> tuple[Any, Any]:
         """Helper: build action and mock parent classifier."""
         from rhapsody_cli.actions.operation_action import OperationCreateAction
 
@@ -131,7 +132,7 @@ class TestOperationCreateAction:
             mock_classifier.addOperation.assert_called_once_with("readValue")
             mock_op.setDescription.assert_called_once_with("Reads value")
 
-    def test_create_bulk_operations_from_file(self, tmp_path) -> None:
+    def test_create_bulk_operations_from_file(self, tmp_path: Any) -> None:
         """UTS_OP_00002: Test creating multiple operations from JSON file."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
@@ -344,7 +345,7 @@ class TestOperationViewAction:
 
         return mock_op
 
-    def test_view_table_output(self, capsys) -> None:
+    def test_view_table_output(self, capsys: Any) -> None:
         """UTS_OP_00011: Test table format output."""
         from rhapsody_cli.actions.operation_action import OperationViewAction
 
@@ -367,7 +368,7 @@ class TestOperationViewAction:
                 assert "Property" in captured.out
                 assert "Temperature" in captured.out
 
-    def test_view_json_output_to_file(self, tmp_path) -> None:
+    def test_view_json_output_to_file(self, tmp_path: Any) -> None:
         """UTS_OP_00012: Test JSON output to file."""
         import json as json_module
 
@@ -399,7 +400,7 @@ class TestOperationViewAction:
                 assert data["body"] == "return threshold;"
                 assert data["metaClass"] == "Operation"
 
-    def test_view_csv_output(self, capsys) -> None:
+    def test_view_csv_output(self, capsys: Any) -> None:
         """UTS_OP_00013: Test CSV format output."""
         from rhapsody_cli.actions.operation_action import OperationViewAction
 
@@ -423,7 +424,7 @@ class TestOperationViewAction:
                 assert "Name,GUID" in lines[0]
                 assert "readValue" in lines[1]
 
-    def test_view_by_guid(self, capsys) -> None:
+    def test_view_by_guid(self, capsys: Any) -> None:
         """UTS_OP_00014: Test viewing operation by GUID."""
         from rhapsody_cli.actions.operation_action import OperationViewAction
 
@@ -451,7 +452,7 @@ class TestOperationListAction:
     SWR_OP_00008: Multi-Format Output
     """
 
-    def test_list_operations(self, capsys) -> None:
+    def test_list_operations(self, capsys: Any) -> None:
         """UTS_OP_00015: Test listing operations on a classifier."""
         from rhapsody_cli.actions.operation_action import OperationListAction
 
@@ -475,7 +476,7 @@ class TestOperationListAction:
             assert "readValue" in captured.out
             assert "setValue" in captured.out
 
-    def test_list_empty(self, capsys) -> None:
+    def test_list_empty(self, capsys: Any) -> None:
         """UTS_OP_00016: Test listing classifier with no operations."""
         from rhapsody_cli.actions.operation_action import OperationListAction
 
@@ -493,7 +494,7 @@ class TestOperationListAction:
 
             capsys.readouterr()  # Should produce empty table (no data)
 
-    def test_list_json_output(self, capsys) -> None:
+    def test_list_json_output(self, capsys: Any) -> None:
         """UTS_OP_00017: Test JSON output format."""
         import json as json_module
 

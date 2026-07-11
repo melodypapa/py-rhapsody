@@ -1,5 +1,6 @@
 """Tests for class actions."""
 
+from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -139,7 +140,7 @@ class TestClassCreateAction:
     UTS_CLS_00010: Create fails without name
     """
 
-    def _make_action_with_parent(self) -> tuple:
+    def _make_action_with_parent(self) -> tuple[Any, Any]:
         """Helper: build action and mock parent package."""
         from rhapsody_cli.actions.class_action import ClassCreateAction
 
@@ -165,7 +166,7 @@ class TestClassCreateAction:
             mock_parent.addClass.assert_called_once_with("TemperatureSensor")
             mock_class.setDescription.assert_called_once_with("Temp sensor")
 
-    def test_create_bulk_classes_from_file(self, tmp_path) -> None:
+    def test_create_bulk_classes_from_file(self, tmp_path: Any) -> None:
         """UTS_CLS_00002: Test creating multiple classes from JSON file."""
         action, mock_parent = self._make_action_with_parent()
         mock_class = MagicMock()
@@ -457,7 +458,7 @@ class TestClassViewAction:
 
         return mock_class
 
-    def test_view_table_output(self, capsys) -> None:
+    def test_view_table_output(self, capsys: Any) -> None:
         """UTS_CLS_00015: Test table format output."""
         from rhapsody_cli.actions.class_action import ClassViewAction
 
@@ -478,7 +479,7 @@ class TestClassViewAction:
             assert "Property" in captured.out
             assert "readValue, setThreshold" in captured.out
 
-    def test_view_json_output_to_file(self, tmp_path) -> None:
+    def test_view_json_output_to_file(self, tmp_path: Any) -> None:
         """UTS_CLS_00016: Test JSON output to file with int-normalized IsAbstract."""
         import json as json_module
 
@@ -506,7 +507,7 @@ class TestClassViewAction:
             assert data["operations"] == ["readValue", "setThreshold"]
             assert data["attributes"] == ["threshold", "unit"]
 
-    def test_view_csv_output(self, capsys) -> None:
+    def test_view_csv_output(self, capsys: Any) -> None:
         """UTS_CLS_00017: Test CSV format output."""
         from rhapsody_cli.actions.class_action import ClassViewAction
 
@@ -528,7 +529,7 @@ class TestClassViewAction:
             assert "Name,GUID" in lines[0]
             assert "TemperatureSensor" in lines[1]
 
-    def test_view_by_guid(self, capsys) -> None:
+    def test_view_by_guid(self, capsys: Any) -> None:
         """UTS_CLS_00018: Test viewing class by GUID."""
         from rhapsody_cli.actions.class_action import ClassViewAction
 
@@ -570,7 +571,7 @@ class TestClassListAction:
     UTS_CLS_00023: List JSON output
     """
 
-    def test_list_classes(self, capsys) -> None:
+    def test_list_classes(self, capsys: Any) -> None:
         """UTS_CLS_00021: Test listing classes in a package."""
         from rhapsody_cli.actions.class_action import ClassListAction
 
@@ -595,7 +596,7 @@ class TestClassListAction:
             assert "TemperatureSensor" in captured.out
             assert "PressureSensor" in captured.out
 
-    def test_list_empty_package(self, capsys) -> None:
+    def test_list_empty_package(self, capsys: Any) -> None:
         """UTS_CLS_00022: Test listing empty package."""
         from rhapsody_cli.actions.class_action import ClassListAction
 
@@ -614,7 +615,7 @@ class TestClassListAction:
 
             capsys.readouterr()  # Should produce empty table (no data)
 
-    def test_list_json_output(self, capsys) -> None:
+    def test_list_json_output(self, capsys: Any) -> None:
         """UTS_CLS_00023: Test JSON output format."""
         import json as json_module
 
@@ -897,7 +898,7 @@ class TestClassUpdateAction:
                 assert "unknown_field" in str(mock_warning.call_args)
                 mock_class.setDescription.assert_called_once_with("real desc")
 
-    def test_update_class_from_file(self, tmp_path) -> None:
+    def test_update_class_from_file(self, tmp_path: Any) -> None:
         """UTS_CLS_00036: Test loading JSON from --input file."""
         from rhapsody_cli.actions.class_action import ClassUpdateAction
 
