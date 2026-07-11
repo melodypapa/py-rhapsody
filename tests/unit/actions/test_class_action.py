@@ -761,3 +761,176 @@ class TestClassLinkAction:
             action.execute(args)
 
             mock_source.addGeneralization.assert_called_once_with(mock_target)
+
+
+class TestClassUpdateAction:
+    """Test ClassUpdateAction.
+
+    UTS_CLS_00030: Update class via path
+    UTS_CLS_00031: Update class via GUID with type validation
+    UTS_CLS_00032: Update GUID wrong type raises error
+    UTS_CLS_00033: Partial update only modifies provided fields
+    UTS_CLS_00034: Boolean flags converted to int (1/0)
+    UTS_CLS_00035: Unknown fields skipped with warning
+    UTS_CLS_00036: Update from JSON file
+    UTS_CLS_00037: Update requires path or guid
+    """
+
+    def test_update_class_with_path(self) -> None:
+        """UTS_CLS_00030: Test updating class via --path."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_class", return_value=mock_class):
+            args = MagicMock()
+            args.path = "Sensors/TemperatureSensor"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"description":"Updated description"}'
+
+            action.execute(args)
+
+            mock_class.setDescription.assert_called_once_with("Updated description")
+
+    def test_update_class_with_guid(self) -> None:
+        """UTS_CLS_00031: Test updating class via --guid with type validation."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+        mock_class.getMetaClass.return_value = "Class"
+
+        with patch.object(action, "_resolve_class_by_guid", return_value=mock_class):
+            args = MagicMock()
+            args.path = None
+            args.guid = "{ABC-123}"
+            args.input = None
+            args.attributes = '{"description":"Updated"}'
+
+            action.execute(args)
+
+            mock_class.setDescription.assert_called_once_with("Updated")
+
+    def test_update_class_guid_wrong_type(self) -> None:
+        """UTS_CLS_00032: Test --guid resolving to non-Class raises error."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_project = MagicMock()
+        mock_element = MagicMock()
+        mock_element.getMetaClass.return_value = "Package"
+        mock_project.findElementByGUID.return_value = mock_element
+
+        with patch.object(ElementManagementAction, "_get_active_project", return_value=mock_project):
+            args = MagicMock()
+            args.path = None
+            args.guid = "{ABC-123}"
+            args.input = None
+            args.attributes = '{"description":"x"}'
+
+            with pytest.raises(CliExecutionError) as exc_info:
+                action.execute(args)
+
+            assert "does not resolve to a Class" in str(exc_info.value)
+            assert "found Package" in str(exc_info.value)
+
+    def test_update_class_partial_update(self) -> None:
+        """UTS_CLS_00033: Test partial update - only isAbstract field applied."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_class", return_value=mock_class):
+            args = MagicMock()
+            args.path = "Sensors/MyClass"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"isAbstract":true}'
+
+            action.execute(args)
+
+            mock_class.setIsAbstract.assert_called_once_with(1)
+            mock_class.setDescription.assert_not_called()
+            mock_class.setName.assert_not_called()
+
+    def test_update_class_boolean_flags(self) -> None:
+        """UTS_CLS_00034: Test isAbstract/isFinal/isActive converted to int (1/0)."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_class", return_value=mock_class):
+            args = MagicMock()
+            args.path = "Sensors/MyClass"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"isAbstract":true,"isFinal":false,"isActive":true}'
+
+            action.execute(args)
+
+            mock_class.setIsAbstract.assert_called_once_with(1)
+            mock_class.setIsFinal.assert_called_once_with(0)
+            mock_class.setIsActive.assert_called_once_with(1)
+
+    def test_update_class_skips_unknown_fields(self) -> None:
+        """UTS_CLS_00035: Test unknown field triggers warning, known field still applied."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_class", return_value=mock_class):
+            args = MagicMock()
+            args.path = "Sensors/MyClass"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"unknown_field":"value","description":"real desc"}'
+
+            with patch.object(action.logger, "warning") as mock_warning:
+                action.execute(args)
+
+                mock_warning.assert_called_once()
+                assert "unknown_field" in str(mock_warning.call_args)
+                mock_class.setDescription.assert_called_once_with("real desc")
+
+    def test_update_class_from_file(self, tmp_path) -> None:
+        """UTS_CLS_00036: Test loading JSON from --input file."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        json_file = tmp_path / "update.json"
+        json_file.write_text('{"description":"From file"}')
+
+        action = ClassUpdateAction()
+        mock_class = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_class", return_value=mock_class):
+            args = MagicMock()
+            args.path = "Sensors/MyClass"
+            args.guid = None
+            args.input = str(json_file)
+            args.attributes = None
+
+            action.execute(args)
+
+            mock_class.setDescription.assert_called_once_with("From file")
+
+    def test_update_class_requires_path_or_guid(self) -> None:
+        """UTS_CLS_00037: Test that neither --path nor --guid raises error."""
+        from rhapsody_cli.actions.class_action import ClassUpdateAction
+
+        action = ClassUpdateAction()
+
+        args = MagicMock()
+        args.path = None
+        args.guid = None
+        args.input = None
+        args.attributes = None
+
+        with pytest.raises(CliExecutionError) as exc_info:
+            action.execute(args)
+
+        assert "Either --path or --guid is required" in str(exc_info.value)

@@ -22,8 +22,8 @@ class TestClassCommand:
         with pytest.raises(CliExecutionError):
             ClassCommand([])
 
-    def test_registers_all_five_subcommands(self) -> None:
-        """UTS_CLS_00029: Test that all 5 subcommands are registered."""
+    def test_registers_all_six_subcommands(self) -> None:
+        """UTS_CLS_00029: Test that all 6 subcommands are registered."""
         cmd = ClassCommand(["create", "--path", "Sensors", '{"name":"Test"}'])
         actions = cmd.get_actions()
         command_ids = [a.command_id for a in actions]
@@ -33,4 +33,5 @@ class TestClassCommand:
         assert "view" in command_ids
         assert "list" in command_ids
         assert "link" in command_ids
-        assert len(actions) == 5
+        assert "update" in command_ids
+        assert len(actions) == 6

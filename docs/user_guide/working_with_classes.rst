@@ -31,6 +31,9 @@ list
 link
    Add or remove generalization relationships
 
+update
+   Update class attributes
+
 class create
 ------------
 
@@ -243,6 +246,79 @@ Exactly one of ``--path`` or ``--guid`` must be specified. Exactly one of
 
    # Using GUID
    rhapsody-cli class link --guid 12345678-1234-1234-1234-123456789abc --add BaseSensor
+
+class update
+------------
+
+Update an existing class's attributes via path or GUID.
+
+**Usage:**
+
+::
+
+   rhapsody-cli class update --path <class-path> [options] [attributes]
+   rhapsody-cli class update --guid <guid> [options] [attributes]
+
+**Arguments:**
+
+- ``--path <class-path>`` - Class path to update (optional)
+- ``--guid <guid>`` - Class GUID to update (optional)
+- ``--input <json-file>`` - JSON file with class attributes (optional)
+- ``attributes`` - Inline JSON or file path (required if --input not specified)
+
+Exactly one of ``--path`` or ``--guid`` must be specified.
+
+**Examples:**
+
+Update class name and description via path::
+
+   rhapsody-cli class update --path Sensors/TemperatureSensor '{"name":"NewName","description":"Updated"}'
+
+Update class boolean flags via path::
+
+   rhapsody-cli class update --path Sensors/TemperatureSensor '{"isAbstract":true,"isActive":true}'
+
+Update class via GUID::
+
+   rhapsody-cli class update --guid 12345678-1234-1234-1234-123456789abc '{"description":"New description"}'
+
+**JSON Format:**
+
+::
+
+   {
+     "name": "NewName",
+     "description": "Updated description",
+     "isAbstract": true,
+     "isFinal": false,
+     "isActive": true,
+     "stereotypes": ["active"],
+     "tags": {"status": "active"}
+   }
+
+**Validated Attributes:**
+
+- ``name`` - Class name
+- ``description`` - Plain text description
+- ``isAbstract`` - Boolean, sets via setIsAbstract(1/0)
+- ``isFinal`` - Boolean, sets via setIsFinal(1/0)
+- ``isActive`` - Boolean, sets via setIsActive(1/0)
+- ``stereotypes`` - Array of stereotype names
+- ``tags`` - Object of key-value pairs
+
+.. note::
+
+   Update performs a partial update: only the fields present in the JSON are
+   modified. Fields omitted from the JSON are left unchanged. Unknown fields
+   are skipped with a warning log.
+
+   Operations, attributes, and superclasses are not managed via ``update``.
+   Use the dedicated ``class create`` (with operations/attributes/superclasses
+   arrays) and ``class link`` (for generalization relationships) commands
+   instead.
+
+   When using ``--guid``, the element type is validated. If the GUID does not
+   resolve to a Class, a ``CliExecutionError`` is raised.
 
 Workflow: Class Cloning
 -----------------------

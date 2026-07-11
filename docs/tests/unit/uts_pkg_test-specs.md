@@ -853,3 +853,125 @@ Package created successfully; no error raised.
 - Success logs present
 **Last Changed:** 2026-07-10
 
+---
+
+## UTS_PKG_00035: Update package via path
+
+**ID:** UTS_PKG_00035
+**Traces-To:** SWR_PKG_0016
+**Title:** Update package via path
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package can be updated via --path argument.
+**Pre-conditions:**
+- Package exists at specified path
+- Valid JSON provided
+**Test Steps:**
+1. Call PackageUpdateAction with --path
+2. Verify attributes updated
+**Expected Result:**
+Package updated successfully.
+**Verification Criteria:**
+- setDescription called with correct value
+- Logger shows INFO message
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_PKG_00036: Update package via GUID with type validation
+
+**ID:** UTS_PKG_00036
+**Traces-To:** SWR_PKG_0016
+**Title:** Update package via GUID with type validation
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that package can be updated via --guid with type validation.
+**Pre-conditions:**
+- Package exists with given GUID
+**Test Steps:**
+1. Call PackageUpdateAction with --guid
+2. Verify metaClass validation
+3. Verify attributes updated
+**Expected Result:**
+Package updated, type validated.
+**Verification Criteria:**
+- findElementByGUID called
+- metaClass checked equals "Package"
+- setName called with correct value
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_PKG_00037: Update package GUID wrong type raises error
+
+**ID:** UTS_PKG_00037
+**Traces-To:** SWR_PKG_0016
+**Title:** Update package GUID wrong type raises error
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that wrong element type via --guid raises CliExecutionError.
+**Pre-conditions:**
+- GUID resolves to non-package element (Class)
+**Test Steps:**
+1. Call PackageUpdateAction with --guid for Class
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError with type mismatch message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error contains "does not resolve to a Package"
+- Error contains "found Class"
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_PKG_00038: Update package partial update
+
+**ID:** UTS_PKG_00038
+**Traces-To:** SWR_PKG_0016
+**Title:** Update package partial update
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that partial update only modifies specified fields.
+**Pre-conditions:**
+- Package exists
+**Test Steps:**
+1. Call PackageUpdateAction with only tags field
+2. Verify only setPropertyValue called
+3. Verify other setters not called
+**Expected Result:**
+Only specified field updated.
+**Verification Criteria:**
+- setPropertyValue called for tags
+- setDescription not called
+- setName not called
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_PKG_00039: Update package skips unknown fields
+
+**ID:** UTS_PKG_00039
+**Traces-To:** SWR_PKG_0016
+**Title:** Update package skips unknown fields
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that unknown fields are skipped with warning.
+**Pre-conditions:**
+- JSON contains unknown fields
+**Test Steps:**
+1. Call PackageUpdateAction with unknown field
+2. Verify warning logged
+3. Verify known field still applied
+**Expected Result:**
+Unknown fields skipped, known fields applied.
+**Verification Criteria:**
+- Logger.warning called with unknown field name
+- Known attribute still applied
+**Last Changed:** 2026-07-10
+

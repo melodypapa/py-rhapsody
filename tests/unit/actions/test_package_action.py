@@ -527,3 +527,158 @@ class TestPackageListAction:
             captured = capsys.readouterr()
             data = json.loads(captured.out)
             assert data == ["TempSensors", "PressureSensors"]
+
+
+class TestPackageUpdateAction:
+    """Test PackageUpdateAction.
+
+    UTS_PKG_00035: Update package via path
+    UTS_PKG_00036: Update package via GUID with type validation
+    UTS_PKG_00037: Update GUID wrong type raises error
+    UTS_PKG_00038: Partial update only modifies provided fields
+    UTS_PKG_00039: Unknown fields skipped with warning
+    UTS_PKG_00040: Update from JSON file
+    UTS_PKG_00041: Update requires path or guid
+    """
+
+    def test_update_package_with_path(self) -> None:
+        """UTS_PKG_00035: Test updating package via --path."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+        mock_package = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_package):
+            args = MagicMock()
+            args.path = "Sensors/TempSensors"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"description":"Updated description"}'
+
+            action.execute(args)
+
+            mock_package.setDescription.assert_called_once_with("Updated description")
+
+    def test_update_package_with_guid(self) -> None:
+        """UTS_PKG_00036: Test updating package via --guid with type validation."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+        mock_root = MagicMock()
+        mock_package = MagicMock()
+        mock_package.getMetaClass.return_value = "Package"
+        mock_root.findElementByGUID.return_value = mock_package
+
+        with patch.object(action, "_get_active_root", return_value=mock_root):
+            args = MagicMock()
+            args.path = None
+            args.guid = "{ABC-123}"
+            args.input = None
+            args.attributes = '{"description":"Updated"}'
+
+            action.execute(args)
+
+            mock_root.findElementByGUID.assert_called_once_with("{ABC-123}")
+            mock_package.setDescription.assert_called_once_with("Updated")
+
+    def test_update_package_guid_wrong_type(self) -> None:
+        """UTS_PKG_00037: Test --guid resolving to non-Package raises error."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+        mock_root = MagicMock()
+        mock_element = MagicMock()
+        mock_element.getMetaClass.return_value = "Class"
+        mock_root.findElementByGUID.return_value = mock_element
+
+        with patch.object(action, "_get_active_root", return_value=mock_root):
+            args = MagicMock()
+            args.path = None
+            args.guid = "{ABC-123}"
+            args.input = None
+            args.attributes = '{"description":"x"}'
+
+            with pytest.raises(CliExecutionError) as exc_info:
+                action.execute(args)
+
+            assert "does not resolve to a Package" in str(exc_info.value)
+            assert "found Class" in str(exc_info.value)
+
+    def test_update_package_partial_update(self) -> None:
+        """UTS_PKG_00038: Test partial update - only tags field applied."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+        mock_package = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_package):
+            args = MagicMock()
+            args.path = "Sensors"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"tags":{"status":"active"}}'
+
+            action.execute(args)
+
+            mock_package.setPropertyValue.assert_called_once_with("status", "active")
+            mock_package.setDescription.assert_not_called()
+            mock_package.setName.assert_not_called()
+
+    def test_update_package_skips_unknown_fields(self) -> None:
+        """UTS_PKG_00039: Test unknown field triggers warning, known field still applied."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+        mock_package = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_package):
+            args = MagicMock()
+            args.path = "Sensors"
+            args.guid = None
+            args.input = None
+            args.attributes = '{"unknown_field":"value","description":"real desc"}'
+
+            with patch.object(action.logger, "warning") as mock_warning:
+                action.execute(args)
+
+                mock_warning.assert_called_once()
+                assert "unknown_field" in str(mock_warning.call_args)
+                mock_package.setDescription.assert_called_once_with("real desc")
+
+    def test_update_package_from_file(self, tmp_path: Any) -> None:
+        """UTS_PKG_00040: Test loading JSON from --input file."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        json_file = tmp_path / "update.json"
+        json_file.write_text('{"description":"From file"}')
+
+        action = PackageUpdateAction()
+        mock_package = MagicMock()
+
+        with patch.object(action, "_resolve_and_validate_package", return_value=mock_package):
+            args = MagicMock()
+            args.path = "Sensors"
+            args.guid = None
+            args.input = str(json_file)
+            args.attributes = None
+
+            action.execute(args)
+
+            mock_package.setDescription.assert_called_once_with("From file")
+
+    def test_update_package_requires_path_or_guid(self) -> None:
+        """UTS_PKG_00041: Test that neither --path nor --guid raises error."""
+        from rhapsody_cli.actions.package_action import PackageUpdateAction
+
+        action = PackageUpdateAction()
+
+        args = MagicMock()
+        args.path = None
+        args.guid = None
+        args.input = None
+        args.attributes = None
+
+        with pytest.raises(CliExecutionError) as exc_info:
+            action.execute(args)
+
+        assert "Either --path or --guid is required" in str(exc_info.value)

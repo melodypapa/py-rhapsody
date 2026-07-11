@@ -25,6 +25,9 @@ view
 list
    List nested packages
 
+update
+   Update package attributes
+
 package create
 --------------
 
@@ -220,6 +223,72 @@ CSV::
    TempSensors
    PressureSensors
    FlowSensors
+
+package update
+--------------
+
+Update an existing package's attributes via path or GUID.
+
+**Usage:**
+
+::
+
+   rhapsody-cli package update --path <package-path> [options] [attributes]
+   rhapsody-cli package update --guid <guid> [options] [attributes]
+
+**Arguments:**
+
+- ``--path <package-path>`` - Package path to update (optional)
+- ``--guid <guid>`` - Package GUID to update (optional)
+- ``--input <json-file>`` - JSON file with package attributes (optional)
+- ``attributes`` - Inline JSON or file path (required if --input not specified)
+
+Exactly one of ``--path`` or ``--guid`` must be specified.
+
+**Examples:**
+
+Update package name and description via path::
+
+   rhapsody-cli package update --path Sensors/TempSensors '{"name":"NewName","description":"Updated description"}'
+
+Update package via GUID::
+
+   rhapsody-cli package update --guid 12345678-1234-1234-1234-123456789abc '{"description":"New description"}'
+
+Update package from JSON file::
+
+   rhapsody-cli package update --path Sensors/TempSensors --input update.json
+
+**JSON Format:**
+
+::
+
+   {
+     "name": "NewName",
+     "description": "Updated description",
+     "display_name": "Display Name",
+     "stereotypes": ["auto_generated"],
+     "tags": {"status": "active"},
+     "properties": {"custom": "value"}
+   }
+
+**Validated Attributes:**
+
+- ``name`` - Package name
+- ``description`` - Plain text description
+- ``display_name`` - Display name
+- ``stereotypes`` - Array of stereotype names
+- ``tags`` - Tag name-value pairs
+- ``properties`` - Custom properties object
+
+.. note::
+
+   Update performs a partial update: only the fields present in the JSON are
+   modified. Fields omitted from the JSON are left unchanged. Unknown fields
+   are skipped with a warning log.
+
+   When using ``--guid``, the element type is validated. If the GUID does not
+   resolve to a Package, a ``CliExecutionError`` is raised.
 
 Workflow: Package Cloning
 -------------------------

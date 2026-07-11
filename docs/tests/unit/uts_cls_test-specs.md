@@ -703,3 +703,149 @@ All 5 subcommands (create, delete, view, list, link) registered.
 - get_actions returns 5 actions
 - All subcommand names present
 **Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00030: Update class via path
+
+**ID:** UTS_CLS_00030
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class via path
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that class can be updated via --path argument.
+**Pre-conditions:**
+- Class exists at specified path
+- Valid JSON provided
+**Test Steps:**
+1. Call ClassUpdateAction with --path
+2. Verify attributes updated
+**Expected Result:**
+Class updated successfully.
+**Verification Criteria:**
+- setDescription called with correct value
+- Logger shows INFO message
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00031: Update class via GUID with type validation
+
+**ID:** UTS_CLS_00031
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class via GUID with type validation
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that class can be updated via --guid with type validation.
+**Pre-conditions:**
+- Class exists with given GUID
+**Test Steps:**
+1. Call ClassUpdateAction with --guid
+2. Verify metaClass validation
+3. Verify attributes updated
+**Expected Result:**
+Class updated, type validated.
+**Verification Criteria:**
+- findElementByGUID called
+- metaClass checked equals "Class"
+- setIsAbstract called with correct value
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00032: Update class GUID wrong type raises error
+
+**ID:** UTS_CLS_00032
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class GUID wrong type raises error
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that wrong element type via --guid raises CliExecutionError.
+**Pre-conditions:**
+- GUID resolves to non-class element (Package)
+**Test Steps:**
+1. Call ClassUpdateAction with --guid for Package
+2. Verify CliExecutionError raised
+**Expected Result:**
+CliExecutionError with type mismatch message.
+**Verification Criteria:**
+- CliExecutionError raised
+- Error contains "does not resolve to a Class"
+- Error contains "found Package"
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00033: Update class boolean flags
+
+**ID:** UTS_CLS_00033
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class boolean flags
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test updating boolean flags isAbstract, isFinal, isActive.
+**Pre-conditions:**
+- Class exists
+**Test Steps:**
+1. Call ClassUpdateAction with boolean flags
+2. Verify setIsAbstract, setIsFinal, setIsActive called
+**Expected Result:**
+Boolean flags updated correctly.
+**Verification Criteria:**
+- setIsAbstract(1) called for true
+- setIsFinal(0) called for false
+- setIsActive(1) called for true
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00034: Update class partial update
+
+**ID:** UTS_CLS_00034
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class partial update
+**Type:** Unit
+**Priority:** High
+**Description:**
+Test that partial update only modifies specified fields.
+**Pre-conditions:**
+- Class exists
+**Test Steps:**
+1. Call ClassUpdateAction with only isAbstract field
+2. Verify only setIsAbstract called
+3. Verify other setters not called
+**Expected Result:**
+Only specified field updated.
+**Verification Criteria:**
+- setIsAbstract called
+- setDescription not called
+- setName not called
+**Last Changed:** 2026-07-10
+
+---
+
+## UTS_CLS_00035: Update class skips unknown fields
+
+**ID:** UTS_CLS_00035
+**Traces-To:** SWR_CLS_00014
+**Title:** Update class skips unknown fields
+**Type:** Unit
+**Priority:** Medium
+**Description:**
+Test that unknown fields are skipped with warning.
+**Pre-conditions:**
+- JSON contains unknown fields
+**Test Steps:**
+1. Call ClassUpdateAction with unknown field
+2. Verify warning logged
+3. Verify known field still applied
+**Expected Result:**
+Unknown fields skipped, known fields applied.
+**Verification Criteria:**
+- Logger.warning called with unknown field name
+- Known attribute still applied
+**Last Changed:** 2026-07-10

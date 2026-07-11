@@ -268,3 +268,35 @@ Class view, delete, and link commands
 - SHALL raise CliExecutionError if GUID not found
 **Implementation:** src/rhapsody_cli/actions/class_action.py:AbstractClassAction._resolve_class_by_guid
 **Last Changed:** 2026-07-10
+
+---
+
+## SWR_CLS_00014: Class Update Command
+
+**ID:** SWR_CLS_00014
+**Title:** class update command modifies class attributes
+**Status:** Planned
+**Priority:** High
+**Description:**
+The class CLI
+- SHALL provide a `class update` command to modify attributes of an existing class.
+- SHALL accept `--path <class-path>` argument (optional) - full path to class (including name, e.g. Sensors/TemperatureSensor)
+- SHALL accept `--guid <guid>` argument (optional) - class GUID
+- SHALL require exactly one of `--path` or `--guid`
+- SHALL accept `--input <json-file>` argument (optional) - external JSON file
+- SHALL accept positional `attributes` argument (inline JSON with fields to update)
+- SHALL validate path/guid resolves to Class element (metaClass == "Class")
+- SHALL validate type when using --guid (metaClass == "Class", raise CliExecutionError if mismatch)
+- SHALL perform partial update - only specified fields are modified
+- SHALL support validated attributes: name, description, isAbstract, isFinal, isActive, stereotypes, tags
+- SHALL apply name via `setName(val)`, description via `setDescription(val)`
+- SHALL apply boolean flags via `setIsAbstract(1/0)`, `setIsFinal(1/0)`, `setIsActive(1/0)`
+- SHALL apply stereotypes via `addStereotype(name, "Class")`
+- SHALL apply tags via `setPropertyValue(key, val)`
+- SHALL skip unknown attributes with warning log
+- SHALL detect inline JSON (starts with `{`) vs file path automatically
+- SHALL parse JSON file with UTF-8 encoding
+- SHALL log INFO for successful updates
+- SHALL log WARNING for skipped attributes
+**Implementation:** src/rhapsody_cli/actions/class_action.py:ClassUpdateAction
+**Last Changed:** 2026-07-10
