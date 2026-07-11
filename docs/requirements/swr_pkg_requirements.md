@@ -95,7 +95,7 @@ The package CLI
 ```
 
 **CSV format example:**
-```csv
+```text
 Name,GUID,Description,MetaClass,FullPath
 TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
 ```
@@ -274,7 +274,7 @@ JSON format:
 ```
 
 CSV format:
-```csv
+```text
 Name,GUID,Description,MetaClass,FullPath
 TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
 ```
@@ -311,7 +311,7 @@ JSON format:
 ```
 
 CSV format:
-```csv
+```text
 Name
 TempSensors
 PressureSensors

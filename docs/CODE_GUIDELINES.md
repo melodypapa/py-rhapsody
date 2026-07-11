@@ -127,6 +127,8 @@ from rhapsody_cli.models.elements.classifiers import RPClass
 
 ---
 
+## TDD Methodology
+
 ### Principle: Tests First
 
 All code must follow strict Test-Driven Development (TDD):
@@ -544,8 +546,6 @@ raise CliExecutionError(f"Error: {e}") from e
 ```
 
 ---
-
-## Utility Classes
 
 ### OutputFormatter Pattern
 
