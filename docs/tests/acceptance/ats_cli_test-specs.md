@@ -1,4 +1,4 @@
-# Acceptance Test Specifications - Command-Line Interface
+﻿# Acceptance Test Specifications - Command-Line Interface
 
 **Category:** CLI
 **Prefix:** ATS
@@ -186,5 +186,4 @@ installed) and assert the exit code is non-zero and the error appears on stderr,
 stdout. Confirm via `--help` that the class-based commands are registered under
 `project`, `element`, and `io` groups.
 **Last Changed:** 2026-07-07
-
----
+

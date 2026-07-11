@@ -1,4 +1,4 @@
-# Acceptance Test Specifications - Exceptions
+﻿# Acceptance Test Specifications - Exceptions
 
 **Category:** EXC
 **Prefix:** ATS
@@ -146,5 +146,4 @@ callable that returns `42` to `call_com` and assert `42` is returned unchanged. 
 via code inspection (or a representative sample) that wrapper methods route COM calls
 through `call_com` rather than calling the COM object directly.
 **Last Changed:** 2026-07-07
-
----
+

@@ -1,4 +1,4 @@
-# Unit Test Specifications - Command-Line Interface
+﻿# Unit Test Specifications - Command-Line Interface
 
 **Category:** CLI
 **Prefix:** UTS
@@ -1012,5 +1012,4 @@ All three groups are `click.Group` subclasses with the right names and the right
 **Verification Criteria:**
 Pass if all type/name/subcommand assertions hold.
 **Last Changed:** 2026-07-07
-
----
+

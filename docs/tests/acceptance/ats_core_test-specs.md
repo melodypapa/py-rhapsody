@@ -1,4 +1,4 @@
-# Acceptance Test Specifications - Wrapping Machinery
+﻿# Acceptance Test Specifications - Wrapping Machinery
 
 **Category:** CORE
 **Prefix:** ATS
@@ -197,5 +197,4 @@ Obtain an `RPCollection` with at least one element. Assert that `collection[-1]`
 first item and (if the collection has N >= 2 items) `collection[N]` returns the last item,
 confirming positive indexing still works after the negative-index guard.
 **Last Changed:** 2026-07-07
-
----
+

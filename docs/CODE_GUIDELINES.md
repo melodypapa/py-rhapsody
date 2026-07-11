@@ -2,17 +2,6 @@
 
 > **Core Principle:** Test-first, class-based architecture. Write tests before code. Organize code as classes, not functions.
 
-## Table of Contents
-
-1. [Python Compatibility & Imports](#python-compatibility--imports)
-2. [Naming Conventions](#naming-conventions)
-3. [TDD Methodology](#tdd-methodology)
-4. [Class-Based Architecture](#class-based-architecture)
-5. [CLI Commands](#cli-commands)
-6. [Utility Classes](#utility-classes)
-7. [Testing Patterns](#testing-patterns)
-8. [Code Review Checklist](#code-review-checklist)
-
 ---
 
 ## Naming Conventions
@@ -56,6 +45,8 @@ supported_formats = ("json", "csv")  # ❌ Lowercase for constants
 - **Dunder methods:** Double underscores (e.g., `__init__`, `__str__`)
 
 ---
+
+## Python Compatibility & Imports
 
 ### ❌ DO NOT USE: `from __future__ import annotations`
 

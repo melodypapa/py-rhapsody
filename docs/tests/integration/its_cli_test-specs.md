@@ -1,4 +1,4 @@
-# Integration Test Specifications - Command-Line Interface
+﻿# Integration Test Specifications - Command-Line Interface
 
 **Category:** CLI
 **Prefix:** ITS
@@ -374,5 +374,4 @@ to `click.Abort`; `CliRunner` reports a non-zero exit code.
   `RhapsodyConnectionError`.
 - `openProject` spy call count is 0.
 **Last Changed:** 2026-07-07
-
----
+

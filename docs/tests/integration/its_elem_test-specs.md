@@ -1,4 +1,4 @@
-# Integration Test Specifications - Model Element Wrappers
+﻿# Integration Test Specifications - Model Element Wrappers
 
 **Category:** ELEM
 **Prefix:** ITS
@@ -307,5 +307,4 @@ delegates graphics operations through `call_com`.
 - `sc_com.deleteState.call_args == ((state_com,),)`.
 - `sc_com.createGraphics.call_count == 1` and `sc_com.closeDiagram.call_count == 1`.
 **Last Changed:** 2026-07-07
-
----
+
