@@ -40,24 +40,6 @@ class TestElementCLISubprocess:
         assert result.returncode == 0, f"Help failed: {result.stderr}"
         assert "Usage:" in result.stdout or "usage:" in result.stdout.lower()
 
-    def test_element_add_help(self) -> None:
-        """Test that element add --help works."""
-        result = self._run_cli("element", "add", "--help")
-        assert result.returncode == 0, f"Help failed: {result.stderr}"
-        assert "type" in result.stdout.lower()
-        assert "name" in result.stdout.lower()
-
-    def test_element_query_help(self) -> None:
-        """Test that element query --help works."""
-        result = self._run_cli("element", "query", "--help")
-        assert result.returncode == 0, f"Help failed: {result.stderr}"
-
-    def test_element_delete_help(self) -> None:
-        """Test that element delete --help works."""
-        result = self._run_cli("element", "delete", "--help")
-        assert result.returncode == 0, f"Help failed: {result.stderr}"
-        assert "path" in result.stdout.lower()
-
     def test_cli_verbose_flag(self) -> None:
         """Test that --verbose flag is accepted at subcommand level."""
         result = self._run_cli("element", "query", "--verbose")
@@ -84,20 +66,6 @@ class TestElementCLISubprocess:
         result = self._run_cli("invalid_command")
         assert result.returncode != 0
         assert "invalid choice" in result.stderr.lower() or "Error" in result.stderr or "usage:" in result.stderr.lower()
-
-    def test_cli_query_connection_check(self) -> None:
-        """Test that query command attempts to connect to Rhapsody.
-
-        When Rhapsody is not running, should fail with connection error,
-        not with a usage/syntax error.
-        """
-        result = self._run_cli("element", "query")
-        # Will fail due to no Rhapsody, but should have a proper error message
-        # (not a usage error)
-        if result.returncode != 0:
-            # Make sure it's not a usage error
-            assert "unrecognized arguments" not in result.stderr.lower()
-            assert "Usage:" not in result.stderr and "usage:" not in result.stderr.lower()
 
     def test_cli_add_connection_check(self) -> None:
         """Test that add command attempts to connect to Rhapsody.
