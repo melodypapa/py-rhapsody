@@ -3,7 +3,7 @@
 Demo: Rhapsody Project Operations
 
 This demo demonstrates common project management operations with the Rhapsody GUI visible:
-- Launching Rhapsody with GUI display
+- Connecting to Rhapsody with GUI display (show_gui=True)
 - Opening the shipped demos/demo_project with openProject()
 - Getting active project with activeProject()
 - Listing all open projects with getProjects()
@@ -266,21 +266,12 @@ def main() -> None:
     print("Demo: Rhapsody Project Operations")
     print("=" * 60)
 
-    # Connect to Rhapsody
-    # Use prefer_attach=False to always launch with GUI visible
-    # Use prefer_attach=True to attach to existing instance if available
+    # Connect to Rhapsody with GUI visible
     print("\nConnecting to Rhapsody...")
     try:
-        # Launch Rhapsody with GUI visible (prefer_attach=False ensures we launch)
-        app = RhapsodyApplication.connect(prefer_attach=False)
-        print("[OK] Connected successfully")
-
-        # Rhapsody launched via COM automation starts with the UI hidden by
-        # default. Explicitly disable HiddenUI to show the GUI window.
-        print("\nMaking Rhapsody GUI visible...")
-        app.setHiddenUI(False)
-        app.bringWindowToTop()
-        print("[OK] Rhapsody GUI should now be visible")
+        # show_gui=True ensures the Rhapsody window is visible
+        app = RhapsodyApplication.connect(show_gui=True)
+        print("[OK] Connected successfully - Rhapsody GUI should now be visible")
     except RhapsodyConnectionError as e:
         print(f"[-] Failed to connect: {e}")
         sys.exit(1)
@@ -348,7 +339,7 @@ def main() -> None:
         print("Cleanup")
         print("=" * 60)
         print("Disconnecting from Rhapsody...")
-        app.quit()
+        app.disconnect()
         print("[OK] Disconnected successfully")
 
     print("\n" + "=" * 60)

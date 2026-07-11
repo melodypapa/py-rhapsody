@@ -300,7 +300,7 @@ def main() -> None:
         print("Cleanup")
         print("=" * 60)
         print("Disconnecting from Rhapsody...")
-        app.quit()
+        app.disconnect()
         print("[OK] Disconnected successfully")
 
     print("\n" + "=" * 60)

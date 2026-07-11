@@ -3,7 +3,7 @@
 Demo: Rhapsody Error Handling Patterns
 
 This demo demonstrates comprehensive error handling for Rhapsody operations:
-- Connection error handling (attach vs. launch fallback)
+- Connection error handling with smart connect fallback
 - Project operation error handling
 - Element not found scenarios
 - COM error translation
@@ -25,7 +25,7 @@ DEMO_PROJECT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "de
 
 
 def demo_connection_error_handling() -> Any:
-    """Demonstrate connection error handling with fallback.
+    """Demonstrate connection error handling with smart connect fallback.
 
     Returns:
         RhapsodyApplication if successful, None otherwise
@@ -34,27 +34,11 @@ def demo_connection_error_handling() -> Any:
     print("Error Handling: Connection Errors")
     print("=" * 60)
 
-    app = None
-
     try:
-        print("Strategy 1: Try to attach to running instance")
-        try:
-            app = RhapsodyApplication.attach()
-            print("[OK] Successfully attached to running Rhapsody instance")
-            return app
-        except RhapsodyConnectionError as e:
-            print(f"[-] Attach failed: {e}")
-            print("  -> Falling back to launch method")
-
-        print("\nStrategy 2: Launch new instance")
-        try:
-            app = RhapsodyApplication.launch()
-            print("[OK] Successfully launched new Rhapsody instance")
-            return app
-        except RhapsodyConnectionError as e:
-            print(f"[-] Launch failed: {e}")
-            print("  -> No connection methods available")
-            raise
+        print("Using smart connect() with built-in attach -> launch fallback")
+        app = RhapsodyApplication.connect()
+        print("[OK] Successfully connected to Rhapsody")
+        return app
 
     except RhapsodyConnectionError as e:
         print("\n[-] All connection methods failed")
@@ -350,7 +334,7 @@ def demo_comprehensive_error_handling() -> None:
             print("=" * 60)
             try:
                 print("Disconnecting from Rhapsody...")
-                app.quit()
+                app.disconnect()
                 time.sleep(2)  # Allow COM object lifecycle to complete
                 print("[OK] Disconnected successfully")
             except Exception as e:
@@ -374,7 +358,7 @@ def main() -> None:
         print("[OK] All error handling patterns demonstrated")
         print("\nKey takeaways:")
         print("  1. Always use try-except blocks for Rhapsody operations")
-        print("  2. Implement connection fallback (attach -> launch)")
+        print("  2. Use connect() with built-in attach -> launch fallback")
         print("  3. Handle 'not found' scenarios gracefully")
         print("  4. Use finally blocks for cleanup")
         print("  5. Validate results before using them")

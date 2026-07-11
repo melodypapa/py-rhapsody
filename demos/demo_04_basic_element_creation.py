@@ -389,7 +389,7 @@ def main() -> None:
         print("Cleanup: Disconnecting")
         print("=" * 60)
         print("Disconnecting from Rhapsody...")
-        app.quit()
+        app.disconnect()
         time.sleep(2)  # Allow COM object lifecycle to complete
         print("[OK] Disconnected successfully")
 

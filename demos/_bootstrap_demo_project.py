@@ -45,8 +45,8 @@ def _clean_demo_project_dir() -> None:
 
 def build_demo_project() -> None:
     """Create and populate the demo_project used by the numbered demos."""
-    print("Connecting to Rhapsody (launching new instance)...")
-    app = RhapsodyApplication.launch()
+    print("Connecting to Rhapsody...")
+    app = RhapsodyApplication.connect()
 
     try:
         print(f"Creating project '{PROJECT_NAME}' at {DEMO_PROJECT_DIR}...")
@@ -123,7 +123,7 @@ def build_demo_project() -> None:
         print(f"\n[OK] Demo project created at: {project.getFilename()}")
     finally:
         print("Closing Rhapsody...")
-        app.quit()
+        app.disconnect()
 
 
 def main() -> None:

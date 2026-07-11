@@ -4,54 +4,51 @@ Connecting to Rhapsody
 Overview
 --------
 
-rhapsody-cli provides the ``RhapsodyApplication`` class to manage connections to IBM Rhapsody. It supports three connection modes:
-
-1. **Attach** - Connect to an existing Rhapsody instance
-2. **Launch** - Start a new Rhapsody instance
-3. **Connect** - Try to attach first, then launch if necessary (recommended)
+rhapsody-cli provides the ``RhapsodyApplication`` class to manage connections
+to IBM Rhapsody. The primary entry point is ``RhapsodyApplication.connect()``,
+which handles both attaching to a running instance and launching a new one.
 
 Connection Modes
 ----------------
 
-Attach to Existing Instance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Smart Connect (Recommended)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use ``attach()`` to connect to an already running Rhapsody instance:
-
-.. code-block:: python
-
-   from rhapsody_cli.application import RhapsodyApplication
-
-   app = RhapsodyApplication()
-   app.attach()
-
-This method will raise ``RhapsodyConnectionError`` if Rhapsody is not running.
-
-Launch New Instance
-~~~~~~~~~~~~~~~~~~~
-
-Use ``launch()`` to start a new Rhapsody instance:
+Use ``connect()`` to automatically try attaching to an existing instance first,
+then launch a new instance if necessary:
 
 .. code-block:: python
 
    from rhapsody_cli.application import RhapsodyApplication
 
-   app = RhapsodyApplication()
-   app.launch()
+   app = RhapsodyApplication.connect()  # Try attach, fall back to launch
+   # ... work with Rhapsody ...
+   app.disconnect()
 
-Connect (Recommended)
-~~~~~~~~~~~~~~~~~~~~~
+Attach-Only Mode
+~~~~~~~~~~~~~~~~
 
-Use ``connect()`` to automatically try attaching first, then launch if necessary:
+Use ``connect(attach_only=True)`` to require an already-running Rhapsody
+instance:
 
 .. code-block:: python
 
    from rhapsody_cli.application import RhapsodyApplication
 
-   app = RhapsodyApplication()
-   app.connect()  # Smart connection - attach if running, launch if not
+   app = RhapsodyApplication.connect(attach_only=True)
+   # Raises RhapsodyConnectionError if Rhapsody is not running
 
-This is the recommended approach for most use cases.
+Headless Launch
+~~~~~~~~~~~~~~~
+
+Use ``connect(show_gui=False)`` to launch a headless Rhapsody instance (no GUI):
+
+.. code-block:: python
+
+   from rhapsody_cli.application import RhapsodyApplication
+
+   app = RhapsodyApplication.connect(show_gui=False)
+   # Rhapsody runs without a visible GUI window
 
 Error Handling
 --------------
@@ -63,14 +60,10 @@ Connection errors are raised as ``RhapsodyConnectionError``:
    from rhapsody_cli.application import RhapsodyApplication
    from rhapsody_cli.exceptions import RhapsodyConnectionError
 
-   app = RhapsodyApplication()
-
    try:
-       app.attach()
+       app = RhapsodyApplication.connect()
    except RhapsodyConnectionError as e:
        print(f"Failed to connect: {e}")
-       # Try launching instead
-       app.launch()
 
 Disconnecting
 -------------
@@ -81,20 +74,14 @@ Always disconnect when done to free resources:
 
    app.disconnect()
 
-Or use a context manager pattern (if implemented):
-
-.. code-block:: python
-
-   with RhapsodyApplication() as app:
-       app.connect()
-       # Work with Rhapsody
-       # Automatically disconnects when exiting the block
+The ``disconnect()`` method is the lifecycle pair of ``connect()``. Internally
+it calls ``quit()`` on the COM object.
 
 Connection Examples
 -------------------
 
 Complete Connection Example
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
@@ -102,10 +89,8 @@ Complete Connection Example
    from rhapsody_cli.exceptions import RhapsodyConnectionError
 
    def connect_to_rhapsody():
-       app = RhapsodyApplication()
-
        try:
-           app.connect()
+           app = RhapsodyApplication.connect()
            print("Successfully connected to Rhapsody")
            return app
        except RhapsodyConnectionError as e:
@@ -124,19 +109,18 @@ Complete Connection Example
 Multiple Instance Management
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To work with multiple Rhapsody instances, create separate ``RhapsodyApplication`` objects:
+To work with multiple Rhapsody instances, create separate
+``RhapsodyApplication`` objects:
 
 .. code-block:: python
 
    from rhapsody_cli.application import RhapsodyApplication
 
-   # Connect to existing instance
-   app1 = RhapsodyApplication()
-   app1.attach()
+   # Connect to existing instance (will fail if not running)
+   app1 = RhapsodyApplication.connect(attach_only=True)
 
-   # Launch new instance (in separate process)
-   app2 = RhapsodyApplication()
-   app2.launch()
+   # Launch a new instance with GUI visible
+   app2 = RhapsodyApplication.connect()
 
    # Now you can work with both instances
    project1 = app1.openProject("project1.rpy")
@@ -172,7 +156,7 @@ Connection Refused
 
       dir "C:\Program Files*\IBM\Rhapsody"
 
-2. Try attaching to an already-running instance instead of launching
+2. Try launching Rhapsody manually first, then use ``connect(attach_only=True)``
 3. Restart Rhapsody
 4. Restart your terminal or IDE
 
@@ -183,9 +167,9 @@ COM Not Available
 
 **Solution**: Install pywin32:
 
-.. code-block:: bash
+   .. code-block:: bash
 
-   pip install pywin32
+      pip install pywin32
 
 Non-Windows System
 ~~~~~~~~~~~~~~~~~~

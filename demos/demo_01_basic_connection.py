@@ -2,10 +2,15 @@
 """
 Demo: Basic Rhapsody Connection Methods
 
-This demo demonstrates the three different ways to connect to Rhapsody:
-1. attach() - Connect to a running Rhapsody instance
-2. launch() - Launch a new Rhapsody instance
-3. connect() - Smart connection (tries attach first, falls back to launch)
+This demo demonstrates three ways to connect to Rhapsody using the
+simplified connect() API:
+
+1. connect() - Smart connection (tries attach first, falls back to launch)
+2. connect(attach_only=True) - Attach to running instance only
+3. connect(show_gui=True) - Launch with GUI visible
+
+The old attach() and launch() methods are now private helpers; connect()
+is the only public entry point.
 
 Author: rhapsody-cli
 Requirements: Windows with IBM Rhapsody installation
@@ -21,25 +26,23 @@ from rhapsody_cli.exceptions import RhapsodyConnectionError
 DEMO_PROJECT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_project", "DemoProject.rpyx")
 
 
-def demo_attach() -> bool:
-    """Demonstrate attaching to a running Rhapsody instance.
+def demo_attach_only() -> bool:
+    """Demonstrate attaching to a running Rhapsody instance only.
 
     Returns:
         True if successful, False otherwise
     """
     print("\n" + "=" * 60)
-    print("Method 1: Attaching to Running Rhapsody Instance")
+    print("Method 1: Attach to Running Instance (attach_only=True)")
     print("=" * 60)
 
     try:
         print("Attempting to attach to running Rhapsody instance...")
-        app = RhapsodyApplication.attach()
+        app = RhapsodyApplication.connect(attach_only=True)
         print("[OK] Successfully attached to Rhapsody!")
 
         # Display application information
         print("\nApplication Information:")
-        # print(f"  - Version: {app.getVersion()}")  # type: ignore[attr-defined]
-        # print(f"  - Install path: {app.getRhapsodyDir()}")  # type: ignore[attr-defined]
 
         # Get active project if available
         try:
@@ -53,30 +56,30 @@ def demo_attach() -> bool:
 
         # Clean up
         print("\nDisconnecting from Rhapsody...")
-        app.quit()
+        app.disconnect()
         print("[OK] Disconnected successfully")
 
         return True
 
     except RhapsodyConnectionError as e:
         print(f"[-] Failed to attach: {e}")
-        print("  Hint: Make sure Rhapsody is running before using attach()")
+        print("  Hint: Make sure Rhapsody is running before using this mode")
         return False
 
 
-def demo_launch() -> bool:
+def demo_launch_new() -> bool:
     """Demonstrate launching a new Rhapsody instance.
 
     Returns:
         True if successful, False otherwise
     """
     print("\n" + "=" * 60)
-    print("Method 2: Launching New Rhapsody Instance")
+    print("Method 2: Launch New Instance (connect())")
     print("=" * 60)
 
     try:
         print("Attempting to launch new Rhapsody instance...")
-        app = RhapsodyApplication.launch()
+        app = RhapsodyApplication.connect()
         print("[OK] Successfully launched Rhapsody!")
 
         app.openProject(DEMO_PROJECT_PATH)
@@ -87,7 +90,7 @@ def demo_launch() -> bool:
 
         # Clean up
         print("\nClosing Rhapsody...")
-        app.quit()
+        app.disconnect()
         print("[OK] Rhapsody closed successfully")
 
         return True
@@ -98,7 +101,7 @@ def demo_launch() -> bool:
         return False
 
 
-def demo_connect() -> bool:
+def demo_smart_connect() -> bool:
     """Demonstrate smart connection (attach with fallback to launch).
 
     Returns:
@@ -110,7 +113,7 @@ def demo_connect() -> bool:
 
     try:
         print("Attempting smart connection (attach -> launch fallback)...")
-        app = RhapsodyApplication.connect(prefer_attach=True)
+        app = RhapsodyApplication.connect()
         print("[OK] Successfully connected to Rhapsody!")
 
         # Determine if we attached or launched
@@ -140,7 +143,7 @@ def demo_connect() -> bool:
 
         # Clean up
         print("\nDisconnecting from Rhapsody...")
-        app.quit()
+        app.disconnect()
         print("[OK] Disconnected successfully")
 
         return True
@@ -157,17 +160,17 @@ def main() -> None:
     print("Demo: Basic Rhapsody Connection Methods")
     print("=" * 60)
     print("\nThis demo demonstrates three ways to connect to Rhapsody:")
-    print("1. attach() - Connect to running instance")
-    print("2. launch() - Launch new instance")
+    print("1. connect(attach_only=True) - Attach to running instance only")
+    print("2. connect() - Launch new instance (with GUI)")
     print("3. connect() - Smart connection (recommended)")
 
     results = {}
-    results["attach"] = demo_attach()
-    results["launch"] = demo_launch()
+    results["attach_only"] = demo_attach_only()
+    results["launch"] = demo_launch_new()
     # Give the previous instance's process a moment to fully terminate
-    # after quit() before the next method tries to attach/launch again.
+    # after disconnect() before the next method tries to attach/launch again.
     time.sleep(2)
-    results["connect"] = demo_connect()
+    results["smart"] = demo_smart_connect()
 
     # Summary
     print("\n" + "=" * 60)
