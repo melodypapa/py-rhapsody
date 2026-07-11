@@ -4,7 +4,6 @@ import logging
 import sys
 from typing import Optional
 
-from rhapsody_cli.cli.context import RhapsodyContext
 from rhapsody_cli.cli.logging_config import CliLoggingConfigurator
 from rhapsody_cli.commands.attribute_command import AttributeCommand
 from rhapsody_cli.commands.class_command import ClassCommand
@@ -33,15 +32,12 @@ def main() -> None:
     verbose = "-v" in command_args or "--verbose" in command_args
     CliLoggingConfigurator(verbose=verbose).configure()
 
-    # Set up global context
-    ctx = RhapsodyContext()
     # Check for output format flag
     output_format = "table"
-    if "--output" in command_args:
-        idx = command_args.index("--output")
+    if "--format" in command_args:
+        idx = command_args.index("--format")
         if idx + 1 < len(command_args):
             output_format = command_args[idx + 1]
-    ctx.output_format = output_format
 
     try:
         # Dispatch to command group classes
@@ -64,7 +60,7 @@ def main() -> None:
 
         # Execute the command
         if cmd and hasattr(cmd, "execute"):
-            cmd.execute()
+            cmd.execute(output_format=output_format)
 
     except KeyboardInterrupt:
         print("\nInterrupted")
@@ -87,7 +83,7 @@ def _usage(error: str) -> None:
     commands_text = "Commands:\n  attribute  Manage attributes\n  class      Manage classes\n"
     commands_text += "  operation  Manage operations\n"
     commands_text += "  package    Manage packages\n  port       Manage ports\n  project    Manage projects\n"
-    options_text = "Global Options:\n  --output <format>   Output format (table, json, csv)."
+    options_text = "Global Options:\n  --format <format>   Output format (table, json, csv)."
     options_text += " Default: table\n  -v|--verbose        Enable debug logging\n"
     options_text += "  -h|--help          Show this help message\n"
 

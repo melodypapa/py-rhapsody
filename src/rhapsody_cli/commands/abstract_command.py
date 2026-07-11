@@ -61,12 +61,19 @@ class AbstractCommand:
         """
         raise NotImplementedError(f"{self.__class__.__name__}.get_actions() must be implemented")
 
-    def execute(self, **kwargs: object) -> None:
-        """Dispatch execution to the action matching the parsed subcommand."""
+    def execute(self, output_format: str = "table") -> None:
+        """Dispatch execution to the action matching the parsed subcommand.
+
+        Args:
+            output_format: The output format ("table", "json", "csv") to set
+                on the dispatched action before executing it.
+        """
         action = self._sub_commands.get(self._subcommand) if self._subcommand else None
         if action is None or self._parsed_args is None:
             logger.error("Unknown subcommand '%s'", self._subcommand)
             raise CliExecutionError(f"Unknown subcommand '{self._subcommand}'", exit_code=2)
+        if hasattr(action, "output_format"):
+            action.output_format = output_format
         action.execute(self._parsed_args)
 
     def usage(self, error: str = "") -> None:

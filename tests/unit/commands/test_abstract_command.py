@@ -66,3 +66,55 @@ class TestAbstractCommand:
         action = FakeAction()
         cmd = ConcreteCommand(["run"], action)
         assert cmd._command_name() == "concrete"
+
+
+class FakeContextAwareAction(AbstractAction):
+    """Fake action that mimics RhapsodyContextAction's output_format attribute."""
+
+    def __init__(self) -> None:
+        super().__init__(command_id="run")
+        self.output_format: str = "table"
+        self.executed = False
+
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
+        """Register the 'run' subcommand."""
+        sub_parser.add_parser("run", help="Run the fake action")
+
+    def execute(self, args: argparse.Namespace) -> None:
+        """Record that execute was called."""
+        self.executed = True
+
+
+class ConcreteContextAwareCommand(AbstractCommand):
+    """Concrete AbstractCommand wrapping a context-aware fake action."""
+
+    def __init__(self, args: List[str], action: AbstractAction) -> None:
+        self._action = action
+        super().__init__("concrete", args)
+
+    def get_actions(self) -> List[AbstractAction]:
+        """Return the single fake action."""
+        return [self._action]
+
+
+class TestAbstractCommandOutputFormat:
+    """Test that execute() threads output_format into the dispatched action."""
+
+    def test_execute_sets_output_format_on_action(self) -> None:
+        """execute(output_format=...) should set it on the action before calling execute()."""
+        action = FakeContextAwareAction()
+        cmd = ConcreteContextAwareCommand(["run"], action)
+
+        cmd.execute(output_format="json")
+
+        assert action.output_format == "json"
+        assert action.executed is True
+
+    def test_execute_defaults_output_format_to_table(self) -> None:
+        """execute() with no output_format kwarg should leave the action's default untouched."""
+        action = FakeContextAwareAction()
+        cmd = ConcreteContextAwareCommand(["run"], action)
+
+        cmd.execute()
+
+        assert action.output_format == "table"
