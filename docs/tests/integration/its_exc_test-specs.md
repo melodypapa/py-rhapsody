@@ -1,4 +1,4 @@
-# Integration Test Specifications - Exceptions
+﻿# Integration Test Specifications - Exceptions
 
 **Category:** EXC
 **Prefix:** ITS
@@ -199,5 +199,4 @@ call).
 - `Dispatch.call_count == 1` with arg `"Rhapsody2.Application.1"`.
 - Exception message contains `"Failed to launch Rhapsody instance"`.
 **Last Changed:** 2026-07-07
-
----
+

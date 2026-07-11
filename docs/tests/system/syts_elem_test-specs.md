@@ -1,4 +1,4 @@
-# System Test Specifications - Model Element Wrappers
+﻿# System Test Specifications - Model Element Wrappers
 
 **Category:** ELEM
 **Prefix:** SYTS
@@ -261,5 +261,4 @@ returned.
 - Fail if any meta class is missing from the registry (returns the generic
   `RPModelElement` fallback) or if `wrap()` raises.
 **Last Changed:** 2026-07-07
-
----
+

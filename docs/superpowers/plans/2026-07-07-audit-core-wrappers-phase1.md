@@ -14,7 +14,7 @@
 
 ---
 
-### Task 1: Reorganize `elements/` into per-family modules (no behavior change)
+## Task 1: Reorganize `elements/` into per-family modules (no behavior change)
 
 This task only moves code between files and updates imports. No method bodies, signatures, or class hierarchy change. At the end of this task, the full existing test suite must pass unmodified in behavior (only import paths change).
 
@@ -576,7 +576,7 @@ git commit -m "refactor: reorganize elements/ into per-family modules"
 
 ---
 
-### Task 2: Add `RPVariable`, re-parent `RPAttribute`
+## Task 2: Add `RPVariable`, re-parent `RPAttribute`
 
 `IRPAttribute extends IRPVariable extends IRPUnit`. `RPVariable` is the base for tag/attribute-like elements that carry a type and default value. Two methods (`getDefaultValue`/`setDefaultValue`) currently live (incorrectly) on `RPAttribute` but are actually declared on `IRPVariable` — they move up in this task.
 
@@ -951,7 +951,7 @@ git commit -m "feat: add RPVariable, re-parent RPAttribute to extend it"
 
 ---
 
-### Task 3: Add `RPInterfaceItem`, re-parent `RPOperation`
+## Task 3: Add `RPInterfaceItem`, re-parent `RPOperation`
 
 `IRPOperation extends IRPInterfaceItem extends IRPClassifier`. `RPInterfaceItem` goes in `classifiers.py` alongside the rest of the classifier family.
 
@@ -1199,7 +1199,7 @@ git commit -m "feat: add RPInterfaceItem, re-parent RPOperation to extend it"
 
 ---
 
-### Task 4: Add `RPAnnotation`, re-parent `RPRequirement`
+## Task 4: Add `RPAnnotation`, re-parent `RPRequirement`
 
 `IRPRequirement extends IRPAnnotation extends IRPUnit`.
 
@@ -1491,7 +1491,7 @@ git commit -m "feat: add RPAnnotation, re-parent RPRequirement to extend it"
 
 ---
 
-### Task 5: Add `RPRelation`, re-parent `RPInstance`
+## Task 5: Add `RPRelation`, re-parent `RPInstance`
 
 `IRPInstance extends IRPRelation extends IRPUnit`. `RPRelation` has 31 declared methods; several return currently-unmapped types (`IRPAssociationClass`, `IRPClass`) which will simply be wrapped as generic `RPModelElement` by `wrap()` until later sub-projects add dedicated wrappers — this is expected and matches the existing fallback design.
 
@@ -2159,7 +2159,7 @@ git commit -m "feat: add RPRelation, re-parent RPInstance to extend it"
 
 ---
 
-### Task 6: Re-parent `RPProject` to extend `RPPackage`
+## Task 6: Re-parent `RPProject` to extend `RPPackage`
 
 `IRPProject extends IRPPackage` directly (no new intermediate class needed — `RPPackage` already exists). No method-name conflicts exist between `RPProject`'s and `RPPackage`'s current methods.
 
@@ -2246,7 +2246,7 @@ git commit -m "fix: re-parent RPProject to extend RPPackage per IRPProject hiera
 
 ---
 
-### Task 7: Re-parent `RPStatechart` to extend `RPClass`
+## Task 7: Re-parent `RPStatechart` to extend `RPClass`
 
 `IRPStatechart extends IRPClass` directly (no new intermediate class needed). No method-name conflicts exist between `RPStatechart`'s and `RPClass`'s/`RPClassifier`'s current methods.
 
@@ -2334,7 +2334,7 @@ git commit -m "fix: re-parent RPStatechart to extend RPClass per IRPStatechart h
 
 ---
 
-### Task 8: Final full-suite verification
+## Task 8: Final full-suite verification
 
 **Files:** none (verification only)
 

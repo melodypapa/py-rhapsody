@@ -1,4 +1,4 @@
-# System Test Specifications - Command-Line Interface
+﻿# System Test Specifications - Command-Line Interface
 
 **Category:** CLI
 **Prefix:** SYTS
@@ -236,5 +236,4 @@ verified by invoking `--help` on each level and confirming the command listing.
   output, and the `--output` choices are present.
 - Fail if any subgroup or command is missing, or if the `--output` option is absent.
 **Last Changed:** 2026-07-07
-
----
+

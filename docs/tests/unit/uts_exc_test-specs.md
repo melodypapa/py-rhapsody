@@ -1,4 +1,4 @@
-# Unit Test Specifications - Exceptions
+﻿# Unit Test Specifications - Exceptions
 
 **Category:** EXC
 **Prefix:** UTS
@@ -204,5 +204,4 @@ Both wrapper methods raise `RhapsodyRuntimeException` carrying the original COM 
 **Verification Criteria:**
 Pass if both `assertRaises(RhapsodyRuntimeException)` blocks trigger, the messages contain the original text, and raw `com_error` is not the raised type.
 **Last Changed:** 2026-07-07
-
----
+

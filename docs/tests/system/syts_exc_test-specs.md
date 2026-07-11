@@ -1,4 +1,4 @@
-# System Test Specifications - Exceptions
+﻿# System Test Specifications - Exceptions
 
 **Category:** EXC
 **Prefix:** SYTS
@@ -163,5 +163,4 @@ Operation, Diagram) to confirm consistent funneling.
 - Fail if any sampled method raises `pywintypes.com_error` directly, raises a different
   exception type, or drops the original message.
 **Last Changed:** 2026-07-07
-
----
+

@@ -1,4 +1,4 @@
-# Acceptance Test Specifications - Application Connection Layer
+﻿# Acceptance Test Specifications - Application Connection Layer
 
 **Category:** APP
 **Prefix:** ATS
@@ -181,5 +181,4 @@ Open two different fixture projects, one in each app, and assert
 then assert `app_b.activeProject()` still returns the expected project (i.e., `app_b` is
 unaffected). Finally call `app_b.quit()` to clean up.
 **Last Changed:** 2026-07-07
-
----
+

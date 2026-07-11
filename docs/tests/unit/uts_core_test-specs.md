@@ -1,4 +1,4 @@
-# Unit Test Specifications - Wrapping Machinery
+﻿# Unit Test Specifications - Wrapping Machinery
 
 **Category:** CORE
 **Prefix:** UTS
@@ -442,5 +442,4 @@ The module imports without error; `_core.pywintypes is None`; `call_com` on a `V
 **Verification Criteria:**
 Pass if the re-import succeeds, `_core.pywintypes is None`, and a non-COM exception is re-raised unchanged.
 **Last Changed:** 2026-07-07
-
----
+

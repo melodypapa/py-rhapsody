@@ -1,4 +1,4 @@
-# System Test Specifications - Wrapping Machinery
+﻿# System Test Specifications - Wrapping Machinery
 
 **Category:** CORE
 **Prefix:** SYTS
@@ -227,5 +227,4 @@ indexing is 1-based and does not support negative indexing.
 - Fail if a negative index returns an element, raises a different exception, or breaks
   subsequent positive indexing.
 **Last Changed:** 2026-07-07
-
----
+

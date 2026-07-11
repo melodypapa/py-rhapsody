@@ -170,8 +170,12 @@ Documentation Structure
    user_guide/quickstart
    user_guide/connecting_to_rhapsody
    user_guide/working_with_projects
-   user_guide/working_with_elements
    user_guide/working_with_packages
+   user_guide/working_with_classes
+   user_guide/working_with_operations
+   user_guide/working_with_attributes
+   user_guide/working_with_ports
+   user_guide/working_with_elements
    user_guide/cli_tools
 
 .. toctree::
@@ -197,6 +201,46 @@ Documentation Structure
 
    contributing
    license
+   CODE_GUIDELINES
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Requirements:
+
+   requirements/swr_app_requirements
+   requirements/swr_cli_requirements
+   requirements/swr_core_requirements
+   requirements/swr_exc_requirements
+   requirements/swr_pkg_requirements
+   requirements/swr_cls_requirements
+   requirements/swr_op_requirements
+   requirements/swr_attr_requirements
+   requirements/swr_port_requirements
+   requirements/swr_elem_requirements
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Test Specifications:
+   :glob:
+
+   tests/unit/*
+   tests/integration/*
+   tests/system/*
+   tests/acceptance/*
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Development:
+
+   traceability_matrix
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Design Specs & Plans:
+   :glob:
+
+   superpowers/specs/*
+   superpowers/plans/*
 
 Project Structure
 -----------------

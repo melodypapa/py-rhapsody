@@ -1,4 +1,4 @@
-# Acceptance Test Specifications - Model Element Wrappers
+﻿# Acceptance Test Specifications - Model Element Wrappers
 
 **Category:** ELEM
 **Prefix:** ATS
@@ -205,5 +205,4 @@ toggle back to `False` and assert it returns `False`. If a fixture event element
 available, call `addEventReceptionWithEvent` and assert the returned object is a wrapped
 reception element.
 **Last Changed:** 2026-07-07
-
----
+

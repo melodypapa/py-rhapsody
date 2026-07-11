@@ -10,7 +10,7 @@
 ## SWR_CORE_00001: RPModelElement Base Class
 
 **ID:** SWR_CORE_00001
-**Title: RPModelElement wraps IRPModelElement as the base for all model elements
+**Title:** RPModelElement wraps IRPModelElement as the base for all model elements
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -28,7 +28,7 @@ underlying COM object. It shall implement `__eq__` (COM object equality), `__has
 ## SWR_CORE_00002: RPUnit Save and File Operations
 
 **ID:** SWR_CORE_00002
-**Title: RPUnit wraps IRPUnit for elements that can be saved as separate files
+**Title:** RPUnit wraps IRPUnit for elements that can be saved as separate files
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -45,7 +45,7 @@ COM-style integers (1/0).
 ## SWR_CORE_00003: RPCollection Iterable Container
 
 **ID:** SWR_CORE_00003
-**Title: RPCollection wraps IRPCollection as an iterable/indexable container
+**Title:** RPCollection wraps IRPCollection as an iterable/indexable container
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -63,7 +63,7 @@ auto-wrapped via `wrap()`). Items returned by `getItem` shall be auto-wrapped vi
 ## SWR_CORE_00004: call_com Error Translation
 
 **ID:** SWR_CORE_00004
-**Title: call_com translates COM errors into RhapsodyRuntimeException
+**Title:** call_com translates COM errors into RhapsodyRuntimeException
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -80,7 +80,7 @@ unchanged. Callers shall never see raw `pywintypes.com_error`.
 ## SWR_CORE_00005: wrap Factory Function
 
 **ID:** SWR_CORE_00005
-**Title: wrap dispatches a raw COM object to its matching wrapper class
+**Title:** wrap dispatches a raw COM object to its matching wrapper class
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -97,7 +97,7 @@ to a generic `RPModelElement` wrapper.
 ## SWR_CORE_00006: register_wrapper Registry
 
 **ID:** SWR_CORE_00006
-**Title: register_wrapper populates the meta-class to wrapper-class registry
+**Title:** register_wrapper populates the meta-class to wrapper-class registry
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -114,7 +114,7 @@ plus one registry entry, with no changes to `wrap()` itself.
 ## SWR_CORE_00007: _wrap_if_element Helper
 
 **ID:** SWR_CORE_00007
-**Title: _wrap_if_element wraps values that look like Rhapsody model elements
+**Title:** _wrap_if_element wraps values that look like Rhapsody model elements
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -130,7 +130,7 @@ members.
 ## SWR_CORE_00008: Registry Fallback to RPModelElement
 
 **ID:** SWR_CORE_00008
-**Title: Unmapped meta classes fall back to generic RPModelElement wrapper
+**Title:** Unmapped meta classes fall back to generic RPModelElement wrapper
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -146,7 +146,7 @@ do not yet have a dedicated wrapper class.
 ## SWR_CORE_00009: Negative Index Rejection
 
 **ID:** SWR_CORE_00009
-**Title: RPCollection rejects negative indices
+**Title:** RPCollection rejects negative indices
 **Status:** Implemented
 **Priority:** Low
 **Description:**
@@ -161,7 +161,7 @@ support negative indexing.
 ## SWR_CORE_00010: pywintypes Optional Import
 
 **ID:** SWR_CORE_00010
-**Title: pywintypes import is optional on non-Windows platforms
+**Title:** pywintypes import is optional on non-Windows platforms
 **Status:** Implemented
 **Priority:** Low
 **Description:**

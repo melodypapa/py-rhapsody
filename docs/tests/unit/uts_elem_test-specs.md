@@ -1,4 +1,4 @@
-# Unit Test Specifications - Model Element Wrappers
+﻿# Unit Test Specifications - Model Element Wrappers
 
 **Category:** ELEM
 **Prefix:** UTS
@@ -681,5 +681,4 @@ The registry entry for `"Class"` still maps to `RPClass`; no duplicate keys appe
 **Verification Criteria:**
 Pass if the registry entry is unchanged and there is exactly one `"Class"` key.
 **Last Changed:** 2026-07-07
-
----
+

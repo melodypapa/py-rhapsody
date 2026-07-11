@@ -10,7 +10,7 @@
 
 ---
 
-### Task 1: Add `CliLoggingConfigurator` class with tests
+## Task 1: Add `CliLoggingConfigurator` class with tests
 
 **Files:**
 - Create: `src/rhapsody_cli/cli/logging_config.py`
@@ -158,7 +158,7 @@ git commit -m "feat: add class-based CLI logging configurator"
 
 ---
 
-### Task 2: Wire `--verbose` flag into `cli/main.py`
+## Task 2: Wire `--verbose` flag into `cli/main.py`
 
 **Files:**
 - Modify: `src/rhapsody_cli/cli/main.py`
@@ -301,7 +301,7 @@ git commit -m "feat: wire --verbose flag to CliLoggingConfigurator"
 
 ---
 
-### Task 3: Remove `project` sub-command from CLI registration
+## Task 3: Remove `project` sub-command from CLI registration
 
 **Files:**
 - Modify: `tests/cli/test_core.py`
@@ -367,7 +367,7 @@ git commit -m "test: replace project-enabled CLI help test with disabled-command
 
 ---
 
-### Task 4: Add `RhapsodyContext.get_active_project()`
+## Task 4: Add `RhapsodyContext.get_active_project()`
 
 **Files:**
 - Modify: `src/rhapsody_cli/cli/context.py`
@@ -451,7 +451,7 @@ git commit -m "feat: add RhapsodyContext.get_active_project()"
 
 ---
 
-### Task 5: Update element commands to attach + use active project
+## Task 5: Update element commands to attach + use active project
 
 **Files:**
 - Modify: `src/rhapsody_cli/cli/commands/element.py`
@@ -769,7 +769,7 @@ git commit -m "feat: attach to live Rhapsody instance in element commands"
 
 ---
 
-### Task 6: Full quality gate and final verification
+## Task 6: Full quality gate and final verification
 
 **Files:** none (verification only)
 

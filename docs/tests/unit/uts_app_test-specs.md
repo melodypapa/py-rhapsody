@@ -1,4 +1,4 @@
-# Unit Test Specifications - Application Connection Layer
+﻿# Unit Test Specifications - Application Connection Layer
 
 **Category:** APP
 **Prefix:** UTS
@@ -370,5 +370,4 @@ Verifies that the `_PROG_ID` module-level constant in `rhapsody_cli.application`
 **Verification Criteria:**
 Pass if `_PROG_ID == "Rhapsody2.Application.1"`, and the captured call args for both `GetActiveObject` and `Dispatch` equal `("Rhapsody2.Application.1",)`.
 **Last Changed:** 2026-07-07
-
----
+

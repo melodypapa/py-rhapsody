@@ -1,4 +1,4 @@
-# Integration Test Specifications - Wrapping Machinery
+﻿# Integration Test Specifications - Wrapping Machinery
 
 **Category:** CORE
 **Prefix:** ITS
@@ -274,5 +274,4 @@ not equal even if their names match. `repr` exposes both class and name.
 - `len({a, b}) == 1`.
 - `repr(a)` contains `"RPClass"` and `"Foo"`.
 **Last Changed:** 2026-07-07
-
----
+

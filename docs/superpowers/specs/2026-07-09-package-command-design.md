@@ -370,7 +370,7 @@ rhapsody-cli package view --path Sensors/TemperatureSensors --format csv --outpu
 ```
 
 **CSV format:**
-```csv
+```text
 Name,GUID,Description,MetaClass,FullPath
 TempSensors,{12345678-1234-1234-1234-1234567890},Temperature sensors package,Package,Sensors/TempSensors
 ```
@@ -511,7 +511,7 @@ rhapsody-cli package list --path Sensors --format csv --output packages.csv
 ```
 
 **CSV format:**
-```csv
+```text
 Name
 TempSensors
 PressureSensors
@@ -940,4 +940,3 @@ class TestPackageListAction:
 
 - [Element CLI Enhancements Design](2026-07-09-element-cli-enhancements-design.md) - Existing element command patterns
 - [Rhapsody COM API Design](2026-07-06-rhapsody-cli-com-api-design.md) - RPPackage wrapper implementation
-- [Project README](../README.md) - User documentation

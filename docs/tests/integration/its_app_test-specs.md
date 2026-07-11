@@ -1,4 +1,4 @@
-# Integration Test Specifications - Application Connection Layer
+﻿# Integration Test Specifications - Application Connection Layer
 
 **Category:** APP
 **Prefix:** ITS
@@ -232,5 +232,4 @@ on the underlying COM object.
 - After first `quit()`: `_com.quit.call_count == 1`.
 - After second `quit()`: `_com.quit.call_count == 2`.
 **Last Changed:** 2026-07-07
-
----
+

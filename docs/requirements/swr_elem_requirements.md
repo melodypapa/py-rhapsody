@@ -10,7 +10,7 @@
 ## SWR_ELEM_00001: RPProject Wrapper
 
 **ID:** SWR_ELEM_00001
-**Title: RPProject wraps IRPProject, the top-level container for a Rhapsody model
+**Title:** RPProject wraps IRPProject, the top-level container for a Rhapsody model
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -28,7 +28,7 @@ meta class `"Project"`.
 ## SWR_ELEM_00002: RPPackage Wrapper
 
 **ID:** SWR_ELEM_00002
-**Title: RPPackage wraps IRPPackage, a container for classes, actors, and other elements
+**Title:** RPPackage wraps IRPPackage, a container for classes, actors, and other elements
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -44,7 +44,7 @@ shall register itself for the meta class `"Package"`.
 ## SWR_ELEM_00003: RPClassifier Shared Base
 
 **ID:** SWR_ELEM_00003
-**Title: RPClassifier wraps IRPClassifier, the shared base of Class/Actor/UseCase
+**Title:** RPClassifier wraps IRPClassifier, the shared base of Class/Actor/UseCase
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -62,7 +62,7 @@ Java-mirrored methods: `addAttribute(name)` (returns wrapped attribute),
 ## SWR_ELEM_00004: RPClass Wrapper
 
 **ID:** SWR_ELEM_00004
-**Title: RPClass wraps IRPClass, a UML/SysML class in the Rhapsody model
+**Title:** RPClass wraps IRPClass, a UML/SysML class in the Rhapsody model
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -79,7 +79,7 @@ The wrapper shall register itself for the meta class `"Class"`.
 ## SWR_ELEM_00005: RPActor Wrapper
 
 **ID:** SWR_ELEM_00005
-**Title: RPActor wraps IRPActor, a UML actor (external role interacting with the system)
+**Title:** RPActor wraps IRPActor, a UML actor (external role interacting with the system)
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -96,7 +96,7 @@ shall register itself for the meta class `"Actor"`.
 ## SWR_ELEM_00006: RPOperation Wrapper
 
 **ID:** SWR_ELEM_00006
-**Title: RPOperation wraps IRPOperation, a class/package-level operation or function
+**Title:** RPOperation wraps IRPOperation, a class/package-level operation or function
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -113,7 +113,7 @@ class `"Operation"`.
 ## SWR_ELEM_00007: RPAttribute Wrapper
 
 **ID:** SWR_ELEM_00007
-**Title: RPAttribute wraps IRPAttribute, a class/package-level attribute or variable
+**Title:** RPAttribute wraps IRPAttribute, a class/package-level attribute or variable
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -130,7 +130,7 @@ methods: `getMultiplicity()` / `setMultiplicity(multiplicity)` (str), `getIsStat
 ## SWR_ELEM_00008: RPDiagram Wrapper
 
 **ID:** SWR_ELEM_00008
-**Title: RPDiagram wraps IRPDiagram, the base interface for all Rhapsody diagram types
+**Title:** RPDiagram wraps IRPDiagram, the base interface for all Rhapsody diagram types
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -148,7 +148,7 @@ methods: `closeDiagram()`, `addTextBox(text, x_position, y_position, width, heig
 ## SWR_ELEM_00009: RPInstance Wrapper
 
 **ID:** SWR_ELEM_00009
-**Title: RPInstance wraps IRPInstance, an instance/object in the Rhapsody model
+**Title:** RPInstance wraps IRPInstance, an instance/object in the Rhapsody model
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -166,7 +166,7 @@ The wrapper shall register itself for the meta class `"Instance"`.
 ## SWR_ELEM_00010: RPRequirement Wrapper
 
 **ID:** SWR_ELEM_00010
-**Title: RPRequirement wraps IRPRequirement, a traceable requirement in the model
+**Title:** RPRequirement wraps IRPRequirement, a traceable requirement in the model
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -182,7 +182,7 @@ meta class `"Requirement"`.
 ## SWR_ELEM_00011: RPStatechart Wrapper
 
 **ID:** SWR_ELEM_00011
-**Title: RPStatechart wraps IRPStatechart, a class's behavioral state machine
+**Title:** RPStatechart wraps IRPStatechart, a class's behavioral state machine
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -199,7 +199,7 @@ Java-mirrored methods: `addNewNodeByType(meta_type, x_position, y_position, widt
 ## SWR_ELEM_00012: RPUseCase Wrapper
 
 **ID:** SWR_ELEM_00012
-**Title: RPUseCase wraps IRPUseCase, a UML use case
+**Title:** RPUseCase wraps IRPUseCase, a UML use case
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -216,7 +216,7 @@ shall register itself for the meta class `"UseCase"`.
 ## SWR_ELEM_00013: Element Module Registration on Import
 
 **ID:** SWR_ELEM_00013
-**Title: Importing rhapsody_cli.models.elements registers all core element wrappers
+**Title:** Importing rhapsody_cli.models.elements registers all core element wrappers
 **Status:** Implemented
 **Priority:** High
 **Description:**

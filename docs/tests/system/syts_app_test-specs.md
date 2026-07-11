@@ -1,4 +1,4 @@
-# System Test Specifications - Application Connection Layer
+﻿# System Test Specifications - Application Connection Layer
 
 **Category:** APP
 **Prefix:** SYTS
@@ -196,5 +196,4 @@ which echoes the error to stderr and aborts with a non-zero exit code.
 - Fail if the CLI exits 0, if the raw com_error leaks to the user, or if no error is
   written to stderr.
 **Last Changed:** 2026-07-07
-
----
+
