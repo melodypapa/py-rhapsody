@@ -10,7 +10,7 @@
 ## SWR_CLI_00001: CLI Entry Point
 
 **ID:** SWR_CLI_00001
-**Title: main() is the main argparse entry point for the rhapsody-cli tool
+**Title:** main() is the main argparse entry point for the rhapsody-cli tool
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -27,7 +27,7 @@ dispatch the first positional argument to one of the `AbstractCommand` subclasse
 ## SWR_CLI_00002: Output Format Option
 
 **ID:** SWR_CLI_00002
-**Title: --output option selects table, json, or csv output format
+**Title:** --output option selects table, json, or csv output format
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -41,7 +41,7 @@ store the selected format string on `ctx.output_format` (where `ctx` is the `Rha
 ## SWR_CLI_00003: RhapsodyContext Session Management
 
 **ID:** SWR_CLI_00003
-**Title: RhapsodyContext manages CLI session state (app, project, output format)
+**Title:** RhapsodyContext manages CLI session state (app, project, output format)
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -59,7 +59,7 @@ quits app).
 ## SWR_CLI_00004: Project Open Command
 
 **ID:** SWR_CLI_00004
-**Title: project open command opens a Rhapsody project file
+**Title:** project open command opens a Rhapsody project file
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -76,7 +76,7 @@ call `sys.exit(1)`.
 ## SWR_CLI_00005: Project List Command
 
 **ID:** SWR_CLI_00005
-**Title: project list command lists open projects
+**Title:** project list command lists open projects
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -93,7 +93,7 @@ reported to stderr via `sys.exit(1)`.
 ## SWR_CLI_00006: Project Close Command
 
 **ID:** SWR_CLI_00006
-**Title: project close command closes the active project
+**Title:** project close command closes the active project
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -109,7 +109,7 @@ Otherwise it shall close the project via `ctx.close_project()` and print
 ## SWR_CLI_00007: Element Add Command
 
 **ID:** SWR_CLI_00007
-**Title: element add command creates a new element in the active project
+**Title:** element add command creates a new element in the active project
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -127,7 +127,7 @@ On success it shall print `"Created {type}: {name}"`.
 ## SWR_CLI_00008: Element View Command
 
 **ID:** SWR_CLI_00008
-**Title: element view command displays element details for a path
+**Title:** element view command displays element details for a path
 **Status:** Implemented
 **Priority:** Low
 **Description:**
@@ -144,7 +144,7 @@ stderr via `sys.exit(1)`.
 ## SWR_CLI_00009: Element Query Command
 
 **ID:** SWR_CLI_00009
-**Title: element query command lists elements in the active project
+**Title:** element query command lists elements in the active project
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -162,7 +162,7 @@ a table with columns `Name` and `Type`. Exceptions are reported to stderr via
 ## SWR_CLI_00012: OutputFormatter Table Format
 
 **ID:** SWR_CLI_00012
-**Title: OutputFormatter.table formats rows as an ASCII grid table
+**Title:** OutputFormatter.table formats rows as an ASCII grid table
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -177,7 +177,7 @@ as a string.
 ## SWR_CLI_00013: OutputFormatter JSON Format
 
 **ID:** SWR_CLI_00013
-**Title: OutputFormatter.json_format serializes data as indented JSON
+**Title:** OutputFormatter.json_format serializes data as indented JSON
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -191,7 +191,7 @@ so that non-serializable values fall back to their `str()` representation.
 ## SWR_CLI_00014: OutputFormatter CSV Format
 
 **ID:** SWR_CLI_00014
-**Title: OutputFormatter.csv_format writes headers and rows as CSV
+**Title:** OutputFormatter.csv_format writes headers and rows as CSV
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -205,7 +205,7 @@ data rows to an in-memory `StringIO` using `csv.writer` and return the resulting
 ## SWR_CLI_00015: OutputFormatter Format Router
 
 **ID:** SWR_CLI_00015
-**Title: OutputFormatter.format routes data to the chosen formatter
+**Title:** OutputFormatter.format routes data to the chosen formatter
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -220,7 +220,7 @@ when `format_type == "json"`, to `csv_format` (coercing `data` to a list) when
 ## SWR_CLI_00016: Class-Based Command Architecture
 
 **ID:** SWR_CLI_00016
-**Title: CLI uses a class-based argparse command/action architecture
+**Title:** CLI uses a class-based argparse command/action architecture
 **Status:** Implemented
 **Priority:** Medium
 **Description:**

@@ -10,7 +10,7 @@
 ## SWR_EXC_00001: RhapsodyRuntimeException
 
 **ID:** SWR_EXC_00001
-**Title: RhapsodyRuntimeException mirrors the Java API exception of the same name
+**Title:** RhapsodyRuntimeException mirrors the Java API exception of the same name
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -27,7 +27,7 @@ as the exception message for diagnostics.
 ## SWR_EXC_00002: RhapsodyConnectionError
 
 **ID:** SWR_EXC_00002
-**Title: RhapsodyConnectionError is raised when attach/launch fails
+**Title:** RhapsodyConnectionError is raised when attach/launch fails
 **Status:** Implemented
 **Priority:** High
 **Description:**
@@ -44,7 +44,7 @@ or `"Failed to launch Rhapsody instance: {detail}"`).
 ## SWR_EXC_00003: Exceptions Public API
 
 **ID:** SWR_EXC_00003
-**Title: exceptions package exports both exception classes
+**Title:** exceptions package exports both exception classes
 **Status:** Implemented
 **Priority:** Medium
 **Description:**
@@ -60,7 +60,7 @@ top-level `rhapsody_cli` package so users can import them as
 ## SWR_EXC_00004: COM Error Funneling
 
 **ID:** SWR_EXC_00004
-**Title: All wrapper COM calls funnel errors through call_com to RhapsodyRuntimeException
+**Title:** All wrapper COM calls funnel errors through call_com to RhapsodyRuntimeException
 **Status:** Implemented
 **Priority:** High
 **Description:**
