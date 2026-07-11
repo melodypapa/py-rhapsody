@@ -6,86 +6,88 @@ import pytest
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.exceptions import RhapsodyConnectionError
+from rhapsody_cli.models.core import RPCollection
 from rhapsody_cli.models.elements.containment import RPProject
 from tests.unit.models.fakes import make_com_error, make_fake_collection, make_fake_element
 
 
-@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_attach_wraps_active_com_object(mock_get_active_object: MagicMock) -> None:
-    fake_app = MagicMock(name="FakeApplication")
-    mock_get_active_object.return_value = fake_app
-
-    app = RhapsodyApplication.attach()
-
-    mock_get_active_object.assert_called_once_with("Rhapsody2.Application.1")
-    assert app._com is fake_app
+# --- connect() lifecycle tests ---
 
 
-@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_attach_raises_connection_error_when_none_running(
-    mock_get_active_object: MagicMock,
-) -> None:
-    mock_get_active_object.side_effect = make_com_error("no running instance")
-
-    with pytest.raises(RhapsodyConnectionError):
-        RhapsodyApplication.attach()
-
-
-@patch("rhapsody_cli.application.win32com.client.Dispatch")
-def test_launch_wraps_new_com_object(mock_dispatch: MagicMock) -> None:
-    fake_app = MagicMock(name="FakeApplication")
-    mock_dispatch.return_value = fake_app
-
-    app = RhapsodyApplication.launch()
-
-    mock_dispatch.assert_called_once_with("Rhapsody2.Application.1")
-    assert app._com is fake_app
-
-
-@patch("rhapsody_cli.application.win32com.client.Dispatch")
-def test_launch_raises_connection_error_when_dispatch_fails(
-    mock_dispatch: MagicMock,
-) -> None:
-    mock_dispatch.side_effect = make_com_error("launch failed")
-
-    with pytest.raises(RhapsodyConnectionError):
-        RhapsodyApplication.launch()
-
-
-@patch("rhapsody_cli.application.win32com.client.Dispatch")
-@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_prefers_attach_when_available(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
-    fake_app = MagicMock(name="FakeApplication")
-    mock_get_active_object.return_value = fake_app
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_uses_attach_when_running(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    fake_com = MagicMock(name="FakeApplication")
+    mock_attach.return_value = RhapsodyApplication(fake_com)
 
     app = RhapsodyApplication.connect()
 
-    mock_get_active_object.assert_called_once_with("Rhapsody2.Application.1")
-    mock_dispatch.assert_not_called()
-    assert app._com is fake_app
+    mock_attach.assert_called_once()
+    mock_launch.assert_not_called()
+    assert app._com is fake_com
 
 
-@patch("rhapsody_cli.application.win32com.client.Dispatch")
-@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_falls_back_to_launch_when_attach_fails(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
-    mock_get_active_object.side_effect = make_com_error("no running instance")
-    fake_app = MagicMock(name="FakeApplication")
-    mock_dispatch.return_value = fake_app
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_uses_launch_when_attach_fails(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    mock_attach.side_effect = RhapsodyConnectionError("no instance")
+    fake_com = MagicMock(name="FakeApplication")
+    mock_launch.return_value = RhapsodyApplication(fake_com)
 
     app = RhapsodyApplication.connect()
 
-    mock_dispatch.assert_called_once_with("Rhapsody2.Application.1")
-    assert app._com is fake_app
+    mock_attach.assert_called_once()
+    mock_launch.assert_called_once()
+    assert app._com is fake_com
 
 
-@patch("rhapsody_cli.application.win32com.client.Dispatch")
-@patch("rhapsody_cli.application.win32com.client.GetActiveObject")
-def test_connect_raises_connection_error_when_launch_fails(mock_get_active_object: MagicMock, mock_dispatch: MagicMock) -> None:
-    mock_get_active_object.side_effect = make_com_error("no running instance")
-    mock_dispatch.side_effect = make_com_error("launch failed")
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_raises_when_both_fail(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    mock_attach.side_effect = RhapsodyConnectionError("no instance")
+    mock_launch.side_effect = RhapsodyConnectionError("launch failed")
 
     with pytest.raises(RhapsodyConnectionError):
         RhapsodyApplication.connect()
+
+    mock_attach.assert_called_once()
+    mock_launch.assert_called_once()
+
+
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_attach_only_raises_when_not_running(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    mock_attach.side_effect = RhapsodyConnectionError("no instance")
+
+    with pytest.raises(RhapsodyConnectionError):
+        RhapsodyApplication.connect(attach_only=True)
+
+    mock_attach.assert_called_once()
+    mock_launch.assert_not_called()
+
+
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_launch_shows_gui_by_default(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    mock_attach.side_effect = RhapsodyConnectionError("no instance")
+    fake_com = MagicMock(name="FakeApplication")
+    mock_launch.return_value = RhapsodyApplication(fake_com)
+
+    RhapsodyApplication.connect()
+
+    fake_com.setHiddenUI.assert_called_once_with(False)
+
+
+@patch.object(RhapsodyApplication, "_launch")
+@patch.object(RhapsodyApplication, "_attach")
+def test_connect_launch_hides_gui_when_specified(mock_attach: MagicMock, mock_launch: MagicMock) -> None:
+    mock_attach.side_effect = RhapsodyConnectionError("no instance")
+    fake_com = MagicMock(name="FakeApplication")
+    mock_launch.return_value = RhapsodyApplication(fake_com)
+
+    RhapsodyApplication.connect(show_gui=False)
+
+    fake_com.setHiddenUI.assert_not_called()
 
 
 def test_open_project_wraps_result_as_rpproject() -> None:
@@ -165,6 +167,15 @@ def test_quit_delegates_to_com() -> None:
     fake_app.quit.assert_called_once_with()
 
 
+def test_disconnect_calls_quit() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.disconnect()
+
+    fake_app.quit.assert_called_once_with()
+
+
 def test_get_is_hidden_ui_calls_method_when_present() -> None:
     fake_app = MagicMock(name="FakeApplication")
     fake_app.getIsHiddenUI.return_value = 1
@@ -211,3 +222,141 @@ def test_bring_window_to_top_delegates_to_com() -> None:
     app.bringWindowToTop()
 
     fake_app.bringWindowToTop.assert_called_once_with()
+
+
+# --- Project lifecycle ---
+
+
+def test_close_all_projects_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.closeAllProjects()
+
+    fake_app.closeAllProjects.assert_called_once_with()
+
+
+def test_save_all_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.saveAll()
+
+    fake_app.saveAll.assert_called_once_with()
+
+
+# --- Version info ---
+
+
+def test_get_version_returns_string() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_app.getVersion.return_value = "8.3.1"
+    app = RhapsodyApplication(fake_app)
+
+    assert app.getVersion() == "8.3.1"
+
+
+def test_get_build_no_returns_string() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_app.getBuildNo.return_value = "12345"
+    app = RhapsodyApplication(fake_app)
+
+    assert app.getBuildNo() == "12345"
+
+
+def test_get_rhapsody_dir_returns_string() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_app.getRhapsodyDir.return_value = "C:/Program Files/Rhapsody"
+    app = RhapsodyApplication(fake_app)
+
+    assert app.getRhapsodyDir() == "C:/Program Files/Rhapsody"
+
+
+def test_get_omroot_returns_string() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_app.getOMROOT.return_value = "C:/Rhapsody/OMROOT"
+    app = RhapsodyApplication(fake_app)
+
+    assert app.getOMROOT() == "C:/Rhapsody/OMROOT"
+
+
+# --- Code generation ---
+
+
+def test_generate_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.generate()
+
+    fake_app.generate.assert_called_once_with()
+
+
+def test_generate_elements_passes_collection_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    fake_collection = make_fake_collection([])
+    app = RhapsodyApplication(fake_app)
+
+    app.generateElements(RPCollection(fake_collection))
+
+    fake_app.generateElements.assert_called_once_with(fake_collection)
+
+
+def test_generate_entire_project_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.generateEntireProject()
+
+    fake_app.generateEntireProject.assert_called_once_with()
+
+
+def test_regenerate_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.regenerate()
+
+    fake_app.regenerate.assert_called_once_with()
+
+
+# --- Model import ---
+
+
+def test_add_to_model_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.addToModel("myfile.rpy", 1)
+
+    fake_app.addToModel.assert_called_once_with("myfile.rpy", 1)
+
+
+def test_add_to_model_ex_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.addToModelEx("myfile.rpy", 1, 1, 1)
+
+    fake_app.addToModelEx.assert_called_once_with("myfile.rpy", 1, 1, 1)
+
+
+# --- Model checking ---
+
+
+def test_set_log_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.setLog("C:/log.txt")
+
+    fake_app.setLog.assert_called_once_with("C:/log.txt")
+
+
+def test_check_model_delegates_to_com() -> None:
+    fake_app = MagicMock(name="FakeApplication")
+    app = RhapsodyApplication(fake_app)
+
+    app.checkModel()
+
+    fake_app.checkModel.assert_called_once_with()
