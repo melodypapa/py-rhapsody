@@ -13,6 +13,11 @@ class RhapsodyContext:
     """Manages CLI session state: active project, output format, etc."""
 
     def __init__(self) -> None:
+        """Initialize a new CLI session context.
+
+        The context starts with no active application or project.
+        Default output format is 'table'.
+        """
         self.app: Optional[RhapsodyApplication] = None
         self.project: Optional[RPProject] = None
         self.output_format: str = "table"  # table, json, csv
