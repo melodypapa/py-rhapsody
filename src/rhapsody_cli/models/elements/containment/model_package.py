@@ -58,7 +58,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPPackage`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getNestedPackages()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedPackages", "nestedPackages"))
 
     def getClasses(self) -> "RPCollection":
         """Returns all classes contained in this package.
@@ -66,7 +66,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPClass`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getClasses()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getClasses", "classes"))
 
     def getActors(self) -> "RPCollection":
         """Returns all actors contained in this package.
@@ -74,7 +74,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPActor`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getActors()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getActors", "actors"))
 
     def getUseCases(self) -> "RPCollection":
         """Returns all use cases contained in this package.
@@ -82,7 +82,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPUseCase`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getUseCases()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getUseCases", "useCases"))
 
     def addUseCase(self, name: str) -> Any:
         """Adds a new use case to the package.
@@ -145,7 +145,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of enumeration elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getEnumerations()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getEnumerations", "enumerations"))
 
 
 AbstractRPModelElement.register_wrapper("Package", RPPackage)

@@ -31,7 +31,7 @@ class RPInstance(RPRelation):
         Returns:
             An ``RPCollection`` of nested model elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAllNestedElements()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAllNestedElements", "allNestedElements"))
 
     def getAttributeValue(self, attribute_name: str) -> str:
         """Gets the value of an attribute on the instance.
@@ -59,7 +59,7 @@ class RPInstance(RPRelation):
         Returns:
             An ``RPCollection`` of incoming link elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getInLinks()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInLinks", "inLinks"))
 
     def getOutLinks(self) -> RPCollection:
         """Returns all outgoing links from this instance.
@@ -67,7 +67,7 @@ class RPInstance(RPRelation):
         Returns:
             An ``RPCollection`` of outgoing link elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getOutLinks()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOutLinks", "outLinks"))
 
     def addRelationToTheWhole(self, rel_name: str) -> Any:
         """Adds a relation to the whole for this instance.
@@ -86,7 +86,7 @@ class RPInstance(RPRelation):
         Returns:
             The wrapped ``IRPOperation`` that instantiates this instance.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getInstantiatedBy()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getInstantiatedBy", "instantiatedBy"))
 
     def getListOfInitializerArguments(self) -> RPCollection:
         """Returns the list of initializer arguments for this instance.
@@ -94,7 +94,7 @@ class RPInstance(RPRelation):
         Returns:
             An ``RPCollection`` of initializer argument elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getListOfInitializerArguments()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getListOfInitializerArguments", "listOfInitializerArguments"))
 
     def setExplicit(self) -> None:
         """Sets the instance to be explicit."""
@@ -119,7 +119,7 @@ class RPInstance(RPRelation):
         Args:
             instantiated_by: The operation (``IRPOperation``) that instantiates this instance.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setInstantiatedBy(instantiated_by._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setInstantiatedBy", "instantiatedBy", instantiated_by._com)
 
     def updateContainedDiagramsOnServer(self, enforce_update: int) -> int:
         """Updates the views on the Rhapsody Model Manager server for all diagrams.

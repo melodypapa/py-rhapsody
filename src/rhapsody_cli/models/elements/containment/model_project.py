@@ -45,7 +45,7 @@ class RPProject(RPPackage):
         Returns:
             An ``RPCollection`` of ``IRPPackage`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPackages()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPackages", "packages"))
 
     def getRoot(self) -> "RPProject":
         """Returns the root project element.
@@ -83,7 +83,7 @@ class RPProject(RPPackage):
         Returns:
             An ``RPCollection`` of component elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getComponents()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getComponents", "components"))
 
     def findByName(self, name: str) -> Any:
         """Finds an element in the project by name.
@@ -124,7 +124,7 @@ class RPProject(RPPackage):
         Returns:
             ``1`` if the project is dirty (has unsaved changes), ``0`` otherwise.
         """
-        return int(AbstractRPModelElement.call_com(lambda: self._com.getIsDirty()))
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsDirty", "isDirty"))
 
     def setDirty(self, is_dirty: int) -> None:
         """Sets the dirty flag of the project.
@@ -132,7 +132,7 @@ class RPProject(RPPackage):
         Args:
             is_dirty: ``1`` to mark as dirty, ``0`` to mark as clean.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setDirty(is_dirty))
+        AbstractRPModelElement._set_method_or_property(self._com, "setDirty", "dirty", is_dirty)
 
 
 AbstractRPModelElement.register_wrapper("Project", RPProject)

@@ -30,7 +30,7 @@ class RPAnnotation(RPUnit):
         Returns:
             An ``RPCollection`` of the anchored model elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getAnchoredByMe()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAnchoredByMe", "anchoredByMe"))
 
     def getBody(self) -> str:
         """Gets the text of the specification for the annotation.
@@ -38,7 +38,7 @@ class RPAnnotation(RPUnit):
         Returns:
             The annotation's body text.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getBody()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getBody", "body"))
 
     def getSpecification(self) -> str:
         """Gets the text of the specification for the annotation.
@@ -46,7 +46,7 @@ class RPAnnotation(RPUnit):
         Returns:
             The annotation's specification text.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getSpecification()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecification", "specification"))
 
     def getSpecificationRTF(self) -> str:
         """Returns the specification of the annotation in RTF format.
@@ -54,7 +54,7 @@ class RPAnnotation(RPUnit):
         Returns:
             The RTF-formatted specification string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getSpecificationRTF()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecificationRTF", "specificationRTF"))
 
     def isSpecificationRTF(self) -> bool:
         """Checks whether the specification is in RTF format.
@@ -62,7 +62,7 @@ class RPAnnotation(RPUnit):
         Returns:
             ``True`` if the specification is RTF-formatted, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.isSpecificationRTF()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "isSpecificationRTF", "specificationRTF"))
 
     def removeAnchor(self, target: RPModelElement) -> None:
         """Removes the anchor to the specified model element.
@@ -78,7 +78,7 @@ class RPAnnotation(RPUnit):
         Args:
             body: The body text to set for the annotation.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setBody(body))
+        AbstractRPModelElement._set_method_or_property(self._com, "setBody", "body", body)
 
     def setSpecification(self, specification: str) -> None:
         """Adds a specification to the annotation.
@@ -86,7 +86,7 @@ class RPAnnotation(RPUnit):
         Args:
             specification: The specification text to set for the annotation.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setSpecification(specification))
+        AbstractRPModelElement._set_method_or_property(self._com, "setSpecification", "specification", specification)
 
     def setSpecificationRTF(self, specification_rtf: str) -> None:
         """Specifies the RTF string to use for the annotation's specification.
@@ -94,7 +94,7 @@ class RPAnnotation(RPUnit):
         Args:
             specification_rtf: The RTF-formatted specification string.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setSpecificationRTF(specification_rtf))
+        AbstractRPModelElement._set_method_or_property(self._com, "setSpecificationRTF", "specificationRTF", specification_rtf)
 
 
 class RPRequirement(RPAnnotation):
@@ -106,7 +106,7 @@ class RPRequirement(RPAnnotation):
         Returns:
             The requirement ID string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getRequirementID()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRequirementID", "requirementID"))
 
     def setRequirementID(self, requirement_id: str) -> None:
         """Sets the unique identifier for the requirement.
@@ -114,7 +114,7 @@ class RPRequirement(RPAnnotation):
         Args:
             requirement_id: The new requirement ID to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRequirementID(requirement_id))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRequirementID", "requirementID", requirement_id)
 
 
 AbstractRPModelElement.register_wrapper("Requirement", RPRequirement)

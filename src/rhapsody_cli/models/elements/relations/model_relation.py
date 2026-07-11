@@ -60,7 +60,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPAssociationClass``, or an empty wrapper if none exists.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getAssociationClass()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getAssociationClass", "associationClass"))
 
     def getInverse(self) -> "RPRelation":
         """Gets the inverse relation for this (bidirectional) relation.
@@ -68,7 +68,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPRelation`` representing the inverse direction.
         """
-        return cast(RPRelation, AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getInverse())))
+        return cast(RPRelation, AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getInverse", "inverse")))
 
     def getIsNavigable(self) -> bool:
         """Checks whether the relation is navigable.
@@ -76,7 +76,7 @@ class RPRelation(RPUnit):
         Returns:
             ``True`` if the relation is navigable, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.getIsNavigable()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsNavigable", "isNavigable"))
 
     def getIsSymmetric(self) -> bool:
         """Checks whether the relation is symmetric.
@@ -84,7 +84,7 @@ class RPRelation(RPUnit):
         Returns:
             ``True`` if the relation is symmetric, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.getIsSymmetric()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsSymmetric", "isSymmetric"))
 
     def getMultiplicity(self) -> str:
         """Gets the multiplicity of the relation.
@@ -92,7 +92,7 @@ class RPRelation(RPUnit):
         Returns:
             The multiplicity string (e.g. ``"1"``, ``"0..*"``).
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getMultiplicity()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getMultiplicity", "multiplicity"))
 
     def getObjectAsObjectType(self) -> Any:
         """Gets the object's class, treated as the object's type.
@@ -100,7 +100,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPClass``.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getObjectAsObjectType()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getObjectAsObjectType", "objectAsObjectType"))
 
     def getOfClass(self) -> Any:
         """Gets the classifier that owns this relation.
@@ -108,7 +108,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPClassifier``.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getOfClass()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOfClass", "ofClass"))
 
     def getOtherClass(self) -> Any:
         """Gets the class that this class is related to via this relation.
@@ -116,7 +116,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPClassifier`` on the other end of the relation.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getOtherClass()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOtherClass", "otherClass"))
 
     def getQualifier(self) -> str:
         """Gets the qualifier text for the association.
@@ -124,7 +124,7 @@ class RPRelation(RPUnit):
         Returns:
             The qualifier string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getQualifier()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getQualifier", "qualifier"))
 
     def getQualifiers(self) -> RPCollection:
         """Gets the collection of qualifier model elements for the association.
@@ -132,7 +132,7 @@ class RPRelation(RPUnit):
         Returns:
             An ``RPCollection`` of qualifier model elements.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getQualifiers()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getQualifiers", "qualifiers"))
 
     def getQualifierType(self) -> Any:
         """For associations that use qualifiers, returns the type of the qualifier.
@@ -140,7 +140,7 @@ class RPRelation(RPUnit):
         Returns:
             The wrapped ``IRPClassifier`` used as the qualifier's type.
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getQualifierType()))
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getQualifierType", "qualifierType"))
 
     def getRelationLabel(self) -> str:
         """Gets the label of the relation.
@@ -148,7 +148,7 @@ class RPRelation(RPUnit):
         Returns:
             The relation label string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getRelationLabel()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationLabel", "relationLabel"))
 
     def getRelationLinkName(self) -> str:
         """Gets the link name of the relation.
@@ -156,7 +156,7 @@ class RPRelation(RPUnit):
         Returns:
             The relation link name string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getRelationLinkName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationLinkName", "relationLinkName"))
 
     def getRelationRoleName(self) -> str:
         """Gets the role name of the relation.
@@ -164,7 +164,7 @@ class RPRelation(RPUnit):
         Returns:
             The relation role name string.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getRelationRoleName()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationRoleName", "relationRoleName"))
 
     def getRelationType(self) -> str:
         """Gets the type of the relation.
@@ -172,7 +172,7 @@ class RPRelation(RPUnit):
         Returns:
             The relation type string (e.g. ``"Association"``).
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getRelationType()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationType", "relationType"))
 
     def getVisibility(self) -> str:
         """Gets the visibility of the relation.
@@ -180,7 +180,7 @@ class RPRelation(RPUnit):
         Returns:
             The visibility string (e.g. ``"public"``, ``"private"``).
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getVisibility()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getVisibility", "visibility"))
 
     def isTypelessObject(self) -> bool:
         """Checks whether the object at the other end of the relation has no type.
@@ -188,7 +188,7 @@ class RPRelation(RPUnit):
         Returns:
             ``True`` if the related object is typeless, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.isTypelessObject()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "isTypelessObject", "typelessObject"))
 
     def makeUnidirect(self) -> None:
         """Makes the relation unidirectional."""
@@ -217,7 +217,7 @@ class RPRelation(RPUnit):
         Args:
             is_navigable: ``True`` to make the relation navigable, ``False`` otherwise.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsNavigable(1 if is_navigable else 0))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsNavigable", "isNavigable", 1 if is_navigable else 0)
 
     def setMultiplicity(self, multiplicity: str) -> None:
         """Sets the multiplicity of the relation.
@@ -225,7 +225,7 @@ class RPRelation(RPUnit):
         Args:
             multiplicity: The multiplicity string to set (e.g. ``"1"``, ``"0..*"``).
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setMultiplicity(multiplicity))
+        AbstractRPModelElement._set_method_or_property(self._com, "setMultiplicity", "multiplicity", multiplicity)
 
     def setOfClass(self, of_class: RPClassifier) -> None:
         """Sets the classifier that owns this relation.
@@ -233,7 +233,7 @@ class RPRelation(RPUnit):
         Args:
             of_class: The classifier to set as the owner of this relation.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setOfClass(of_class._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setOfClass", "ofClass", of_class._com)
 
     def setOtherClass(self, other_class: RPClassifier) -> None:
         """Sets the class that this class is related to via this relation.
@@ -241,7 +241,7 @@ class RPRelation(RPUnit):
         Args:
             other_class: The classifier to set on the other end of the relation.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setOtherClass(other_class._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setOtherClass", "otherClass", other_class._com)
 
     def setQualifier(self, qualifier: str) -> None:
         """Sets the qualifier text for the association.
@@ -249,7 +249,7 @@ class RPRelation(RPUnit):
         Args:
             qualifier: The qualifier string to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setQualifier(qualifier))
+        AbstractRPModelElement._set_method_or_property(self._com, "setQualifier", "qualifier", qualifier)
 
     def setQualifierType(self, p_val: RPModelElement) -> None:
         """Sets the type to use for the qualifier for the association.
@@ -257,7 +257,7 @@ class RPRelation(RPUnit):
         Args:
             p_val: The classifier to use as the qualifier's type.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setQualifierType(p_val._com))
+        AbstractRPModelElement._set_method_or_property(self._com, "setQualifierType", "qualifierType", p_val._com)
 
     def setRelationLabel(self, relation_label: str) -> None:
         """Sets the label of the relation.
@@ -265,7 +265,7 @@ class RPRelation(RPUnit):
         Args:
             relation_label: The label string to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRelationLabel(relation_label))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRelationLabel", "relationLabel", relation_label)
 
     def setRelationLinkName(self, relation_link_name: str) -> None:
         """Sets the link name of the relation.
@@ -273,7 +273,7 @@ class RPRelation(RPUnit):
         Args:
             relation_link_name: The link name string to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRelationLinkName(relation_link_name))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRelationLinkName", "relationLinkName", relation_link_name)
 
     def setRelationRoleName(self, relation_role_name: str) -> None:
         """Sets the role name of the relation.
@@ -281,7 +281,7 @@ class RPRelation(RPUnit):
         Args:
             relation_role_name: The role name string to set.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRelationRoleName(relation_role_name))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRelationRoleName", "relationRoleName", relation_role_name)
 
     def setRelationType(self, relation_type: str) -> None:
         """Sets the type of the relation.
@@ -289,4 +289,4 @@ class RPRelation(RPUnit):
         Args:
             relation_type: The relation type string to set (e.g. ``"Association"``).
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setRelationType(relation_type))
+        AbstractRPModelElement._set_method_or_property(self._com, "setRelationType", "relationType", relation_type)

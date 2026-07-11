@@ -41,7 +41,7 @@ class RPInterfaceItem(RPClassifier):
         Returns:
             An ``RPCollection`` of ``IRPArgument`` objects.
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getArguments()))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getArguments", "arguments"))
 
     def getSignature(self) -> str:
         """Returns the signature of the operation.
@@ -49,7 +49,7 @@ class RPInterfaceItem(RPClassifier):
         Returns:
             The full signature string, including argument names and types.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getSignature()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignature", "signature"))
 
     def getSignatureNoArgNames(self) -> str:
         """Returns the signature of the operation without the argument names.
@@ -57,7 +57,7 @@ class RPInterfaceItem(RPClassifier):
         Returns:
             The signature string with argument types but no argument names.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getSignatureNoArgNames()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignatureNoArgNames", "signatureNoArgNames"))
 
     def getSignatureNoArgTypes(self) -> str:
         """Returns the signature of the operation without the argument types.
@@ -65,7 +65,7 @@ class RPInterfaceItem(RPClassifier):
         Returns:
             The signature string with argument names but no argument types.
         """
-        return AbstractRPModelElement.call_com(lambda: str(self._com.getSignatureNoArgTypes()))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignatureNoArgTypes", "signatureNoArgTypes"))
 
     def matchOnSignature(self, item: "RPInterfaceItem") -> bool:
         """Compares the signature of this operation with another operation's signature.

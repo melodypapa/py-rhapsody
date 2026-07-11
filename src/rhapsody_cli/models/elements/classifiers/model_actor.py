@@ -27,7 +27,7 @@ class RPActor(RPClassifier):
         Returns:
             ``True`` if the behavior is overridden, ``False`` otherwise.
         """
-        return AbstractRPModelElement.call_com(lambda: bool(self._com.getIsBehaviorOverriden()))
+        return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehaviorOverriden", "isBehaviorOverriden"))
 
     def setIsBehaviorOverriden(self, is_overridden: bool) -> None:
         """Sets whether the behavior of the actor is overridden.
@@ -35,7 +35,7 @@ class RPActor(RPClassifier):
         Args:
             is_overridden: ``True`` to mark the behavior as overridden, ``False`` otherwise.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsBehaviorOverriden(1 if is_overridden else 0))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsBehaviorOverriden", "isBehaviorOverriden", 1 if is_overridden else 0)
 
 
 AbstractRPModelElement.register_wrapper("Actor", RPActor)

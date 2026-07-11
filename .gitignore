@@ -221,3 +221,11 @@ __marimo__/
 
 .claude/settings.local.json
 docs/java_api
+
+# Rhapsody session/workspace files regenerated whenever a project is opened;
+# not needed to reopen the project and not part of the committed model.
+demos/demo_project/*.rpwx
+demos/demo_project/*.ehl
+demos/demo_project/*.save
+demos/demo_project/_scratch_*/
+

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RhapsodyArchive>
+	<MagicNumber></MagicNumber>
+	<CODE-PAGE>936</CODE-PAGE>
+	<version>109.0.2</version>
+	<lang>C++</lang>
+	<BuildNo>202507311556</BuildNo>
+	<RMMMinimumClientVersion>100.0</RMMMinimumClientVersion>
+	
+	<RHAPSODY-MODEL>
+	<ISubsystem type="e">
+			<_id type="a">GUID 9df702c0-e0ee-4f09-9717-b1da348c71ed</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">UseCases</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Actors and use cases for the rhapsody-cli demos.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<weakCGTime type="a">7.11.2026::10:42:29</weakCGTime>
+			<strongCGTime type="a">1.2.1990::0:0:0</strongCGTime>
+			<_defaultComposite type="s">GUID ab8ed57a-bb1b-4a6d-bd01-15f9ccbf3930</_defaultComposite>
+			<_eventsBaseID type="a">-1</_eventsBaseID>
+			<_configurationRelatedTime type="a">1.1.1970::8:0:0</_configurationRelatedTime>
+			<AggregatesList type="e">
+				<value>GUID ab8ed57a-bb1b-4a6d-bd01-15f9ccbf3930</value>
+				<value>GUID e2f98600-b5a5-49ec-9982-69b84b1ee227</value>
+				<value>GUID 68b4c150-614b-4473-a8ff-338511d456f5</value>
+			</AggregatesList>
+		</ISubsystem>
+		<IClass type="e">
+			<_id type="a">GUID ab8ed57a-bb1b-4a6d-bd01-15f9ccbf3930</_id>
+			<_myState type="a">40960</_myState>
+			<_name type="a">TopLevel</_name>
+			<_modifiedTimeWeak type="a">1.2.1990::0:0:0</_modifiedTimeWeak>
+			<_modifiedTime type="a">1.1.1970::8:0:0</_modifiedTime>
+			<weakCGTime type="a">1.2.1990::0:0:0</weakCGTime>
+			<strongCGTime type="a">1.2.1990::0:0:0</strongCGTime>
+			<_itsStateChart type="r">
+				<IHandle type="e">
+				</IHandle>
+			</_itsStateChart>
+			<_classModifier type="a">Unspecified</_classModifier>
+		</IClass>
+		<IUseCase type="e">
+			<_id type="a">GUID e2f98600-b5a5-49ec-9982-69b84b1ee227</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">ManageUsers</_name>
+			<_modifiedTimeWeak type="a">1.2.1990::0:0:0</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">Use case for managing users in the system.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<weakCGTime type="a">1.2.1990::0:0:0</weakCGTime>
+			<strongCGTime type="a">1.2.1990::0:0:0</strongCGTime>
+			<_itsStateChart type="r">
+				<IHandle type="e">
+				</IHandle>
+			</_itsStateChart>
+			<_classModifier type="a">Unspecified</_classModifier>
+			<UseCaseStereoTypes type="c">
+				<IRPYRawContainer type="e">
+				</IRPYRawContainer>
+			</UseCaseStereoTypes>
+			<_EntryPoints type="c">
+				<IRPYRawContainer type="e">
+				</IRPYRawContainer>
+			</_EntryPoints>
+		</IUseCase>
+		<IActor type="e">
+			<_id type="a">GUID 68b4c150-614b-4473-a8ff-338511d456f5</_id>
+			<_myState type="a">8192</_myState>
+			<_name type="a">Customer</_name>
+			<_modifiedTimeWeak type="a">7.11.2026::10:42:29</_modifiedTimeWeak>
+			<_description type="p"><IDescription type="e">
+				<_text type="a">A customer of the system.</_text>
+			</IDescription>
+			</_description>
+			<_modifiedTime type="a">7.11.2026::10:42:29</_modifiedTime>
+			<weakCGTime type="a">7.11.2026::10:42:29</weakCGTime>
+			<strongCGTime type="a">7.11.2026::10:42:29</strongCGTime>
+			<_itsStateChart type="r">
+				<IHandle type="e">
+				</IHandle>
+			</_itsStateChart>
+			<_classModifier type="a">Unspecified</_classModifier>
+		</IActor>
+		
+	</RHAPSODY-MODEL>
+	<OslcLinks type="c">
+		<IRPYRawContainer type="e">
+		</IRPYRawContainer>
+	</OslcLinks>
+
+<INCLUDES-RHAPSODY-INDEX>false</INCLUDES-RHAPSODY-INDEX>
+</RhapsodyArchive>
+

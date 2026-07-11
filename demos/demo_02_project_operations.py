@@ -4,13 +4,15 @@ Demo: Rhapsody Project Operations
 
 This demo demonstrates common project management operations with the Rhapsody GUI visible:
 - Launching Rhapsody with GUI display
+- Opening the shipped demos/demo_project with openProject()
 - Getting active project with activeProject()
 - Listing all open projects with getProjects()
-- Creating new projects in system temp folder with createNewProject()
+- Creating new projects with createNewProject() (inside demos/demo_project, cleaned up after)
 - Saving and closing projects with save() and close()
 - Reopening closed projects with openProject()
 - Full project lifecycle: create -> save -> close -> reopen
-- Automatic cleanup: temporary project files are deleted after demo
+- Automatic cleanup: the scratch project created during the demo is deleted
+  afterwards; the shipped demos/demo_project is left untouched.
 
 The Rhapsody GUI window will open and remain visible during demo execution,
 allowing you to observe all operations in real-time.
@@ -20,13 +22,16 @@ Requirements: Windows with IBM Rhapsody installation
 """
 
 import os
+import shutil
 import sys
-import tempfile
 import time
-from typing import Any
+from typing import Any, Optional
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
+
+DEMO_PROJECT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_project")
+DEMO_PROJECT_PATH = os.path.join(DEMO_PROJECT_DIR, "DemoProject.rpyx")
 
 
 def demo_get_active_project(app: RhapsodyApplication) -> Any:
@@ -90,16 +95,20 @@ def demo_list_all_projects(app: RhapsodyApplication) -> None:
         if projects and len(projects) > 0:
             print(f"[OK] Found {len(projects)} open project(s)")
 
+            active_guid = None
+            try:
+                active_project = app.activeProject()
+                if active_project and active_project._com:
+                    active_guid = active_project.getGUID()
+            except RhapsodyRuntimeException:
+                pass
+
             for i, project in enumerate(projects, 1):
                 print(f"\nProject {i}:")
                 print(f"  - Name: {project.getName()}")
                 print(f"  - Filename: {project.getFilename()}")
-                try:
-                    is_active = project.getIsActive()
-                    status = "Active" if is_active else "Inactive"
-                    print(f"  - Status: {status}")
-                except Exception:
-                    print("  - Status: Unable to determine")
+                status = "Active" if active_guid and project.getGUID() == active_guid else "Inactive"
+                print(f"  - Status: {status}")
         else:
             print("[-] No open projects found")
             print("  Hint: Open or create a project in Rhapsody")
@@ -146,37 +155,36 @@ def demo_open_existing_project(app: RhapsodyApplication, project_path: str) -> A
 
 
 def demo_create_new_project(app: RhapsodyApplication) -> Any:
-    """Demonstrate creating a new project in system temp folder.
+    """Demonstrate creating a new project inside a scratch subfolder of
+    demos/demo_project.
 
-    Handles temp folder creation, generates unique project name with timestamp,
-    creates and saves the project. The project file will be cleaned up
-    (deleted) after the demo completes.
+    Generates a unique project name with a timestamp, creates and saves the
+    project. The scratch subfolder (and everything in it) is deleted after
+    the demo completes, so the committed demos/demo_project is left
+    untouched.
 
     Args:
         app: Connected RhapsodyApplication instance
 
     Returns:
-        Project filename (full path to .rpy file) if successful, None otherwise
+        Tuple of (scratch directory, project filename), or (None, None) on failure.
     """
     print("\n" + "=" * 60)
     print("Operation: Create New Project")
     print("=" * 60)
 
     try:
-        # Get system temp directory
-        temp_location = tempfile.gettempdir()
-        print(f"Using temp location: {temp_location}")
-
-        # Create temp directory if it doesn't exist
-        os.makedirs(temp_location, exist_ok=True)
-
-        # Generate unique project name with timestamp (milliseconds for uniqueness)
+        # Generate a unique scratch subfolder (milliseconds for uniqueness)
+        # inside demos/demo_project, so the demo doesn't touch the OS temp
+        # folder and stays fully self-contained within the repository.
         timestamp = str(int(time.time() * 1000))
-        project_name = f"DemoProject_{timestamp}"
+        scratch_dir = os.path.join(DEMO_PROJECT_DIR, f"_scratch_{timestamp}")
+        os.makedirs(scratch_dir, exist_ok=True)
 
-        print(f"Creating new project '{project_name}' at {temp_location}...")
+        project_name = f"ScratchProject_{timestamp}"
+        print(f"Creating new project '{project_name}' at {scratch_dir}...")
 
-        project = app.createNewProject(temp_location, project_name)
+        project = app.createNewProject(scratch_dir, project_name)
         print("[OK] Successfully created new project!")
 
         print("\nProject Details:")
@@ -189,36 +197,37 @@ def demo_create_new_project(app: RhapsodyApplication) -> Any:
         print("[OK] Project saved")
 
         # Capture the filename - getFilename() may return relative path or just name
-        # so construct the full absolute path using temp_location
+        # so construct the full absolute path using scratch_dir
         relative_filename = project.getFilename()
 
         # Build the full path to the project file
         # Rhapsody creates .rpyx files, so if no extension, add it
         if not relative_filename.endswith(".rpy") and not relative_filename.endswith(".rpyx"):
-            project_file_path = os.path.join(temp_location, relative_filename + ".rpyx")
+            project_file_path = os.path.join(scratch_dir, relative_filename + ".rpyx")
         else:
-            # If it already has an extension, use it as-is with temp_location
+            # If it already has an extension, use it as-is with scratch_dir
             if os.path.isabs(relative_filename):
                 project_file_path = relative_filename
             else:
-                project_file_path = os.path.join(temp_location, relative_filename)
+                project_file_path = os.path.join(scratch_dir, relative_filename)
 
         print(f"\nProject file path: {project_file_path}")
-        return project_file_path
+        return scratch_dir, project_file_path
 
     except Exception as e:
         print(f"[-] Failed to create project: {e}")
-        print("  Hint: Ensure you have write permissions to the temp location")
-        sys.exit(1)
+        print("  Hint: Ensure you have write permissions to demos/demo_project")
+        return None, None
 
 
-def demo_save_and_close_project(project: Any, filename: str, cleanup: bool = True) -> None:
-    """Demonstrate saving, closing, and optionally cleaning up a project.
+def demo_save_and_close_project(project: Any, scratch_dir: Optional[str] = None) -> None:
+    """Demonstrate saving and closing a project, optionally cleaning up its
+    scratch directory afterwards.
 
     Args:
         project: Project object to save and close
-        filename: Path to the project file (for cleanup)
-        cleanup: If True, delete the project file after closing (default: True)
+        scratch_dir: If provided, the scratch directory (and everything in
+            it) is deleted after closing the project.
     """
     print("\n" + "=" * 60)
     print("Operation: Save and Close Project")
@@ -239,16 +248,16 @@ def demo_save_and_close_project(project: Any, filename: str, cleanup: bool = Tru
         project.close()
         print("[OK] Project closed")
 
-        # Clean up: delete the project file (if requested)
-        if cleanup and filename and os.path.exists(filename):
-            print(f"\nCleaning up: deleting {filename}...")
-            os.remove(filename)
-            print("[OK] Project file deleted")
+        # Clean up: delete the scratch directory (if requested)
+        if scratch_dir and os.path.isdir(scratch_dir):
+            print(f"\nCleaning up: deleting {scratch_dir}...")
+            shutil.rmtree(scratch_dir, ignore_errors=True)
+            print("[OK] Scratch directory deleted")
 
     except RhapsodyRuntimeException as e:
         print(f"[-] Failed to save/close project: {e}")
     except OSError as e:
-        print(f"[-] Failed to delete project file: {e}")
+        print(f"[-] Failed to delete scratch directory: {e}")
 
 
 def main() -> None:
@@ -277,6 +286,12 @@ def main() -> None:
         sys.exit(1)
 
     try:
+        # Demo 0: Open the shipped demo_project (demonstrates openProject())
+        demo_project = demo_open_existing_project(app, DEMO_PROJECT_PATH)
+        if not demo_project or not demo_project._com:
+            print("[-] Could not open demos/demo_project; aborting demo")
+            sys.exit(1)
+
         # Demo 1: Get active project
         demo_get_active_project(app)
 
@@ -288,16 +303,16 @@ def main() -> None:
         print("Operation: Project Lifecycle (Create -> Close -> Reopen)")
         print("=" * 60)
 
-        # Step 1: Create project in temp (temp folder handling is internal)
-        created_project_filename = demo_create_new_project(app)
+        # Step 1: Create a scratch project inside demos/demo_project
+        scratch_dir, created_project_filename = demo_create_new_project(app)
 
         if created_project_filename:
             # Step 2: Get active project (the one we just created)
-            temp_project = app.activeProject()
+            scratch_project = app.activeProject()
 
-            if temp_project and temp_project._com:
+            if scratch_project and scratch_project._com:
                 # Step 3: Close the created project WITHOUT cleanup (we need the file to reopen)
-                demo_save_and_close_project(temp_project, created_project_filename, cleanup=False)
+                demo_save_and_close_project(scratch_project)
 
                 # Step 4: Reopen the project
                 print("\n" + "=" * 60)
@@ -307,21 +322,25 @@ def main() -> None:
 
                 if reopened_project and reopened_project._com:
                     print("\n[OK] Successfully completed create -> close -> reopen cycle!")
-                    # Step 5: Close again WITH cleanup (now we can delete the file)
-                    demo_save_and_close_project(reopened_project, created_project_filename, cleanup=True)
+                    # Step 5: Close again WITH cleanup (now we can delete the scratch directory)
+                    demo_save_and_close_project(reopened_project, scratch_dir)
                 else:
                     print("[-] Failed to reopen project")
                     # Clean up manually if reopen failed
-                    if created_project_filename and os.path.exists(created_project_filename):
-                        print(f"Cleaning up failed project file: {created_project_filename}")
-                        try:
-                            os.remove(created_project_filename)
-                        except OSError as e:
-                            print(f"[-] Could not delete file: {e}")
+                    if scratch_dir and os.path.isdir(scratch_dir):
+                        print(f"Cleaning up failed scratch directory: {scratch_dir}")
+                        shutil.rmtree(scratch_dir, ignore_errors=True)
             else:
                 print("[-] Could not access created project")
+                if scratch_dir and os.path.isdir(scratch_dir):
+                    shutil.rmtree(scratch_dir, ignore_errors=True)
         else:
-            print("[-] Failed to create project in temp folder")
+            print("[-] Failed to create scratch project")
+
+        # Note: creating/opening the scratch project above replaces the
+        # active workspace, so demos/demo_project (opened earlier) is
+        # already closed at this point - it was never modified, so there is
+        # nothing to save and nothing left to clean up for it.
 
     finally:
         # Clean up
