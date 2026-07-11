@@ -1,0 +1,378 @@
+#!/usr/bin/env python3
+"""
+Demo: Rhapsody Error Handling Patterns
+
+This demo demonstrates comprehensive error handling for Rhapsody operations:
+- Connection error handling (attach vs. launch fallback)
+- Project operation error handling
+- Element not found scenarios
+- COM error translation
+- Proper cleanup after errors
+
+Author: rhapsody-cli
+Requirements: Windows with IBM Rhapsody installation
+"""
+
+import sys
+from typing import Any
+
+from rhapsody_cli.application import RhapsodyApplication
+from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
+
+
+def demo_connection_error_handling() -> Any:
+    """Demonstrate connection error handling with fallback.
+
+    Returns:
+        RhapsodyApplication if successful, None otherwise
+    """
+    print("\n" + "=" * 60)
+    print("Error Handling: Connection Errors")
+    print("=" * 60)
+
+    app = None
+
+    try:
+        print("Strategy 1: Try to attach to running instance")
+        try:
+            app = RhapsodyApplication.attach()
+            print("✓ Successfully attached to running Rhapsody instance")
+            return app
+        except RhapsodyConnectionError as e:
+            print(f"✗ Attach failed: {e}")
+            print("  → Falling back to launch method")
+
+        print("\nStrategy 2: Launch new instance")
+        try:
+            app = RhapsodyApplication.launch()
+            print("✓ Successfully launched new Rhapsody instance")
+            return app
+        except RhapsodyConnectionError as e:
+            print(f"✗ Launch failed: {e}")
+            print("  → No connection methods available")
+            raise
+
+    except RhapsodyConnectionError as e:
+        print("\n✗ All connection methods failed")
+        print(f"  Final error: {e}")
+        print("\n  Troubleshooting:")
+        print("  1. Ensure Rhapsody is properly installed")
+        print("  2. Check for valid Rhapsody license")
+        print("  3. Verify you're running on Windows")
+        print("  4. Try launching Rhapsody manually first")
+        raise
+
+
+def demo_project_operation_errors(app: RhapsodyApplication) -> None:
+    """Demonstrate project operation error handling.
+
+    Args:
+        app: Connected RhapsodyApplication instance
+    """
+    print("\n" + "=" * 60)
+    print("Error Handling: Project Operations")
+    print("=" * 60)
+
+    # Test 1: Try to open non-existent project
+    print("\nTest 1: Opening non-existent project file")
+    try:
+        non_existent_path = r"C:\NonExistent\Project.rpy"
+        print(f"  Attempting to open: {non_existent_path}")
+        project = app.openProject(non_existent_path)
+        print("  ✗ Unexpected success (should have failed)")
+    except RhapsodyRuntimeException as e:
+        print(f"  ✓ Expected error caught: {type(e).__name__}")
+        print(f"    Message: {str(e)[:80]}...")
+
+    # Test 2: Try to create project in invalid location
+    print("\nTest 2: Creating project in invalid location")
+    try:
+        invalid_path = r"C:\Invalid\Path\That\Does\Not\Exist"
+        print(f"  Attempting to create project at: {invalid_path}")
+        project = app.createNewProject(invalid_path, "TestProject")
+        print("  ✗ Unexpected success (should have failed)")
+    except RhapsodyRuntimeException as e:
+        print(f"  ✓ Expected error caught: {type(e).__name__}")
+        print(f"    Message: {str(e)[:80]}...")
+
+    # Test 3: Try to get active project when none exists
+    print("\nTest 3: Getting active project (may not exist)")
+    try:
+        print("  Attempting to get active project")
+        project = app.activeProject()
+        if project:
+            print(f"  ✓ Active project found: {project.getName()}")
+        else:
+            print("  ✓ No active project (handled gracefully)")
+    except RhapsodyRuntimeException as e:
+        print(f"  ✓ Error caught: {type(e).__name__}")
+        print(f"    Message: {str(e)[:80]}...")
+
+
+def demo_element_not_found_errors(app: RhapsodyApplication) -> None:
+    """Demonstrate element not found error handling.
+
+    Args:
+        app: Connected RhapsodyApplication instance
+    """
+    print("\n" + "=" * 60)
+    print("Error Handling: Element Not Found")
+    print("=" * 60)
+
+    project = None
+
+    try:
+        # Try to get active project first
+        project = app.activeProject()
+        if not project:
+            print("  No active project available for element operations")
+            print("  Skipping element not found tests")
+            return
+
+        print(f"Using project: {project.getName()}")
+
+        # Test 1: Try to find non-existent element
+        print("\nTest 1: Finding non-existent element")
+        try:
+            non_existent_name = "ThisElementDoesNotExist12345"
+            print(f"  Searching for: {non_existent_name}")
+            element = project.findNestedElement(non_existent_name, "Class")
+            if element:
+                print(f"  ✗ Unexpected: Found element {element.getName()}")
+            else:
+                print("  ✓ Element not found (handled gracefully)")
+        except RhapsodyRuntimeException as e:
+            print(f"  ✓ Error caught: {type(e).__name__}")
+            print(f"    Message: {str(e)[:80]}...")
+
+        # Test 2: Try to query elements with invalid metaclass
+        print("\nTest 2: Querying with invalid metaclass")
+        try:
+            invalid_metaclass = "InvalidMetaClass12345"
+            print(f"  Querying for: {invalid_metaclass}")
+            elements = project.getNestedElementsByMetaClass(invalid_metaclass, 1)
+            if elements and len(elements) > 0:
+                print(f"  ✗ Unexpected: Found {len(elements)} elements")
+            else:
+                print("  ✓ No elements found (handled gracefully)")
+        except RhapsodyRuntimeException as e:
+            print(f"  ✓ Error caught: {type(e).__name__}")
+            print(f"    Message: {str(e)[:80]}...")
+
+        # Test 3: Try to access nested elements on non-container
+        print("\nTest 3: Accessing nested elements on non-container")
+        try:
+            # Get a simple element (like an attribute) that doesn't have nested elements
+            classes = project.getNestedElementsByMetaClass("Class", 1)
+            if classes and len(classes) > 0:
+                test_class = classes[0]
+                print(f"  Using class: {test_class.getName()}")
+                # Try to get packages from a class (should fail or return empty)
+                nested = test_class.getPackages()
+                print(f"  ✓ Operation handled (returned {len(nested)} items)")
+        except RhapsodyRuntimeException as e:
+            print(f"  ✓ Error caught: {type(e).__name__}")
+            print(f"    Message: {str(e)[:80]}...")
+
+    except RhapsodyRuntimeException as e:
+        print(f"✗ Unexpected error in element tests: {e}")
+
+
+def demo_safe_operation_patterns(app: RhapsodyApplication) -> None:
+    """Demonstrate safe operation patterns with proper error handling.
+
+    Args:
+        app: Connected RhapsodyApplication instance
+    """
+    print("\n" + "=" * 60)
+    print("Error Handling: Safe Operation Patterns")
+    print("=" * 60)
+
+    project = None
+
+    try:
+        # Pattern 1: Safe project access
+        print("\nPattern 1: Safe project access")
+        try:
+            project = app.activeProject()
+            if project:
+                print(f"  ✓ Working with project: {project.getName()}")
+            else:
+                print("  ✓ No active project - continuing with other tests")
+        except RhapsodyRuntimeException as e:
+            print(f"  ✗ Failed to get project: {e}")
+            project = None
+
+        # Pattern 2: Safe element iteration
+        if project:
+            print("\nPattern 2: Safe element iteration")
+            try:
+                classes = project.getNestedElementsByMetaClass("Class", 1)
+                print(f"  Processing {len(classes)} classes safely")
+
+                # Limit to first 5 classes
+                for i in range(min(5, len(classes))):
+                    try:
+                        cls = classes[i]
+                        name = cls.getName()
+                        guid = cls.getGUID()
+                        print(f"  {i + 1}. {name} (GUID: {guid[:8]}...)")
+                    except Exception as e:
+                        print(f"  {i + 1}. Error processing class: {e}")
+
+            except RhapsodyRuntimeException as e:
+                print(f"  ✗ Failed to get classes: {e}")
+
+        # Pattern 3: Safe nested operations
+        if project:
+            print("\nPattern 3: Safe nested operations")
+            try:
+                packages = project.getPackages()
+                success_count = 0
+                error_count = 0
+
+                # Limit to first 3 packages
+                for i in range(min(3, len(packages))):
+                    try:
+                        pkg = packages[i]
+                        pkg_name = pkg.getName()
+                        classes = pkg.getClasses()
+                        success_count += 1
+                        print(f"  ✓ {pkg_name}: {len(classes)} classes")
+                    except Exception as e:
+                        error_count += 1
+                        print(f"  ✗ Error processing package: {e}")
+
+                print(f"  Summary: {success_count} successful, {error_count} errors")
+
+            except RhapsodyRuntimeException as e:
+                print(f"  ✗ Failed to get packages: {e}")
+
+    except Exception as e:
+        print(f"✗ Unexpected error in safe patterns: {e}")
+
+
+def demo_cleanup_after_errors(app: RhapsodyApplication) -> None:
+    """Demonstrate proper cleanup after errors.
+
+    Args:
+        app: Connected RhapsodyApplication instance
+    """
+    print("\n" + "=" * 60)
+    print("Error Handling: Cleanup After Errors")
+    print("=" * 60)
+
+    print("Demonstrating cleanup in various scenarios:\n")
+
+    # Scenario 1: Cleanup after successful operation
+    print("Scenario 1: Cleanup after successful operation")
+    try:
+        project = app.activeProject()
+        if project:
+            print(f"  ✓ Successfully worked with: {project.getName()}")
+        print("  ✓ Normal cleanup completed")
+    except Exception as e:
+        print(f"  ✗ Error occurred: {e}")
+        print("  ✓ Cleanup still executed")
+
+    # Scenario 2: Cleanup in finally block
+    print("\nScenario 2: Cleanup using finally block")
+    temp_project = None
+    try:
+        temp_project = app.activeProject()
+        if temp_project:
+            # Simulate some work
+            print(f"  ✓ Working with: {temp_project.getName()}")
+            # Intentionally cause an error for demonstration
+            raise Exception("Simulated error for cleanup demo")
+    except Exception as e:
+        print(f"  ✗ Error caught: {e}")
+    finally:
+        print("  ✓ Cleanup in finally block always executes")
+
+    # Scenario 3: Context manager pattern (recommended)
+    print("\nScenario 3: Context manager pattern (recommended for production)")
+    print("  Note: Consider implementing context managers for Rhapsody objects")
+    print("  Example: with RhapsodyProject(app, project_path) as project:")
+
+
+def demo_comprehensive_error_handling() -> None:
+    """Demonstrate comprehensive error handling workflow."""
+    print("\n" + "=" * 60)
+    print("Error Handling: Comprehensive Workflow")
+    print("=" * 60)
+
+    app = None
+
+    try:
+        print("Step 1: Connect to Rhapsody")
+        app = demo_connection_error_handling()
+
+        if app:
+            print("\nStep 2: Test project operation errors")
+            demo_project_operation_errors(app)
+
+            print("\nStep 3: Test element not found errors")
+            demo_element_not_found_errors(app)
+
+            print("\nStep 4: Test safe operation patterns")
+            demo_safe_operation_patterns(app)
+
+            print("\nStep 5: Test cleanup after errors")
+            demo_cleanup_after_errors(app)
+
+    except RhapsodyConnectionError as e:
+        print(f"\n✗ Fatal connection error: {e}")
+        print("  Cannot proceed with demos without Rhapsody connection")
+        return
+
+    except Exception as e:
+        print(f"\n✗ Unexpected error: {e}")
+
+    finally:
+        # Final cleanup
+        if app:
+            print("\n" + "=" * 60)
+            print("Final Cleanup")
+            print("=" * 60)
+            try:
+                print("Disconnecting from Rhapsody...")
+                app.disconnect()
+                print("✓ Disconnected successfully")
+            except Exception as e:
+                print(f"✗ Error during cleanup: {e}")
+
+
+def main() -> None:
+    """Main demo function."""
+    print("=" * 60)
+    print("Demo: Rhapsody Error Handling Patterns")
+    print("=" * 60)
+    print("\nThis demo demonstrates comprehensive error handling for Rhapsody.")
+    print("It includes intentional errors to show proper handling patterns.")
+
+    try:
+        demo_comprehensive_error_handling()
+
+        print("\n" + "=" * 60)
+        print("Error Handling Summary")
+        print("=" * 60)
+        print("✓ All error handling patterns demonstrated")
+        print("\nKey takeaways:")
+        print("  1. Always use try-except blocks for Rhapsody operations")
+        print("  2. Implement connection fallback (attach → launch)")
+        print("  3. Handle 'not found' scenarios gracefully")
+        print("  4. Use finally blocks for cleanup")
+        print("  5. Validate results before using them")
+
+        print("\n" + "=" * 60)
+        print("Demo completed successfully!")
+        print("=" * 60)
+
+    except Exception as e:
+        print(f"\n✗ Demo failed with unexpected error: {e}")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

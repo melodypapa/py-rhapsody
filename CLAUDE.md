@@ -27,14 +27,19 @@ pip install -e .              # Core package only (pywin32 on Windows)
 ```bash
 pytest                                  # All tests
 pytest tests/unit/                      # Unit tests only (mocked COM, no Rhapsody needed)
-pytest tests/integration/               # Integration tests
+pytest tests/integration/               # Integration tests (requires live Rhapsody instance)
 pytest tests/system/                    # End-to-end subprocess tests
 pytest tests/unit/models/test_core.py   # Single test module
 pytest -k "test_open"                   # Pattern matching
 pytest --co                             # List all tests without running
 ```
 
-Tests run entirely against mocked COM objects (fakes live under `tests/unit/models/fakes.py`). No Rhapsody installation or license is required to run the test suite.
+**Test structure:**
+- `tests/unit/` — Mocked COM objects, no Rhapsody installation required (what CI runs)
+- `tests/integration/` — Requires live, licensed Rhapsody instance (auto-skips if unavailable)
+- `tests/system/` — End-to-end subprocess tests
+
+Tests run entirely against mocked COM objects (fakes live under `tests/unit/models/fakes.py`). No Rhapsody installation or license is required to run the unit test suite.
 
 ### Linting, Formatting, Type Checking
 
@@ -60,6 +65,8 @@ rhapsody-cli element query
 rhapsody-cli project open path/to/project.rpy
 rhapsody-cli project list
 ```
+
+**Available command groups:** `element` | `io` | `project`
 
 ## Architecture
 
@@ -171,6 +178,10 @@ All constants use `SCREAMING_SNAKE_CASE` (module-level and class-level). See `do
 - `RhapsodyRuntimeException` — COM API failures.
 - CLI actions use the helpers on `RhapsodyContextAction` (`_handle_connection_error`, `_handle_execution_error`) for consistent logging + stderr output.
 
+### Element Deletion
+
+When deleting elements, always call the wrapped `element.deleteFromProject()` method. Never call `element._com.delete()` directly — the raw COM object does not expose a `delete()` method.
+
 ## Git Workflow
 
 - **All changes go on feature branches, never directly to `main`.** Branch naming: `feature/<short-description>`, `fix/<...>`, `refactor/<...>`, `docs/<...>` (kebab-case with type prefix).
@@ -179,8 +190,26 @@ All constants use `SCREAMING_SNAKE_CASE` (module-level and class-level). See `do
 
 ## CI/CD
 
-- `.github/workflows/python-package.yml` — runs tests, ruff, black, mypy on push/PR across a Python 3.8–3.13 matrix.
+- `.github/workflows/python-package.yml` — runs `ruff check`, `black --check`, `mypy` (Python < 3.10 only), and `pytest tests/unit -v --cov` across Python 3.8–3.13 on `windows-latest`. Integration/system tests are not run in CI (they require a live Rhapsody instance).
 - `.github/workflows/python-publish.yml` — auto-publishes to PyPI on GitHub release.
+
+## Common Tasks
+
+### Add a new element wrapper
+
+1. Create `src/rhapsody_cli/models/elements/<subpackage>/model_myclass.py` (choose subpackage based on element type: `classifiers/`, `containment/`, `relations/`, etc.)
+2. Define `RPMyClass(RPModelElement)` with methods mirroring the Java API
+3. Call `AbstractRPModelElement.register_wrapper("MyClass", RPMyClass)` at module level
+4. Write tests in `tests/unit/models/elements/test_myclass.py` using fakes from `tests/unit/models/fakes.py`
+5. Add the import to the subpackage's `__init__.py` so registration fires on import
+
+### Add a new CLI subcommand
+
+1. Write tests first in appropriate `tests/unit/cli/`, `tests/unit/commands/`, or `tests/unit/actions/` module
+2. Create an action class inheriting from `AbstractAction` (or `RhapsodyContextAction` / `ElementManagementAction`)
+3. Implement `init_arguments(sub_parser)` to register the subparser and `execute(args)` for business logic
+4. Register the action in the appropriate command group's `get_actions()` method (`ElementCommand`, `ProjectCommand`, etc.)
+5. Verify unit tests pass and run the full quality gate
 
 ## Documentation
 
