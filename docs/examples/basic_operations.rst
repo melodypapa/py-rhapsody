@@ -12,15 +12,23 @@ Example 1: Connect and List Projects
    from rhapsody_cli.exceptions import RhapsodyConnectionError
 
    def list_open_projects():
-       app = RhapsodyApplication()
-
        try:
-           app.connect()
+           # Smart connection: tries to attach, falls back to launch
+           app = RhapsodyApplication.connect()
            print("Connected to Rhapsody")
 
-           # Note: The connect() returns True/False indicating success
-           # To list projects, you would typically open one and query it
-           
+           # Get all open projects
+           projects = app.getProjects()
+           print(f"Open projects: {len(projects)}")
+
+           for project in projects:
+               print(f"  - {project.getName()}")
+
+           # Get active project
+           active_project = app.activeProject()
+           if active_project:
+               print(f"Active project: {active_project.getName()}")
+
        except RhapsodyConnectionError as e:
            print(f"Connection failed: {e}")
        finally:
@@ -38,8 +46,7 @@ Example 2: Open Project and List Elements
    from rhapsody_cli.exceptions import RhapsodyRuntimeException
 
    def explore_project(project_path):
-       app = RhapsodyApplication()
-       app.connect()
+       app = RhapsodyApplication.connect()
 
        try:
            # Open project
@@ -52,14 +59,14 @@ Example 2: Open Project and List Elements
            for pkg in packages:
                print(f"  - {pkg.getName()}")
 
-           # List classes
-           classes = project.getClasses()
+           # List classes (recursive search)
+           classes = project.getNestedElementsByMetaClass("Class", 1)
            print(f"\nClasses: {len(classes)}")
            for cls in classes:
                print(f"  - {cls.getName()}")
 
            # List diagrams
-           diagrams = project.getDiagrams()
+           diagrams = project.getNestedElementsByMetaClass("Diagram", 1)
            print(f"\nDiagrams: {len(diagrams)}")
            for diag in diagrams:
                print(f"  - {diag.getName()}")
@@ -67,7 +74,6 @@ Example 2: Open Project and List Elements
        except RhapsodyRuntimeException as e:
            print(f"Error: {e}")
        finally:
-           project.close()
            app.disconnect()
 
    if __name__ == "__main__":
@@ -81,34 +87,36 @@ Example 3: Create Simple Model Structure
    from rhapsody_cli.application import RhapsodyApplication
 
    def create_model():
-       app = RhapsodyApplication()
-       app.connect()
+       app = RhapsodyApplication.connect()
 
        try:
            project = app.openProject("C:\\path\\to\\project.rpy")
 
            # Create package
-           models_pkg = project.createPackageElement("Models")
+           models_pkg = project.addPackage("Models")
 
            # Create class
-           user_class = models_pkg.createClassElement("User")
+           user_class = models_pkg.addClass("User")
 
            # Add attributes
-           user_class.createAttribute("id", "int")
-           user_class.createAttribute("name", "string")
-           user_class.createAttribute("email", "string")
+           user_class.addAttribute("id", "int")
+           user_class.addAttribute("name", "string")
+           user_class.addAttribute("email", "string")
 
            # Add operation
-           op = user_class.createOperation("getId", "int")
+           op = user_class.addOperation("getId")
+           op.setReturnResult("int")
 
            print("Model created:")
            print(f"  Package: {models_pkg.getName()}")
            print(f"  Class: {user_class.getName()}")
-           print(f"  Attributes: 3")
-           print(f"  Operations: 1")
+           print(f"  Attributes: {len(user_class.getAttributes())}")
+           print(f"  Operations: {len(user_class.getOperations())}")
+
+           # Save changes
+           project.save()
 
        finally:
-           project.close()
            app.disconnect()
 
    if __name__ == "__main__":
@@ -122,24 +130,18 @@ Example 4: Find and Modify Elements
    from rhapsody_cli.application import RhapsodyApplication
 
    def modify_elements():
-       app = RhapsodyApplication()
-       app.connect()
+       app = RhapsodyApplication.connect()
 
        try:
            project = app.openProject("C:\\path\\to\\project.rpy")
 
            # Find package by name
-           pkg = project.findNestedPackageByName("Models")
+           pkg = project.findNestedElement("Models", "Package")
            if pkg:
                print(f"Found package: {pkg.getName()}")
 
                # Find class in package
-               user_class = None
-               for cls in pkg.getClasses():
-                   if cls.getName() == "User":
-                       user_class = cls
-                       break
-
+               user_class = pkg.findNestedElement("User", "Class")
                if user_class:
                    print(f"Found class: {user_class.getName()}")
 
@@ -152,7 +154,6 @@ Example 4: Find and Modify Elements
                        print(f"  Operation: {op.getName()}")
 
        finally:
-           project.close()
            app.disconnect()
 
    if __name__ == "__main__":
@@ -170,38 +171,28 @@ Example 5: Error Handling and Recovery
    )
 
    def safe_operation():
-       app = RhapsodyApplication()
-
-       # Try to attach, fall back to launching
+       # Smart connection: tries to attach, falls back to launching
        try:
-           app.attach()
-           print("Attached to running Rhapsody instance")
-       except RhapsodyConnectionError:
-           print("No running instance, launching new one")
-           app.launch()
+           app = RhapsodyApplication.connect()
+           print("Connected to Rhapsody")
+       except RhapsodyConnectionError as e:
+           print(f"Connection failed: {e}")
+           return
 
        project = None
        try:
            # Try to open project
-           project = app.openProject("C:\\path\\to\\project.rpy")
-           print(f"Successfully opened: {project.getName()}")
-
-       except FileNotFoundError as e:
-           print(f"Project file not found: {e}")
-
-       except RhapsodyRuntimeException as e:
-           print(f"Rhapsody error: {e}")
+           try:
+               project = app.openProject("C:\\path\\to\\project.rpy")
+               print(f"Successfully opened: {project.getName()}")
+           except RhapsodyRuntimeException as e:
+               print(f"Project error: {e}")
 
        except Exception as e:
            print(f"Unexpected error: {e}")
 
        finally:
            # Always cleanup
-           if project:
-               try:
-                   project.close()
-               except:
-                   pass
            app.disconnect()
 
    if __name__ == "__main__":

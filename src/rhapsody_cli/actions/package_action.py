@@ -17,7 +17,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, cast
 
 from rhapsody_cli.actions.abstract_action import ElementManagementAction
 from rhapsody_cli.cli.formatters import OutputFormatter
@@ -520,7 +520,7 @@ class PackageUpdateAction(AbstractPackageAction):
         if args.input:
             try:
                 with open(args.input, encoding="utf-8") as f:
-                    return json.load(f)
+                    return cast(Dict[str, Any], json.load(f))
             except FileNotFoundError:
                 raise CliExecutionError(f"File not found: {args.input}") from None
             except json.JSONDecodeError as e:
@@ -529,13 +529,13 @@ class PackageUpdateAction(AbstractPackageAction):
             data_str = args.attributes.strip()
             if data_str.startswith("{"):
                 try:
-                    return json.loads(data_str)
+                    return cast(Dict[str, Any], json.loads(data_str))
                 except json.JSONDecodeError as e:
                     raise CliExecutionError(f"Invalid JSON: {e}") from e
             else:
                 try:
                     with open(data_str, encoding="utf-8") as f:
-                        return json.load(f)
+                        return cast(Dict[str, Any], json.load(f))
                 except FileNotFoundError:
                     raise CliExecutionError(f"File not found: {data_str}") from None
                 except json.JSONDecodeError as e:
