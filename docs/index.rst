@@ -170,8 +170,12 @@ Documentation Structure
    user_guide/quickstart
    user_guide/connecting_to_rhapsody
    user_guide/working_with_projects
-   user_guide/working_with_elements
    user_guide/working_with_packages
+   user_guide/working_with_classes
+   user_guide/working_with_operations
+   user_guide/working_with_attributes
+   user_guide/working_with_ports
+   user_guide/working_with_elements
    user_guide/cli_tools
 
 .. toctree::
