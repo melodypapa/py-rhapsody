@@ -5,25 +5,25 @@ from typing import Any
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.relations.model_instance import RPInstance
 
-# IRPPort method parity checklist:
-# [x] addProvidedInterface      [x] impl  [x] docstring  [x] test
-# [x] addRequiredInterface      [x] impl  [x] docstring  [x] test
-# [x] getIsBehavioral           [x] impl  [x] docstring  [x] test
-# [x] getIsReversed             [x] impl  [x] docstring  [x] test
-# [x] getPortContract           [x] impl  [x] docstring  [x] test
-# [x] getProvidedInterfaces     [x] impl  [x] docstring  [x] test
-# [x] getRequiredInterfaces     [x] impl  [x] docstring  [x] test
-# [x] removeProvidedInterface   [x] impl  [x] docstring  [x] test
-# [x] removeRequiredInterface   [x] impl  [x] docstring  [x] test
-# [x] setIsBehavioral           [x] impl  [x] docstring  [x] test
-# [x] setIsReversed             [x] impl  [x] docstring  [x] test
-# [x] setPortContract           [x] impl  [x] docstring  [x] test
-# [x] getContract (deprecated, use getPortContract) [x] impl [x] docstring [x] test
-# [x] setContract (deprecated, use setPortContract) [x] impl [x] docstring [x] test
-
 
 class RPPort(RPInstance):
     """Wraps ``IRPPort``: represents a port on a classifier in the model."""
+
+    # IRPPort method parity checklist:
+    # [x] addProvidedInterface      [x] impl  [x] docstring  [x] test
+    # [x] addRequiredInterface      [x] impl  [x] docstring  [x] test
+    # [x] getIsBehavioral           [x] impl  [x] docstring  [x] test
+    # [x] getIsReversed             [x] impl  [x] docstring  [x] test
+    # [x] getPortContract           [x] impl  [x] docstring  [x] test
+    # [x] getProvidedInterfaces     [x] impl  [x] docstring  [x] test
+    # [x] getRequiredInterfaces     [x] impl  [x] docstring  [x] test
+    # [x] removeProvidedInterface   [x] impl  [x] docstring  [x] test
+    # [x] removeRequiredInterface   [x] impl  [x] docstring  [x] test
+    # [x] setIsBehavioral           [x] impl  [x] docstring  [x] test
+    # [x] setIsReversed             [x] impl  [x] docstring  [x] test
+    # [x] setPortContract           [x] impl  [x] docstring  [x] test
+    # [x] getContract (deprecated, use getPortContract) [x] impl [x] docstring [x] test
+    # [x] setContract (deprecated, use setPortContract) [x] impl [x] docstring [x] test
 
     def getIsBehavioral(self) -> int:
         """Checks whether the port is a behavioral port.

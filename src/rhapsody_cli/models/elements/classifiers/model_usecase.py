@@ -7,6 +7,25 @@ from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifi
 class RPUseCase(RPClassifier):
     """Wraps ``IRPUseCase``: represents a use case in the model."""
 
+    # IRPUseCase method parity checklist:
+    # [ ] addDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addEventReceptionWithEvent  [ ] impl  [ ] docstring  [ ] test
+    # [x] addExtensionPoint  [x] impl  [x] docstring  [x] test
+    # [ ] deleteDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteEntryPoint  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteExtensionPoint  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findEntryPoint  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findExtensionPoint  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [x] getDescribingDiagrams  [x] impl  [x] docstring  [x] test
+    # [x] getEntryPoints  [x] impl  [x] docstring  [x] test
+    # [x] getExtensionPoints  [x] impl  [x] docstring  [x] test
+    # [ ] getIsBehaviorOverriden  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsBehaviorOverriden  [ ] impl  [ ] docstring  [ ] test
+    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # No deprecated IRPUseCase methods.
+
     def addExtensionPoint(self, entry_point: str) -> None:
         """Adds an extension point to the use case.
 

@@ -4,63 +4,63 @@ from typing import Any
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement, RPUnit
 
-# IRPClassifier method parity checklist:
-# [x] addActivityDiagram              [x] impl  [x] docstring  [x] test
-# [x] addAttribute                    [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addFlowItems                    [x] impl  [x] docstring  [x] test
-# [x] addFlows                        [x] impl  [x] docstring  [x] test
-# [x] addGeneralization               [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addOperation                    [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addRelation                     [x] impl  [x] docstring  [x] test
-# [x] addRelationTo                   [x] impl  [x] docstring  [x] test
-# [x] addStatechart                   [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addUnidirectionalRelation       [x] impl  [x] docstring  [x] test
-# [x] addUnidirectionalRelationTo     [x] impl  [x] docstring  [x] test
-# [x] deleteAttribute                 [x] impl  [x] docstring  [x] test
-# [x] deleteFlowItems                 [x] impl  [x] docstring  [x] test
-# [x] deleteFlows                     [x] impl  [x] docstring  [x] test
-# [x] deleteGeneralization            [x] impl  [x] docstring  [x] test
-# [x] deleteOperation                 [x] impl  [x] docstring  [x] test
-# [x] deleteRelation                  [x] impl  [x] docstring  [x] test
-# [x] findAttribute                   [x] impl  [x] docstring  [x] test
-# [x] findBaseClassifier              [x] impl  [x] docstring  [x] test
-# [x] findDerivedClassifier           [x] impl  [x] docstring  [x] test
-# [x] findGeneralization              [x] impl  [x] docstring  [x] test
-# [x] findInterfaceItem               [x] impl  [x] docstring  [x] test
-# [x] findNestedClassifier            [x] impl  [x] docstring  [x] test
-# [x] findNestedClassifierRecursive   [x] impl  [x] docstring  [x] test
-# [x] findRelation                    [x] impl  [x] docstring  [x] test
-# [x] findTrigger                     [x] impl  [x] docstring  [x] test
-# [x] getActivityDiagram              [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
-# [x] getAttributes                   [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getAttributesIncludingBases     [x] impl  [x] docstring  [x] test
-# [x] getBaseClassifiers              [x] impl  [x] docstring  [x] test
-# [x] getBehavioralDiagrams           [x] impl  [x] docstring  [x] test
-# [x] getDerivedClassifiers           [x] impl  [x] docstring  [x] test
-# [x] getFlowItems                    [x] impl  [x] docstring  [x] test
-# [x] getFlows                        [x] impl  [x] docstring  [x] test
-# [x] getGeneralizations              [x] impl  [x] docstring  [x] test
-# [x] getInterfaceItems               [x] impl  [x] docstring  [x] test
-# [x] getInterfaceItemsIncludingBases [x] impl  [x] docstring  [x] test
-# [x] getLinks                        [x] impl  [x] docstring  [x] test
-# [x] getNestedClassifiers            [x] impl  [x] docstring  [x] test
-# [x] getOperations                   [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getPorts                        [x] impl  [x] docstring  [x] test
-# [x] getRelations                    [x] impl  [x] docstring  [x] test
-# [x] getRelationsIncludingBases      [x] impl  [x] docstring  [x] test
-# [x] getSequenceDiagrams             [x] impl  [x] docstring  [x] test
-# [x] getSourceArtifacts              [x] impl  [x] docstring  [x] test
-# [x] getStatechart                   [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
-# [inherited] IRPUnit / IRPModelElement methods (getName, setName, getOwner, getGUID,
-#              addDependency, addStereotype, getStereotypes, getNestedElements, save, load, etc.)
-# No deprecated IRPClassifier methods in deprecated-list.html.
-# [x] addPort (convenience method, not part of IRPClassifier's Java API -
-#     ports are created generically via addNewAggr("Port", name); this
-#     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] test
-
 
 class RPClassifier(RPUnit):
     """Wraps ``IRPClassifier``: the base class for all classifiable elements."""
+
+    # IRPClassifier method parity checklist:
+    # [x] addActivityDiagram              [x] impl  [x] docstring  [x] test
+    # [x] addAttribute                    [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addFlowItems                    [x] impl  [x] docstring  [x] test
+    # [x] addFlows                        [x] impl  [x] docstring  [x] test
+    # [x] addGeneralization               [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addOperation                    [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addRelation                     [x] impl  [x] docstring  [x] test
+    # [x] addRelationTo                   [x] impl  [x] docstring  [x] test
+    # [x] addStatechart                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addUnidirectionalRelation       [x] impl  [x] docstring  [x] test
+    # [x] addUnidirectionalRelationTo     [x] impl  [x] docstring  [x] test
+    # [x] deleteAttribute                 [x] impl  [x] docstring  [x] test
+    # [x] deleteFlowItems                 [x] impl  [x] docstring  [x] test
+    # [x] deleteFlows                     [x] impl  [x] docstring  [x] test
+    # [x] deleteGeneralization            [x] impl  [x] docstring  [x] test
+    # [x] deleteOperation                 [x] impl  [x] docstring  [x] test
+    # [x] deleteRelation                  [x] impl  [x] docstring  [x] test
+    # [x] findAttribute                   [x] impl  [x] docstring  [x] test
+    # [x] findBaseClassifier              [x] impl  [x] docstring  [x] test
+    # [x] findDerivedClassifier           [x] impl  [x] docstring  [x] test
+    # [x] findGeneralization              [x] impl  [x] docstring  [x] test
+    # [x] findInterfaceItem               [x] impl  [x] docstring  [x] test
+    # [x] findNestedClassifier            [x] impl  [x] docstring  [x] test
+    # [x] findNestedClassifierRecursive   [x] impl  [x] docstring  [x] test
+    # [x] findRelation                    [x] impl  [x] docstring  [x] test
+    # [x] findTrigger                     [x] impl  [x] docstring  [x] test
+    # [x] getActivityDiagram              [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
+    # [x] getAttributes                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getAttributesIncludingBases     [x] impl  [x] docstring  [x] test
+    # [x] getBaseClassifiers              [x] impl  [x] docstring  [x] test
+    # [x] getBehavioralDiagrams           [x] impl  [x] docstring  [x] test
+    # [x] getDerivedClassifiers           [x] impl  [x] docstring  [x] test
+    # [x] getFlowItems                    [x] impl  [x] docstring  [x] test
+    # [x] getFlows                        [x] impl  [x] docstring  [x] test
+    # [x] getGeneralizations              [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceItems               [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceItemsIncludingBases [x] impl  [x] docstring  [x] test
+    # [x] getLinks                        [x] impl  [x] docstring  [x] test
+    # [x] getNestedClassifiers            [x] impl  [x] docstring  [x] test
+    # [x] getOperations                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getPorts                        [x] impl  [x] docstring  [x] test
+    # [x] getRelations                    [x] impl  [x] docstring  [x] test
+    # [x] getRelationsIncludingBases      [x] impl  [x] docstring  [x] test
+    # [x] getSequenceDiagrams             [x] impl  [x] docstring  [x] test
+    # [x] getSourceArtifacts              [x] impl  [x] docstring  [x] test
+    # [x] getStatechart                   [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
+    # [inherited] IRPUnit / IRPModelElement methods (getName, setName, getOwner, getGUID,
+    #              addDependency, addStereotype, getStereotypes, getNestedElements, save, load, etc.)
+    # No deprecated IRPClassifier methods in deprecated-list.html.
+    # [x] addPort (convenience method, not part of IRPClassifier's Java API -
+    #     ports are created generically via addNewAggr("Port", name); this
+    #     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] test
 
     def addAttribute(self, name: str) -> Any:
         """Adds a new attribute to the classifier.

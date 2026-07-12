@@ -5,41 +5,41 @@ from typing import Any
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
-# IRPClass method parity checklist:
-# [x] addClass                 [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addConstructor           [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addDestructor            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addSuperclass            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getIsAbstract            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] addEventReception        [x] impl  [x] docstring  [x] test
-# [x] addEventReceptionWithEvent [x] impl [x] docstring [x] test
-# [x] addLink                  [x] impl  [x] docstring  [x] test
-# [x] addLinkToPartViaPort     [x] impl  [x] docstring  [x] test
-# [x] addReception             [x] impl  [x] docstring  [x] test
-# [x] addTriggeredOperation    [x] impl  [x] docstring  [x] test
-# [x] addType                  [x] impl  [x] docstring  [x] test
-# [x] deleteClass              [x] impl  [x] docstring  [x] test
-# [x] deleteConstructor        [x] impl  [x] docstring  [x] test
-# [x] deleteDestructor         [x] impl  [x] docstring  [x] test
-# [x] deleteEventReception     [x] impl  [x] docstring  [x] test
-# [x] deleteReception          [x] impl  [x] docstring  [x] test
-# [x] deleteSuperclass         [x] impl  [x] docstring  [x] test
-# [x] deleteType               [x] impl  [x] docstring  [x] test
-# [x] getIsActive              [x] impl  [x] docstring  [x] test
-# [x] getIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
-# [x] getIsComposite           [x] impl  [x] docstring  [x] test
-# [x] getIsFinal               [x] impl  [x] docstring  [x] test
-# [x] getIsReactive            [x] impl  [x] docstring  [x] test
-# [x] setIsAbstract            [x] impl  [x] docstring  [x] test
-# [x] setIsActive              [x] impl  [x] docstring  [x] test
-# [x] setIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
-# [x] setIsFinal               [x] impl  [x] docstring  [x] test
-# [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
-# No deprecated methods in IRPClass.
-
 
 class RPClass(RPClassifier):
     """Wraps ``IRPClass``: represents a class in the model."""
+
+    # IRPClass method parity checklist:
+    # [x] addClass                 [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addConstructor           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addDestructor            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addSuperclass            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getIsAbstract            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] addEventReception        [x] impl  [x] docstring  [x] test
+    # [x] addEventReceptionWithEvent [x] impl [x] docstring [x] test
+    # [x] addLink                  [x] impl  [x] docstring  [x] test
+    # [x] addLinkToPartViaPort     [x] impl  [x] docstring  [x] test
+    # [x] addReception             [x] impl  [x] docstring  [x] test
+    # [x] addTriggeredOperation    [x] impl  [x] docstring  [x] test
+    # [x] addType                  [x] impl  [x] docstring  [x] test
+    # [x] deleteClass              [x] impl  [x] docstring  [x] test
+    # [x] deleteConstructor        [x] impl  [x] docstring  [x] test
+    # [x] deleteDestructor         [x] impl  [x] docstring  [x] test
+    # [x] deleteEventReception     [x] impl  [x] docstring  [x] test
+    # [x] deleteReception          [x] impl  [x] docstring  [x] test
+    # [x] deleteSuperclass         [x] impl  [x] docstring  [x] test
+    # [x] deleteType               [x] impl  [x] docstring  [x] test
+    # [x] getIsActive              [x] impl  [x] docstring  [x] test
+    # [x] getIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
+    # [x] getIsComposite           [x] impl  [x] docstring  [x] test
+    # [x] getIsFinal               [x] impl  [x] docstring  [x] test
+    # [x] getIsReactive            [x] impl  [x] docstring  [x] test
+    # [x] setIsAbstract            [x] impl  [x] docstring  [x] test
+    # [x] setIsActive              [x] impl  [x] docstring  [x] test
+    # [x] setIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
+    # [x] setIsFinal               [x] impl  [x] docstring  [x] test
+    # [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
+    # No deprecated methods in IRPClass.
 
     def addSuperclass(self, super_class: "RPClass") -> None:
         """Adds a superclass to this class.

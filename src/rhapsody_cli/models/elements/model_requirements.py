@@ -16,6 +16,20 @@ class RPAnnotation(RPUnit):
     model elements.
     """
 
+    # IRPAnnotation method parity checklist:
+    # [x] addAnchor  [x] impl  [x] docstring  [x] test
+    # [x] getAnchoredByMe  [x] impl  [x] docstring  [x] test
+    # [x] getBody  [x] impl  [x] docstring  [x] test
+    # [x] getSpecification  [x] impl  [x] docstring  [x] test
+    # [x] getSpecificationRTF  [x] impl  [x] docstring  [x] test
+    # [x] isSpecificationRTF  [x] impl  [x] docstring  [x] test
+    # [x] removeAnchor  [x] impl  [x] docstring  [x] test
+    # [x] setBody  [x] impl  [x] docstring  [x] test
+    # [x] setSpecification  [x] impl  [x] docstring  [x] test
+    # [x] setSpecificationRTF  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # No deprecated IRPAnnotation methods.
+
     def addAnchor(self, target: RPModelElement) -> None:
         """Adds an anchor from the annotation to the specified model element.
 
@@ -129,6 +143,12 @@ class RPAnnotation(RPUnit):
 
 class RPRequirement(RPAnnotation):
     """Wraps ``IRPRequirement``: represents a requirement in the model."""
+
+    # IRPRequirement method parity checklist:
+    # [x] getRequirementID  [x] impl  [x] docstring  [x] test
+    # [x] setRequirementID  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPAnnotation / IRPUnit / IRPModelElement methods (covered by RPAnnotation / RPUnit / RPModelElement checklists)
+    # No deprecated IRPRequirement methods.
 
     def getRequirementID(self) -> str:
         """Returns the ID that was set for the requirement.

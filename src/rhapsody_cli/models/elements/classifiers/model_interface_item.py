@@ -12,6 +12,17 @@ class RPInterfaceItem(RPClassifier):
     triggers).
     """
 
+    # IRPInterfaceItem method parity checklist:
+    # [x] addArgument  [x] impl  [x] docstring  [x] test
+    # [x] addArgumentBeforePosition  [x] impl  [x] docstring  [x] test
+    # [x] getArguments  [x] impl  [x] docstring  [x] test
+    # [x] getSignature  [x] impl  [x] docstring  [x] test
+    # [x] getSignatureNoArgNames  [x] impl  [x] docstring  [x] test
+    # [x] getSignatureNoArgTypes  [x] impl  [x] docstring  [x] test
+    # [x] matchOnSignature  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # No deprecated IRPInterfaceItem methods.
+
     def addArgument(self, new_val: str) -> Any:
         """Adds a new argument to the end of the argument list.
 

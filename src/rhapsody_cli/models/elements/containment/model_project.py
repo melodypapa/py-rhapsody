@@ -9,6 +9,80 @@ from rhapsody_cli.models.elements.containment.model_package import RPPackage
 class RPProject(RPPackage):
     """Wraps ``IRPProject``: represents the top-level project container."""
 
+    # IRPProject method parity checklist:
+    # [ ] gatewayExportToXML  [ ] impl  [ ] docstring  [ ] test
+    # [ ] gatewayExportToXML2  [ ] impl  [ ] docstring  [ ] test
+    # [ ] generateReport  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addComponent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [x] addPackage  [x] impl  [x] docstring  [x] test
+    # [ ] addProfile  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addSpellCheckerResult  [ ] impl  [ ] docstring  [ ] test
+    # [ ] allowAutoSave  [ ] impl  [ ] docstring  [ ] test
+    # [ ] allowNonUniqueNames  [ ] impl  [ ] docstring  [ ] test
+    # [ ] applyBrowserCustomViewsOnDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] applyRoundtripDiffMerge  [ ] impl  [ ] docstring  [ ] test
+    # [x] becomeActiveProject  [x] impl  [x] docstring  [x] test
+    # [ ] checkEventsBaseIdsSolveCollisions  [ ] impl  [ ] docstring  [ ] test
+    # [ ] cleanUnresolvedElements  [ ] impl  [ ] docstring  [ ] test
+    # [x] close  [x] impl  [x] docstring  [x] test
+    # [ ] closeCSVFile  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteComponent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] enableRhapsodyModelManager  [ ] impl  [ ] docstring  [ ] test
+    # [ ] endTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] test
+    # [x] findComponent  [x] impl  [x] docstring  [x] test
+    # [ ] findElementByBinaryID  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findElementByFileName  [ ] impl  [ ] docstring  [ ] test
+    # [x] findElementByGUID  [x] impl  [x] docstring  [x] test
+    # [ ] findElementsWithOSLCLink  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getActiveComponent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getActiveConfiguration  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getActiveCustomViewsOnBrowser  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getActiveCustomViewsOnDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getAllStereotypes  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getCgSimplifiedModelPackage  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getCodeGeneratedFiles  [ ] impl  [ ] docstring  [ ] test
+    # [x] getComponents  [x] impl  [x] docstring  [x] test
+    # [ ] getDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNewCollaboration  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNewProgressBar  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getProfiles  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getRemoteResourcePackages  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getRequirementsByID  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getRoundtripShadowModel  [ ] impl  [ ] docstring  [ ] test
+    # [ ] highlightFromCode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] importPackageFromRose  [ ] impl  [ ] docstring  [ ] test
+    # [ ] importProjectFromRose  [ ] impl  [ ] docstring  [ ] test
+    # [ ] isActivelyManaged  [ ] impl  [ ] docstring  [ ] test
+    # [ ] isModifiedRecursive  [ ] impl  [ ] docstring  [ ] test
+    # [ ] locateInIDE  [ ] impl  [ ] docstring  [ ] test
+    # [ ] migrateDesignManagerLinks  [ ] impl  [ ] docstring  [ ] test
+    # [deprecated] moveToDesignManager  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [deprecated] moveToDesignManagerAfterLogin  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [ ] openCSVFile  [ ] impl  [ ] docstring  [ ] test
+    # [ ] recalculateEventsBaseIds  [ ] impl  [ ] docstring  [ ] test
+    # [ ] reloadCSVFile  [ ] impl  [ ] docstring  [ ] test
+    # [ ] remove  [ ] impl  [ ] docstring  [ ] test
+    # [ ] removeCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] test
+    # [ ] removeCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [x] save  [x] impl  [x] docstring  [x] test   (inherited from RPUnit)
+    # [ ] saveAs  [ ] impl  [ ] docstring  [ ] test
+    # [ ] saveAsPrevVersion  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setActiveComponent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setActiveConfiguration  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setGlobalConfiguration  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setObjectExplicit  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setObjectImplicit  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setUseUniqueStereotypeAndRefCache  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setWaitDialogWatchdogValue  [ ] impl  [ ] docstring  [ ] test
+    # [ ] startTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPPackage / IRPUnit / IRPModelElement methods (covered by RPPackage / RPUnit / RPModelElement checklists)
+    # Deprecated IRPProject methods listed above.
+
     def addPackage(self, name: str) -> Any:
         """Adds a new package to the project.
 

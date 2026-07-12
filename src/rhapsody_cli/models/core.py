@@ -1776,40 +1776,41 @@ class AddToModelMode(IntEnum):
     AS_UNIT_WITHOUT_COPY = 2
 
 
-# IRPUnit method parity checklist:
-# [x] copyToAnotherProject                [x] impl  [x] docstring  [x] test
-# [x] getAddToModelMode                   [x] impl  [x] docstring  [x] test
-# [x] getCMHeader                         [x] impl  [x] docstring  [x] test
-# [x] getCMState                          [x] impl  [x] docstring  [x] test
-# [x] getCurrentDirectory                 [x] impl  [x] docstring  [x] test
-# [x] getFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
-# [x] getIncludeInNextLoad                [x] impl  [x] docstring  [x] test
-# [x] getIsStub                           [x] impl  [x] docstring  [x] test
-# [x] getLanguage                         [x] impl  [x] docstring  [x] test
-# [x] getLastModifiedTime                 [x] impl  [x] docstring  [x] test
-# [x] getNestedSaveUnits                  [x] impl  [x] docstring  [x] test
-# [x] getNestedSaveUnitsCount             [x] impl  [x] docstring  [x] test
-# [x] getStructureDiagrams                [x] impl  [x] docstring  [x] test
-# [x] getUnitPath                         [x] impl  [x] docstring  [x] test
-# [x] isReadOnly                          [x] impl  [x] docstring  [x] test  (pre-existing)
-# [x] isReferenceUnit                     [x] impl  [x] docstring  [x] test
-# [x] isSeparateSaveUnit                  [x] impl  [x] docstring  [x] test
-# [x] load                                [x] impl  [x] docstring  [x] test
-# [x] moveToAnotherProjectLeaveAReference [x] impl  [x] docstring  [x] test
-# [x] referenceToAnotherProject           [x] impl  [x] docstring  [x] test
-# [x] save                                [x] impl  [x] docstring  [x] test  (pre-existing)
-# [x] setCMHeader                         [x] impl  [x] docstring  [x] test
-# [x] setFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
-# [x] setIncludeInNextLoad                [x] impl  [x] docstring  [x] test
-# [x] setLanguage                         [x] impl  [x] docstring  [x] test
-# [x] setReadOnly                         [x] impl  [x] docstring  [x] test  (pre-existing)
-# [x] setSeparateSaveUnit                 [x] impl  [x] docstring  [x] test
-# [x] setUnitPath                         [x] impl  [x] docstring  [x] test
-# [x] unload                              [x] impl  [x] docstring  [x] test
-# [inherited] getNestedElements - provided by RPModelElement
-# No deprecated IRPUnit methods.
 class RPUnit(RPModelElement):
     """Wraps ``IRPUnit``: model elements that can be saved as separate files."""
+
+    # IRPUnit method parity checklist:
+    # [x] copyToAnotherProject                [x] impl  [x] docstring  [x] test
+    # [x] getAddToModelMode                   [x] impl  [x] docstring  [x] test
+    # [x] getCMHeader                         [x] impl  [x] docstring  [x] test
+    # [x] getCMState                          [x] impl  [x] docstring  [x] test
+    # [x] getCurrentDirectory                 [x] impl  [x] docstring  [x] test
+    # [x] getFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
+    # [x] getIncludeInNextLoad                [x] impl  [x] docstring  [x] test
+    # [x] getIsStub                           [x] impl  [x] docstring  [x] test
+    # [x] getLanguage                         [x] impl  [x] docstring  [x] test
+    # [x] getLastModifiedTime                 [x] impl  [x] docstring  [x] test
+    # [x] getNestedSaveUnits                  [x] impl  [x] docstring  [x] test
+    # [x] getNestedSaveUnitsCount             [x] impl  [x] docstring  [x] test
+    # [x] getStructureDiagrams                [x] impl  [x] docstring  [x] test
+    # [x] getUnitPath                         [x] impl  [x] docstring  [x] test
+    # [x] isReadOnly                          [x] impl  [x] docstring  [x] test  (pre-existing)
+    # [x] isReferenceUnit                     [x] impl  [x] docstring  [x] test
+    # [x] isSeparateSaveUnit                  [x] impl  [x] docstring  [x] test
+    # [x] load                                [x] impl  [x] docstring  [x] test
+    # [x] moveToAnotherProjectLeaveAReference [x] impl  [x] docstring  [x] test
+    # [x] referenceToAnotherProject           [x] impl  [x] docstring  [x] test
+    # [x] save                                [x] impl  [x] docstring  [x] test  (pre-existing)
+    # [x] setCMHeader                         [x] impl  [x] docstring  [x] test
+    # [x] setFilename                         [x] impl  [x] docstring  [x] test  (pre-existing)
+    # [x] setIncludeInNextLoad                [x] impl  [x] docstring  [x] test
+    # [x] setLanguage                         [x] impl  [x] docstring  [x] test
+    # [x] setReadOnly                         [x] impl  [x] docstring  [x] test  (pre-existing)
+    # [x] setSeparateSaveUnit                 [x] impl  [x] docstring  [x] test
+    # [x] setUnitPath                         [x] impl  [x] docstring  [x] test
+    # [x] unload                              [x] impl  [x] docstring  [x] test
+    # [inherited] getNestedElements - provided by RPModelElement
+    # No deprecated IRPUnit methods.
 
     def copyToAnotherProject(self, parent_in_target: "RPModelElement") -> "RPModelElement":
         """Makes an editable copy of the unit in a different project.
@@ -2180,6 +2181,20 @@ class RPUnit(RPModelElement):
 
 class RPCollection:
     """Wraps ``IRPCollection``: an iterable/indexable container of elements."""
+
+    # IRPCollection method parity checklist:
+    # [x] getCount  [x] impl  [x] docstring  [x] test
+    # [x] getItem  [x] impl  [x] docstring  [x] test
+    # [x] addItem  [x] impl  [x] docstring  [x] test
+    # [ ] addGraphicalItem  [ ] impl  [ ] docstring  [ ] test
+    # [ ] toList  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setSize  [ ] impl  [ ] docstring  [ ] test
+    # [ ] remove  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setString  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setModelElement  [ ] impl  [ ] docstring  [ ] test
+    # [ ] empty  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setInteger  [ ] impl  [ ] docstring  [ ] test
+    # No deprecated IRPCollection methods.
 
     def __init__(self, com_obj: Any) -> None:
         self._com = com_obj

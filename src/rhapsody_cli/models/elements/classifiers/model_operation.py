@@ -9,6 +9,42 @@ from rhapsody_cli.models.elements.classifiers.model_interface_item import RPInte
 class RPOperation(RPInterfaceItem):
     """Wraps ``IRPOperation``: represents an operation or method in a classifier."""
 
+    # IRPOperation method parity checklist:
+    # [x] createAutoFlowChart  [x] impl  [x] docstring  [x] test
+    # [ ] deleteArgument  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteFlowchart  [ ] impl  [ ] docstring  [ ] test
+    # [x] getBody  [x] impl  [x] docstring  [x] test
+    # [ ] getFlowchart  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getImplementationSignature  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getInitializer  [ ] impl  [ ] docstring  [ ] test
+    # [x] getIsAbstract  [x] impl  [x] docstring  [x] test
+    # [ ] getIsCgDerived  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsConst  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsCtor  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsDtor  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsFinal  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsInline  [ ] impl  [ ] docstring  [ ] test
+    # [x] getIsStatic  [x] impl  [x] docstring  [x] test
+    # [ ] getIsTrigger  [ ] impl  [ ] docstring  [ ] test
+    # [x] getIsVirtual  [x] impl  [x] docstring  [x] test
+    # [x] getReturnTypeDeclaration  [x] impl  [x] docstring  [x] test
+    # [x] getReturns  [x] impl  [x] docstring  [x] test
+    # [ ] getVisibility  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setBody  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setFlowchart  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setInitializer  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsAbstract  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsConst  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsFinal  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsStatic  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsVirtual  [ ] impl  [ ] docstring  [ ] test
+    # [x] setReturnTypeDeclaration  [x] impl  [x] docstring  [x] test
+    # [x] setReturns  [x] impl  [x] docstring  [x] test
+    # [ ] setVisibility  [ ] impl  [ ] docstring  [ ] test
+    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPInterfaceItem / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPInterfaceItem / RPClassifier / RPUnit / RPModelElement checklists)
+    # No deprecated IRPOperation methods.
+
     def getBody(self) -> str:
         """Returns the body/implementation of the operation.
 

@@ -18,6 +18,20 @@ class RPVariable(RPUnit):
     attributes and parameters) that carry a type and default value.
     """
 
+    # IRPVariable method parity checklist:
+    # [x] addElementDefaultValue  [x] impl  [x] docstring  [x] test
+    # [x] addStringDefaultValue  [x] impl  [x] docstring  [x] test
+    # [x] getDeclaration  [x] impl  [x] docstring  [x] test
+    # [x] getDefaultValue  [x] impl  [x] docstring  [x] test
+    # [x] getType  [x] impl  [x] docstring  [x] test
+    # [x] getValueSpecifications  [x] impl  [x] docstring  [x] test
+    # [x] setDeclaration  [x] impl  [x] docstring  [x] test
+    # [x] setDefaultValue  [x] impl  [x] docstring  [x] test
+    # [x] setType  [x] impl  [x] docstring  [x] test
+    # [x] setTypeDeclaration  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # No deprecated IRPVariable methods.
+
     def addElementDefaultValue(self, new_default_val: RPModelElement) -> Any:
         """For tags with multiplicity greater than 1, adds a model element as an additional value.
 
@@ -138,6 +152,22 @@ class RPVariable(RPUnit):
 class RPAttribute(RPVariable):
     """Wraps ``IRPAttribute``: represents an attribute in a classifier."""
 
+    # IRPAttribute method parity checklist:
+    # [ ] getIsConstant  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsOrdered  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getIsReference  [ ] impl  [ ] docstring  [ ] test
+    # [x] getIsStatic  [x] impl  [x] docstring  [x] test
+    # [x] getMultiplicity  [x] impl  [x] docstring  [x] test
+    # [x] getVisibility  [x] impl  [x] docstring  [x] test
+    # [ ] setIsConstant  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsOrdered  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setIsReference  [ ] impl  [ ] docstring  [ ] test
+    # [x] setIsStatic  [x] impl  [x] docstring  [x] test
+    # [x] setMultiplicity  [x] impl  [x] docstring  [x] test
+    # [x] setVisibility  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # No deprecated IRPAttribute methods.
+
     def getMultiplicity(self) -> str:
         """Gets the multiplicity specified for the attribute.
 
@@ -211,6 +241,19 @@ AbstractRPModelElement.register_wrapper("Attribute", RPAttribute)
 class RPTag(RPVariable):
     """Wraps ``IRPTag``: a tag that extends ``IRPVariable``."""
 
+    # IRPTag method parity checklist:
+    # [ ] getBase  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getFromProfile  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getMultiplicity  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getTagMetaClass  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getValue  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setMultiplicity  [ ] impl  [ ] docstring  [ ] test
+    # [x] setTagContextValue  [x] impl  [x] docstring  [x] test   (inherited from RPModelElement)
+    # [ ] setTagMetaClass  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setValue  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # No deprecated IRPTag methods.
+
     pass
 
 
@@ -219,6 +262,12 @@ AbstractRPModelElement.register_wrapper("Tag", RPTag)
 
 class RPArgument(RPVariable):
     """Wraps ``IRPArgument``: an argument/parameter of an operation."""
+
+    # IRPArgument method parity checklist:
+    # [x] getArgumentDirection  [x] impl  [x] docstring  [x] test
+    # [x] setArgumentDirection  [x] impl  [x] docstring  [x] test
+    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # No deprecated IRPArgument methods.
 
     def getArgumentDirection(self) -> str:
         """Returns the direction of the argument (e.g. ``"in"``, ``"out"``, ``"inout"``).

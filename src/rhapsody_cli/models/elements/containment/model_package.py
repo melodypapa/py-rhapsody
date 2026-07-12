@@ -8,6 +8,110 @@ from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPUni
 class RPPackage(RPUnit):
     """Wraps ``IRPPackage``: represents a package that contains model elements."""
 
+    # IRPPackage method parity checklist:
+    # [ ] addActivityDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [x] addActor  [x] impl  [x] docstring  [x] test
+    # [x] addClass  [x] impl  [x] docstring  [x] test
+    # [ ] addCollaborationDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addComponentDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addDeploymentDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addEvent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addFlowItems  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addFlows  [ ] impl  [ ] docstring  [ ] test
+    # [x] addGlobalFunction  [x] impl  [x] docstring  [x] test
+    # [ ] addGlobalObject  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addGlobalVariable  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addImplicitObject  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addInstanceSpecification  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addLink  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addLinkBetweenSYSMLPorts  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addModule  [ ] impl  [ ] docstring  [ ] test
+    # [x] addNestedPackage  [x] impl  [x] docstring  [x] test
+    # [ ] addNode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addObjectModelDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addPanelDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addSequenceDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addStatechart  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addTimingDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] addType  [ ] impl  [ ] docstring  [ ] test
+    # [x] addUseCase  [x] impl  [x] docstring  [x] test
+    # [ ] addUseCaseDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteActor  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteClass  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteCollaborationDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteComponentDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteDeploymentDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteEvent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteFlowItems  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteFlows  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteGlobalFunction  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteGlobalObject  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteGlobalVariable  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteNode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteObjectModelDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deletePackage  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deletePanelDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteSequenceDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteTimingDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteType  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteUseCase  [ ] impl  [ ] docstring  [ ] test
+    # [ ] deleteUseCaseDiagram  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findActor  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findAllByName  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findClass  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findEvent  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findGlobalFunction  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findGlobalObject  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findGlobalVariable  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findNode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findType  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findUsage  [ ] impl  [ ] docstring  [ ] test
+    # [ ] findUseCase  [ ] impl  [ ] docstring  [ ] test
+    # [x] getActors  [x] impl  [x] docstring  [x] test
+    # [ ] getAllNestedElements  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getBehavioralDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [x] getClasses  [x] impl  [x] docstring  [x] test
+    # [ ] getCollaborationDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getComponentDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getDeploymentDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getEvents  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getEventsBaseId  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getFlowItems  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getFlows  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getGlobalFunctions  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getGlobalObjects  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getGlobalVariables  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getInstanceSpecifications  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getLinks  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getModules  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNamespace  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNestedClassifiers  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNestedComponents  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getNodes  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getObjectModelDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getPackages  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getPanelDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getRemoteRequirementsPopulateMode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getRootInstanceSpecifications  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getSavedInSeperateDirectory  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getSequenceDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getSourceArtifacts  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getTimingDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getTypes  [ ] impl  [ ] docstring  [ ] test
+    # [ ] getUseCaseDiagrams  [ ] impl  [ ] docstring  [ ] test
+    # [x] getUseCases  [x] impl  [x] docstring  [x] test
+    # [ ] getUserDefinedStereotypes  [ ] impl  [ ] docstring  [ ] test
+    # [ ] loginToRemoteArtifactServer  [ ] impl  [ ] docstring  [ ] test
+    # [ ] populateRemoteRequirements  [ ] impl  [ ] docstring  [ ] test
+    # [ ] reCalculateEventsBaseId  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setRemoteRequirementsPopulateMode  [ ] impl  [ ] docstring  [ ] test
+    # [ ] setSavedInSeperateDirectory  [ ] impl  [ ] docstring  [ ] test
+    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [ ] updateContainedMatricesOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [ ] updateContainedTablesOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # No deprecated IRPPackage methods.
+
     def addClass(self, name: str) -> Any:
         """Adds a new class to the package.
 

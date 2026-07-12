@@ -5,46 +5,46 @@ from typing import Any, cast
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement, RPUnit
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
-# IRPRelation method parity checklist:
-# [x] addQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getAssociationClass       [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getInverse                [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getIsNavigable            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getIsSymmetric            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getMultiplicity           [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getObjectAsObjectType     [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getOfClass                [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getOtherClass             [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getQualifiers             [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getQualifierType          [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getRelationLabel          [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getRelationLinkName       [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getRelationRoleName       [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getRelationType           [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getVisibility             [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] isTypelessObject          [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] makeUnidirect             [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] removeQualifier           [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setInverse                [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setIsNavigable            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setMultiplicity           [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setOfClass                [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setOtherClass             [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setQualifierType          [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setRelationLabel          [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setRelationLinkName       [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setRelationRoleName       [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setRelationType           [x] impl  [x] docstring  [x] test   (already implemented)
-# No deprecated methods in IRPRelation. All 31 methods at full parity.
-
 
 class RPRelation(RPUnit):
     """Wraps ``IRPRelation``: the base interface for relationships between
     classifiers (such as associations, and the instance links derived from
     them).
     """
+
+    # IRPRelation method parity checklist:
+    # [x] addQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getAssociationClass       [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getInverse                [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getIsNavigable            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getIsSymmetric            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getMultiplicity           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getObjectAsObjectType     [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getOfClass                [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getOtherClass             [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getQualifiers             [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getQualifierType          [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getRelationLabel          [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getRelationLinkName       [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getRelationRoleName       [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getRelationType           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getVisibility             [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] isTypelessObject          [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] makeUnidirect             [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] removeQualifier           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setInverse                [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setIsNavigable            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setMultiplicity           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setOfClass                [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setOtherClass             [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setQualifier              [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setQualifierType          [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setRelationLabel          [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setRelationLinkName       [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setRelationRoleName       [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setRelationType           [x] impl  [x] docstring  [x] test   (already implemented)
+    # No deprecated methods in IRPRelation. All 31 methods at full parity.
 
     def addQualifier(self, p_val: RPModelElement) -> None:
         """Adds a qualifier to the association.

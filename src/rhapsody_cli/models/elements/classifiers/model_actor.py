@@ -9,6 +9,14 @@ from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifi
 class RPActor(RPClassifier):
     """Wraps ``IRPActor``: represents an actor in the model."""
 
+    # IRPActor method parity checklist:
+    # [x] addEventReceptionWithEvent  [x] impl  [x] docstring  [x] test
+    # [x] getIsBehaviorOverriden  [x] impl  [x] docstring  [x] test
+    # [x] setIsBehaviorOverriden  [x] impl  [x] docstring  [x] test
+    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
+    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # No deprecated IRPActor methods.
+
     def addEventReceptionWithEvent(self, name: str, event: RPModelElement) -> Any:
         """Adds a new event reception to the actor, using the specified event.
 

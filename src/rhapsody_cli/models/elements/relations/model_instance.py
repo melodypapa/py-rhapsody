@@ -5,25 +5,25 @@ from typing import Any
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.relations.model_relation import RPRelation
 
-# IRPInstance method parity checklist:
-# [x] addRelationToTheWhole        [x] impl  [x] docstring  [x] test
-# [x] getAllNestedElements         [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getInLinks                   [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] getInstantiatedBy            [x] impl  [x] docstring  [x] test
-# [x] getListOfInitializerArguments [x] impl [x] docstring  [x] test
-# [x] getOutLinks                  [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
-# [x] setExplicit                  [x] impl  [x] docstring  [x] test
-# [x] setImplicit                  [x] impl  [x] docstring  [x] test
-# [x] setInitializerArgumentValue  [x] impl  [x] docstring  [x] test
-# [x] setInstantiatedBy            [x] impl  [x] docstring  [x] test
-# [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
-# No deprecated methods in IRPInstance.
-
 
 class RPInstance(RPRelation):
     """Wraps ``IRPInstance``: represents an instance in the model."""
+
+    # IRPInstance method parity checklist:
+    # [x] addRelationToTheWhole        [x] impl  [x] docstring  [x] test
+    # [x] getAllNestedElements         [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getInLinks                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] getInstantiatedBy            [x] impl  [x] docstring  [x] test
+    # [x] getListOfInitializerArguments [x] impl [x] docstring  [x] test
+    # [x] getOutLinks                  [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] setExplicit                  [x] impl  [x] docstring  [x] test
+    # [x] setImplicit                  [x] impl  [x] docstring  [x] test
+    # [x] setInitializerArgumentValue  [x] impl  [x] docstring  [x] test
+    # [x] setInstantiatedBy            [x] impl  [x] docstring  [x] test
+    # [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
+    # No deprecated methods in IRPInstance.
 
     def getAllNestedElements(self) -> RPCollection:
         """Returns a collection of all the model elements that are directly under the object.
