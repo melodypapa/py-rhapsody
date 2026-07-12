@@ -1,13 +1,12 @@
 """Other Model model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
-from rhapsody_cli.models.core import RPModelElement
+from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 from rhapsody_cli.models.elements.relations.model_instance import RPInstance
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.common.model_misc import RPEnumerationLiteral
     from rhapsody_cli.models.elements.containment.model_package import RPPackage
     from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPSequenceDiagram
@@ -42,7 +41,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::getFormalClassifier()
         """
-        raise NotImplementedError
+        return cast("RPClassifier", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getFormalClassifier())))
 
     def get_formal_instance(self) -> "RPInstance":
         """Returns the object that is realized by the lifeline, for cases where a lifeline represents an object and not just a classifier.
@@ -56,7 +55,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::getFormalInstance()
         """
-        raise NotImplementedError
+        return cast("RPInstance", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getFormalInstance())))
 
     def get_referenced_sequence_diagram(self) -> "RPSequenceDiagram":
         """Returns the sequence diagram referenced by the lifeline.
@@ -70,7 +69,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::getReferencedSequenceDiagram()
         """
-        raise NotImplementedError
+        return cast("RPSequenceDiagram", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getReferencedSequenceDiagram())))
 
     def get_referencing_classifier_roles_recursively(self) -> "RPCollection":
         """Returns a collection of all the lifelines in referenced sequence diagrams, recursively including all lifelines in the decomposition hierarchy.
@@ -84,7 +83,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::getReferencingClassifierRolesRecursively()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getReferencingClassifierRolesRecursively()))
 
     def get_role_type(self) -> str:
         """Returns a string representing the type of the classifier role.
@@ -101,7 +100,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::getRoleType()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getRoleType", "roleType"))
 
     def set_formal_classifier(self, formal_classifier: "RPClassifier") -> None:
         """Sets the specified element as the classifier realized by the lifeline.
@@ -116,7 +115,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::setFormalClassifier(com.telelogic.rhapsody.core.IRPClassifier formalClassifier)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFormalClassifier(formal_classifier._com))
 
     def set_formal_instance(self, formal_instance: "RPInstance") -> None:
         """Sets the specified element as the object realized by the lifeline.
@@ -131,7 +130,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::setFormalInstance(com.telelogic.rhapsody.core.IRPInstance formalInstance)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFormalInstance(formal_instance._com))
 
     def set_referenced_sequence_diagram(self, referenced_sequence_diagram: "RPSequenceDiagram") -> None:
         """Sets the specified diagram to be the sequence diagram referenced by the lifeline.
@@ -146,7 +145,7 @@ class RPClassifierRole(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPClassifierRole::setReferencedSequenceDiagram(com.telelogic.rhapsody.core.IRPSequenceDiagram referencedSequenceDiagram)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setReferencedSequenceDiagram(referenced_sequence_diagram._com))
 
 
 class RPSysMLPort(RPInstance):
@@ -191,7 +190,7 @@ class RPSysMLPort(RPInstance):
                 com.telelogic.rhapsody.core.IRPSysMLPort toPort,
                 com.telelogic.rhapsody.core.IRPPackage newOwner)
         """
-        raise NotImplementedError
+        return cast("RPLink", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addLink(from_part._com, to_part._com, assoc._com, to_port._com, new_owner._com))))
 
     def get_is_reversed(self) -> int:
         """Checks whether the flowport was specified as conjugated.
@@ -205,7 +204,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::getIsReversed()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsReversed()))
 
     def get_port_direction(self) -> str:
         """Returns the direction that was specified for the flowport.
@@ -220,7 +219,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::getPortDirection()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getPortDirection", "portDirection"))
 
     def get_type(self) -> "RPClassifier":
         """Returns the type that was specified for the flowport.
@@ -234,7 +233,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::getType()
         """
-        raise NotImplementedError
+        return cast("RPClassifier", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getType())))
 
     def set_is_reversed(self, is_reversed: int) -> None:
         """Specifies whether the flowport should be conjugated.
@@ -249,7 +248,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::setIsReversed(int isReversed)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setIsReversed", "isReversed", is_reversed)
 
     def set_port_direction(self, port_direction: str) -> None:
         """Sets the direction of the flowport.
@@ -264,7 +263,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::setPortDirection(java.lang.String portDirection)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setPortDirection", "portDirection", port_direction)
 
     def set_type(self, type_: "RPClassifier") -> None:
         """Sets the type for the flowport.
@@ -278,7 +277,7 @@ class RPSysMLPort(RPInstance):
         Reference:
             com.telelogic.rhapsody.core.IRPSysMLPort::setType(com.telelogic.rhapsody.core.IRPClassifier type)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setType(type_._com))
 
 
 class RPType(RPClassifier):
@@ -340,7 +339,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::addEnumerationLiteral(java.lang.String name)
         """
-        raise NotImplementedError
+        return cast("RPEnumerationLiteral", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addEnumerationLiteral(name))))
 
     def delete_enumeration_literal(self, literal: "RPEnumerationLiteral") -> None:
         """Deletes the specified enumeration literal from this type.
@@ -354,7 +353,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::deleteEnumerationLiteral(com.telelogic.rhapsody.core.IRPEnumerationLiteral literal)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.deleteEnumerationLiteral(literal._com))
 
     def get_declaration(self) -> str:
         """Returns the declaration of the type.
@@ -368,7 +367,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getDeclaration()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getDeclaration", "declaration"))
 
     def get_enumeration_literals(self) -> "RPCollection":
         """Returns the enumeration literals of the type.
@@ -382,7 +381,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getEnumerationLiterals()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getEnumerationLiterals()))
 
     def get_is_predefined(self) -> int:
         """Returns whether the type is predefined.
@@ -396,7 +395,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getIsPredefined()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsPredefined()))
 
     def get_is_typedef(self) -> int:
         """Returns whether the type is a typedef.
@@ -410,7 +409,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getIsTypedef()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsTypedef()))
 
     def get_is_typedef_constant(self) -> int:
         """Returns whether the typedef is a constant.
@@ -424,7 +423,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getIsTypedefConstant()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsTypedefConstant()))
 
     def get_is_typedef_ordered(self) -> int:
         """Returns whether the typedef is ordered.
@@ -438,7 +437,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getIsTypedefOrdered()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsTypedefOrdered()))
 
     def get_is_typedef_reference(self) -> int:
         """Returns whether the typedef is a reference.
@@ -452,7 +451,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getIsTypedefReference()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.getIsTypedefReference()))
 
     def get_kind(self) -> str:
         """Returns the kind of the type.
@@ -466,7 +465,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getKind()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getKind", "kind"))
 
     def get_typedef_base_type(self) -> "RPClassifier":
         """Returns the base type of the typedef.
@@ -480,7 +479,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getTypedefBaseType()
         """
-        raise NotImplementedError
+        return cast("RPClassifier", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getTypedefBaseType())))
 
     def get_typedef_multiplicity(self) -> str:
         """Returns the multiplicity of the typedef.
@@ -494,7 +493,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::getTypedefMultiplicity()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getTypedefMultiplicity", "typedefMultiplicity"))
 
     def is_array(self) -> int:
         """Checks whether the type is an array.
@@ -508,7 +507,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isArray()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isArray()))
 
     def is_enum(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually an enum.
@@ -522,7 +521,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isEnum()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isEnum()))
 
     def is_equal_to(self) -> int:
         """Checks whether the type is an equal-to type.
@@ -536,7 +535,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isEqualTo()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isEqualTo()))
 
     def is_implicit(self) -> int:
         """Checks whether the type is implicit.
@@ -550,7 +549,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isImplicit()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isImplicit()))
 
     def is_kind_enumeration(self) -> int:
         """Checks whether the kind of the type is Enumeration.
@@ -564,7 +563,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isKindEnumeration()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isKindEnumeration()))
 
     def is_kind_language(self) -> int:
         """Checks whether the kind of the type was set to Language.
@@ -578,7 +577,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isKindLanguage()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isKindLanguage()))
 
     def is_kind_struct(self) -> int:
         """Checks whether the kind of the type is Structure.
@@ -592,7 +591,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isKindStruct()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isKindStruct()))
 
     def is_kind_typedef(self) -> int:
         """Checks whether the kind of the type is Typedef.
@@ -606,7 +605,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isKindTypedef()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isKindTypedef()))
 
     def is_kind_union(self) -> int:
         """Checks whether the kind of the type is Union.
@@ -620,7 +619,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isKindUnion()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isKindUnion()))
 
     def is_pointer(self) -> int:
         """Checks whether the type is a pointer.
@@ -634,7 +633,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isPointer()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isPointer()))
 
     def is_pointer_to_pointer(self) -> int:
         """Checks whether the type is a pointer to a pointer.
@@ -648,7 +647,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isPointerToPointer()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isPointerToPointer()))
 
     def is_reference(self) -> int:
         """Checks whether the type is a reference.
@@ -662,7 +661,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isReference()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isReference()))
 
     def is_reference_to_pointer(self) -> int:
         """Checks whether the type is a reference to a pointer.
@@ -676,7 +675,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isReferenceToPointer()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isReferenceToPointer()))
 
     def is_struct(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually a struct.
@@ -690,7 +689,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isStruct()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isStruct()))
 
     def is_template(self) -> int:
         """Checks whether the type is a template.
@@ -704,7 +703,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isTemplate()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isTemplate()))
 
     def is_union(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually a union.
@@ -718,7 +717,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::isUnion()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isUnion()))
 
     def set_declaration(self, declaration: str) -> None:
         """Sets the declaration of the type.
@@ -732,7 +731,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setDeclaration(java.lang.String declaration)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setDeclaration", "declaration", declaration)
 
     def set_is_typedef_constant(self, is_typedef_constant: int) -> None:
         """Sets whether the typedef is a constant.
@@ -747,7 +746,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setIsTypedefConstant(int isTypedefConstant)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setIsTypedefConstant", "isTypedefConstant", is_typedef_constant)
 
     def set_is_typedef_ordered(self, is_typedef_ordered: int) -> None:
         """Sets whether the typedef is ordered.
@@ -762,7 +761,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setIsTypedefOrdered(int isTypedefOrdered)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setIsTypedefOrdered", "isTypedefOrdered", is_typedef_ordered)
 
     def set_is_typedef_reference(self, is_typedef_reference: int) -> None:
         """Sets whether the typedef is a reference.
@@ -777,7 +776,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setIsTypedefReference(int isTypedefReference)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setIsTypedefReference", "isTypedefReference", is_typedef_reference)
 
     def set_kind(self, kind: str) -> None:
         """Sets the kind of the type.
@@ -791,7 +790,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setKind(java.lang.String kind)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setKind", "kind", kind)
 
     def set_typedef_base_type(self, typedef_base_type: "RPClassifier") -> None:
         """Sets the base type of the typedef.
@@ -805,7 +804,7 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setTypedefBaseType(com.telelogic.rhapsody.core.IRPClassifier typedefBaseType)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setTypedefBaseType(typedef_base_type._com))
 
     def set_typedef_multiplicity(self, typedef_multiplicity: str) -> None:
         """Sets the multiplicity of the typedef.
@@ -819,4 +818,9 @@ class RPType(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPType::setTypedefMultiplicity(java.lang.String typedefMultiplicity)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setTypedefMultiplicity", "typedefMultiplicity", typedef_multiplicity)
+
+
+AbstractRPModelElement.register_wrapper("ClassifierRole", RPClassifierRole)
+AbstractRPModelElement.register_wrapper("SysMLPort", RPSysMLPort)
+AbstractRPModelElement.register_wrapper("Type", RPType)
