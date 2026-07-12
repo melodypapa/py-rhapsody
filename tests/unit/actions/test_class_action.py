@@ -1,6 +1,6 @@
 """Tests for class actions."""
 
-from typing import Any
+from typing import Any, Tuple
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -140,7 +140,7 @@ class TestClassCreateAction:
     UTS_CLS_00010: Create fails without name
     """
 
-    def _make_action_with_parent(self) -> tuple[Any, Any]:
+    def _make_action_with_parent(self) -> Tuple[Any, Any]:
         """Helper: build action and mock parent package."""
         from rhapsody_cli.actions.class_action import ClassCreateAction
 

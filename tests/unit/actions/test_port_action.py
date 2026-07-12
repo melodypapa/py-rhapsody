@@ -1,6 +1,6 @@
 """Tests for port actions."""
 
-from typing import Any
+from typing import Any, Tuple
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -126,7 +126,7 @@ class TestPortCreateAction:
     SWR_PORT_00013: Bulk Creation Support
     """
 
-    def _make_action_with_classifier(self) -> tuple[Any, Any]:
+    def _make_action_with_classifier(self) -> Tuple[Any, Any]:
         """Helper: build action and mock parent classifier."""
         from rhapsody_cli.actions.port_action import PortCreateAction
 
