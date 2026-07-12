@@ -26,6 +26,9 @@ class RPVariable(RPUnit):
 
         Returns:
             The wrapped ``IRPInstanceValue`` created for the new default value.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::addElementDefaultValue(com.telelogic.rhapsody.core.IRPModelElement newDefaultVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addElementDefaultValue(new_default_val._com)))
 
@@ -37,6 +40,9 @@ class RPVariable(RPUnit):
 
         Returns:
             The wrapped ``IRPLiteralSpecification`` created for the new default value.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::addStringDefaultValue(java.lang.String newDefaultVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStringDefaultValue(new_default_val)))
 
@@ -45,6 +51,9 @@ class RPVariable(RPUnit):
 
         Returns:
             The on-the-fly type declaration, or an existing type's info if one was used.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::getDeclaration()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getDeclaration", "declaration"))
 
@@ -53,6 +62,9 @@ class RPVariable(RPUnit):
 
         Returns:
             The default value as a string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::getDefaultValue()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getDefaultValue", "defaultValue"))
 
@@ -61,6 +73,9 @@ class RPVariable(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` that is the type of the variable.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::getType()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getType", "type"))
 
@@ -69,6 +84,9 @@ class RPVariable(RPUnit):
 
         Returns:
             An ``RPCollection`` of the declared initial value specifications.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::getValueSpecifications()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getValueSpecifications", "valueSpecifications"))
 
@@ -77,6 +95,9 @@ class RPVariable(RPUnit):
 
         Args:
             declaration: The on-the-fly type declaration to use instead of an existing type.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::setDeclaration(java.lang.String declaration)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setDeclaration", "declaration", declaration)
 
@@ -85,6 +106,9 @@ class RPVariable(RPUnit):
 
         Args:
             default_value: The new default value.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::setDefaultValue(java.lang.String defaultValue)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setDefaultValue", "defaultValue", default_value)
 
@@ -93,6 +117,9 @@ class RPVariable(RPUnit):
 
         Args:
             type_: The classifier to use as the variable's type.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::setType(com.telelogic.rhapsody.core.IRPClassifier type)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setType", "type", type_._com)
 
@@ -101,6 +128,9 @@ class RPVariable(RPUnit):
 
         Args:
             new_val: The on-the-fly type declaration.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPVariable::setTypeDeclaration(java.lang.String newVal)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setTypeDeclaration", "typeDeclaration", new_val)
 
@@ -113,6 +143,9 @@ class RPAttribute(RPVariable):
 
         Returns:
             The multiplicity string (e.g. ``"1"``, ``"0..*"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::getMultiplicity()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getMultiplicity", "multiplicity"))
 
@@ -121,6 +154,9 @@ class RPAttribute(RPVariable):
 
         Args:
             multiplicity: The multiplicity string to set (e.g. ``"1"``, ``"0..*"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::setMultiplicity(java.lang.String multiplicity)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setMultiplicity", "multiplicity", multiplicity)
 
@@ -129,6 +165,9 @@ class RPAttribute(RPVariable):
 
         Returns:
             ``True`` if the attribute is static, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::getIsStatic()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsStatic", "isStatic"))
 
@@ -137,6 +176,9 @@ class RPAttribute(RPVariable):
 
         Args:
             is_static: ``True`` to mark the attribute static, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::setIsStatic(int isStatic)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsStatic", "isStatic", 1 if is_static else 0)
 
@@ -145,6 +187,9 @@ class RPAttribute(RPVariable):
 
         Returns:
             The visibility string (e.g. ``"public"``, ``"private"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::getVisibility()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getVisibility", "visibility"))
 
@@ -153,6 +198,9 @@ class RPAttribute(RPVariable):
 
         Args:
             visibility: The visibility string to set (e.g. ``"public"``, ``"private"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAttribute::setVisibility(java.lang.String visibility)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setVisibility", "visibility", visibility)
 
@@ -177,6 +225,9 @@ class RPArgument(RPVariable):
 
         Returns:
             The argument direction as a string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPArgument::getArgumentDirection()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getArgumentDirection", "argumentDirection"))
 
@@ -185,6 +236,9 @@ class RPArgument(RPVariable):
 
         Args:
             argument_direction: The direction to set (e.g. ``"in"``, ``"out"``, ``"inout"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPArgument::setArgumentDirection(java.lang.String argumentDirection)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setArgumentDirection", "argumentDirection", argument_direction)
 

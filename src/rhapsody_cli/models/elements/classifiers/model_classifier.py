@@ -70,6 +70,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPAttribute`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addAttribute(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addAttribute(name)))
 
@@ -81,6 +84,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPOperation`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addOperation(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addOperation(name)))
 
@@ -89,6 +95,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPAttribute`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getAttributes()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributes", "attributes"))
 
@@ -97,6 +106,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPOperation`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getOperations()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOperations", "operations"))
 
@@ -105,6 +117,9 @@ class RPClassifier(RPUnit):
 
         Args:
             base_classifier: The base classifier to generalize from.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addGeneralization(com.telelogic.rhapsody.core.IRPClassifier pVal)
         """
         AbstractRPModelElement.call_com(lambda: self._com.addGeneralization(base_classifier._com))
 
@@ -113,6 +128,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPStatechart`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addStatechart()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStatechart()))
 
@@ -121,6 +139,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPFlowchart`` activity diagram that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addActivityDiagram()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActivityDiagram()))
 
@@ -132,6 +153,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPFlowItem`` item flow that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addFlowItems(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlowItems(name)))
 
@@ -143,6 +167,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPFlow`` flow that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addFlows(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlows(name)))
 
@@ -188,6 +215,18 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` association that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addRelation(
+                java.lang.String otherClassName,
+                java.lang.String otherClassPackageName,
+                java.lang.String roleName1,
+                java.lang.String linkType1,
+                java.lang.String multiplicity1,
+                java.lang.String roleName2,
+                java.lang.String linkType2,
+                java.lang.String multiplicity2,
+                java.lang.String linkName)
         """
         return AbstractRPModelElement.wrap(
             AbstractRPModelElement.call_com(
@@ -244,6 +283,17 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` association that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addRelationTo(
+                com.telelogic.rhapsody.core.IRPClassifier otherClassifier,
+                java.lang.String roleName1,
+                java.lang.String linkType1,
+                java.lang.String multiplicity1,
+                java.lang.String roleName2,
+                java.lang.String linkType2,
+                java.lang.String multiplicity2,
+                java.lang.String linkName)
         """
         return AbstractRPModelElement.wrap(
             AbstractRPModelElement.call_com(
@@ -287,6 +337,15 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` association that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addUnidirectionalRelation(
+                java.lang.String otherClassName,
+                java.lang.String otherClassPackageName,
+                java.lang.String roleName,
+                java.lang.String linkType,
+                java.lang.String multiplicity,
+                java.lang.String linkName)
         """
         return AbstractRPModelElement.wrap(
             AbstractRPModelElement.call_com(
@@ -325,6 +384,14 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` association that was created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::addUnidirectionalRelationTo(
+                com.telelogic.rhapsody.core.IRPClassifier otherClassifier,
+                java.lang.String roleName,
+                java.lang.String linkType,
+                java.lang.String multiplicity,
+                java.lang.String linkName)
         """
         return AbstractRPModelElement.wrap(
             AbstractRPModelElement.call_com(
@@ -343,6 +410,9 @@ class RPClassifier(RPUnit):
 
         Args:
             attribute: The wrapped attribute that should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteAttribute(com.telelogic.rhapsody.core.IRPAttribute attribute)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteAttribute(attribute._com))
 
@@ -351,6 +421,9 @@ class RPClassifier(RPUnit):
 
         Args:
             p_item: The wrapped item flow that should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteFlowItems(com.telelogic.rhapsody.core.IRPFlowItem pItem)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteFlowItems(p_item._com))
 
@@ -359,6 +432,9 @@ class RPClassifier(RPUnit):
 
         Args:
             p_flow: The wrapped flow that should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteFlows(com.telelogic.rhapsody.core.IRPFlow pFlow)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteFlows(p_flow._com))
 
@@ -368,6 +444,9 @@ class RPClassifier(RPUnit):
         Args:
             super_class: The classifier whose generalization relationship with
                 this classifier should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteGeneralization(com.telelogic.rhapsody.core.IRPClassifier superClass)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteGeneralization(super_class._com))
 
@@ -376,6 +455,9 @@ class RPClassifier(RPUnit):
 
         Args:
             operation: The wrapped operation that should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteOperation(com.telelogic.rhapsody.core.IRPOperation operation)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteOperation(operation._com))
 
@@ -384,6 +466,9 @@ class RPClassifier(RPUnit):
 
         Args:
             relation: The wrapped relation that should be deleted.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::deleteRelation(com.telelogic.rhapsody.core.IRPRelation relation)
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteRelation(relation._com))
 
@@ -395,6 +480,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPAttribute`` with the name specified.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findAttribute(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findAttribute(new_val)))
 
@@ -406,6 +494,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` base classifier with the specified name.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findBaseClassifier(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findBaseClassifier(new_val)))
 
@@ -417,6 +508,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` derived classifier with the specified name.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findDerivedClassifier(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findDerivedClassifier(new_val)))
 
@@ -431,6 +525,9 @@ class RPClassifier(RPUnit):
             The wrapped ``IRPGeneralization`` representing the generalization
             relationship between this classifier and the classifier whose name
             was specified.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findGeneralization(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findGeneralization(new_val)))
 
@@ -445,6 +542,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPInterfaceItem`` operation or event reception.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findInterfaceItem(java.lang.String signature)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findInterfaceItem(signature)))
 
@@ -460,6 +560,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` with the name that was specified.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findNestedClassifier(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedClassifier(new_val)))
 
@@ -476,6 +579,9 @@ class RPClassifier(RPUnit):
         Returns:
             The wrapped classifier that was specified (returned as an
             ``IRPModelElement``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findNestedClassifierRecursive(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedClassifierRecursive(new_val)))
 
@@ -487,6 +593,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` association whose name was specified.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findRelation(java.lang.String newVal)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findRelation(new_val)))
 
@@ -498,6 +607,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPInterfaceItem`` trigger with the specified name.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::findTrigger(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findTrigger(name)))
 
@@ -510,6 +622,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPFlowchart`` activity diagram.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getActivityDiagram()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getActivityDiagram", "activityDiagram"))
 
@@ -519,6 +634,9 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPAttribute`` objects, including those
             inherited from the classifier's base classifiers.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getAttributesIncludingBases()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributesIncludingBases", "attributesIncludingBases"))
 
@@ -527,6 +645,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` base classifiers.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getBaseClassifiers()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBaseClassifiers", "baseClassifiers"))
 
@@ -537,6 +658,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPStatechart`` statecharts and activities.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getBehavioralDiagrams()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBehavioralDiagrams", "behavioralDiagrams"))
 
@@ -545,6 +669,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` derived classifiers.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getDerivedClassifiers()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDerivedClassifiers", "derivedClassifiers"))
 
@@ -553,6 +680,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPFlowItem`` item flows.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getFlowItems()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlowItems", "flowItems"))
 
@@ -561,6 +691,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPFlow`` flows.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getFlows()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlows", "flows"))
 
@@ -569,6 +702,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPGeneralization`` generalization relationships.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getGeneralizations()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getGeneralizations", "generalizations"))
 
@@ -579,6 +715,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPInterfaceItem`` elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getInterfaceItems()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItems", "interfaceItems"))
 
@@ -591,6 +730,9 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPInterfaceItem`` elements, including
             those inherited from the base classifier.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getInterfaceItemsIncludingBases()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItemsIncludingBases", "interfaceItemsIncludingBases"))
 
@@ -599,6 +741,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of link relationships.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getLinks()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getLinks", "links"))
 
@@ -610,6 +755,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPClassifier`` nested classifiers.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getNestedClassifiers()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedClassifiers", "nestedClassifiers"))
 
@@ -618,6 +766,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPPort`` ports.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getPorts()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPorts", "ports"))
 
@@ -642,6 +793,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPRelation`` associations.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getRelations()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelations", "relations"))
 
@@ -651,6 +805,9 @@ class RPClassifier(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPRelation`` associations, including those
             inherited from the classifier's base classifier.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getRelationsIncludingBases()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelationsIncludingBases", "relationsIncludingBases"))
 
@@ -659,6 +816,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of sequence diagrams.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getSequenceDiagrams()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSequenceDiagrams", "sequenceDiagrams"))
 
@@ -667,6 +827,9 @@ class RPClassifier(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPFile`` source artifacts.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getSourceArtifacts()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSourceArtifacts", "sourceArtifacts"))
 
@@ -679,5 +842,8 @@ class RPClassifier(RPUnit):
 
         Returns:
             The wrapped ``IRPStatechart`` statechart.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPClassifier::getStatechart()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getStatechart", "statechart"))

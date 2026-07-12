@@ -12,6 +12,12 @@ class RPUseCase(RPClassifier):
 
         Args:
             entry_point: The name of the extension point.
+
+        Raises:
+            RhapsodyRuntimeException: if the extension point cannot be added.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPUseCase::addExtensionPoint(java.lang.String entryPoint)
         """
         AbstractRPModelElement.call_com(lambda: self._com.addExtensionPoint(entry_point))
 
@@ -20,6 +26,12 @@ class RPUseCase(RPClassifier):
 
         Returns:
             An ``RPCollection`` of extension point strings.
+
+        Raises:
+            RhapsodyRuntimeException: if the extension points cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPUseCase::getExtensionPoints()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getExtensionPoints", "extensionPoints"))
 
@@ -28,6 +40,12 @@ class RPUseCase(RPClassifier):
 
         Returns:
             An ``RPCollection`` of entry point strings.
+
+        Raises:
+            RhapsodyRuntimeException: if the entry points cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPUseCase::getEntryPoints()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getEntryPoints", "entryPoints"))
 
@@ -36,6 +54,12 @@ class RPUseCase(RPClassifier):
 
         Returns:
             An ``RPCollection`` of ``IRPDiagram`` objects.
+
+        Raises:
+            RhapsodyRuntimeException: if the describing diagrams cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPUseCase::getDescribingDiagrams()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDescribingDiagrams", "describingDiagrams"))
 

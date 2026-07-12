@@ -51,6 +51,12 @@ class RPRelation(RPUnit):
 
         Args:
             p_val: The model element to add as a qualifier.
+
+        Raises:
+            RhapsodyRuntimeException: if the qualifier cannot be added.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::addQualifier(com.telelogic.rhapsody.core.IRPModelElement pVal)
         """
         AbstractRPModelElement.call_com(lambda: self._com.addQualifier(p_val._com))
 
@@ -59,6 +65,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPAssociationClass``, or an empty wrapper if none exists.
+
+        Raises:
+            RhapsodyRuntimeException: if the association class cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getAssociationClass()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getAssociationClass", "associationClass"))
 
@@ -67,6 +79,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPRelation`` representing the inverse direction.
+
+        Raises:
+            RhapsodyRuntimeException: if the inverse relation cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getInverse()
         """
         return cast(RPRelation, AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getInverse", "inverse")))
 
@@ -75,6 +93,12 @@ class RPRelation(RPUnit):
 
         Returns:
             ``True`` if the relation is navigable, ``False`` otherwise.
+
+        Raises:
+            RhapsodyRuntimeException: if the property cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getIsNavigable()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsNavigable", "isNavigable"))
 
@@ -83,6 +107,12 @@ class RPRelation(RPUnit):
 
         Returns:
             ``True`` if the relation is symmetric, ``False`` otherwise.
+
+        Raises:
+            RhapsodyRuntimeException: if the property cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getIsSymmetric()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsSymmetric", "isSymmetric"))
 
@@ -91,6 +121,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The multiplicity string (e.g. ``"1"``, ``"0..*"``).
+
+        Raises:
+            RhapsodyRuntimeException: if the multiplicity cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getMultiplicity()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getMultiplicity", "multiplicity"))
 
@@ -99,6 +135,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPClass``.
+
+        Raises:
+            RhapsodyRuntimeException: if the object type cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getObjectAsObjectType()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getObjectAsObjectType", "objectAsObjectType"))
 
@@ -107,6 +149,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier``.
+
+        Raises:
+            RhapsodyRuntimeException: if the owner classifier cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getOfClass()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOfClass", "ofClass"))
 
@@ -115,6 +163,9 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` on the other end of the relation.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getOtherClass()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOtherClass", "otherClass"))
 
@@ -123,6 +174,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The qualifier string.
+
+        Raises:
+            RhapsodyRuntimeException: if the qualifier cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getQualifier()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getQualifier", "qualifier"))
 
@@ -131,6 +188,12 @@ class RPRelation(RPUnit):
 
         Returns:
             An ``RPCollection`` of qualifier model elements.
+
+        Raises:
+            RhapsodyRuntimeException: if the qualifiers cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getQualifiers()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getQualifiers", "qualifiers"))
 
@@ -139,6 +202,9 @@ class RPRelation(RPUnit):
 
         Returns:
             The wrapped ``IRPClassifier`` used as the qualifier's type.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getQualifierType()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getQualifierType", "qualifierType"))
 
@@ -147,6 +213,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The relation label string.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation label cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getRelationLabel()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationLabel", "relationLabel"))
 
@@ -155,6 +227,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The relation link name string.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation link name cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getRelationLinkName()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationLinkName", "relationLinkName"))
 
@@ -163,6 +241,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The relation role name string.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation role name cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getRelationRoleName()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationRoleName", "relationRoleName"))
 
@@ -171,6 +255,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The relation type string (e.g. ``"Association"``).
+
+        Raises:
+            RhapsodyRuntimeException: if the relation type cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getRelationType()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRelationType", "relationType"))
 
@@ -179,6 +269,12 @@ class RPRelation(RPUnit):
 
         Returns:
             The visibility string (e.g. ``"public"``, ``"private"``).
+
+        Raises:
+            RhapsodyRuntimeException: if the visibility cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::getVisibility()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getVisibility", "visibility"))
 
@@ -187,11 +283,24 @@ class RPRelation(RPUnit):
 
         Returns:
             ``True`` if the related object is typeless, ``False`` otherwise.
+
+        Raises:
+            RhapsodyRuntimeException: if the typeless state cannot be retrieved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::isTypelessObject()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "isTypelessObject", "typelessObject"))
 
     def makeUnidirect(self) -> None:
-        """Makes the relation unidirectional."""
+        """Makes the relation unidirectional.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation cannot be made unidirectional.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::makeUnidirect()
+        """
         AbstractRPModelElement.call_com(lambda: self._com.makeUnidirect())
 
     def removeQualifier(self, p_val: RPModelElement) -> None:
@@ -199,6 +308,12 @@ class RPRelation(RPUnit):
 
         Args:
             p_val: The model element to remove from the qualifiers.
+
+        Raises:
+            RhapsodyRuntimeException: if the qualifier cannot be removed.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::removeQualifier(com.telelogic.rhapsody.core.IRPModelElement pVal)
         """
         AbstractRPModelElement.call_com(lambda: self._com.removeQualifier(p_val._com))
 
@@ -208,6 +323,12 @@ class RPRelation(RPUnit):
         Args:
             role_name: The role name to use for the inverse relation.
             link_type: The link type to use for the inverse relation.
+
+        Raises:
+            RhapsodyRuntimeException: if the inverse relation cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setInverse(java.lang.String roleName, java.lang.String linkType)
         """
         AbstractRPModelElement.call_com(lambda: self._com.setInverse(role_name, link_type))
 
@@ -216,6 +337,12 @@ class RPRelation(RPUnit):
 
         Args:
             is_navigable: ``True`` to make the relation navigable, ``False`` otherwise.
+
+        Raises:
+            RhapsodyRuntimeException: if the property cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setIsNavigable(int isNavigable)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsNavigable", "isNavigable", 1 if is_navigable else 0)
 
@@ -224,6 +351,12 @@ class RPRelation(RPUnit):
 
         Args:
             multiplicity: The multiplicity string to set (e.g. ``"1"``, ``"0..*"``).
+
+        Raises:
+            RhapsodyRuntimeException: if the multiplicity cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setMultiplicity(java.lang.String multiplicity)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setMultiplicity", "multiplicity", multiplicity)
 
@@ -232,6 +365,12 @@ class RPRelation(RPUnit):
 
         Args:
             of_class: The classifier to set as the owner of this relation.
+
+        Raises:
+            RhapsodyRuntimeException: if the owner classifier cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setOfClass(com.telelogic.rhapsody.core.IRPClassifier ofClass)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setOfClass", "ofClass", of_class._com)
 
@@ -240,6 +379,12 @@ class RPRelation(RPUnit):
 
         Args:
             other_class: The classifier to set on the other end of the relation.
+
+        Raises:
+            RhapsodyRuntimeException: if the other class cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setOtherClass(com.telelogic.rhapsody.core.IRPClassifier otherClass)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setOtherClass", "otherClass", other_class._com)
 
@@ -248,6 +393,12 @@ class RPRelation(RPUnit):
 
         Args:
             qualifier: The qualifier string to set.
+
+        Raises:
+            RhapsodyRuntimeException: if the qualifier cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setQualifier(java.lang.String qualifier)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setQualifier", "qualifier", qualifier)
 
@@ -256,6 +407,9 @@ class RPRelation(RPUnit):
 
         Args:
             p_val: The classifier to use as the qualifier's type.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setQualifierType(com.telelogic.rhapsody.core.IRPClassifier pVal)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setQualifierType", "qualifierType", p_val._com)
 
@@ -264,6 +418,12 @@ class RPRelation(RPUnit):
 
         Args:
             relation_label: The label string to set.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation label cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setRelationLabel(java.lang.String relationLabel)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRelationLabel", "relationLabel", relation_label)
 
@@ -272,6 +432,12 @@ class RPRelation(RPUnit):
 
         Args:
             relation_link_name: The link name string to set.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation link name cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setRelationLinkName(java.lang.String relationLinkName)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRelationLinkName", "relationLinkName", relation_link_name)
 
@@ -280,6 +446,12 @@ class RPRelation(RPUnit):
 
         Args:
             relation_role_name: The role name string to set.
+
+        Raises:
+            RhapsodyRuntimeException: if the relation role name cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setRelationRoleName(java.lang.String relationRoleName)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRelationRoleName", "relationRoleName", relation_role_name)
 
@@ -288,5 +460,11 @@ class RPRelation(RPUnit):
 
         Args:
             relation_type: The relation type string to set (e.g. ``"Association"``).
+
+        Raises:
+            RhapsodyRuntimeException: if the relation type cannot be set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRelation::setRelationType(java.lang.String relationType)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRelationType", "relationType", relation_type)

@@ -17,15 +17,28 @@ class RPProject(RPPackage):
 
         Returns:
             The wrapped ``IRPPackage`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::addPackage(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addPackage(name)))
 
     def close(self) -> None:
-        """Closes the project."""
+        """Closes the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::close()
+        """
         AbstractRPModelElement.call_com(lambda: self._com.close())
 
     def becomeActiveProject(self) -> None:
-        """Makes this project the active project in Rhapsody."""
+        """Makes this project the active project in Rhapsody.
+
+        Used when you have multiple projects open in Rhapsody.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::becomeActiveProject()
+        """
         AbstractRPModelElement.call_com(lambda: self._com.becomeActiveProject())
 
     def findComponent(self, name: str) -> Any:
@@ -36,6 +49,9 @@ class RPProject(RPPackage):
 
         Returns:
             The wrapped component element if found, otherwise empty wrapper.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::findComponent(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findComponent(name)))
 
@@ -44,6 +60,9 @@ class RPProject(RPPackage):
 
         Returns:
             An ``RPCollection`` of ``IRPPackage`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getPackages()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPackages", "packages"))
 
@@ -63,6 +82,9 @@ class RPProject(RPPackage):
 
         Returns:
             The wrapped ``IRPClass`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addClass(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addClass(name)))
 
@@ -74,6 +96,9 @@ class RPProject(RPPackage):
 
         Returns:
             The wrapped ``IRPActor`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addActor(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActor(name)))
 
@@ -82,6 +107,9 @@ class RPProject(RPPackage):
 
         Returns:
             An ``RPCollection`` of component elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getComponents()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getComponents", "components"))
 
@@ -115,6 +143,9 @@ class RPProject(RPPackage):
 
         Returns:
             The wrapped element if found.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::findElementByGUID(java.lang.String theGUID)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findElementByGUID(guid)))
 

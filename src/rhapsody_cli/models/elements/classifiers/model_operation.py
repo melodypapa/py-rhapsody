@@ -14,6 +14,9 @@ class RPOperation(RPInterfaceItem):
 
         Returns:
             The operation's body code as a string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getBody()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getBody", "body"))
 
@@ -22,6 +25,9 @@ class RPOperation(RPInterfaceItem):
 
         Returns:
             ``True`` if the operation is abstract, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getIsAbstract()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsAbstract", "isAbstract"))
 
@@ -30,14 +36,20 @@ class RPOperation(RPInterfaceItem):
 
         Returns:
             ``True`` if the operation is static, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getIsStatic()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsStatic", "isStatic"))
 
     def getIsVirtual(self) -> bool:
-        """Checks whether this operation is virtual.
+        """Checks whether this operation is virtual (for C++ or C# classes).
 
         Returns:
             ``True`` if the operation is virtual, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getIsVirtual()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsVirtual", "isVirtual"))
 
@@ -46,6 +58,9 @@ class RPOperation(RPInterfaceItem):
 
         Returns:
             The wrapped return type element.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getReturns()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getReturns", "returns"))
 
@@ -54,11 +69,18 @@ class RPOperation(RPInterfaceItem):
 
         Returns:
             The return type declaration as a string (e.g. ``"int"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::getReturnTypeDeclaration()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getReturnTypeDeclaration", "returnTypeDeclaration"))
 
     def createAutoFlowChart(self) -> None:
-        """Automatically generates a flowchart for the operation."""
+        """Automatically generates a flowchart for the operation.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::createAutoFlowChart()
+        """
         AbstractRPModelElement.call_com(lambda: self._com.createAutoFlowChart())
 
     def setReturns(self, returns: Any) -> None:
@@ -66,6 +88,9 @@ class RPOperation(RPInterfaceItem):
 
         Args:
             returns: The wrapped ``IRPClassifier`` to use as the return type.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::setReturns(com.telelogic.rhapsody.core.IRPClassifier returns)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setReturns", "returns", returns._com)
 
@@ -75,6 +100,9 @@ class RPOperation(RPInterfaceItem):
         Args:
             new_val: The on-the-fly type declaration (e.g. ``"int"``), reusing
                 a matching existing type if found.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::setReturnTypeDeclaration(java.lang.String newVal)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setReturnTypeDeclaration", "returnTypeDeclaration", new_val)
 

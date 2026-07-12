@@ -21,6 +21,9 @@ class RPAnnotation(RPUnit):
 
         Args:
             target: The model element to anchor this annotation to.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::addAnchor(com.telelogic.rhapsody.core.IRPModelElement target)
         """
         AbstractRPModelElement.call_com(lambda: self._com.addAnchor(target._com))
 
@@ -29,6 +32,9 @@ class RPAnnotation(RPUnit):
 
         Returns:
             An ``RPCollection`` of the anchored model elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::getAnchoredByMe()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAnchoredByMe", "anchoredByMe"))
 
@@ -37,6 +43,9 @@ class RPAnnotation(RPUnit):
 
         Returns:
             The annotation's body text.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::getBody()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getBody", "body"))
 
@@ -45,6 +54,9 @@ class RPAnnotation(RPUnit):
 
         Returns:
             The annotation's specification text.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::getSpecification()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecification", "specification"))
 
@@ -53,6 +65,9 @@ class RPAnnotation(RPUnit):
 
         Returns:
             The RTF-formatted specification string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::getSpecificationRTF()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecificationRTF", "specificationRTF"))
 
@@ -61,6 +76,9 @@ class RPAnnotation(RPUnit):
 
         Returns:
             ``True`` if the specification is RTF-formatted, ``False`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::isSpecificationRTF()
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "isSpecificationRTF", "specificationRTF"))
 
@@ -69,6 +87,9 @@ class RPAnnotation(RPUnit):
 
         Args:
             target: The model element to remove the anchor from.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::removeAnchor(com.telelogic.rhapsody.core.IRPModelElement target)
         """
         AbstractRPModelElement.call_com(lambda: self._com.removeAnchor(target._com))
 
@@ -77,6 +98,9 @@ class RPAnnotation(RPUnit):
 
         Args:
             body: The body text to set for the annotation.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::setBody(java.lang.String body)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setBody", "body", body)
 
@@ -85,14 +109,20 @@ class RPAnnotation(RPUnit):
 
         Args:
             specification: The specification text to set for the annotation.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::setSpecification(java.lang.String specification)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setSpecification", "specification", specification)
 
     def setSpecificationRTF(self, specification_rtf: str) -> None:
-        """Specifies the RTF string to use for the annotation's specification.
+        """Specifies the RTF string to use for the specification of the annotation.
 
         Args:
             specification_rtf: The RTF-formatted specification string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPAnnotation::setSpecificationRTF(java.lang.String specificationRTF)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setSpecificationRTF", "specificationRTF", specification_rtf)
 
@@ -101,18 +131,24 @@ class RPRequirement(RPAnnotation):
     """Wraps ``IRPRequirement``: represents a requirement in the model."""
 
     def getRequirementID(self) -> str:
-        """Gets the unique identifier for the requirement.
+        """Returns the ID that was set for the requirement.
 
         Returns:
             The requirement ID string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRequirement::getRequirementID()
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRequirementID", "requirementID"))
 
     def setRequirementID(self, requirement_id: str) -> None:
-        """Sets the unique identifier for the requirement.
+        """Sets the ID for the requirement.
 
         Args:
             requirement_id: The new requirement ID to set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPRequirement::setRequirementID(java.lang.String requirementID)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRequirementID", "requirementID", requirement_id)
 

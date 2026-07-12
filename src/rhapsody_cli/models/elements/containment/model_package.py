@@ -16,6 +16,9 @@ class RPPackage(RPUnit):
 
         Returns:
             The wrapped ``IRPClass`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addClass(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addClass(name)))
 
@@ -27,6 +30,9 @@ class RPPackage(RPUnit):
 
         Returns:
             The wrapped ``IRPPackage`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addNestedPackage(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNestedPackage(name)))
 
@@ -38,6 +44,9 @@ class RPPackage(RPUnit):
 
         Returns:
             The wrapped ``IRPActor`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addActor(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActor(name)))
 
@@ -49,6 +58,9 @@ class RPPackage(RPUnit):
 
         Returns:
             The wrapped function element created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addGlobalFunction(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addGlobalFunction(name)))
 
@@ -65,6 +77,9 @@ class RPPackage(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPClass`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getClasses()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getClasses", "classes"))
 
@@ -73,6 +88,9 @@ class RPPackage(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPActor`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getActors()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getActors", "actors"))
 
@@ -81,6 +99,9 @@ class RPPackage(RPUnit):
 
         Returns:
             An ``RPCollection`` of ``IRPUseCase`` objects.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getUseCases()
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getUseCases", "useCases"))
 
@@ -92,6 +113,9 @@ class RPPackage(RPUnit):
 
         Returns:
             The wrapped ``IRPUseCase`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addUseCase(java.lang.String name)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addUseCase(name)))
 
