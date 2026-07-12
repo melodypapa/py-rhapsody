@@ -30,7 +30,7 @@ class RPClassifierRole(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPClassifierRole methods.
 
-    def get_formal_classifier(self) -> "RPClassifier":
+    def getFormalClassifier(self) -> "RPClassifier":
         """Returns the classifier (for example, class or actor) that the lifeline realizes.
 
         Returns:
@@ -44,7 +44,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_formal_instance(self) -> "RPInstance":
+    def getFormalInstance(self) -> "RPInstance":
         """Returns the object that is realized by the lifeline, for cases where a lifeline represents an object and not just a classifier.
 
         Returns:
@@ -58,7 +58,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_referenced_sequence_diagram(self) -> "RPSequenceDiagram":
+    def getReferencedSequenceDiagram(self) -> "RPSequenceDiagram":
         """Returns the sequence diagram referenced by the lifeline.
 
         Returns:
@@ -72,7 +72,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_referencing_classifier_roles_recursively(self) -> "RPCollection":
+    def getReferencingClassifierRolesRecursively(self) -> "RPCollection":
         """Returns a collection of all the lifelines in referenced sequence diagrams, recursively including all lifelines in the decomposition hierarchy.
 
         Returns:
@@ -86,7 +86,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_role_type(self) -> str:
+    def getRoleType(self) -> str:
         """Returns a string representing the type of the classifier role.
 
         For example, ``CLASS`` for elements of type IRPClass and ``ACTOR`` for
@@ -103,7 +103,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_formal_classifier(self, formal_classifier: "RPClassifier") -> None:
+    def setFormalClassifier(self, formal_classifier: "RPClassifier") -> None:
         """Sets the specified element as the classifier realized by the lifeline.
 
         Args:
@@ -118,7 +118,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_formal_instance(self, formal_instance: "RPInstance") -> None:
+    def setFormalInstance(self, formal_instance: "RPInstance") -> None:
         """Sets the specified element as the object realized by the lifeline.
 
         Args:
@@ -133,7 +133,7 @@ class RPClassifierRole(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_referenced_sequence_diagram(self, referenced_sequence_diagram: "RPSequenceDiagram") -> None:
+    def setReferencedSequenceDiagram(self, referenced_sequence_diagram: "RPSequenceDiagram") -> None:
         """Sets the specified diagram to be the sequence diagram referenced by the lifeline.
 
         Args:
@@ -166,7 +166,7 @@ class RPSysMLPort(RPInstance):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPSysMLPort methods.
 
-    def add_link(self, from_part: "RPInstance", to_part: "RPInstance", assoc: "RPRelation", to_port: "RPSysMLPort", new_owner: "RPPackage") -> "RPLink":
+    def addLink(self, from_part: "RPInstance", to_part: "RPInstance", assoc: "RPRelation", to_port: "RPSysMLPort", new_owner: "RPPackage") -> "RPLink":
         """Creates a link between flowports on two parts.
 
         Args:
@@ -193,7 +193,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def get_is_reversed(self) -> int:
+    def getIsReversed(self) -> int:
         """Checks whether the flowport was specified as conjugated.
 
         Returns:
@@ -207,7 +207,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def get_port_direction(self) -> str:
+    def getPortDirection(self) -> str:
         """Returns the direction that was specified for the flowport.
 
         Returns:
@@ -222,7 +222,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def get_type(self) -> "RPClassifier":
+    def getType(self) -> "RPClassifier":
         """Returns the type that was specified for the flowport.
 
         Returns:
@@ -236,7 +236,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def set_is_reversed(self, is_reversed: int) -> None:
+    def setIsReversed(self, is_reversed: int) -> None:
         """Specifies whether the flowport should be conjugated.
 
         Args:
@@ -251,7 +251,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def set_port_direction(self, port_direction: str) -> None:
+    def setPortDirection(self, port_direction: str) -> None:
         """Sets the direction of the flowport.
 
         Args:
@@ -266,7 +266,7 @@ class RPSysMLPort(RPInstance):
         """
         raise NotImplementedError
 
-    def set_type(self, type_: "RPClassifier") -> None:
+    def setType(self, type_: "RPClassifier") -> None:
         """Sets the type for the flowport.
 
         Args:
@@ -325,7 +325,7 @@ class RPType(RPClassifier):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPType methods.
 
-    def add_enumeration_literal(self, name: str) -> "RPEnumerationLiteral":
+    def addEnumerationLiteral(self, name: str) -> "RPEnumerationLiteral":
         """Adds an enumeration literal with the specified name to this type.
 
         Args:
@@ -342,7 +342,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def delete_enumeration_literal(self, literal: "RPEnumerationLiteral") -> None:
+    def deleteEnumerationLiteral(self, literal: "RPEnumerationLiteral") -> None:
         """Deletes the specified enumeration literal from this type.
 
         Args:
@@ -356,7 +356,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_declaration(self) -> str:
+    def getDeclaration(self) -> str:
         """Returns the declaration of the type.
 
         Returns:
@@ -370,7 +370,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_enumeration_literals(self) -> "RPCollection":
+    def getEnumerationLiterals(self) -> "RPCollection":
         """Returns the enumeration literals of the type.
 
         Returns:
@@ -384,7 +384,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_is_predefined(self) -> int:
+    def getIsPredefined(self) -> int:
         """Returns whether the type is predefined.
 
         Returns:
@@ -398,7 +398,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_is_typedef(self) -> int:
+    def getIsTypedef(self) -> int:
         """Returns whether the type is a typedef.
 
         Returns:
@@ -412,7 +412,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_is_typedef_constant(self) -> int:
+    def getIsTypedefConstant(self) -> int:
         """Returns whether the typedef is a constant.
 
         Returns:
@@ -426,7 +426,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_is_typedef_ordered(self) -> int:
+    def getIsTypedefOrdered(self) -> int:
         """Returns whether the typedef is ordered.
 
         Returns:
@@ -440,7 +440,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_is_typedef_reference(self) -> int:
+    def getIsTypedefReference(self) -> int:
         """Returns whether the typedef is a reference.
 
         Returns:
@@ -454,7 +454,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_kind(self) -> str:
+    def getKind(self) -> str:
         """Returns the kind of the type.
 
         Returns:
@@ -468,7 +468,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_typedef_base_type(self) -> "RPClassifier":
+    def getTypedefBaseType(self) -> "RPClassifier":
         """Returns the base type of the typedef.
 
         Returns:
@@ -482,7 +482,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def get_typedef_multiplicity(self) -> str:
+    def getTypedefMultiplicity(self) -> str:
         """Returns the multiplicity of the typedef.
 
         Returns:
@@ -496,7 +496,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_array(self) -> int:
+    def isArray(self) -> int:
         """Checks whether the type is an array.
 
         Returns:
@@ -510,7 +510,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_enum(self) -> int:
+    def isEnum(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually an enum.
 
         Returns:
@@ -524,7 +524,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_equal_to(self) -> int:
+    def isEqualTo(self) -> int:
         """Checks whether the type is an equal-to type.
 
         Returns:
@@ -538,7 +538,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_implicit(self) -> int:
+    def isImplicit(self) -> int:
         """Checks whether the type is implicit.
 
         Returns:
@@ -552,7 +552,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_kind_enumeration(self) -> int:
+    def isKindEnumeration(self) -> int:
         """Checks whether the kind of the type is Enumeration.
 
         Returns:
@@ -566,7 +566,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_kind_language(self) -> int:
+    def isKindLanguage(self) -> int:
         """Checks whether the kind of the type was set to Language.
 
         Returns:
@@ -580,7 +580,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_kind_struct(self) -> int:
+    def isKindStruct(self) -> int:
         """Checks whether the kind of the type is Structure.
 
         Returns:
@@ -594,7 +594,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_kind_typedef(self) -> int:
+    def isKindTypedef(self) -> int:
         """Checks whether the kind of the type is Typedef.
 
         Returns:
@@ -608,7 +608,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_kind_union(self) -> int:
+    def isKindUnion(self) -> int:
         """Checks whether the kind of the type is Union.
 
         Returns:
@@ -622,7 +622,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_pointer(self) -> int:
+    def isPointer(self) -> int:
         """Checks whether the type is a pointer.
 
         Returns:
@@ -636,7 +636,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_pointer_to_pointer(self) -> int:
+    def isPointerToPointer(self) -> int:
         """Checks whether the type is a pointer to a pointer.
 
         Returns:
@@ -650,7 +650,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_reference(self) -> int:
+    def isReference(self) -> int:
         """Checks whether the type is a reference.
 
         Returns:
@@ -664,7 +664,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_reference_to_pointer(self) -> int:
+    def isReferenceToPointer(self) -> int:
         """Checks whether the type is a reference to a pointer.
 
         Returns:
@@ -678,7 +678,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_struct(self) -> int:
+    def isStruct(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually a struct.
 
         Returns:
@@ -692,7 +692,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_template(self) -> int:
+    def isTemplate(self) -> int:
         """Checks whether the type is a template.
 
         Returns:
@@ -706,7 +706,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def is_union(self) -> int:
+    def isUnion(self) -> int:
         """For types whose kind was set to Language, parses the declaration to see if the type is actually a union.
 
         Returns:
@@ -720,7 +720,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_declaration(self, declaration: str) -> None:
+    def setDeclaration(self, declaration: str) -> None:
         """Sets the declaration of the type.
 
         Args:
@@ -734,7 +734,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_is_typedef_constant(self, is_typedef_constant: int) -> None:
+    def setIsTypedefConstant(self, is_typedef_constant: int) -> None:
         """Sets whether the typedef is a constant.
 
         Args:
@@ -749,7 +749,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_is_typedef_ordered(self, is_typedef_ordered: int) -> None:
+    def setIsTypedefOrdered(self, is_typedef_ordered: int) -> None:
         """Sets whether the typedef is ordered.
 
         Args:
@@ -764,7 +764,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_is_typedef_reference(self, is_typedef_reference: int) -> None:
+    def setIsTypedefReference(self, is_typedef_reference: int) -> None:
         """Sets whether the typedef is a reference.
 
         Args:
@@ -779,7 +779,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_kind(self, kind: str) -> None:
+    def setKind(self, kind: str) -> None:
         """Sets the kind of the type.
 
         Args:
@@ -793,7 +793,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_typedef_base_type(self, typedef_base_type: "RPClassifier") -> None:
+    def setTypedefBaseType(self, typedef_base_type: "RPClassifier") -> None:
         """Sets the base type of the typedef.
 
         Args:
@@ -807,7 +807,7 @@ class RPType(RPClassifier):
         """
         raise NotImplementedError
 
-    def set_typedef_multiplicity(self, typedef_multiplicity: str) -> None:
+    def setTypedefMultiplicity(self, typedef_multiplicity: str) -> None:
         """Sets the multiplicity of the typedef.
 
         Args:

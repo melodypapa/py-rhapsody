@@ -22,7 +22,7 @@ class RPCollaborationDiagram(RPDiagram):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPCollaborationDiagram methods.
 
-    def get_logical_collaboration(self) -> "RPCollaboration":
+    def getLogicalCollaboration(self) -> "RPCollaboration":
         """Returns the collaboration object underlying the collaboration diagram.
 
         Returns:
@@ -93,7 +93,7 @@ class RPSequenceDiagram(RPDiagram):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPSequenceDiagram methods.
 
-    def get_logical_collaboration(self) -> "RPCollaboration":
+    def getLogicalCollaboration(self) -> "RPCollaboration":
         """Returns the collaboration object underlying the sequence diagram.
 
         Returns:
@@ -104,7 +104,7 @@ class RPSequenceDiagram(RPDiagram):
         """
         raise NotImplementedError
 
-    def get_related_use_cases(self) -> "RPCollection":
+    def getRelatedUseCases(self) -> "RPCollection":
         """Returns use cases related to this sequence diagram.
 
         For internal use only.
@@ -130,7 +130,7 @@ class RPStatechartDiagram(RPDiagram):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPStatechartDiagram methods.
 
-    def add_and_line(self, source_state: "RPGraphNode", x_start_position: int, y_start_position: int, x_end_position: int, y_end_position: int) -> "RPCollection":
+    def addAndLine(self, source_state: "RPGraphNode", x_start_position: int, y_start_position: int, x_end_position: int, y_end_position: int) -> "RPCollection":
         """Adds an And Line to the specified state.
 
         Args:
@@ -152,7 +152,7 @@ class RPStatechartDiagram(RPDiagram):
         """
         raise NotImplementedError
 
-    def create_graphics(self) -> None:
+    def createGraphics(self) -> None:
         """Creates the graphical representation of the elements in the statechart.
 
         When you create a statechart with the API, the graphical representation
@@ -166,7 +166,7 @@ class RPStatechartDiagram(RPDiagram):
         """
         raise NotImplementedError
 
-    def get_statechart(self) -> "RPStatechart":
+    def getStatechart(self) -> "RPStatechart":
         """Returns the statechart object underlying the statechart diagram.
 
         Returns:
@@ -214,7 +214,7 @@ class RPTimingDiagram(RPSequenceDiagram):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPTimingDiagram methods.
 
-    def get_is_elaborated(self) -> int:
+    def getIsElaborated(self) -> int:
         """Checks whether the timing diagram is an elaborated timing diagram.
 
         Returns:
@@ -227,7 +227,7 @@ class RPTimingDiagram(RPSequenceDiagram):
         """
         raise NotImplementedError
 
-    def set_is_elaborated(self, is_elaborated: int) -> None:
+    def setIsElaborated(self, is_elaborated: int) -> None:
         """Specifies whether the diagram should be an elaborated or compact timing diagram.
 
         Args:
@@ -255,7 +255,7 @@ class RPActivityDiagram(RPStatechartDiagram):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPActivityDiagram methods.
 
-    def decompose_swimlane(self, graph_swimlane: "RPGraphElement") -> "RPCollection":
+    def decomposeSwimlane(self, graph_swimlane: "RPGraphElement") -> "RPCollection":
         """Decomposes the specified swimlane into two swimlanes.
 
         Args:
@@ -273,7 +273,7 @@ class RPActivityDiagram(RPStatechartDiagram):
         """
         raise NotImplementedError
 
-    def get_flowchart(self) -> "RPFlowchart":
+    def getFlowchart(self) -> "RPFlowchart":
         """Returns the flowchart object underlying the activity diagram.
 
         Returns:

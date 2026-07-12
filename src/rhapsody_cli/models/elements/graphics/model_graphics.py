@@ -65,7 +65,7 @@ class RPConnector(RPStateVertex):
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # No deprecated IRPConnector methods.
 
-    def create_default_transition(self, from_: "RPState") -> "RPTransition":
+    def createDefaultTransition(self, from_: "RPState") -> "RPTransition":
         """Creates a default transition leading to this connector, within the state specified.
 
         Args:
@@ -79,7 +79,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def get_connector_type(self) -> str:
+    def getConnectorType(self) -> str:
         """Returns the type of the connector.
 
         Returns:
@@ -91,7 +91,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def get_derived_in_edges(self) -> "RPCollection":
+    def getDerivedInEdges(self) -> "RPCollection":
         """Returns a collection of the transitions coming into the connector.
 
         Returns:
@@ -103,7 +103,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def get_derived_out_edge(self) -> "RPTransition":
+    def getDerivedOutEdge(self) -> "RPTransition":
         """Returns the transition exiting the connector.
 
         Returns:
@@ -114,7 +114,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def get_its_swimlane(self) -> "RPSwimlane":
+    def getItsSwimlane(self) -> "RPSwimlane":
         """For connectors in a swimlane, returns the swimlane that contains the connector.
 
         Returns:
@@ -125,7 +125,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def get_of_state(self) -> "RPState":
+    def getOfState(self) -> "RPState":
         """For history connectors, returns the state that the history connector belongs to.
 
         Returns:
@@ -136,7 +136,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_condition_connector(self) -> int:
+    def isConditionConnector(self) -> int:
         """Checks whether the connector is a condition connector.
 
         Returns:
@@ -147,7 +147,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_diagram_connector(self) -> int:
+    def isDiagramConnector(self) -> int:
         """Checks whether the connector is a diagram connector.
 
         Returns:
@@ -158,7 +158,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_fork_connector(self) -> int:
+    def isForkConnector(self) -> int:
         """Checks whether the connector is a fork sync bar connector.
 
         Returns:
@@ -169,7 +169,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_history_connector(self) -> int:
+    def isHistoryConnector(self) -> int:
         """Checks whether the connector is a history connector.
 
         Returns:
@@ -180,7 +180,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_join_connector(self) -> int:
+    def isJoinConnector(self) -> int:
         """Checks whether the connector is a join sync bar connector.
 
         Returns:
@@ -191,7 +191,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_junction_connector(self) -> int:
+    def isJunctionConnector(self) -> int:
         """Checks whether the connector is a junction connector.
 
         Returns:
@@ -202,7 +202,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_stub_connector(self) -> int:
+    def isStubConnector(self) -> int:
         """Checks whether the connector is an EnterExit point.
 
         Returns:
@@ -213,7 +213,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def is_termination_connector(self) -> int:
+    def isTerminationConnector(self) -> int:
         """Checks whether the connector is a termination connector.
 
         Returns:
@@ -224,7 +224,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def set_its_swimlane(self, p_val: "RPSwimlane") -> None:
+    def setItsSwimlane(self, p_val: "RPSwimlane") -> None:
         """Specifies the swimlane that should contain this connector.
 
         Args:
@@ -235,7 +235,7 @@ class RPConnector(RPStateVertex):
         """
         raise NotImplementedError
 
-    def set_of_state(self, of_state: "RPState") -> None:
+    def setOfState(self, of_state: "RPState") -> None:
         """For history connectors, specifies the state for which the connector should maintain historical state information.
 
         Args:
@@ -276,7 +276,7 @@ class RPGraphElement(RPModelElement):
     # [ ] setSelectedImage             [ ] impl  [ ] docstring  [ ] test
     # No deprecated IRPGraphElement methods.
 
-    def add_property(self, property_key: str, property_type: str, property_value: str) -> None:
+    def addProperty(self, property_key: str, property_type: str, property_value: str) -> None:
         """Adds a property to this graph element.
 
         Args:
@@ -292,7 +292,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def apply_default_format(self) -> None:
+    def applyDefaultFormat(self) -> None:
         """Applies the default format to this graph element.
 
         Raises:
@@ -303,7 +303,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_all_graphical_properties(self) -> "RPCollection":
+    def getAllGraphicalProperties(self) -> "RPCollection":
         """Returns all graphical properties of this graph element.
 
         Returns:
@@ -317,7 +317,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_all_properties(self) -> "RPCollection":
+    def getAllProperties(self) -> "RPCollection":
         """Returns all properties of this graph element.
 
         Returns:
@@ -331,7 +331,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_associated_image(self) -> str:
+    def getAssociatedImage(self) -> str:
         """Returns the associated image of this graph element.
 
         Returns:
@@ -345,7 +345,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_diagram(self) -> "RPDiagram":
+    def getDiagram(self) -> "RPDiagram":
         """Returns the diagram that contains this graph element.
 
         Returns:
@@ -359,7 +359,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_graphical_parent(self) -> "RPGraphElement":
+    def getGraphicalParent(self) -> "RPGraphElement":
         """Returns the graphical parent of this graph element.
 
         Returns:
@@ -373,7 +373,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_graphical_property(self, name: str) -> "RPGraphicalProperty":
+    def getGraphicalProperty(self, name: str) -> "RPGraphicalProperty":
         """Returns the specified graphical property of this graph element.
 
         Args:
@@ -390,7 +390,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_graphical_property_of_text(self, text_name: str, name: str) -> "RPGraphicalProperty":
+    def getGraphicalPropertyOfText(self, text_name: str, name: str) -> "RPGraphicalProperty":
         """Returns the specified graphical property for a textual element associated with the graphic element.
 
         Args:
@@ -408,7 +408,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_image_layout(self) -> str:
+    def getImageLayout(self) -> str:
         """Returns the image layout specified for the image linked to the graphic element.
 
         Returns:
@@ -420,7 +420,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_interface_name(self) -> str:
+    def getInterfaceName(self) -> str:
         """Returns the interface name of this graph element.
 
         Returns:
@@ -434,7 +434,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_local_properties(self) -> "RPCollection":
+    def getLocalProperties(self) -> "RPCollection":
         """Returns the local properties of this graph element.
 
         Returns:
@@ -448,7 +448,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_model_object(self) -> "RPModelElement":
+    def getModelObject(self) -> "RPModelElement":
         """Returns the model object associated with this graph element.
 
         Returns:
@@ -462,7 +462,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_property_value(self, property_key: str) -> str:
+    def getPropertyValue(self, property_key: str) -> str:
         """Returns the value of the specified property.
 
         Args:
@@ -479,7 +479,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_selected_image(self) -> str:
+    def getSelectedImage(self) -> str:
         """Returns the full path of the image that was linked to the graphic element.
 
         Returns:
@@ -490,7 +490,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def remove_property(self, property_key: str) -> None:
+    def removeProperty(self, property_key: str) -> None:
         """Removes the specified property from this graph element.
 
         Args:
@@ -504,7 +504,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_associated_image(self, associated_image: str) -> None:
+    def setAssociatedImage(self, associated_image: str) -> None:
         """Sets the associated image for this graph element.
 
         Args:
@@ -518,7 +518,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_graphical_property(self, name: str, value: str) -> None:
+    def setGraphicalProperty(self, name: str, value: str) -> None:
         """Sets a new value for a graphical property.
 
         Args:
@@ -530,7 +530,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_graphical_property_of_text(self, text_name: str, name: str, value: str) -> None:
+    def setGraphicalPropertyOfText(self, text_name: str, name: str, value: str) -> None:
         """Sets a new value for a graphical property for the specified textual element associated with the graphic element.
 
         Args:
@@ -544,7 +544,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_image_layout(self, image_layout: str) -> None:
+    def setImageLayout(self, image_layout: str) -> None:
         """Specifies the image layout that should be used for the image linked to the graphic element.
 
         Args:
@@ -556,7 +556,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_property_value(self, property_key: str, property_value: str) -> None:
+    def setPropertyValue(self, property_key: str, property_value: str) -> None:
         """Sets the value of the specified property.
 
         Args:
@@ -571,7 +571,7 @@ class RPGraphElement(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_selected_image(self, selected_image: str) -> None:
+    def setSelectedImage(self, selected_image: str) -> None:
         """Links the graphic element to the image represented by the path specified.
 
         Args:
@@ -593,7 +593,7 @@ class RPGraphicalProperty(RPModelElement):
     # [ ] getValue                     [ ] impl  [ ] docstring  [ ] test
     # No deprecated IRPGraphicalProperty methods.
 
-    def get_interface_name(self) -> str:
+    def getInterfaceName(self) -> str:
         """Returns the interface name of this graphical property.
 
         Returns:
@@ -607,7 +607,7 @@ class RPGraphicalProperty(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_key(self) -> str:
+    def getKey(self) -> str:
         """Returns the key of this graphical property.
 
         Returns:
@@ -621,7 +621,7 @@ class RPGraphicalProperty(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_value(self) -> str:
+    def getValue(self) -> str:
         """Returns the value of this graphical property.
 
         Returns:
@@ -649,7 +649,7 @@ class RPImageMap(RPModelElement):
     # [ ] getTarget                    [ ] impl  [ ] docstring  [ ] test
     # No deprecated IRPImageMap methods.
 
-    def get_interface_name(self) -> str:
+    def getInterfaceName(self) -> str:
         """Returns the interface name of this image map.
 
         Returns:
@@ -663,7 +663,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_is_g_u_i_d(self) -> int:
+    def getIsGUID(self) -> int:
         """Returns whether this image map uses a GUID.
 
         Returns:
@@ -677,7 +677,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_name(self) -> str:
+    def getName(self) -> str:
         """Returns the name of this image map.
 
         Returns:
@@ -691,7 +691,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_picture_file_name(self) -> str:
+    def getPictureFileName(self) -> str:
         """Returns the picture file name of this image map.
 
         Returns:
@@ -705,7 +705,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_points(self) -> str:
+    def getPoints(self) -> str:
         """Returns the points of this image map.
 
         Returns:
@@ -719,7 +719,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_shape(self) -> str:
+    def getShape(self) -> str:
         """Returns the shape of this image map.
 
         Returns:
@@ -733,7 +733,7 @@ class RPImageMap(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_target(self) -> str:
+    def getTarget(self) -> str:
         """Returns the target of this image map.
 
         Returns:
@@ -775,7 +775,7 @@ class RPLink(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPLink methods.
 
-    def get_end1_multiplicity(self) -> str:
+    def getEnd1Multiplicity(self) -> str:
         """Returns the multiplicity of the first end of this link.
 
         Returns:
@@ -789,7 +789,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_end1_name(self) -> str:
+    def getEnd1Name(self) -> str:
         """Returns the name of the first end of this link.
 
         Returns:
@@ -803,7 +803,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_end2_multiplicity(self) -> str:
+    def getEnd2Multiplicity(self) -> str:
         """Returns the multiplicity of the second end of this link.
 
         Returns:
@@ -817,7 +817,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_end2_name(self) -> str:
+    def getEnd2Name(self) -> str:
         """Returns the name of the second end of this link.
 
         Returns:
@@ -831,7 +831,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from(self) -> "RPInstance":
+    def getFrom(self) -> "RPInstance":
         """Returns the source instance of this link.
 
         Returns:
@@ -845,7 +845,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element(self) -> "RPModelElement":
+    def getFromElement(self) -> "RPModelElement":
         """Returns the source element of this link.
 
         Returns:
@@ -859,7 +859,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_port(self) -> "RPPort":
+    def getFromPort(self) -> "RPPort":
         """Returns the source port of this link.
 
         Returns:
@@ -873,7 +873,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_sys_m_l_port(self) -> "RPSysMLPort":
+    def getFromSysMLPort(self) -> "RPSysMLPort":
         """Returns the source SysML port of this link.
 
         Returns:
@@ -887,7 +887,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_instantiates(self) -> "RPRelation":
+    def getInstantiates(self) -> "RPRelation":
         """Returns the relation that this link instantiates.
 
         Returns:
@@ -901,7 +901,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_other(self) -> "RPLink":
+    def getOther(self) -> "RPLink":
         """Returns the other link in a bidirectional relationship.
 
         Returns:
@@ -915,7 +915,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to(self) -> "RPInstance":
+    def getTo(self) -> "RPInstance":
         """Returns the target of a link.
 
         Returns:
@@ -926,7 +926,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element(self) -> "RPModelElement":
+    def getToElement(self) -> "RPModelElement":
         """Returns the target element of this link.
 
         Returns:
@@ -940,7 +940,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_port(self) -> "RPPort":
+    def getToPort(self) -> "RPPort":
         """Returns the port through which a link reaches a target object.
 
         Returns:
@@ -951,7 +951,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_sys_m_l_port(self) -> "RPSysMLPort":
+    def getToSysMLPort(self) -> "RPSysMLPort":
         """Returns the target SysML port of this link.
 
         Returns:
@@ -965,7 +965,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def set_end1_multiplicity(self, end1_multiplicity: str) -> None:
+    def setEnd1Multiplicity(self, end1_multiplicity: str) -> None:
         """Sets the multiplicity of the first end of this link.
 
         Args:
@@ -979,7 +979,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def set_end1_name(self, end1_name: str) -> None:
+    def setEnd1Name(self, end1_name: str) -> None:
         """Sets the name of the first end of this link.
 
         Args:
@@ -993,7 +993,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def set_end2_multiplicity(self, end2_multiplicity: str) -> None:
+    def setEnd2Multiplicity(self, end2_multiplicity: str) -> None:
         """Sets the multiplicity of the second end of this link.
 
         Args:
@@ -1007,7 +1007,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def set_end2_name(self, end2_name: str) -> None:
+    def setEnd2Name(self, end2_name: str) -> None:
         """Sets the name of the second end of this link.
 
         Args:
@@ -1021,7 +1021,7 @@ class RPLink(RPUnit):
         """
         raise NotImplementedError
 
-    def set_instantiates(self, p_val: "RPRelation") -> None:
+    def setInstantiates(self, p_val: "RPRelation") -> None:
         """Sets the relation that this link instantiates.
 
         Args:
@@ -1058,7 +1058,7 @@ class RPMatrixLayout(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPMatrixLayout methods.
 
-    def get_cell_element_types(self) -> "RPCollection":
+    def getCellElementTypes(self) -> "RPCollection":
         """Returns a collection of the element types that were specified to be displayed in the cells of the matrix.
 
         Returns:
@@ -1070,7 +1070,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types(self) -> "RPCollection":
+    def getFromElementTypes(self) -> "RPCollection":
         """Returns a collection of the "from" element types specified to be displayed in the matrix.
 
         Returns:
@@ -1081,7 +1081,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types_query_to_use(self) -> "RPTableLayout":
+    def getFromElementTypesQueryToUse(self) -> "RPTableLayout":
         """Returns the query that was specified to determine the "from" element types.
 
         Returns:
@@ -1093,7 +1093,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types_use_query_or_elements_list(self) -> int:
+    def getFromElementTypesUseQueryOrElementsList(self) -> int:
         """Checks whether a query or collection of element types was used to specify the "from" element types.
 
         Returns:
@@ -1106,7 +1106,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types(self) -> "RPCollection":
+    def getToElementTypes(self) -> "RPCollection":
         """Returns a collection of the "to" element types specified to be displayed in the matrix.
 
         Returns:
@@ -1117,7 +1117,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types_query_to_use(self) -> "RPTableLayout":
+    def getToElementTypesQueryToUse(self) -> "RPTableLayout":
         """Returns the query that was specified to determine the "to" element types.
 
         Returns:
@@ -1129,7 +1129,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types_use_query_or_elements_list(self) -> int:
+    def getToElementTypesUseQueryOrElementsList(self) -> int:
         """Checks whether a query or collection of element types was used to specify the "to" element types.
 
         Returns:
@@ -1142,7 +1142,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_cell_element_types(self, p_collection: "RPCollection") -> None:
+    def setCellElementTypes(self, p_collection: "RPCollection") -> None:
         """Specifies the element types to display in the cells of the matrix.
 
         Args:
@@ -1153,7 +1153,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types(self, p_collection: "RPCollection") -> None:
+    def setFromElementTypes(self, p_collection: "RPCollection") -> None:
         """Specifies the "from" element types that should be displayed in the matrix.
 
         Args:
@@ -1165,7 +1165,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types_query_to_use(self, query: "RPTableLayout") -> None:
+    def setFromElementTypesQueryToUse(self, query: "RPTableLayout") -> None:
         """Specifies the query to use to determine the "from" element types for the matrix layout.
 
         Args:
@@ -1177,7 +1177,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types_use_query_or_elements_list(self, query_or_elements_list: int) -> None:
+    def setFromElementTypesUseQueryOrElementsList(self, query_or_elements_list: int) -> None:
         """Specifies whether a query or collection of element types should be used to determine the "from" element types.
 
         Args:
@@ -1191,7 +1191,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types(self, p_collection: "RPCollection") -> None:
+    def setToElementTypes(self, p_collection: "RPCollection") -> None:
         """Specifies the "to" element types that should be displayed in the matrix.
 
         Args:
@@ -1203,7 +1203,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types_query_to_use(self, query: "RPTableLayout") -> None:
+    def setToElementTypesQueryToUse(self, query: "RPTableLayout") -> None:
         """Specifies the query to use to determine the "to" element types for the matrix layout.
 
         Args:
@@ -1215,7 +1215,7 @@ class RPMatrixLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types_use_query_or_elements_list(self, query_or_elements_list: int) -> None:
+    def setToElementTypesUseQueryOrElementsList(self, query_or_elements_list: int) -> None:
         """Specifies whether a query or collection of element types should be used to determine the "to" element types.
 
         Args:
@@ -1257,7 +1257,7 @@ class RPMatrixView(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPMatrixView methods.
 
-    def get_cell_elements(self, row: int, column: int) -> "RPCollection":
+    def getCellElements(self, row: int, column: int) -> "RPCollection":
         """Returns the model elements contained in the specified cell.
 
         Args:
@@ -1277,7 +1277,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_cell_string(self, row: int, column: int) -> str:
+    def getCellString(self, row: int, column: int) -> str:
         """Returns the text contained in the specified cell.
 
         Args:
@@ -1297,7 +1297,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_count(self) -> int:
+    def getColumnCount(self) -> int:
         """Returns the number of columns in the matrix.
 
         Returns:
@@ -1311,7 +1311,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_content(self, format_: str) -> str:
+    def getContent(self, format_: str) -> str:
         """Retrieves the content of the matrix in the specified format.
 
         Args:
@@ -1327,7 +1327,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_scope(self) -> "RPCollection":
+    def getFromScope(self) -> "RPCollection":
         """Returns the "from" scope of this matrix view.
 
         Returns:
@@ -1341,7 +1341,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_h_t_m_l_content(self) -> str:
+    def getHTMLContent(self) -> str:
         """Returns the content of the matrix as HTML.
 
         Returns:
@@ -1352,7 +1352,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_image_collection(self, s_folder: str, s_filename: str, s_extension: str) -> "RPCollection":
+    def getImageCollection(self, s_folder: str, s_filename: str, s_extension: str) -> "RPCollection":
         """Returns a collection of images for the matrix view.
 
         Args:
@@ -1371,7 +1371,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_its_matrix_layout(self) -> "RPMatrixLayout":
+    def getItsMatrixLayout(self) -> "RPMatrixLayout":
         """Returns the matrix layout used by this matrix view.
 
         Returns:
@@ -1385,7 +1385,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_row_count(self) -> int:
+    def getRowCount(self) -> int:
         """Returns the number of rows in the matrix.
 
         Returns:
@@ -1399,7 +1399,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_scope(self) -> "RPCollection":
+    def getToScope(self) -> "RPCollection":
         """Returns the "to" scope of this matrix view.
 
         Returns:
@@ -1413,7 +1413,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_scope(self, p_collection: "RPCollection") -> None:
+    def setFromScope(self, p_collection: "RPCollection") -> None:
         """Specifies the "from" scope to use for this matrix view.
 
         Args:
@@ -1426,7 +1426,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_its_matrix_layout(self, p_val: "RPMatrixLayout") -> None:
+    def setItsMatrixLayout(self, p_val: "RPMatrixLayout") -> None:
         """Specifies the matrix layout to use for this matrix view.
 
         Args:
@@ -1437,7 +1437,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_scope(self, p_collection: "RPCollection") -> None:
+    def setToScope(self, p_collection: "RPCollection") -> None:
         """Specifies the "to" scope to use for this matrix view.
 
         Args:
@@ -1450,7 +1450,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def update_view_on_server(self, enforce_update: int) -> int:
+    def updateViewOnServer(self, enforce_update: int) -> int:
         """Updates the view for the matrix on the Rhapsody Model Manager server.
 
         Args:
@@ -1472,7 +1472,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_include_descendants_from_scope(self) -> int:
+    def getIncludeDescendantsFromScope(self) -> int:
         """Returns whether descendants are included in the "from" scope.
 
         Returns:
@@ -1486,7 +1486,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_include_descendants_to_scope(self) -> int:
+    def getIncludeDescendantsToScope(self) -> int:
         """Returns whether descendants are included in the "to" scope.
 
         Returns:
@@ -1511,7 +1511,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_include_descendants_from_scope(self, include_descendants_from_scope: int) -> None:
+    def setIncludeDescendantsFromScope(self, include_descendants_from_scope: int) -> None:
         """Sets whether descendants are included in the "from" scope.
 
         Args:
@@ -1525,7 +1525,7 @@ class RPMatrixView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_include_descendants_to_scope(self, include_descendants_to_scope: int) -> None:
+    def setIncludeDescendantsToScope(self, include_descendants_to_scope: int) -> None:
         """Sets whether descendants are included in the "to" scope.
 
         Args:
@@ -1552,7 +1552,7 @@ class RPMessagePoint(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPMessagePoint methods.
 
-    def get_classifier_role(self) -> "RPClassifierRole":
+    def getClassifierRole(self) -> "RPClassifierRole":
         """Returns the classifier role associated with this message point.
 
         Returns:
@@ -1566,7 +1566,7 @@ class RPMessagePoint(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_interaction_occurrence(self) -> "RPInteractionOccurrence":
+    def getInteractionOccurrence(self) -> "RPInteractionOccurrence":
         """Returns the interaction occurrence associated with this message point.
 
         Returns:
@@ -1580,7 +1580,7 @@ class RPMessagePoint(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_interaction_operator(self) -> "RPInteractionOperator":
+    def getInteractionOperator(self) -> "RPInteractionOperator":
         """Returns the interaction operator associated with this message point.
 
         Returns:
@@ -1594,7 +1594,7 @@ class RPMessagePoint(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_message(self) -> "RPMessage":
+    def getMessage(self) -> "RPMessage":
         """Returns the message associated with this message point.
 
         Returns:
@@ -1608,7 +1608,7 @@ class RPMessagePoint(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_type(self) -> str:
+    def getType(self) -> str:
         """Returns the type of this message point.
 
         Returns:
@@ -1681,7 +1681,7 @@ class RPTableLayout(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPTableLayout methods.
 
-    def add_column(self, type_: str, property: str, column_name: str) -> None:
+    def addColumn(self, type_: str, property: str, column_name: str) -> None:
         """Adds a new column to the table layout.
 
         Args:
@@ -1698,7 +1698,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def add_column_ex(self, type_: str, property: str, column_name: str, context: str) -> int:
+    def addColumnEx(self, type_: str, property: str, column_name: str, context: str) -> int:
         """Adds a new column to the table layout and returns its index.
 
         Differs from addColumn in that it also allows specifying a label from a context
@@ -1724,7 +1724,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_collapse_first_column(self) -> int:
+    def getCollapseFirstColumn(self) -> int:
         """Checks whether the first column includes controls for collapsing and expanding rows.
 
         Returns:
@@ -1735,7 +1735,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_context(self, index: int) -> str:
+    def getColumnContext(self, index: int) -> str:
         """Returns the context pattern label specified for the column.
 
         Args:
@@ -1752,7 +1752,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_default_width(self, index: int) -> int:
+    def getColumnDefaultWidth(self, index: int) -> int:
         """Returns the default width defined for the specified column.
 
         Args:
@@ -1770,7 +1770,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_allow_new(self, index: int) -> int:
+    def getColumnImplementationAllowNew(self, index: int) -> int:
         """Checks whether the user-defined picker for the column includes the New option.
 
         Args:
@@ -1787,7 +1787,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_allow_select(self, index: int) -> int:
+    def getColumnImplementationAllowSelect(self, index: int) -> int:
         """Checks whether the user-defined picker for the column includes the Select option.
 
         Args:
@@ -1804,7 +1804,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_cell_type(self, index: int) -> str:
+    def getColumnImplementationCellType(self, index: int) -> str:
         """Returns the type of information displayed in the column's cells.
 
         The returned value is one of the constants defined in
@@ -1827,7 +1827,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_display_property(self, index: int) -> str:
+    def getColumnImplementationDisplayProperty(self, index: int) -> str:
         """Returns the element information displayed when the cell value type is model element or list.
 
         The returned value is one of the constants defined in
@@ -1850,7 +1850,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_getter_code(self, index: int) -> str:
+    def getColumnImplementationGetterCode(self, index: int) -> str:
         """Returns the Java code for the getter of the cells in the specified column.
 
         Args:
@@ -1867,7 +1867,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_imports(self, index: int) -> str:
+    def getColumnImplementationImports(self, index: int) -> str:
         """Returns the list of imports specified for a column with customized cell behavior.
 
         Args:
@@ -1884,7 +1884,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_picker_code(self, index: int) -> str:
+    def getColumnImplementationPickerCode(self, index: int) -> str:
         """Returns the Java code for the picker of the cells in the specified column.
 
         Args:
@@ -1901,7 +1901,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_implementation_setter_code(self, index: int) -> str:
+    def getColumnImplementationSetterCode(self, index: int) -> str:
         """Returns the Java code for the setter of the cells in the specified column.
 
         Args:
@@ -1918,7 +1918,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_name(self, index: int) -> str:
+    def getColumnName(self, index: int) -> str:
         """Returns the name of the specified column.
 
         Args:
@@ -1936,7 +1936,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_property(self, index: int) -> str:
+    def getColumnProperty(self, index: int) -> str:
         """Returns the property of the specified column.
 
         Corresponds to the Property field on the Columns tab for table layouts. The returned
@@ -1958,7 +1958,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_type(self, index: int) -> str:
+    def getColumnType(self, index: int) -> str:
         """Returns the type of the specified table column.
 
         The returned value is one of the constants defined in IRPTableLayout.Column.
@@ -1978,7 +1978,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_columns(self) -> "RPCollection":
+    def getColumns(self) -> "RPCollection":
         """Returns a collection of the columns in this table layout.
 
         Returns:
@@ -1992,7 +1992,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_element_types(self) -> "RPCollection":
+    def getElementTypes(self) -> "RPCollection":
         """Returns a collection of the element types displayed in the table.
 
         The collection consists of strings (from the list of types displayed on the
@@ -2006,7 +2006,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types(self) -> "RPCollection":
+    def getFromElementTypes(self) -> "RPCollection":
         """Returns the "from" element types for "relation tables".
 
         Returns a collection of the element types specified as the "from" element types. The
@@ -2020,7 +2020,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types_query_to_use(self) -> "RPTableLayout":
+    def getFromElementTypesQueryToUse(self) -> "RPTableLayout":
         """Returns the query used to determine the "from" element types for "relation tables".
 
         Returns:
@@ -2032,7 +2032,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_from_element_types_use_query_or_elements_list(self) -> int:
+    def getFromElementTypesUseQueryOrElementsList(self) -> int:
         """Checks whether a query or element-types collection specifies the "from" element types.
 
         For "relation tables", checks whether a query or collection of element types was used
@@ -2047,7 +2047,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_relation_table(self) -> int:
+    def getRelationTable(self) -> int:
         """Checks whether the table was defined as a "relation table".
 
         Returns:
@@ -2058,7 +2058,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_result_list(self, scope: "RPModelElement") -> "RPCollection":
+    def getResultList(self, scope: "RPModelElement") -> "RPCollection":
         """Returns the result list for the given scope.
 
         Args:
@@ -2072,7 +2072,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types(self) -> "RPCollection":
+    def getToElementTypes(self) -> "RPCollection":
         """Returns the "to" element types for "relation tables".
 
         Returns a collection of the element types specified as the "to" element types. The
@@ -2086,7 +2086,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types_query_to_use(self) -> "RPTableLayout":
+    def getToElementTypesQueryToUse(self) -> "RPTableLayout":
         """Returns the query used to determine the "to" element types for "relation tables".
 
         Returns:
@@ -2098,7 +2098,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_to_element_types_use_query_or_elements_list(self) -> int:
+    def getToElementTypesUseQueryOrElementsList(self) -> int:
         """Checks whether a query or element-types collection specifies the "to" element types.
 
         For "relation tables", checks whether a query or collection of element types was used
@@ -2113,7 +2113,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def remove_column(self, index: int) -> None:
+    def removeColumn(self, index: int) -> None:
         """Removes the specified column from the table layout.
 
         Args:
@@ -2125,7 +2125,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_collapse_first_column(self, collapse: int) -> None:
+    def setCollapseFirstColumn(self, collapse: int) -> None:
         """Specifies whether the first column includes collapse/expand controls.
 
         Args:
@@ -2137,7 +2137,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_context(self, index: int, context: str) -> None:
+    def setColumnContext(self, index: int, context: str) -> None:
         """Specifies a context pattern label for the specified column.
 
         If a context pattern has been defined, this method specifies a label from that pattern
@@ -2155,7 +2155,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_default_width(self, index: int, width: int) -> None:
+    def setColumnDefaultWidth(self, index: int, width: int) -> None:
         """Sets the default width of the specified column.
 
         If a user double-clicks the column border after manually changing the width, the width
@@ -2174,7 +2174,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_allow_new(self, index: int, value: int) -> None:
+    def setColumnImplementationAllowNew(self, index: int, value: int) -> None:
         """Includes the New option in the picker for a column with customized cell behavior.
 
         For columns that use customized cell behavior, this method can include the New option
@@ -2190,7 +2190,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_allow_select(self, index: int, value: int) -> None:
+    def setColumnImplementationAllowSelect(self, index: int, value: int) -> None:
         """Includes the Select option in the picker for a column with customized cell behavior.
 
         For columns that use customized cell behavior, this method can include the Select option
@@ -2209,7 +2209,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_cell_type(self, index: int, cell_type: str) -> None:
+    def setColumnImplementationCellType(self, index: int, cell_type: str) -> None:
         """Specifies the cell information type for a column with customized cell behavior.
 
         For columns that use customized cell behavior, this method specifies the type of
@@ -2230,7 +2230,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_display_property(self, index: int, property_to_display: str) -> None:
+    def setColumnImplementationDisplayProperty(self, index: int, property_to_display: str) -> None:
         """Specifies the displayed element information for a column with customized cell behavior.
 
         For columns that use customized cell behavior, this method specifies the type of element
@@ -2252,7 +2252,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_getter_code(self, index: int, code: str) -> None:
+    def setColumnImplementationGetterCode(self, index: int, code: str) -> None:
         """Specifies the getter Java code for a column with customized cell behavior.
 
         Args:
@@ -2267,7 +2267,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_imports(self, index: int, imports: str) -> None:
+    def setColumnImplementationImports(self, index: int, imports: str) -> None:
         """Specifies the imports for a column with customized cell behavior.
 
         For columns that use customized cell behavior, this method specifies the classes required
@@ -2286,7 +2286,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_picker_code(self, index: int, code: str) -> None:
+    def setColumnImplementationPickerCode(self, index: int, code: str) -> None:
         """Specifies the picker Java code for a column with customized cell behavior.
 
         Args:
@@ -2301,7 +2301,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_implementation_setter_code(self, index: int, code: str) -> None:
+    def setColumnImplementationSetterCode(self, index: int, code: str) -> None:
         """Specifies the setter Java code for a column with customized cell behavior.
 
         Args:
@@ -2316,7 +2316,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_name(self, index: int, name: str) -> None:
+    def setColumnName(self, index: int, name: str) -> None:
         """Sets the name of the specified column.
 
         Args:
@@ -2332,7 +2332,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_property(self, index: int, property: str) -> None:
+    def setColumnProperty(self, index: int, property: str) -> None:
         """Sets the property of the specified column.
 
         Corresponds to the Property field on the Columns tab for table layouts. The value must
@@ -2352,7 +2352,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_column_type(self, index: int, type_: str) -> None:
+    def setColumnType(self, index: int, type_: str) -> None:
         """Sets the type of the specified table column.
 
         The type must be one of the constants defined in IRPTableLayout.Column.
@@ -2370,7 +2370,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_element_types(self, elements: "RPCollection") -> None:
+    def setElementTypes(self, elements: "RPCollection") -> None:
         """Specifies the element types displayed in the table.
 
         The parameter must be a collection of strings (from the list of types displayed on the
@@ -2384,7 +2384,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types(self, elements: "RPCollection") -> None:
+    def setFromElementTypes(self, elements: "RPCollection") -> None:
         """Specifies the "from" element types for "relation tables".
 
         For "relation tables", specifies the list of element types to use as the "from" element
@@ -2399,7 +2399,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types_query_to_use(self, query: "RPTableLayout") -> None:
+    def setFromElementTypesQueryToUse(self, query: "RPTableLayout") -> None:
         """Specifies the query used to determine the "from" element types for "relation tables".
 
         Args:
@@ -2411,7 +2411,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_from_element_types_use_query_or_elements_list(self, query_or_elements_list: int) -> None:
+    def setFromElementTypesUseQueryOrElementsList(self, query_or_elements_list: int) -> None:
         """Specifies whether a query or element-types collection determines the "from" element types.
 
         For "relation tables", specifies whether a query or collection of element types should be
@@ -2427,7 +2427,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_relation_table(self, relation: int) -> None:
+    def setRelationTable(self, relation: int) -> None:
         """Specifies whether the table is defined as a "relation table".
 
         Args:
@@ -2439,7 +2439,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types(self, elements: "RPCollection") -> None:
+    def setToElementTypes(self, elements: "RPCollection") -> None:
         """Specifies the "to" element types for "relation tables".
 
         For "relation tables", specifies the list of element types to use as the "to" element
@@ -2454,7 +2454,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types_query_to_use(self, query: "RPTableLayout") -> None:
+    def setToElementTypesQueryToUse(self, query: "RPTableLayout") -> None:
         """Specifies the query used to determine the "to" element types for "relation tables".
 
         Args:
@@ -2466,7 +2466,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def set_to_element_types_use_query_or_elements_list(self, query_or_elements_list: int) -> None:
+    def setToElementTypesUseQueryOrElementsList(self, query_or_elements_list: int) -> None:
         """Specifies whether a query or element-types collection determines the "to" element types.
 
         For "relation tables", specifies whether a query or collection of element types should be
@@ -2482,7 +2482,7 @@ class RPTableLayout(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_count(self) -> int:
+    def getColumnCount(self) -> int:
         """Returns the number of columns in the table layout.
 
         Returns:
@@ -2522,7 +2522,7 @@ class RPTableView(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPTableView methods.
 
-    def get_cell_elements(self, row: int, column: int) -> "RPCollection":
+    def getCellElements(self, row: int, column: int) -> "RPCollection":
         """Returns the model elements contained in the specified cell.
 
         Args:
@@ -2542,7 +2542,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_cell_string(self, row: int, column: int) -> str:
+    def getCellString(self, row: int, column: int) -> str:
         """Returns the text contained in the specified cell.
 
         Args:
@@ -2562,7 +2562,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_column_count(self) -> int:
+    def getColumnCount(self) -> int:
         """Returns the number of columns in the table.
 
         Returns:
@@ -2576,7 +2576,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_content(self, format_: str) -> str:
+    def getContent(self, format_: str) -> str:
         """Retrieves the content of the table in the specified format.
 
         Args:
@@ -2592,7 +2592,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_h_t_m_l_content(self) -> str:
+    def getHTMLContent(self) -> str:
         """Returns the content of the table as HTML.
 
         Returns:
@@ -2603,7 +2603,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_image_collection(self, s_folder: str, s_filename: str, s_extension: str) -> "RPCollection":
+    def getImageCollection(self, s_folder: str, s_filename: str, s_extension: str) -> "RPCollection":
         """Returns a collection of images for the table view.
 
         Args:
@@ -2622,7 +2622,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_its_table_layout(self) -> "RPTableLayout":
+    def getItsTableLayout(self) -> "RPTableLayout":
         """Returns the table layout used by this table view.
 
         Returns:
@@ -2636,7 +2636,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_row_count(self) -> int:
+    def getRowCount(self) -> int:
         """Returns the number of rows in the table.
 
         Returns:
@@ -2650,7 +2650,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_scope(self) -> "RPCollection":
+    def getScope(self) -> "RPCollection":
         """Returns the scope of this table view.
 
         Returns:
@@ -2664,7 +2664,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_use_owner_scope(self) -> int:
+    def getUseOwnerScope(self) -> int:
         """Checks whether the scope of the table view was defined as including the "owner" of the table view.
 
         Returns:
@@ -2679,7 +2679,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_its_table_layout(self, p_val: "RPTableLayout") -> None:
+    def setItsTableLayout(self, p_val: "RPTableLayout") -> None:
         """Specifies the table layout to use for this table view.
 
         Args:
@@ -2690,7 +2690,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_scope(self, p_collection: "RPCollection") -> None:
+    def setScope(self, p_collection: "RPCollection") -> None:
         """Specifies the scope to use for this table view.
 
         Args:
@@ -2703,7 +2703,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_use_owner_scope(self, p_val: int) -> None:
+    def setUseOwnerScope(self, p_val: int) -> None:
         """Specifies whether the scope of the table view should include the element that owns the table view.
 
         Args:
@@ -2718,7 +2718,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def update_view_on_server(self, enforce_update: int) -> int:
+    def updateViewOnServer(self, enforce_update: int) -> int:
         """Updates the view for the table on the Rhapsody Model Manager server.
 
         Args:
@@ -2740,7 +2740,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def get_include_descendants(self) -> int:
+    def getIncludeDescendants(self) -> int:
         """Returns whether descendants are included in the scope.
 
         Returns:
@@ -2765,7 +2765,7 @@ class RPTableView(RPUnit):
         """
         raise NotImplementedError
 
-    def set_include_descendants(self, include_descendants: int) -> None:
+    def setIncludeDescendants(self, include_descendants: int) -> None:
         """Sets whether descendants are included in the scope.
 
         Args:
@@ -2795,7 +2795,7 @@ class RPPin(RPConnector):
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # No deprecated IRPPin methods.
 
-    def get_is_parameter(self) -> int:
+    def getIsParameter(self) -> int:
         """Checks whether the element is an activity parameter or an action pin.
 
         Returns:
@@ -2807,7 +2807,7 @@ class RPPin(RPConnector):
         """
         raise NotImplementedError
 
-    def get_pin_direction(self) -> str:
+    def getPinDirection(self) -> str:
         """Returns the direction of the pin/parameter: In, Out, or InOut.
 
         Returns:
@@ -2818,7 +2818,7 @@ class RPPin(RPConnector):
         """
         raise NotImplementedError
 
-    def get_pin_type(self) -> "RPClassifier":
+    def getPinType(self) -> "RPClassifier":
         """Returns the type of the value held by the pin/parameter.
 
         Returns:
@@ -2829,7 +2829,7 @@ class RPPin(RPConnector):
         """
         raise NotImplementedError
 
-    def set_is_parameter(self, is_parameter: int) -> None:
+    def setIsParameter(self, is_parameter: int) -> None:
         """Specifies whether the element should be an activity parameter or an action pin.
 
         Args:
@@ -2841,7 +2841,7 @@ class RPPin(RPConnector):
         """
         raise NotImplementedError
 
-    def set_pin_direction(self, pin_direction: str) -> None:
+    def setPinDirection(self, pin_direction: str) -> None:
         """Specifies the direction of the pin/parameter.
 
         Args:
@@ -2854,7 +2854,7 @@ class RPPin(RPConnector):
         """
         raise NotImplementedError
 
-    def set_pin_type(self, pin_type: "RPClassifier") -> None:
+    def setPinType(self, pin_type: "RPClassifier") -> None:
         """Specifies the type to use for the value held by the pin/parameter.
 
         Args:
@@ -2878,7 +2878,7 @@ class RPGraphEdge(RPGraphElement):
     # [inherited] IRPGraphElement methods (covered by RPGraphElement checklist)
     # No deprecated IRPGraphEdge methods.
 
-    def embed_flow(self, flow: "RPFlow") -> "RPGraphEdge":
+    def embedFlow(self, flow: "RPFlow") -> "RPGraphEdge":
         """Embeds the specified flow in this graph edge.
 
         Args:
@@ -2895,7 +2895,7 @@ class RPGraphEdge(RPGraphElement):
         """
         raise NotImplementedError
 
-    def embed_new_flow(self) -> "RPGraphEdge":
+    def embedNewFlow(self) -> "RPGraphEdge":
         """Embeds a new flow in this graph edge.
 
         Returns:
@@ -2909,7 +2909,7 @@ class RPGraphEdge(RPGraphElement):
         """
         raise NotImplementedError
 
-    def get_containing_arrow(self) -> "RPGraphEdge":
+    def getContainingArrow(self) -> "RPGraphEdge":
         """Returns the containing arrow of this graph edge.
 
         Returns:
@@ -2923,7 +2923,7 @@ class RPGraphEdge(RPGraphElement):
         """
         raise NotImplementedError
 
-    def get_source(self) -> "RPGraphElement":
+    def getSource(self) -> "RPGraphElement":
         """Returns the source graph element of this graph edge.
 
         Returns:
@@ -2937,7 +2937,7 @@ class RPGraphEdge(RPGraphElement):
         """
         raise NotImplementedError
 
-    def get_target(self) -> "RPGraphElement":
+    def getTarget(self) -> "RPGraphElement":
         """Returns the target graph element of this graph edge.
 
         Returns:
@@ -2966,7 +2966,7 @@ class RPGraphNode(RPGraphElement):
     # [inherited] IRPGraphElement methods (covered by RPGraphElement checklist)
     # No deprecated IRPGraphNode methods.
 
-    def bring_to_front(self) -> None:
+    def bringToFront(self) -> None:
         """Brings this graph node to the front.
 
         Raises:
@@ -2977,7 +2977,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def get_is_panel_widget(self) -> int:
+    def getIsPanelWidget(self) -> int:
         """Returns whether this graph node is a panel widget.
 
         Returns:
@@ -2991,7 +2991,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def get_panel_widget_instance_path(self) -> "RPCollection":
+    def getPanelWidgetInstancePath(self) -> "RPCollection":
         """Returns the panel widget instance path of this graph node.
 
         Returns:
@@ -3005,7 +3005,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def hide_all_ports(self) -> None:
+    def hideAllPorts(self) -> None:
         """Hides all ports of this graph node.
 
         Raises:
@@ -3016,7 +3016,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def send_to_back(self) -> None:
+    def sendToBack(self) -> None:
         """Sends this graph node to the back.
 
         Raises:
@@ -3027,7 +3027,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def set_panel_widget_instance_path(self, panel_widget_instance_path: "RPCollection") -> None:
+    def setPanelWidgetInstancePath(self, panel_widget_instance_path: "RPCollection") -> None:
         """Specifies the panel widget instance path of this graph node.
 
         Args:
@@ -3041,7 +3041,7 @@ class RPGraphNode(RPGraphElement):
         """
         raise NotImplementedError
 
-    def show_all_ports(self) -> None:
+    def showAllPorts(self) -> None:
         """Shows all ports of this graph node.
 
         Raises:

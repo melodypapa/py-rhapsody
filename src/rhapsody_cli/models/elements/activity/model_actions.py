@@ -25,7 +25,7 @@ class RPAcceptEventAction(RPState):
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # No deprecated IRPAcceptEventAction methods.
 
-    def get_event(self) -> "RPEvent":
+    def getEvent(self) -> "RPEvent":
         """Returns the event that the action waits for.
 
         Returns:
@@ -36,7 +36,7 @@ class RPAcceptEventAction(RPState):
         """
         raise NotImplementedError
 
-    def set_event(self, event: "RPEvent") -> None:
+    def setEvent(self, event: "RPEvent") -> None:
         """Specifies the event that the action should wait for.
 
         Args:
@@ -59,7 +59,7 @@ class RPAcceptTimeEvent(RPState):
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # No deprecated IRPAcceptTimeEvent methods.
 
-    def get_duration_time(self) -> str:
+    def getDurationTime(self) -> str:
         """Returns the duration that was specified for this element.
 
         Returns:
@@ -70,7 +70,7 @@ class RPAcceptTimeEvent(RPState):
         """
         raise NotImplementedError
 
-    def set_duration_time(self, duration_time: str) -> None:
+    def setDurationTime(self, duration_time: str) -> None:
         """Specifies the duration that should be used for this element.
 
         Args:
@@ -91,7 +91,7 @@ class RPAction(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPAction methods.
 
-    def get_body(self) -> str:
+    def getBody(self) -> str:
         """Gets the code defined as the action for the transition.
 
         Returns:
@@ -102,7 +102,7 @@ class RPAction(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_body(self, body: str) -> None:
+    def setBody(self, body: str) -> None:
         """Specifies the code that serves as the action for the transition.
 
         Args:
@@ -138,7 +138,7 @@ class RPCallOperation(RPState):
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # No deprecated IRPCallOperation methods.
 
-    def get_operation(self) -> "RPInterfaceItem":
+    def getOperation(self) -> "RPInterfaceItem":
         """Returns the operation specified for this call operation element.
 
         Returns:
@@ -149,7 +149,7 @@ class RPCallOperation(RPState):
         """
         raise NotImplementedError
 
-    def get_target(self) -> "RPRelation":
+    def getTarget(self) -> "RPRelation":
         """Returns the target specified for this call operation element.
 
         Returns:
@@ -160,7 +160,7 @@ class RPCallOperation(RPState):
         """
         raise NotImplementedError
 
-    def set_operation(self, operation: "RPInterfaceItem") -> None:
+    def setOperation(self, operation: "RPInterfaceItem") -> None:
         """Specifies the operation to use for this call operation element.
 
         Args:
@@ -171,7 +171,7 @@ class RPCallOperation(RPState):
         """
         raise NotImplementedError
 
-    def set_target(self, target: "RPRelation") -> None:
+    def setTarget(self, target: "RPRelation") -> None:
         """Specifies the target to use for this call operation element.
 
         Args:
@@ -199,7 +199,7 @@ class RPContextSpecification(RPValueSpecification):
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPContextSpecification methods.
 
-    def get_multiplicities(self) -> "RPCollection":
+    def getMultiplicities(self) -> "RPCollection":
         """Returns the collection of relevant indices for each of the model elements in the "value" collection.
 
         Returns:
@@ -211,7 +211,7 @@ class RPContextSpecification(RPValueSpecification):
         """
         raise NotImplementedError
 
-    def get_value(self) -> "RPCollection":
+    def getValue(self) -> "RPCollection":
         """Returns the collection of strings that represents the model elements constituting the full path to the element.
 
         Returns:
@@ -222,7 +222,7 @@ class RPContextSpecification(RPValueSpecification):
         """
         raise NotImplementedError
 
-    def set_multiplicities(self, multiplicities: "RPCollection") -> None:
+    def setMultiplicities(self, multiplicities: "RPCollection") -> None:
         """Specifies the collection of indices to use for the model elements in the "value" collection.
 
         Args:
@@ -234,7 +234,7 @@ class RPContextSpecification(RPValueSpecification):
         """
         raise NotImplementedError
 
-    def set_value(self, value: "RPCollection") -> None:
+    def setValue(self, value: "RPCollection") -> None:
         """Specifies the collection of strings that represents the model elements constituting the full path to the element.
 
         Args:
@@ -263,7 +263,7 @@ class RPSendAction(RPAction):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPSendAction methods.
 
-    def add_argument_value(self, value: str, position: int) -> None:
+    def addArgumentValue(self, value: str, position: int) -> None:
         """Provides an argument value for an argument of the event associated with the Send Action element.
 
         Args:
@@ -275,7 +275,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def get_arg_vals(self) -> "RPCollection":
+    def getArgVals(self) -> "RPCollection":
         """Returns a collection of the argument values set for the event associated with the Send Action element.
 
         Returns:
@@ -287,7 +287,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def get_event(self) -> "RPEvent":
+    def getEvent(self) -> "RPEvent":
         """Gets the event sent by the Send Action element.
 
         Returns:
@@ -298,7 +298,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def get_invoked_operation(self) -> "RPInterfaceItem":
+    def getInvokedOperation(self) -> "RPInterfaceItem":
         """Returns the interface item element that is invoked by the Send Action element.
 
         Returns:
@@ -309,7 +309,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def get_target(self) -> "RPModelElement":
+    def getTarget(self) -> "RPModelElement":
         """Gets the event target of the Send Action element.
 
         Returns:
@@ -320,7 +320,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def set_event(self, event: "RPEvent") -> None:
+    def setEvent(self, event: "RPEvent") -> None:
         """Specifies the event sent by the Send Action element.
 
         Args:
@@ -331,7 +331,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def set_invoked_operation(self, invoked_operation: "RPInterfaceItem") -> None:
+    def setInvokedOperation(self, invoked_operation: "RPInterfaceItem") -> None:
         """Sets the invoked operation property.
 
         Args:
@@ -345,7 +345,7 @@ class RPSendAction(RPAction):
         """
         raise NotImplementedError
 
-    def set_target(self, target: "RPModelElement") -> None:
+    def setTarget(self, target: "RPModelElement") -> None:
         """Sets the specified model element to be the target of the Send Action element.
 
         Args:

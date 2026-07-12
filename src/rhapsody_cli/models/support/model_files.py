@@ -74,7 +74,7 @@ class RPControlledFile(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPControlledFile methods.
 
-    def get_full_path_file_name(self) -> str:
+    def getFullPathFileName(self) -> str:
         """Returns the full path of the controlled file.
 
         Returns:
@@ -93,7 +93,7 @@ class RPControlledFile(RPUnit):
         """
         self.call_com(lambda: self._com.open())
 
-    def set_target(self, filename: str) -> None:
+    def setTarget(self, filename: str) -> None:
         """Specifies a different file to associate with the Controlled File element.
 
         Note that this must be a file that already exists in the project directory.
@@ -131,7 +131,7 @@ class RPFile(RPUnit):
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPFile methods.
 
-    def add_element(self, element: "RPClassifier", file_fragment_type: str) -> None:
+    def addElement(self, element: "RPClassifier", file_fragment_type: str) -> None:
         """Adds an element to the file with the specified fragment type.
 
         Args:
@@ -147,7 +147,7 @@ class RPFile(RPUnit):
         """
         self.call_com(lambda: self._com.addElement(element._com, file_fragment_type))
 
-    def add_model_element(self, element: "RPModelElement", file_fragment_type: str) -> None:
+    def addModelElement(self, element: "RPModelElement", file_fragment_type: str) -> None:
         """Adds a model element to the file with the specified fragment type.
 
         Args:
@@ -163,7 +163,7 @@ class RPFile(RPUnit):
         """
         self.call_com(lambda: self._com.addModelElement(element._com, file_fragment_type))
 
-    def add_package_to_scope(self, p: "RPPackage") -> None:
+    def addPackageToScope(self, p: "RPPackage") -> None:
         """Adds a package to the scope of the file.
 
         Args:
@@ -177,7 +177,7 @@ class RPFile(RPUnit):
         """
         self.call_com(lambda: self._com.addPackageToScope(p._com))
 
-    def add_text_element(self, text: str) -> None:
+    def addTextElement(self, text: str) -> None:
         """Adds a text element to the file.
 
         Args:
@@ -191,7 +191,7 @@ class RPFile(RPUnit):
         """
         self.call_com(lambda: self._com.addTextElement(text))
 
-    def add_to_scope(self, element: "RPClassifier") -> None:
+    def addToScope(self, element: "RPClassifier") -> None:
         """Adds an element to the scope of the file.
 
         Args:
@@ -205,7 +205,7 @@ class RPFile(RPUnit):
         """
         self.call_com(lambda: self._com.addToScope(element._com))
 
-    def get_elements(self) -> "RPCollection":
+    def getElements(self) -> "RPCollection":
         """Gets the elements property.
 
         Returns:
@@ -219,7 +219,7 @@ class RPFile(RPUnit):
         """
         return RPCollection(self._get_method_or_property(self._com, "getElements", "elements"))
 
-    def get_file_fragments(self) -> "RPCollection":
+    def getFileFragments(self) -> "RPCollection":
         """Gets the fileFragments property.
 
         Returns:
@@ -233,7 +233,7 @@ class RPFile(RPUnit):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFileFragments", "fileFragments"))
 
-    def get_file_type(self) -> str:
+    def getFileType(self) -> str:
         """Gets the fileType property.
 
         Returns:
@@ -247,7 +247,7 @@ class RPFile(RPUnit):
         """
         return str(self._get_method_or_property(self._com, "getFileType", "fileType"))
 
-    def get_files(self) -> "RPCollection":
+    def getFiles(self) -> "RPCollection":
         """Gets the files property.
 
         Returns:
@@ -261,7 +261,7 @@ class RPFile(RPUnit):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFiles", "files"))
 
-    def get_imp_name(self, including_path: int) -> str:
+    def getImpName(self, including_path: int) -> str:
         """Gets the implementation name.
 
         Args:
@@ -278,7 +278,7 @@ class RPFile(RPUnit):
         """
         return str(self.call_com(lambda: self._com.getImpName(including_path)))
 
-    def get_path(self, full_path: int) -> str:
+    def getPath(self, full_path: int) -> str:
         """Gets the path property.
 
         Args:
@@ -295,7 +295,7 @@ class RPFile(RPUnit):
         """
         return str(self.call_com(lambda: self._com.getPath(full_path)))
 
-    def get_spec_name(self, including_path: int) -> str:
+    def getSpecName(self, including_path: int) -> str:
         """Gets the specification name.
 
         Args:
@@ -312,7 +312,7 @@ class RPFile(RPUnit):
         """
         return str(self.call_com(lambda: self._com.getSpecName(including_path)))
 
-    def is_empty(self) -> int:
+    def isEmpty(self) -> int:
         """Checks whether the file is empty.
 
         Returns:
@@ -326,7 +326,7 @@ class RPFile(RPUnit):
         """
         return int(self.call_com(lambda: self._com.isEmpty()))
 
-    def set_file_type(self, file_type: str) -> None:
+    def setFileType(self, file_type: str) -> None:
         """Sets the fileType property.
 
         Args:
@@ -340,7 +340,7 @@ class RPFile(RPUnit):
         """
         self._set_method_or_property(self._com, "setFileType", "fileType", file_type)
 
-    def set_path(self, path: str) -> None:
+    def setPath(self, path: str) -> None:
         """Sets the path property.
 
         Args:
@@ -367,7 +367,7 @@ class RPFileFragment(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPFileFragment methods.
 
-    def get_fragment_element(self) -> "RPModelElement":
+    def getFragmentElement(self) -> "RPModelElement":
         """Gets the fragmentElement property.
 
         Returns:
@@ -381,7 +381,7 @@ class RPFileFragment(RPModelElement):
         """
         return AbstractRPModelElement.wrap(self._get_method_or_property(self._com, "getFragmentElement", "fragmentElement"))
 
-    def get_fragment_text(self) -> str:
+    def getFragmentText(self) -> str:
         """Gets the fragmentText property.
 
         Returns:
@@ -395,7 +395,7 @@ class RPFileFragment(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFragmentText", "fragmentText"))
 
-    def get_fragment_type(self) -> str:
+    def getFragmentType(self) -> str:
         """Gets the fragmentType property.
 
         Returns:
@@ -409,7 +409,7 @@ class RPFileFragment(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFragmentType", "fragmentType"))
 
-    def move_fragment_in_owner(self, up: int) -> None:
+    def moveFragmentInOwner(self, up: int) -> None:
         """Moves the fragment within its owner.
 
         Args:
@@ -423,7 +423,7 @@ class RPFileFragment(RPModelElement):
         """
         self.call_com(lambda: self._com.moveFragmentInOwner(up))
 
-    def set_fragment_text(self, fragment_text: str) -> None:
+    def setFragmentText(self, fragment_text: str) -> None:
         """Sets the fragmentText property.
 
         Args:

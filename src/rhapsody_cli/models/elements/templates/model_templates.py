@@ -18,7 +18,7 @@ class RPTemplateInstantiation(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPTemplateInstantiation methods.
 
-    def get_template_instantiation_parameters(self) -> "RPCollection":
+    def getTemplateInstantiationParameters(self) -> "RPCollection":
         """Returns the template instantiation parameters of this template instantiation.
 
         Returns:
@@ -44,7 +44,7 @@ class RPTemplateInstantiationParameter(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPTemplateInstantiationParameter methods.
 
-    def get_arg_value(self) -> str:
+    def getArgValue(self) -> str:
         """Returns the argument value of this template instantiation parameter.
 
         Returns:
@@ -58,7 +58,7 @@ class RPTemplateInstantiationParameter(RPModelElement):
         """
         raise NotImplementedError
 
-    def get_type(self) -> "RPClassifier":
+    def getType(self) -> "RPClassifier":
         """Returns the type of this template instantiation parameter.
 
         Returns:
@@ -72,7 +72,7 @@ class RPTemplateInstantiationParameter(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_arg_value(self, arg_value: str) -> None:
+    def setArgValue(self, arg_value: str) -> None:
         """Sets the argument value of this template instantiation parameter.
 
         Args:
@@ -86,7 +86,7 @@ class RPTemplateInstantiationParameter(RPModelElement):
         """
         raise NotImplementedError
 
-    def set_type(self, type_: "RPClassifier") -> None:
+    def setType(self, type_: "RPClassifier") -> None:
         """Sets the type of this template instantiation parameter.
 
         Args:
@@ -115,7 +115,7 @@ class RPTemplateParameter(RPVariable):
     # [inherited] IRPVariable methods (covered by RPVariable checklist)
     # No deprecated IRPTemplateParameter methods.
 
-    def get_parameter_kind(self) -> str:
+    def getParameterKind(self) -> str:
         """Returns the type of the template parameter.
 
         Returns:
@@ -126,7 +126,7 @@ class RPTemplateParameter(RPVariable):
         """
         raise NotImplementedError
 
-    def get_representative(self) -> "RPModelElement":
+    def getRepresentative(self) -> "RPModelElement":
         """Returns the representative of this template parameter.
 
         For internal use only.
@@ -139,7 +139,7 @@ class RPTemplateParameter(RPVariable):
         """
         raise NotImplementedError
 
-    def set_class_type(self) -> None:
+    def setClassType(self) -> None:
         """Sets the type of the parameter to "class".
 
         Reference:
@@ -147,7 +147,7 @@ class RPTemplateParameter(RPVariable):
         """
         raise NotImplementedError
 
-    def set_parameter_kind(self, parameter_kind: str) -> None:
+    def setParameterKind(self, parameter_kind: str) -> None:
         """Specifies the type of the template parameter.
 
         Args:
@@ -158,7 +158,7 @@ class RPTemplateParameter(RPVariable):
         """
         raise NotImplementedError
 
-    def set_representative(self, representative: "RPModelElement") -> None:
+    def setRepresentative(self, representative: "RPModelElement") -> None:
         """Sets the representative of this template parameter.
 
         For internal use only.
