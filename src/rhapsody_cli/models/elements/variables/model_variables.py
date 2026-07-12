@@ -13,7 +13,7 @@ from rhapsody_cli.models.core import (
 from rhapsody_cli.models.elements.classifiers import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.model_values import (
+    from rhapsody_cli.models.elements.values.model_values import (
         RPInstanceValue,
         RPLiteralSpecification,
     )
