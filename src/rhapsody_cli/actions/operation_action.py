@@ -64,7 +64,7 @@ class AbstractOperationAction(ElementManagementAction):
         Raises:
             CliExecutionError: If operation not found.
         """
-        operation = classifier.findInterfaceItem(name)
+        operation = classifier.find_interface_item(name)
         if operation is None:
             raise CliExecutionError(f"Operation '{name}' not found in classifier")
         return operation
@@ -85,14 +85,14 @@ class AbstractOperationAction(ElementManagementAction):
         """
         project = self._get_active_project()
         try:
-            element = project.findElementByGUID(guid)
+            element = project.find_element_by_guid(guid)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to locate operation by GUID '{guid}'")
 
         if element is None:
             raise CliExecutionError(f"No element found with GUID '{guid}'")
 
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Operation":
             raise CliExecutionError(f"GUID '{guid}' does not resolve to an Operation (found {meta_class})")
 
@@ -169,7 +169,7 @@ class OperationCreateAction(AbstractOperationAction):
         if unknown:
             self.logger.warning("Skipping unknown attributes: %s", unknown)
 
-        operation = classifier.addOperation(name)
+        operation = classifier.add_operation(name)
         self._set_attributes(classifier, operation, op_attrs)
 
         full_path = f"{parent_path}/{name}"
@@ -208,15 +208,15 @@ class OperationCreateAction(AbstractOperationAction):
     def _set_attributes(self, classifier: Any, operation: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on operation."""
         if "name" in attrs:
-            operation.setName(attrs["name"])
+            operation.set_name(attrs["name"])
         if "body" in attrs:
-            operation.setBody(attrs["body"])
+            operation.set_body(attrs["body"])
         if "description" in attrs:
-            operation.setDescription(attrs["description"])
+            operation.set_description(attrs["description"])
         if "visibility" in attrs:
-            operation.setVisibility(attrs["visibility"])
+            operation.set_visibility(attrs["visibility"])
         if "arguments" in attrs:
-            operation.setArguments(attrs["arguments"])
+            operation.set_arguments(attrs["arguments"])
         self._set_boolean_flags(operation, attrs)
         self._set_returns(classifier, operation, attrs)
 
@@ -226,11 +226,11 @@ class OperationCreateAction(AbstractOperationAction):
         SWR_OP_00012: Boolean Flag Support
         """
         if "isAbstract" in attrs:
-            operation.setIsAbstract(1 if attrs["isAbstract"] else 0)
+            operation.set_is_abstract(1 if attrs["isAbstract"] else 0)
         if "isStatic" in attrs:
-            operation.setIsStatic(1 if attrs["isStatic"] else 0)
+            operation.set_is_static(1 if attrs["isStatic"] else 0)
         if "isVirtual" in attrs:
-            operation.setIsVirtual(1 if attrs["isVirtual"] else 0)
+            operation.set_is_virtual(1 if attrs["isVirtual"] else 0)
 
     def _set_returns(self, classifier: Any, operation: Any, attrs: Dict[str, Any]) -> None:
         """Resolve and set the returns type.
@@ -239,11 +239,11 @@ class OperationCreateAction(AbstractOperationAction):
         """
         if "returns" in attrs:
             type_name = attrs["returns"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(type_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(type_name)
             if target is None:
                 raise CliExecutionError(f"Returns type '{type_name}' not found")
-            operation.setReturns(target)
+            operation.set_returns(target)
 
 
 class OperationDeleteAction(AbstractOperationAction):
@@ -277,7 +277,7 @@ class OperationDeleteAction(AbstractOperationAction):
 
         if has_guid:
             operation = self._resolve_operation_by_guid(args.guid)
-            classifier = operation.getOwner()
+            classifier = operation.get_owner()
             label = f"GUID '{args.guid}'"
         else:
             classifier = self._resolve_classifier(args.path)
@@ -285,7 +285,7 @@ class OperationDeleteAction(AbstractOperationAction):
             label = args.name
 
         try:
-            classifier.deleteOperation(operation)
+            classifier.delete_operation(operation)
             self.logger.info("Deleted operation: %s", label)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete operation '{label}'")
@@ -330,8 +330,8 @@ class OperationListAction(AbstractOperationAction):
 
     def _collect_operation_names(self, classifier: Any) -> List[str]:
         """Collect names of operations on a classifier."""
-        operations = classifier.getOperations()
-        return [op.getName() for op in operations]
+        operations = classifier.get_operations()
+        return [op.get_name() for op in operations]
 
     def _format_output(self, op_names: List[str], format_type: str) -> str:
         """Format output based on format parameter."""
@@ -439,22 +439,22 @@ class OperationViewAction(AbstractOperationAction):
 
         Normalizes boolean flags to int for clean JSON round-trip.
         """
-        returns = operation.getReturns()
-        returns_name = returns.getName() if returns is not None else ""
-        arguments = operation.getArguments()
+        returns = operation.get_returns()
+        returns_name = returns.get_name() if returns is not None else ""
+        arguments = operation.get_arguments()
         return {
-            "name": operation.getName(),
-            "guid": operation.getGUID(),
-            "description": operation.getDescription(),
-            "body": operation.getBody(),
-            "isAbstract": int(operation.getIsAbstract()),
-            "isStatic": int(operation.getIsStatic()),
-            "isVirtual": int(operation.getIsVirtual()),
+            "name": operation.get_name(),
+            "guid": operation.get_guid(),
+            "description": operation.get_description(),
+            "body": operation.get_body(),
+            "isAbstract": int(operation.get_is_abstract()),
+            "isStatic": int(operation.get_is_static()),
+            "isVirtual": int(operation.get_is_virtual()),
             "returns": returns_name,
-            "visibility": operation.getVisibility(),
-            "arguments": [arg.getName() for arg in arguments],
-            "metaClass": operation.getMetaClass(),
-            "fullPath": operation.getFullPathName(),
+            "visibility": operation.get_visibility(),
+            "arguments": [arg.get_name() for arg in arguments],
+            "metaClass": operation.get_meta_class(),
+            "fullPath": operation.get_full_path_name(),
         }
 
     def _format_output(self, data: Dict[str, Any], format_type: str) -> str:
@@ -538,7 +538,7 @@ class OperationUpdateAction(AbstractOperationAction):
 
         if has_guid:
             operation = self._resolve_operation_by_guid(args.guid)
-            classifier = operation.getOwner()
+            classifier = operation.get_owner()
         else:
             classifier = self._resolve_classifier(args.path)
             operation = self._resolve_operation(classifier, args.name)
@@ -555,7 +555,7 @@ class OperationUpdateAction(AbstractOperationAction):
 
         self._set_attributes(classifier, operation, data)
 
-        self.logger.info("Successfully updated operation: %s", operation.getName())
+        self.logger.info("Successfully updated operation: %s", operation.get_name())
 
     def _load_json_data(self, attributes_input: str) -> Any:
         """Load JSON data from inline string or external file.
@@ -582,25 +582,25 @@ class OperationUpdateAction(AbstractOperationAction):
     def _set_attributes(self, classifier: Any, operation: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on operation (partial update)."""
         if "name" in attrs:
-            operation.setName(attrs["name"])
+            operation.set_name(attrs["name"])
         if "body" in attrs:
-            operation.setBody(attrs["body"])
+            operation.set_body(attrs["body"])
         if "description" in attrs:
-            operation.setDescription(attrs["description"])
+            operation.set_description(attrs["description"])
         if "visibility" in attrs:
-            operation.setVisibility(attrs["visibility"])
+            operation.set_visibility(attrs["visibility"])
         if "arguments" in attrs:
-            operation.setArguments(attrs["arguments"])
+            operation.set_arguments(attrs["arguments"])
         if "isAbstract" in attrs:
-            operation.setIsAbstract(1 if attrs["isAbstract"] else 0)
+            operation.set_is_abstract(1 if attrs["isAbstract"] else 0)
         if "isStatic" in attrs:
-            operation.setIsStatic(1 if attrs["isStatic"] else 0)
+            operation.set_is_static(1 if attrs["isStatic"] else 0)
         if "isVirtual" in attrs:
-            operation.setIsVirtual(1 if attrs["isVirtual"] else 0)
+            operation.set_is_virtual(1 if attrs["isVirtual"] else 0)
         if "returns" in attrs:
             type_name = attrs["returns"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(type_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(type_name)
             if target is None:
                 raise CliExecutionError(f"Returns type '{type_name}' not found")
-            operation.setReturns(target)
+            operation.set_returns(target)

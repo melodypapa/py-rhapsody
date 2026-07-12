@@ -18,60 +18,60 @@ class RPClassifier(RPUnit):
     """Wraps ``IRPClassifier``: the base class for all classifiable elements."""
 
     # IRPClassifier method parity checklist:
-    # [x] addActivityDiagram              [x] impl  [x] docstring  [x] test
-    # [x] addAttribute                    [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addFlowItems                    [x] impl  [x] docstring  [x] test
-    # [x] addFlows                        [x] impl  [x] docstring  [x] test
-    # [x] addGeneralization               [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addOperation                    [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addRelation                     [x] impl  [x] docstring  [x] test
-    # [x] addRelationTo                   [x] impl  [x] docstring  [x] test
-    # [x] addStatechart                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addUnidirectionalRelation       [x] impl  [x] docstring  [x] test
-    # [x] addUnidirectionalRelationTo     [x] impl  [x] docstring  [x] test
-    # [x] deleteAttribute                 [x] impl  [x] docstring  [x] test
-    # [x] deleteFlowItems                 [x] impl  [x] docstring  [x] test
-    # [x] deleteFlows                     [x] impl  [x] docstring  [x] test
-    # [x] deleteGeneralization            [x] impl  [x] docstring  [x] test
-    # [x] deleteOperation                 [x] impl  [x] docstring  [x] test
-    # [x] deleteRelation                  [x] impl  [x] docstring  [x] test
-    # [x] findAttribute                   [x] impl  [x] docstring  [x] test
-    # [x] findBaseClassifier              [x] impl  [x] docstring  [x] test
-    # [x] findDerivedClassifier           [x] impl  [x] docstring  [x] test
-    # [x] findGeneralization              [x] impl  [x] docstring  [x] test
-    # [x] findInterfaceItem               [x] impl  [x] docstring  [x] test
-    # [x] findNestedClassifier            [x] impl  [x] docstring  [x] test
-    # [x] findNestedClassifierRecursive   [x] impl  [x] docstring  [x] test
-    # [x] findRelation                    [x] impl  [x] docstring  [x] test
-    # [x] findTrigger                     [x] impl  [x] docstring  [x] test
-    # [x] getActivityDiagram              [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
-    # [x] getAttributes                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getAttributesIncludingBases     [x] impl  [x] docstring  [x] test
-    # [x] getBaseClassifiers              [x] impl  [x] docstring  [x] test
-    # [x] getBehavioralDiagrams           [x] impl  [x] docstring  [x] test
-    # [x] getDerivedClassifiers           [x] impl  [x] docstring  [x] test
-    # [x] getFlowItems                    [x] impl  [x] docstring  [x] test
-    # [x] getFlows                        [x] impl  [x] docstring  [x] test
-    # [x] getGeneralizations              [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceItems               [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceItemsIncludingBases [x] impl  [x] docstring  [x] test
-    # [x] getLinks                        [x] impl  [x] docstring  [x] test
-    # [x] getNestedClassifiers            [x] impl  [x] docstring  [x] test
-    # [x] getOperations                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getPorts                        [x] impl  [x] docstring  [x] test
-    # [x] getRelations                    [x] impl  [x] docstring  [x] test
-    # [x] getRelationsIncludingBases      [x] impl  [x] docstring  [x] test
-    # [x] getSequenceDiagrams             [x] impl  [x] docstring  [x] test
-    # [x] getSourceArtifacts              [x] impl  [x] docstring  [x] test
-    # [x] getStatechart                   [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
+    # [x] add_activity_diagram              [x] impl  [x] docstring  [x] test
+    # [x] add_attribute                    [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_flow_items                    [x] impl  [x] docstring  [x] test
+    # [x] add_flows                        [x] impl  [x] docstring  [x] test
+    # [x] add_generalization               [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_operation                    [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_relation                     [x] impl  [x] docstring  [x] test
+    # [x] add_relation_to                   [x] impl  [x] docstring  [x] test
+    # [x] add_statechart                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_unidirectional_relation       [x] impl  [x] docstring  [x] test
+    # [x] add_unidirectional_relation_to     [x] impl  [x] docstring  [x] test
+    # [x] delete_attribute                 [x] impl  [x] docstring  [x] test
+    # [x] delete_flow_items                 [x] impl  [x] docstring  [x] test
+    # [x] delete_flows                     [x] impl  [x] docstring  [x] test
+    # [x] delete_generalization            [x] impl  [x] docstring  [x] test
+    # [x] delete_operation                 [x] impl  [x] docstring  [x] test
+    # [x] delete_relation                  [x] impl  [x] docstring  [x] test
+    # [x] find_attribute                   [x] impl  [x] docstring  [x] test
+    # [x] find_base_classifier              [x] impl  [x] docstring  [x] test
+    # [x] find_derived_classifier           [x] impl  [x] docstring  [x] test
+    # [x] find_generalization              [x] impl  [x] docstring  [x] test
+    # [x] find_interface_item               [x] impl  [x] docstring  [x] test
+    # [x] find_nested_classifier            [x] impl  [x] docstring  [x] test
+    # [x] find_nested_classifier_recursive   [x] impl  [x] docstring  [x] test
+    # [x] find_relation                    [x] impl  [x] docstring  [x] test
+    # [x] find_trigger                     [x] impl  [x] docstring  [x] test
+    # [x] get_activity_diagram              [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
+    # [x] get_attributes                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_attributes_including_bases     [x] impl  [x] docstring  [x] test
+    # [x] get_base_classifiers              [x] impl  [x] docstring  [x] test
+    # [x] get_behavioral_diagrams           [x] impl  [x] docstring  [x] test
+    # [x] get_derived_classifiers           [x] impl  [x] docstring  [x] test
+    # [x] get_flow_items                    [x] impl  [x] docstring  [x] test
+    # [x] get_flows                        [x] impl  [x] docstring  [x] test
+    # [x] get_generalizations              [x] impl  [x] docstring  [x] test
+    # [x] get_interface_items               [x] impl  [x] docstring  [x] test
+    # [x] get_interface_items_including_bases [x] impl  [x] docstring  [x] test
+    # [x] get_links                        [x] impl  [x] docstring  [x] test
+    # [x] get_nested_classifiers            [x] impl  [x] docstring  [x] test
+    # [x] get_operations                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_ports                        [x] impl  [x] docstring  [x] test
+    # [x] get_relations                    [x] impl  [x] docstring  [x] test
+    # [x] get_relations_including_bases      [x] impl  [x] docstring  [x] test
+    # [x] get_sequence_diagrams             [x] impl  [x] docstring  [x] test
+    # [x] get_source_artifacts              [x] impl  [x] docstring  [x] test
+    # [x] get_statechart                   [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
     # [inherited] IRPUnit / IRPModelElement methods (getName, setName, getOwner, getGUID,
     #              addDependency, addStereotype, getStereotypes, getNestedElements, save, load, etc.)
     # No deprecated IRPClassifier methods in deprecated-list.html.
-    # [x] addPort (convenience method, not part of IRPClassifier's Java API -
+    # [x] add_port (convenience method, not part of IRPClassifier's Java API -
     #     ports are created generically via addNewAggr("Port", name); this
     #     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] test
 
-    def addAttribute(self, name: str) -> "RPAttribute":
+    def add_attribute(self, name: str) -> "RPAttribute":
         """Adds a new attribute to the classifier.
 
         Args:
@@ -85,7 +85,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPAttribute", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addAttribute(name))))
 
-    def addOperation(self, name: str) -> "RPOperation":
+    def add_operation(self, name: str) -> "RPOperation":
         """Adds a new operation to the classifier.
 
         Args:
@@ -99,7 +99,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addOperation(name))))
 
-    def getAttributes(self) -> RPCollection:
+    def get_attributes(self) -> RPCollection:
         """Returns all attributes defined on the classifier.
 
         Returns:
@@ -110,7 +110,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributes", "attributes"))
 
-    def getOperations(self) -> RPCollection:
+    def get_operations(self) -> RPCollection:
         """Returns all operations defined on the classifier.
 
         Returns:
@@ -121,7 +121,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOperations", "operations"))
 
-    def addGeneralization(self, base_classifier: "RPClassifier") -> None:
+    def add_generalization(self, base_classifier: "RPClassifier") -> None:
         """Adds a generalization relationship from this classifier to another.
 
         Args:
@@ -132,7 +132,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addGeneralization(base_classifier._com))
 
-    def addStatechart(self) -> "RPStatechart":
+    def add_statechart(self) -> "RPStatechart":
         """Adds a statechart behavior to this classifier.
 
         Returns:
@@ -143,7 +143,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPStatechart", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStatechart())))
 
-    def addActivityDiagram(self) -> "RPFlowchart":
+    def add_activity_diagram(self) -> "RPFlowchart":
         """Creates a new activity diagram.
 
         Returns:
@@ -154,7 +154,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPFlowchart", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActivityDiagram())))
 
-    def addFlowItems(self, name: str) -> "RPFlowItem":
+    def add_flow_items(self, name: str) -> "RPFlowItem":
         """Adds a new item flow to the classifier.
 
         Args:
@@ -168,7 +168,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPFlowItem", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlowItems(name))))
 
-    def addFlows(self, name: str) -> "RPFlow":
+    def add_flows(self, name: str) -> "RPFlow":
         """Adds a new flow to the classifier.
 
         Args:
@@ -182,7 +182,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPFlow", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlows(name))))
 
-    def addRelation(
+    def add_relation(
         self,
         other_class_name: str,
         other_class_package_name: str,
@@ -256,7 +256,7 @@ class RPClassifier(RPUnit):
             ),
         )
 
-    def addRelationTo(
+    def add_relation_to(
         self,
         other_classifier: "RPClassifier",
         role_name1: str,
@@ -325,7 +325,7 @@ class RPClassifier(RPUnit):
             ),
         )
 
-    def addUnidirectionalRelation(
+    def add_unidirectional_relation(
         self,
         other_class_name: str,
         other_class_package_name: str,
@@ -378,7 +378,7 @@ class RPClassifier(RPUnit):
             ),
         )
 
-    def addUnidirectionalRelationTo(
+    def add_unidirectional_relation_to(
         self,
         other_classifier: "RPClassifier",
         role_name: str,
@@ -426,7 +426,7 @@ class RPClassifier(RPUnit):
             ),
         )
 
-    def deleteAttribute(self, attribute: "RPModelElement") -> None:
+    def delete_attribute(self, attribute: "RPModelElement") -> None:
         """Deletes the specified attribute.
 
         Args:
@@ -437,7 +437,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteAttribute(attribute._com))
 
-    def deleteFlowItems(self, p_item: "RPModelElement") -> None:
+    def delete_flow_items(self, p_item: "RPModelElement") -> None:
         """Deletes the specified item flow.
 
         Args:
@@ -448,7 +448,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteFlowItems(p_item._com))
 
-    def deleteFlows(self, p_flow: "RPModelElement") -> None:
+    def delete_flows(self, p_flow: "RPModelElement") -> None:
         """Deletes the specified flow.
 
         Args:
@@ -459,7 +459,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteFlows(p_flow._com))
 
-    def deleteGeneralization(self, super_class: "RPClassifier") -> None:
+    def delete_generalization(self, super_class: "RPClassifier") -> None:
         """Deletes the generalization relationship between this classifier and the specified base classifier.
 
         Args:
@@ -471,7 +471,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteGeneralization(super_class._com))
 
-    def deleteOperation(self, operation: "RPModelElement") -> None:
+    def delete_operation(self, operation: "RPModelElement") -> None:
         """Deletes the specified operation.
 
         Args:
@@ -482,7 +482,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteOperation(operation._com))
 
-    def deleteRelation(self, relation: "RPModelElement") -> None:
+    def delete_relation(self, relation: "RPModelElement") -> None:
         """Deletes the specified relation.
 
         Args:
@@ -493,7 +493,7 @@ class RPClassifier(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteRelation(relation._com))
 
-    def findAttribute(self, new_val: str) -> "RPAttribute":
+    def find_attribute(self, new_val: str) -> "RPAttribute":
         """Returns the attribute with the name specified.
 
         Args:
@@ -507,7 +507,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPAttribute", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findAttribute(new_val))))
 
-    def findBaseClassifier(self, new_val: str) -> "RPClassifier":
+    def find_base_classifier(self, new_val: str) -> "RPClassifier":
         """Returns the base classifier with the specified name.
 
         Args:
@@ -521,7 +521,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPClassifier", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findBaseClassifier(new_val))))
 
-    def findDerivedClassifier(self, new_val: str) -> "RPClassifier":
+    def find_derived_classifier(self, new_val: str) -> "RPClassifier":
         """Returns the derived classifier with the specified name.
 
         Args:
@@ -535,7 +535,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPClassifier", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findDerivedClassifier(new_val))))
 
-    def findGeneralization(self, new_val: str) -> "RPGeneralization":
+    def find_generalization(self, new_val: str) -> "RPGeneralization":
         """Returns the generalization relationship between this classifier and the named classifier.
 
         Args:
@@ -552,7 +552,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPGeneralization", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findGeneralization(new_val))))
 
-    def findInterfaceItem(self, signature: str) -> "RPInterfaceItem":
+    def find_interface_item(self, signature: str) -> "RPInterfaceItem":
         """Gets the operation or event reception that matches the signature provided.
 
         Args:
@@ -569,12 +569,12 @@ class RPClassifier(RPUnit):
         """
         return cast("RPInterfaceItem", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findInterfaceItem(signature))))
 
-    def findNestedClassifier(self, new_val: str) -> "RPClassifier":
+    def find_nested_classifier(self, new_val: str) -> "RPClassifier":
         """Searches for the nested classifier with the name specified.
 
         This method only searches the first level of elements below the current
         classifier. To search all of the levels below the current classifier,
-        use :meth:`findNestedClassifierRecursive`.
+        use :meth:`find_nested_classifier_recursive`.
 
         Args:
             new_val: The name of the classifier to search for.
@@ -587,12 +587,12 @@ class RPClassifier(RPUnit):
         """
         return cast("RPClassifier", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedClassifier(new_val))))
 
-    def findNestedClassifierRecursive(self, new_val: str) -> "RPModelElement":
+    def find_nested_classifier_recursive(self, new_val: str) -> "RPModelElement":
         """Searches recursively for the classifier with the name specified.
 
         This method searches all of the levels below the current classifier. To
         search only the first level of elements below the current classifier,
-        use :meth:`findNestedClassifier`.
+        use :meth:`find_nested_classifier`.
 
         Args:
             new_val: The name of the classifier to search for.
@@ -606,7 +606,7 @@ class RPClassifier(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedClassifierRecursive(new_val)))
 
-    def findRelation(self, new_val: str) -> "RPRelation":
+    def find_relation(self, new_val: str) -> "RPRelation":
         """Returns the association whose name was specified as a parameter.
 
         Args:
@@ -620,7 +620,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPRelation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findRelation(new_val))))
 
-    def findTrigger(self, name: str) -> "RPInterfaceItem":
+    def find_trigger(self, name: str) -> "RPInterfaceItem":
         """Returns the trigger with the specified name in the classifier's statechart.
 
         Args:
@@ -634,10 +634,10 @@ class RPClassifier(RPUnit):
         """
         return cast("RPInterfaceItem", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findTrigger(name))))
 
-    def getActivityDiagram(self) -> "RPFlowchart":
+    def get_activity_diagram(self) -> "RPFlowchart":
         """Returns the activity diagram defined for the classifier.
 
-        Note: the Java API recommends using :meth:`getBehavioralDiagrams`
+        Note: the Java API recommends using :meth:`get_behavioral_diagrams`
         instead, because Rhapsody now allows more than one statechart and
         activity diagram to be defined for a class.
 
@@ -649,7 +649,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPFlowchart", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getActivityDiagram", "activityDiagram")))
 
-    def getAttributesIncludingBases(self) -> RPCollection:
+    def get_attributes_including_bases(self) -> RPCollection:
         """Returns all the classifier's attributes, including inherited ones.
 
         Returns:
@@ -661,7 +661,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAttributesIncludingBases", "attributesIncludingBases"))
 
-    def getBaseClassifiers(self) -> RPCollection:
+    def get_base_classifiers(self) -> RPCollection:
         """Returns the classifiers that serve as base classifiers for this classifier.
 
         Returns:
@@ -672,7 +672,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBaseClassifiers", "baseClassifiers"))
 
-    def getBehavioralDiagrams(self) -> RPCollection:
+    def get_behavioral_diagrams(self) -> RPCollection:
         """Returns all the statecharts and activities defined for the classifier.
 
         The returned collection consists of elements of type ``IRPStatechart``.
@@ -685,7 +685,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getBehavioralDiagrams", "behavioralDiagrams"))
 
-    def getDerivedClassifiers(self) -> RPCollection:
+    def get_derived_classifiers(self) -> RPCollection:
         """Returns all the classifiers derived from this classifier.
 
         Returns:
@@ -696,7 +696,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDerivedClassifiers", "derivedClassifiers"))
 
-    def getFlowItems(self) -> RPCollection:
+    def get_flow_items(self) -> RPCollection:
         """Returns all the classifier's item flows.
 
         Returns:
@@ -707,7 +707,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlowItems", "flowItems"))
 
-    def getFlows(self) -> RPCollection:
+    def get_flows(self) -> RPCollection:
         """Returns all the classifier's flows.
 
         Returns:
@@ -718,7 +718,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getFlows", "flows"))
 
-    def getGeneralizations(self) -> RPCollection:
+    def get_generalizations(self) -> RPCollection:
         """Returns all the classifier's generalization relationships.
 
         Returns:
@@ -729,7 +729,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getGeneralizations", "generalizations"))
 
-    def getInterfaceItems(self) -> RPCollection:
+    def get_interface_items(self) -> RPCollection:
         """Returns the classifier's elements of type IRPInterfaceItem.
 
         This includes operations, triggered operations, and event receptions.
@@ -742,7 +742,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItems", "interfaceItems"))
 
-    def getInterfaceItemsIncludingBases(self) -> RPCollection:
+    def get_interface_items_including_bases(self) -> RPCollection:
         """Returns the classifier's IRPInterfaceItem elements, including inherited ones.
 
         This includes operations, triggered operations, and event receptions,
@@ -757,7 +757,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInterfaceItemsIncludingBases", "interfaceItemsIncludingBases"))
 
-    def getLinks(self) -> RPCollection:
+    def get_links(self) -> RPCollection:
         """Returns all the classifier's link relationships.
 
         Returns:
@@ -768,7 +768,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getLinks", "links"))
 
-    def getNestedClassifiers(self) -> RPCollection:
+    def get_nested_classifiers(self) -> RPCollection:
         """Returns the classifiers nested below the current classifier.
 
         This method is not recursive - it only returns the classifiers at the
@@ -782,7 +782,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedClassifiers", "nestedClassifiers"))
 
-    def getPorts(self) -> RPCollection:
+    def get_ports(self) -> RPCollection:
         """Returns all the classifier's ports.
 
         Returns:
@@ -793,7 +793,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPorts", "ports"))
 
-    def addPort(self, name: str) -> Any:
+    def add_port(self, name: str) -> Any:
         """Adds a new port to this classifier.
 
         Convenience method: the Rhapsody Java API has no dedicated
@@ -809,7 +809,7 @@ class RPClassifier(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNewAggr("Port", name)))
 
-    def getRelations(self) -> RPCollection:
+    def get_relations(self) -> RPCollection:
         """Returns all the classifier's associations.
 
         Returns:
@@ -820,7 +820,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelations", "relations"))
 
-    def getRelationsIncludingBases(self) -> RPCollection:
+    def get_relations_including_bases(self) -> RPCollection:
         """Returns all the classifier's associations, including inherited ones.
 
         Returns:
@@ -832,7 +832,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRelationsIncludingBases", "relationsIncludingBases"))
 
-    def getSequenceDiagrams(self) -> RPCollection:
+    def get_sequence_diagrams(self) -> RPCollection:
         """Returns the classifier's sequence diagrams.
 
         Returns:
@@ -843,7 +843,7 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSequenceDiagrams", "sequenceDiagrams"))
 
-    def getSourceArtifacts(self) -> RPCollection:
+    def get_source_artifacts(self) -> RPCollection:
         """Gets the source artifacts for the classifier.
 
         Returns:
@@ -854,10 +854,10 @@ class RPClassifier(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getSourceArtifacts", "sourceArtifacts"))
 
-    def getStatechart(self) -> "RPStatechart":
+    def get_statechart(self) -> "RPStatechart":
         """Returns the statechart defined for the classifier.
 
-        Note: the Java API recommends using :meth:`getBehavioralDiagrams`
+        Note: the Java API recommends using :meth:`get_behavioral_diagrams`
         instead, because Rhapsody now allows more than one statechart and
         activity diagram to be defined for a class.
 

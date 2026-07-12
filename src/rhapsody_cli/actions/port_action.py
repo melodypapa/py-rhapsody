@@ -64,9 +64,9 @@ class AbstractPortAction(ElementManagementAction):
         Raises:
             CliExecutionError: If port not found.
         """
-        ports = classifier.getPorts()
+        ports = classifier.get_ports()
         for port in ports:
-            if port.getName() == name:
+            if port.get_name() == name:
                 return port
         raise CliExecutionError(f"Port '{name}' not found in classifier")
 
@@ -86,14 +86,14 @@ class AbstractPortAction(ElementManagementAction):
         """
         project = self._get_active_project()
         try:
-            element = project.findElementByGUID(guid)
+            element = project.find_element_by_guid(guid)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to locate port by GUID '{guid}'")
 
         if element is None:
             raise CliExecutionError(f"No element found with GUID '{guid}'")
 
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Port":
             raise CliExecutionError(f"GUID '{guid}' does not resolve to a Port (found {meta_class})")
 
@@ -166,7 +166,7 @@ class PortCreateAction(AbstractPortAction):
         if unknown:
             self.logger.warning("Skipping unknown attributes: %s", unknown)
 
-        port = classifier.addPort(name)
+        port = classifier.add_port(name)
         self._set_attributes(classifier, port, port_attrs)
 
         full_path = f"{parent_path}/{name}"
@@ -205,9 +205,9 @@ class PortCreateAction(AbstractPortAction):
     def _set_attributes(self, classifier: Any, port: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on port."""
         if "name" in attrs:
-            port.setName(attrs["name"])
+            port.set_name(attrs["name"])
         if "description" in attrs:
-            port.setDescription(attrs["description"])
+            port.set_description(attrs["description"])
         self._set_boolean_flags(port, attrs)
         self._set_port_contract(classifier, port, attrs)
 
@@ -217,9 +217,9 @@ class PortCreateAction(AbstractPortAction):
         SWR_PORT_00012: IsBehavioral and IsReversed Support
         """
         if "isBehavioral" in attrs:
-            port.setIsBehavioral(int(attrs["isBehavioral"]))
+            port.set_is_behavioral(int(attrs["isBehavioral"]))
         if "isReversed" in attrs:
-            port.setIsReversed(int(attrs["isReversed"]))
+            port.set_is_reversed(int(attrs["isReversed"]))
 
     def _set_port_contract(self, classifier: Any, port: Any, attrs: Dict[str, Any]) -> None:
         """Resolve and set the portContract.
@@ -228,11 +228,11 @@ class PortCreateAction(AbstractPortAction):
         """
         if "portContract" in attrs:
             contract_name = attrs["portContract"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(contract_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(contract_name)
             if target is None:
                 raise CliExecutionError(f"PortContract '{contract_name}' not found")
-            port.setPortContract(target)
+            port.set_port_contract(target)
 
 
 class PortDeleteAction(AbstractPortAction):
@@ -273,7 +273,7 @@ class PortDeleteAction(AbstractPortAction):
             label = args.name
 
         try:
-            port.deleteFromProject()
+            port.delete_from_project()
             self.logger.info("Deleted port: %s", label)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete port '{label}'")
@@ -318,8 +318,8 @@ class PortListAction(AbstractPortAction):
 
     def _collect_port_names(self, classifier: Any) -> List[str]:
         """Collect names of ports on a classifier."""
-        ports = classifier.getPorts()
-        return [port.getName() for port in ports]
+        ports = classifier.get_ports()
+        return [port.get_name() for port in ports]
 
     def _format_output(self, port_names: List[str], format_type: str) -> str:
         """Format output based on format parameter."""
@@ -419,17 +419,17 @@ class PortViewAction(AbstractPortAction):
 
         Normalizes boolean flags to int for clean JSON round-trip.
         """
-        contract = port.getPortContract()
-        contract_name = contract.getName() if contract is not None else ""
+        contract = port.get_port_contract()
+        contract_name = contract.get_name() if contract is not None else ""
         return {
-            "name": port.getName(),
-            "guid": port.getGUID(),
-            "description": port.getDescription(),
-            "isBehavioral": int(port.getIsBehavioral()),
-            "isReversed": int(port.getIsReversed()),
+            "name": port.get_name(),
+            "guid": port.get_guid(),
+            "description": port.get_description(),
+            "isBehavioral": int(port.get_is_behavioral()),
+            "isReversed": int(port.get_is_reversed()),
             "portContract": contract_name,
-            "metaClass": port.getMetaClass(),
-            "fullPath": port.getFullPathName(),
+            "metaClass": port.get_meta_class(),
+            "fullPath": port.get_full_path_name(),
         }
 
     def _format_output(self, data: Dict[str, Any], format_type: str) -> str:
@@ -505,7 +505,7 @@ class PortUpdateAction(AbstractPortAction):
 
         if has_guid:
             port = self._resolve_port_by_guid(args.guid)
-            classifier = port.getOwner()
+            classifier = port.get_owner()
         else:
             classifier = self._resolve_classifier(args.path)
             port = self._resolve_port(classifier, args.name)
@@ -522,7 +522,7 @@ class PortUpdateAction(AbstractPortAction):
 
         self._set_attributes(classifier, port, data)
 
-        self.logger.info("Successfully updated port: %s", port.getName())
+        self.logger.info("Successfully updated port: %s", port.get_name())
 
     def _load_json_data(self, attributes_input: str) -> Any:
         """Load JSON data from inline string or external file.
@@ -549,17 +549,17 @@ class PortUpdateAction(AbstractPortAction):
     def _set_attributes(self, classifier: Any, port: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on port (partial update)."""
         if "name" in attrs:
-            port.setName(attrs["name"])
+            port.set_name(attrs["name"])
         if "description" in attrs:
-            port.setDescription(attrs["description"])
+            port.set_description(attrs["description"])
         if "isBehavioral" in attrs:
-            port.setIsBehavioral(int(attrs["isBehavioral"]))
+            port.set_is_behavioral(int(attrs["isBehavioral"]))
         if "isReversed" in attrs:
-            port.setIsReversed(int(attrs["isReversed"]))
+            port.set_is_reversed(int(attrs["isReversed"]))
         if "portContract" in attrs:
             contract_name = attrs["portContract"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(contract_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(contract_name)
             if target is None:
                 raise CliExecutionError(f"PortContract '{contract_name}' not found")
-            port.setPortContract(target)
+            port.set_port_contract(target)

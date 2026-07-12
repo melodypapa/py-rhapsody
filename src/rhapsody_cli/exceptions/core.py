@@ -7,7 +7,7 @@ and covers failures to attach to or launch a Rhapsody instance.
 """
 
 
-class RhapsodyRuntimeException(Exception):
+class RhapsodyRuntimeException(Exception):  # noqa: N818 - mirrors Java API naming
     """Raised when a call into the Rhapsody COM API fails.
 
     Mirrors ``com.telelogic.rhapsody.core.RhapsodyRuntimeException`` from the

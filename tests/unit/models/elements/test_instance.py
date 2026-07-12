@@ -10,7 +10,7 @@ def test_instance_is_a_relation() -> None:
     instance = RPInstance(fake)
 
     assert isinstance(instance, RPRelation)
-    assert instance.getName() == "driver1"
+    assert instance.get_name() == "driver1"
 
 
 def test_instance_get_all_nested_elements_returns_collection() -> None:
@@ -19,17 +19,17 @@ def test_instance_get_all_nested_elements_returns_collection() -> None:
     fake.getAllNestedElements.return_value = make_fake_collection([nested])
     instance = RPInstance(fake)
 
-    nested_elements = instance.getAllNestedElements()
+    nested_elements = instance.get_all_nested_elements()
 
     assert len(nested_elements) == 1
-    assert nested_elements[0].getName() == "speed"
+    assert nested_elements[0].get_name() == "speed"
 
 
 def test_instance_get_attribute_value_delegates_to_com() -> None:
     fake = make_fake_element("Instance", getAttributeValue="42")
     instance = RPInstance(fake)
 
-    assert instance.getAttributeValue("speed") == "42"
+    assert instance.get_attribute_value("speed") == "42"
 
     fake.getAttributeValue.assert_called_once_with("speed")
 
@@ -38,7 +38,7 @@ def test_instance_set_attribute_value_delegates_to_com() -> None:
     fake = make_fake_element("Instance")
     instance = RPInstance(fake)
 
-    instance.setAttributeValue("speed", "88")
+    instance.set_attribute_value("speed", "88")
 
     fake.setAttributeValue.assert_called_once_with("speed", "88")
 
@@ -49,10 +49,10 @@ def test_instance_get_in_links_returns_collection() -> None:
     fake.getInLinks.return_value = make_fake_collection([link])
     instance = RPInstance(fake)
 
-    links = instance.getInLinks()
+    links = instance.get_in_links()
 
     assert len(links) == 1
-    assert links[0].getName() == "conn1"
+    assert links[0].get_name() == "conn1"
 
 
 def test_instance_get_out_links_returns_collection() -> None:
@@ -61,10 +61,10 @@ def test_instance_get_out_links_returns_collection() -> None:
     fake.getOutLinks.return_value = make_fake_collection([link])
     instance = RPInstance(fake)
 
-    links = instance.getOutLinks()
+    links = instance.get_out_links()
 
     assert len(links) == 1
-    assert links[0].getName() == "conn2"
+    assert links[0].get_name() == "conn2"
 
 
 def test_instance_is_registered_for_meta_class_instance() -> None:
@@ -81,10 +81,10 @@ def test_instance_add_relation_to_the_whole_wraps_result() -> None:
     fake.addRelationToTheWhole.return_value = relation
     instance = RPInstance(fake)
 
-    result = instance.addRelationToTheWhole("whole")
+    result = instance.add_relation_to_the_whole("whole")
 
     fake.addRelationToTheWhole.assert_called_once_with("whole")
-    assert result.getName() == "whole"
+    assert result.get_name() == "whole"
 
 
 def test_instance_get_instantiated_by_wraps_result() -> None:
@@ -93,10 +93,10 @@ def test_instance_get_instantiated_by_wraps_result() -> None:
     fake.getInstantiatedBy.return_value = op
     instance = RPInstance(fake)
 
-    result = instance.getInstantiatedBy()
+    result = instance.get_instantiated_by()
 
     fake.getInstantiatedBy.assert_called_once_with()
-    assert result.getName() == "create"
+    assert result.get_name() == "create"
 
 
 def test_instance_get_list_of_initializer_arguments_returns_collection() -> None:
@@ -105,18 +105,18 @@ def test_instance_get_list_of_initializer_arguments_returns_collection() -> None
     fake.getListOfInitializerArguments.return_value = make_fake_collection([arg])
     instance = RPInstance(fake)
 
-    result = instance.getListOfInitializerArguments()
+    result = instance.get_list_of_initializer_arguments()
 
     assert isinstance(result, RPCollection)
     assert len(result) == 1
-    assert result[0].getName() == "x"
+    assert result[0].get_name() == "x"
 
 
 def test_instance_set_explicit_delegates_to_com() -> None:
     fake = make_fake_element("Instance")
     instance = RPInstance(fake)
 
-    instance.setExplicit()
+    instance.set_explicit()
 
     fake.setExplicit.assert_called_once_with()
 
@@ -125,7 +125,7 @@ def test_instance_set_implicit_delegates_to_com() -> None:
     fake = make_fake_element("Instance")
     instance = RPInstance(fake)
 
-    instance.setImplicit()
+    instance.set_implicit()
 
     fake.setImplicit.assert_called_once_with()
 
@@ -134,7 +134,7 @@ def test_instance_set_initializer_argument_value_delegates_to_com() -> None:
     fake = make_fake_element("Instance")
     instance = RPInstance(fake)
 
-    instance.setInitializerArgumentValue("x", "42")
+    instance.set_initializer_argument_value("x", "42")
 
     fake.setInitializerArgumentValue.assert_called_once_with("x", "42")
 
@@ -144,7 +144,7 @@ def test_instance_set_instantiated_by_unwraps_arg() -> None:
     op = make_fake_element("Operation", getName="create")
     instance = RPInstance(fake)
 
-    instance.setInstantiatedBy(AbstractRPModelElement.wrap(op))
+    instance.set_instantiated_by(AbstractRPModelElement.wrap(op))
 
     fake.setInstantiatedBy.assert_called_once_with(op)
 
@@ -153,6 +153,6 @@ def test_instance_update_contained_diagrams_on_server_delegates_to_com() -> None
     fake = make_fake_element("Instance", updateContainedDiagramsOnServer=2)
     instance = RPInstance(fake)
 
-    assert instance.updateContainedDiagramsOnServer(1) == 2
+    assert instance.update_contained_diagrams_on_server(1) == 2
 
     fake.updateContainedDiagramsOnServer.assert_called_once_with(1)

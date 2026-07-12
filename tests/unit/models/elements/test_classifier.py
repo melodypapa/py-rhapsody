@@ -11,7 +11,7 @@ def test_classifier_is_a_unit() -> None:
     classifier = RPClassifier(fake)
 
     assert isinstance(classifier, RPUnit)
-    assert classifier.getName() == "Widget"
+    assert classifier.get_name() == "Widget"
 
 
 def test_classifier_add_attribute_wraps_result() -> None:
@@ -20,10 +20,10 @@ def test_classifier_add_attribute_wraps_result() -> None:
     fake.addAttribute.return_value = attr
     classifier = RPClassifier(fake)
 
-    result = classifier.addAttribute("count")
+    result = classifier.add_attribute("count")
 
     fake.addAttribute.assert_called_once_with("count")
-    assert result.getName() == "count"
+    assert result.get_name() == "count"
 
 
 def test_classifier_add_operation_wraps_result() -> None:
@@ -32,10 +32,10 @@ def test_classifier_add_operation_wraps_result() -> None:
     fake.addOperation.return_value = op
     classifier = RPClassifier(fake)
 
-    result = classifier.addOperation("doIt")
+    result = classifier.add_operation("doIt")
 
     fake.addOperation.assert_called_once_with("doIt")
-    assert result.getName() == "doIt"
+    assert result.get_name() == "doIt"
 
 
 def test_classifier_get_attributes_returns_collection() -> None:
@@ -43,10 +43,10 @@ def test_classifier_get_attributes_returns_collection() -> None:
     fake.getAttributes.return_value = make_fake_collection([make_fake_element("Attribute", getName="count")])
     classifier = RPClassifier(fake)
 
-    attributes = classifier.getAttributes()
+    attributes = classifier.get_attributes()
 
     assert len(attributes) == 1
-    assert attributes[0].getName() == "count"
+    assert attributes[0].get_name() == "count"
 
 
 def test_classifier_get_operations_returns_collection() -> None:
@@ -54,10 +54,10 @@ def test_classifier_get_operations_returns_collection() -> None:
     fake.getOperations.return_value = make_fake_collection([make_fake_element("Operation", getName="doIt")])
     classifier = RPClassifier(fake)
 
-    operations = classifier.getOperations()
+    operations = classifier.get_operations()
 
     assert len(operations) == 1
-    assert operations[0].getName() == "doIt"
+    assert operations[0].get_name() == "doIt"
 
 
 def test_classifier_add_generalization_delegates_to_com() -> None:
@@ -65,7 +65,7 @@ def test_classifier_add_generalization_delegates_to_com() -> None:
     base = make_fake_element("Class", getName="Base")
     classifier = RPClassifier(fake)
 
-    classifier.addGeneralization(RPClassifier(base))
+    classifier.add_generalization(RPClassifier(base))
 
     fake.addGeneralization.assert_called_once_with(base)
 
@@ -76,10 +76,10 @@ def test_classifier_add_statechart_wraps_result() -> None:
     fake.addStatechart.return_value = statechart
     classifier = RPClassifier(fake)
 
-    result = classifier.addStatechart()
+    result = classifier.add_statechart()
 
     fake.addStatechart.assert_called_once_with()
-    assert result.getName() == "Behavior"
+    assert result.get_name() == "Behavior"
 
 
 def test_classifier_add_activity_diagram_wraps_result() -> None:
@@ -88,10 +88,10 @@ def test_classifier_add_activity_diagram_wraps_result() -> None:
     fake.addActivityDiagram.return_value = diagram
     classifier = RPClassifier(fake)
 
-    result = classifier.addActivityDiagram()
+    result = classifier.add_activity_diagram()
 
     fake.addActivityDiagram.assert_called_once_with()
-    assert result.getName() == "Act"
+    assert result.get_name() == "Act"
 
 
 def test_classifier_add_flow_items_wraps_result() -> None:
@@ -100,10 +100,10 @@ def test_classifier_add_flow_items_wraps_result() -> None:
     fake.addFlowItems.return_value = item
     classifier = RPClassifier(fake)
 
-    result = classifier.addFlowItems("flowItem")
+    result = classifier.add_flow_items("flowItem")
 
     fake.addFlowItems.assert_called_once_with("flowItem")
-    assert result.getName() == "flowItem"
+    assert result.get_name() == "flowItem"
 
 
 def test_classifier_add_flows_wraps_result() -> None:
@@ -112,10 +112,10 @@ def test_classifier_add_flows_wraps_result() -> None:
     fake.addFlows.return_value = flow
     classifier = RPClassifier(fake)
 
-    result = classifier.addFlows("flow")
+    result = classifier.add_flows("flow")
 
     fake.addFlows.assert_called_once_with("flow")
-    assert result.getName() == "flow"
+    assert result.get_name() == "flow"
 
 
 def test_classifier_add_relation_wraps_result() -> None:
@@ -124,10 +124,10 @@ def test_classifier_add_relation_wraps_result() -> None:
     fake.addRelation.return_value = relation
     classifier = RPClassifier(fake)
 
-    result = classifier.addRelation("Other", "Pkg", "r1", "Association", "1", "r2", "Association", "*", "Link")
+    result = classifier.add_relation("Other", "Pkg", "r1", "Association", "1", "r2", "Association", "*", "Link")
 
     fake.addRelation.assert_called_once_with("Other", "Pkg", "r1", "Association", "1", "r2", "Association", "*", "Link")
-    assert result.getName() == "assoc"
+    assert result.get_name() == "assoc"
 
 
 def test_classifier_add_relation_to_unwraps_classifier_and_wraps_result() -> None:
@@ -137,10 +137,10 @@ def test_classifier_add_relation_to_unwraps_classifier_and_wraps_result() -> Non
     fake.addRelationTo.return_value = relation
     classifier = RPClassifier(fake)
 
-    result = classifier.addRelationTo(RPClassifier(other_fake), "r1", "Association", "1", "r2", "Association", "*", "Link")
+    result = classifier.add_relation_to(RPClassifier(other_fake), "r1", "Association", "1", "r2", "Association", "*", "Link")
 
     fake.addRelationTo.assert_called_once_with(other_fake, "r1", "Association", "1", "r2", "Association", "*", "Link")
-    assert result.getName() == "assoc"
+    assert result.get_name() == "assoc"
 
 
 def test_classifier_add_unidirectional_relation_wraps_result() -> None:
@@ -149,10 +149,10 @@ def test_classifier_add_unidirectional_relation_wraps_result() -> None:
     fake.addUnidirectionalRelation.return_value = relation
     classifier = RPClassifier(fake)
 
-    result = classifier.addUnidirectionalRelation("Other", "Pkg", "r1", "Association", "1", "Link")
+    result = classifier.add_unidirectional_relation("Other", "Pkg", "r1", "Association", "1", "Link")
 
     fake.addUnidirectionalRelation.assert_called_once_with("Other", "Pkg", "r1", "Association", "1", "Link")
-    assert result.getName() == "assoc"
+    assert result.get_name() == "assoc"
 
 
 def test_classifier_add_unidirectional_relation_to_unwraps_classifier_and_wraps_result() -> None:
@@ -162,10 +162,10 @@ def test_classifier_add_unidirectional_relation_to_unwraps_classifier_and_wraps_
     fake.addUnidirectionalRelationTo.return_value = relation
     classifier = RPClassifier(fake)
 
-    result = classifier.addUnidirectionalRelationTo(RPClassifier(other_fake), "r1", "Association", "1", "Link")
+    result = classifier.add_unidirectional_relation_to(RPClassifier(other_fake), "r1", "Association", "1", "Link")
 
     fake.addUnidirectionalRelationTo.assert_called_once_with(other_fake, "r1", "Association", "1", "Link")
-    assert result.getName() == "assoc"
+    assert result.get_name() == "assoc"
 
 
 def test_classifier_delete_attribute_delegates_to_com() -> None:
@@ -173,7 +173,7 @@ def test_classifier_delete_attribute_delegates_to_com() -> None:
     attr_fake = make_fake_element("Attribute", getName="count")
     classifier = RPClassifier(fake)
 
-    classifier.deleteAttribute(RPModelElement(attr_fake))
+    classifier.delete_attribute(RPModelElement(attr_fake))
 
     fake.deleteAttribute.assert_called_once_with(attr_fake)
 
@@ -183,7 +183,7 @@ def test_classifier_delete_flow_items_delegates_to_com() -> None:
     item_fake = make_fake_element("FlowItem", getName="flowItem")
     classifier = RPClassifier(fake)
 
-    classifier.deleteFlowItems(RPModelElement(item_fake))
+    classifier.delete_flow_items(RPModelElement(item_fake))
 
     fake.deleteFlowItems.assert_called_once_with(item_fake)
 
@@ -193,7 +193,7 @@ def test_classifier_delete_flows_delegates_to_com() -> None:
     flow_fake = make_fake_element("Flow", getName="flow")
     classifier = RPClassifier(fake)
 
-    classifier.deleteFlows(RPModelElement(flow_fake))
+    classifier.delete_flows(RPModelElement(flow_fake))
 
     fake.deleteFlows.assert_called_once_with(flow_fake)
 
@@ -203,7 +203,7 @@ def test_classifier_delete_generalization_unwraps_classifier() -> None:
     base_fake = make_fake_element("Class", getName="Base")
     classifier = RPClassifier(fake)
 
-    classifier.deleteGeneralization(RPClassifier(base_fake))
+    classifier.delete_generalization(RPClassifier(base_fake))
 
     fake.deleteGeneralization.assert_called_once_with(base_fake)
 
@@ -213,7 +213,7 @@ def test_classifier_delete_operation_delegates_to_com() -> None:
     op_fake = make_fake_element("Operation", getName="doIt")
     classifier = RPClassifier(fake)
 
-    classifier.deleteOperation(RPModelElement(op_fake))
+    classifier.delete_operation(RPModelElement(op_fake))
 
     fake.deleteOperation.assert_called_once_with(op_fake)
 
@@ -223,7 +223,7 @@ def test_classifier_delete_relation_delegates_to_com() -> None:
     rel_fake = make_fake_element("Relation", getName="assoc")
     classifier = RPClassifier(fake)
 
-    classifier.deleteRelation(RPModelElement(rel_fake))
+    classifier.delete_relation(RPModelElement(rel_fake))
 
     fake.deleteRelation.assert_called_once_with(rel_fake)
 
@@ -234,10 +234,10 @@ def test_classifier_find_attribute_wraps_result() -> None:
     fake.findAttribute.return_value = attr
     classifier = RPClassifier(fake)
 
-    result = classifier.findAttribute("count")
+    result = classifier.find_attribute("count")
 
     fake.findAttribute.assert_called_once_with("count")
-    assert result.getName() == "count"
+    assert result.get_name() == "count"
 
 
 def test_classifier_find_base_classifier_wraps_result() -> None:
@@ -246,10 +246,10 @@ def test_classifier_find_base_classifier_wraps_result() -> None:
     fake.findBaseClassifier.return_value = base
     classifier = RPClassifier(fake)
 
-    result = classifier.findBaseClassifier("Base")
+    result = classifier.find_base_classifier("Base")
 
     fake.findBaseClassifier.assert_called_once_with("Base")
-    assert result.getName() == "Base"
+    assert result.get_name() == "Base"
 
 
 def test_classifier_find_derived_classifier_wraps_result() -> None:
@@ -258,10 +258,10 @@ def test_classifier_find_derived_classifier_wraps_result() -> None:
     fake.findDerivedClassifier.return_value = derived
     classifier = RPClassifier(fake)
 
-    result = classifier.findDerivedClassifier("Derived")
+    result = classifier.find_derived_classifier("Derived")
 
     fake.findDerivedClassifier.assert_called_once_with("Derived")
-    assert result.getName() == "Derived"
+    assert result.get_name() == "Derived"
 
 
 def test_classifier_find_generalization_wraps_result() -> None:
@@ -270,10 +270,10 @@ def test_classifier_find_generalization_wraps_result() -> None:
     fake.findGeneralization.return_value = gen
     classifier = RPClassifier(fake)
 
-    result = classifier.findGeneralization("Base")
+    result = classifier.find_generalization("Base")
 
     fake.findGeneralization.assert_called_once_with("Base")
-    assert result.getName() == "gen"
+    assert result.get_name() == "gen"
 
 
 def test_classifier_find_interface_item_wraps_result() -> None:
@@ -282,10 +282,10 @@ def test_classifier_find_interface_item_wraps_result() -> None:
     fake.findInterfaceItem.return_value = item
     classifier = RPClassifier(fake)
 
-    result = classifier.findInterfaceItem("doIt()")
+    result = classifier.find_interface_item("doIt()")
 
     fake.findInterfaceItem.assert_called_once_with("doIt()")
-    assert result.getName() == "doIt"
+    assert result.get_name() == "doIt"
 
 
 def test_classifier_find_nested_classifier_wraps_result() -> None:
@@ -294,10 +294,10 @@ def test_classifier_find_nested_classifier_wraps_result() -> None:
     fake.findNestedClassifier.return_value = nested
     classifier = RPClassifier(fake)
 
-    result = classifier.findNestedClassifier("Nested")
+    result = classifier.find_nested_classifier("Nested")
 
     fake.findNestedClassifier.assert_called_once_with("Nested")
-    assert result.getName() == "Nested"
+    assert result.get_name() == "Nested"
 
 
 def test_classifier_find_nested_classifier_recursive_wraps_result() -> None:
@@ -306,10 +306,10 @@ def test_classifier_find_nested_classifier_recursive_wraps_result() -> None:
     fake.findNestedClassifierRecursive.return_value = nested
     classifier = RPClassifier(fake)
 
-    result = classifier.findNestedClassifierRecursive("Nested")
+    result = classifier.find_nested_classifier_recursive("Nested")
 
     fake.findNestedClassifierRecursive.assert_called_once_with("Nested")
-    assert result.getName() == "Nested"
+    assert result.get_name() == "Nested"
 
 
 def test_classifier_find_relation_wraps_result() -> None:
@@ -318,10 +318,10 @@ def test_classifier_find_relation_wraps_result() -> None:
     fake.findRelation.return_value = rel
     classifier = RPClassifier(fake)
 
-    result = classifier.findRelation("assoc")
+    result = classifier.find_relation("assoc")
 
     fake.findRelation.assert_called_once_with("assoc")
-    assert result.getName() == "assoc"
+    assert result.get_name() == "assoc"
 
 
 def test_classifier_find_trigger_wraps_result() -> None:
@@ -330,10 +330,10 @@ def test_classifier_find_trigger_wraps_result() -> None:
     fake.findTrigger.return_value = trigger
     classifier = RPClassifier(fake)
 
-    result = classifier.findTrigger("trig")
+    result = classifier.find_trigger("trig")
 
     fake.findTrigger.assert_called_once_with("trig")
-    assert result.getName() == "trig"
+    assert result.get_name() == "trig"
 
 
 def test_classifier_get_activity_diagram_wraps_result() -> None:
@@ -342,10 +342,10 @@ def test_classifier_get_activity_diagram_wraps_result() -> None:
     fake.getActivityDiagram.return_value = diagram
     classifier = RPClassifier(fake)
 
-    result = classifier.getActivityDiagram()
+    result = classifier.get_activity_diagram()
 
     fake.getActivityDiagram.assert_called_once_with()
-    assert result.getName() == "Act"
+    assert result.get_name() == "Act"
 
 
 def test_classifier_get_statechart_wraps_result() -> None:
@@ -354,10 +354,10 @@ def test_classifier_get_statechart_wraps_result() -> None:
     fake.getStatechart.return_value = statechart
     classifier = RPClassifier(fake)
 
-    result = classifier.getStatechart()
+    result = classifier.get_statechart()
 
     fake.getStatechart.assert_called_once_with()
-    assert result.getName() == "Behavior"
+    assert result.get_name() == "Behavior"
 
 
 def test_classifier_get_attributes_including_bases_returns_collection() -> None:
@@ -365,10 +365,10 @@ def test_classifier_get_attributes_including_bases_returns_collection() -> None:
     fake.getAttributesIncludingBases.return_value = make_fake_collection([make_fake_element("Attribute", getName="count")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getAttributesIncludingBases()
+    result = classifier.get_attributes_including_bases()
 
     assert len(result) == 1
-    assert result[0].getName() == "count"
+    assert result[0].get_name() == "count"
 
 
 def test_classifier_get_base_classifiers_returns_collection() -> None:
@@ -376,10 +376,10 @@ def test_classifier_get_base_classifiers_returns_collection() -> None:
     fake.getBaseClassifiers.return_value = make_fake_collection([make_fake_element("Class", getName="Base")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getBaseClassifiers()
+    result = classifier.get_base_classifiers()
 
     assert len(result) == 1
-    assert result[0].getName() == "Base"
+    assert result[0].get_name() == "Base"
 
 
 def test_classifier_get_behavioral_diagrams_returns_collection() -> None:
@@ -387,10 +387,10 @@ def test_classifier_get_behavioral_diagrams_returns_collection() -> None:
     fake.getBehavioralDiagrams.return_value = make_fake_collection([make_fake_element("Statechart", getName="Behavior")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getBehavioralDiagrams()
+    result = classifier.get_behavioral_diagrams()
 
     assert len(result) == 1
-    assert result[0].getName() == "Behavior"
+    assert result[0].get_name() == "Behavior"
 
 
 def test_classifier_get_derived_classifiers_returns_collection() -> None:
@@ -398,10 +398,10 @@ def test_classifier_get_derived_classifiers_returns_collection() -> None:
     fake.getDerivedClassifiers.return_value = make_fake_collection([make_fake_element("Class", getName="Derived")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getDerivedClassifiers()
+    result = classifier.get_derived_classifiers()
 
     assert len(result) == 1
-    assert result[0].getName() == "Derived"
+    assert result[0].get_name() == "Derived"
 
 
 def test_classifier_get_flow_items_returns_collection() -> None:
@@ -409,10 +409,10 @@ def test_classifier_get_flow_items_returns_collection() -> None:
     fake.getFlowItems.return_value = make_fake_collection([make_fake_element("FlowItem", getName="flowItem")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getFlowItems()
+    result = classifier.get_flow_items()
 
     assert len(result) == 1
-    assert result[0].getName() == "flowItem"
+    assert result[0].get_name() == "flowItem"
 
 
 def test_classifier_get_flows_returns_collection() -> None:
@@ -420,10 +420,10 @@ def test_classifier_get_flows_returns_collection() -> None:
     fake.getFlows.return_value = make_fake_collection([make_fake_element("Flow", getName="flow")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getFlows()
+    result = classifier.get_flows()
 
     assert len(result) == 1
-    assert result[0].getName() == "flow"
+    assert result[0].get_name() == "flow"
 
 
 def test_classifier_get_generalizations_returns_collection() -> None:
@@ -431,10 +431,10 @@ def test_classifier_get_generalizations_returns_collection() -> None:
     fake.getGeneralizations.return_value = make_fake_collection([make_fake_element("Generalization", getName="gen")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getGeneralizations()
+    result = classifier.get_generalizations()
 
     assert len(result) == 1
-    assert result[0].getName() == "gen"
+    assert result[0].get_name() == "gen"
 
 
 def test_classifier_get_interface_items_returns_collection() -> None:
@@ -442,10 +442,10 @@ def test_classifier_get_interface_items_returns_collection() -> None:
     fake.getInterfaceItems.return_value = make_fake_collection([make_fake_element("Operation", getName="doIt")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getInterfaceItems()
+    result = classifier.get_interface_items()
 
     assert len(result) == 1
-    assert result[0].getName() == "doIt"
+    assert result[0].get_name() == "doIt"
 
 
 def test_classifier_get_interface_items_including_bases_returns_collection() -> None:
@@ -453,10 +453,10 @@ def test_classifier_get_interface_items_including_bases_returns_collection() -> 
     fake.getInterfaceItemsIncludingBases.return_value = make_fake_collection([make_fake_element("Operation", getName="doIt")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getInterfaceItemsIncludingBases()
+    result = classifier.get_interface_items_including_bases()
 
     assert len(result) == 1
-    assert result[0].getName() == "doIt"
+    assert result[0].get_name() == "doIt"
 
 
 def test_classifier_get_links_returns_collection() -> None:
@@ -464,10 +464,10 @@ def test_classifier_get_links_returns_collection() -> None:
     fake.getLinks.return_value = make_fake_collection([make_fake_element("Link", getName="link")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getLinks()
+    result = classifier.get_links()
 
     assert len(result) == 1
-    assert result[0].getName() == "link"
+    assert result[0].get_name() == "link"
 
 
 def test_classifier_get_nested_classifiers_returns_collection() -> None:
@@ -475,10 +475,10 @@ def test_classifier_get_nested_classifiers_returns_collection() -> None:
     fake.getNestedClassifiers.return_value = make_fake_collection([make_fake_element("Class", getName="Nested")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getNestedClassifiers()
+    result = classifier.get_nested_classifiers()
 
     assert len(result) == 1
-    assert result[0].getName() == "Nested"
+    assert result[0].get_name() == "Nested"
 
 
 def test_classifier_get_ports_returns_collection() -> None:
@@ -486,10 +486,10 @@ def test_classifier_get_ports_returns_collection() -> None:
     fake.getPorts.return_value = make_fake_collection([make_fake_element("Port", getName="port")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getPorts()
+    result = classifier.get_ports()
 
     assert len(result) == 1
-    assert result[0].getName() == "port"
+    assert result[0].get_name() == "port"
 
 
 def test_classifier_add_port_delegates_to_add_new_aggr() -> None:
@@ -498,11 +498,11 @@ def test_classifier_add_port_delegates_to_add_new_aggr() -> None:
     fake.addNewAggr.return_value = port_fake
     classifier = RPClassifier(fake)
 
-    result = classifier.addPort("clientPort")
+    result = classifier.add_port("clientPort")
 
     fake.addNewAggr.assert_called_once_with("Port", "clientPort")
     assert isinstance(result, RPPort)
-    assert result.getName() == "clientPort"
+    assert result.get_name() == "clientPort"
 
 
 def test_classifier_get_relations_returns_collection() -> None:
@@ -510,10 +510,10 @@ def test_classifier_get_relations_returns_collection() -> None:
     fake.getRelations.return_value = make_fake_collection([make_fake_element("Relation", getName="assoc")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getRelations()
+    result = classifier.get_relations()
 
     assert len(result) == 1
-    assert result[0].getName() == "assoc"
+    assert result[0].get_name() == "assoc"
 
 
 def test_classifier_get_relations_including_bases_returns_collection() -> None:
@@ -521,10 +521,10 @@ def test_classifier_get_relations_including_bases_returns_collection() -> None:
     fake.getRelationsIncludingBases.return_value = make_fake_collection([make_fake_element("Relation", getName="assoc")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getRelationsIncludingBases()
+    result = classifier.get_relations_including_bases()
 
     assert len(result) == 1
-    assert result[0].getName() == "assoc"
+    assert result[0].get_name() == "assoc"
 
 
 def test_classifier_get_sequence_diagrams_returns_collection() -> None:
@@ -532,10 +532,10 @@ def test_classifier_get_sequence_diagrams_returns_collection() -> None:
     fake.getSequenceDiagrams.return_value = make_fake_collection([make_fake_element("SequenceDiagram", getName="seq")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getSequenceDiagrams()
+    result = classifier.get_sequence_diagrams()
 
     assert len(result) == 1
-    assert result[0].getName() == "seq"
+    assert result[0].get_name() == "seq"
 
 
 def test_classifier_get_source_artifacts_returns_collection() -> None:
@@ -543,7 +543,7 @@ def test_classifier_get_source_artifacts_returns_collection() -> None:
     fake.getSourceArtifacts.return_value = make_fake_collection([make_fake_element("File", getName="file")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getSourceArtifacts()
+    result = classifier.get_source_artifacts()
 
     assert len(result) == 1
-    assert result[0].getName() == "file"
+    assert result[0].get_name() == "file"

@@ -10,7 +10,7 @@ def test_collaboration_is_a_unit() -> None:
     collab = RPCollaboration(fake)
 
     assert isinstance(collab, RPUnit)
-    assert collab.getName() == "Collab1"
+    assert collab.get_name() == "Collab1"
 
 
 def test_collaboration_is_registered_for_meta_class_collaboration() -> None:

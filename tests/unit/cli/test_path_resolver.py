@@ -14,10 +14,10 @@ class _FakeElement:
         self._name = name
         self._children = children or []
 
-    def getName(self) -> str:
+    def get_name(self) -> str:
         return self._name
 
-    def getNestedElements(self) -> List["_FakeElement"]:
+    def get_nested_elements(self) -> List["_FakeElement"]:
         return self._children
 
 

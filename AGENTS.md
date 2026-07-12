@@ -2,7 +2,7 @@
 
 ## Project
 
-Pythonic wrapper around the IBM Rhapsody COM API. Method names mirror `com.telelogic.rhapsody.core` Java API exactly. Windows-only for runtime (COM); tests run anywhere via fakes.
+Pythonic wrapper around the IBM Rhapsody COM API. All method names use snake_case (e.g. `get_name`, `set_name`, `add_class`). Internal COM calls preserve the camelCase API (`self._com.methodName(...)`). Windows-only for runtime (COM); tests run anywhere via fakes.
 
 ## Architecture (3 layers, bottom-up)
 
@@ -15,7 +15,7 @@ Pythonic wrapper around the IBM Rhapsody COM API. Method names mirror `com.telel
 ## COM Wrapping Rules (critical)
 
 - All COM calls → `call_com(lambda: self._com.methodName(...))` (translates `com_error` → `RhapsodyRuntimeException`)
-- No-arg getters → `_get_method_or_property(self._com, "getX", "x")` (prefers method, falls back to property)
+- No-arg getters → `_get_method_or_property(self._com, "getX", "x")` (prefers method, falls back to property; note: strings are COM identifiers, not Python names)
 - Parameterized getters → MUST use `call_com` directly (`_get_method_or_property` drops extra args)
 - Single-arg setters → `_set_method_or_property(self._com, "setX", "x", value)`
 - Multi-arg setters → MUST use `call_com` directly
@@ -51,14 +51,14 @@ ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytes
 ## Forbidden
 
 - `from __future__ import annotations` (use string-quoted forward refs or `TYPE_CHECKING` imports instead)
-- `element._com.delete()` (use `element.deleteFromProject()` instead)
+- `element._com.delete()` (use `element.delete_from_project()` instead)
 - `Co-authored-by: Copilot` or any AI attribution
 - Direct commits to `main` — always use `feature/`, `fix/`, `refactor/`, `docs/` branches
 
 ## Adding a New Element Wrapper
 
 1. Create `src/rhapsody_cli/models/elements/<subpackage>/model_<class>.py`
-2. Subclass `RPModelElement`, add methods mirroring Java API
+2. Subclass `RPModelElement`, add methods using snake_case names mirroring Java API
 3. `AbstractRPModelElement.register_wrapper("MetaClass", RPMyClass)` at module level
 4. Add import in the subpackage's `__init__.py`
 5. Write tests using `make_fake_element` / `make_fake_collection`

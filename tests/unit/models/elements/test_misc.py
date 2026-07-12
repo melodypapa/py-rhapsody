@@ -14,7 +14,7 @@ def test_enumeration_literal_is_a_model_element() -> None:
     literal = RPEnumerationLiteral(fake)
 
     assert isinstance(literal, RPModelElement)
-    assert literal.getName() == "LITERAL1"
+    assert literal.get_name() == "LITERAL1"
 
 
 def test_enumeration_literal_is_registered() -> None:
@@ -30,7 +30,7 @@ def test_comment_is_a_model_element() -> None:
     comment = RPComment(fake)
 
     assert isinstance(comment, RPModelElement)
-    assert comment.getName() == "Comment1"
+    assert comment.get_name() == "Comment1"
 
 
 def test_comment_is_registered() -> None:
@@ -46,7 +46,7 @@ def test_constraint_is_a_model_element() -> None:
     constraint = RPConstraint(fake)
 
     assert isinstance(constraint, RPModelElement)
-    assert constraint.getName() == "Constraint1"
+    assert constraint.get_name() == "Constraint1"
 
 
 def test_constraint_is_registered() -> None:

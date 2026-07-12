@@ -10,7 +10,7 @@ def test_component_is_a_unit() -> None:
     component = RPComponent(fake)
 
     assert isinstance(component, RPUnit)
-    assert component.getName() == "Comp1"
+    assert component.get_name() == "Comp1"
 
 
 def test_component_is_registered_for_meta_class_component() -> None:

@@ -21,7 +21,7 @@ class RPInstanceSlot(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPInstanceSlot methods.
 
-    def addElementValue(self, val: "RPModelElement") -> "RPInstanceValue":
+    def add_element_value(self, val: "RPModelElement") -> "RPInstanceValue":
         """Adds an element value to this instance slot.
 
         Args:
@@ -38,7 +38,7 @@ class RPInstanceSlot(RPModelElement):
         """
         raise NotImplementedError
 
-    def addStringValue(self, val: str) -> "RPLiteralSpecification":
+    def add_string_value(self, val: str) -> "RPLiteralSpecification":
         """Adds a string value to this instance slot.
 
         Args:
@@ -55,7 +55,7 @@ class RPInstanceSlot(RPModelElement):
         """
         raise NotImplementedError
 
-    def getSlotProperty(self) -> "RPModelElement":
+    def get_slot_property(self) -> "RPModelElement":
         """Returns the slot property of this instance slot.
 
         Returns:
@@ -69,7 +69,7 @@ class RPInstanceSlot(RPModelElement):
         """
         raise NotImplementedError
 
-    def getValues(self) -> "RPCollection":
+    def get_values(self) -> "RPCollection":
         """Returns the values of this instance slot.
 
         Returns:
@@ -83,7 +83,7 @@ class RPInstanceSlot(RPModelElement):
         """
         raise NotImplementedError
 
-    def setSlotProperty(self, slot_property: "RPModelElement") -> None:
+    def set_slot_property(self, slot_property: "RPModelElement") -> None:
         """Sets the slot property of this instance slot.
 
         Args:
@@ -111,7 +111,7 @@ class RPInstanceSpecification(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPInstanceSpecification methods.
 
-    def addInstanceSlot(self, name: str, slot_property: "RPModelElement") -> "RPInstanceSlot":
+    def add_instance_slot(self, name: str, slot_property: "RPModelElement") -> "RPInstanceSlot":
         """Adds a new instance slot for the specified property of the classifier.
 
         Args:
@@ -130,7 +130,7 @@ class RPInstanceSpecification(RPModelElement):
         """
         raise NotImplementedError
 
-    def getClassifier(self) -> "RPClassifier":
+    def get_classifier(self) -> "RPClassifier":
         """Returns the classifier of this instance specification.
 
         Returns:
@@ -144,7 +144,7 @@ class RPInstanceSpecification(RPModelElement):
         """
         raise NotImplementedError
 
-    def getInstanceSlots(self) -> "RPCollection":
+    def get_instance_slots(self) -> "RPCollection":
         """Returns the instance slots of this instance specification.
 
         Returns:
@@ -158,7 +158,7 @@ class RPInstanceSpecification(RPModelElement):
         """
         raise NotImplementedError
 
-    def isRootInstanceSpecification(self) -> int:
+    def is_root_instance_specification(self) -> int:
         """Checks whether the instance specification is a root instance specification.
 
         A root instance specification is any instance specification that is not a
@@ -176,7 +176,7 @@ class RPInstanceSpecification(RPModelElement):
         """
         raise NotImplementedError
 
-    def populateSlots(self) -> None:
+    def populate_slots(self) -> None:
         """Populates the slots of this instance specification.
 
         Raises:
@@ -187,7 +187,7 @@ class RPInstanceSpecification(RPModelElement):
         """
         raise NotImplementedError
 
-    def setClassifier(self, classifier: "RPClassifier") -> None:
+    def set_classifier(self, classifier: "RPClassifier") -> None:
         """Sets the classifier of this instance specification.
 
         Args:
@@ -226,7 +226,7 @@ class RPInstanceValue(RPValueSpecification):
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPInstanceValue methods.
 
-    def getValue(self) -> "RPModelElement":
+    def get_value(self) -> "RPModelElement":
         """Returns the stored value.
 
         Returns:
@@ -237,7 +237,7 @@ class RPInstanceValue(RPValueSpecification):
         """
         raise NotImplementedError
 
-    def setValue(self, value: "RPModelElement") -> None:
+    def set_value(self, value: "RPModelElement") -> None:
         """Sets the value to store.
 
         Args:
@@ -259,7 +259,7 @@ class RPLiteralSpecification(RPValueSpecification):
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPLiteralSpecification methods.
 
-    def getValue(self) -> str:
+    def get_value(self) -> str:
         """Returns the stored value.
 
         Returns:
@@ -270,7 +270,7 @@ class RPLiteralSpecification(RPValueSpecification):
         """
         raise NotImplementedError
 
-    def setValue(self, value: str) -> None:
+    def set_value(self, value: str) -> None:
         """Sets the value to store.
 
         Args:

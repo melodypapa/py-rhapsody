@@ -10,7 +10,7 @@ def test_association_class_is_a_class() -> None:
     ac = RPAssociationClass(fake)
 
     assert isinstance(ac, RPClass)
-    assert ac.getName() == "MyAssoc"
+    assert ac.get_name() == "MyAssoc"
 
 
 def test_association_class_is_registered_for_meta_class_association_class() -> None:

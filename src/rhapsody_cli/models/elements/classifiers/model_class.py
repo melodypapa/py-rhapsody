@@ -16,38 +16,38 @@ class RPClass(RPClassifier):
     """Wraps ``IRPClass``: represents a class in the model."""
 
     # IRPClass method parity checklist:
-    # [x] addClass                 [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addConstructor           [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addDestructor            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addSuperclass            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getIsAbstract            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] addEventReception        [x] impl  [x] docstring  [x] test
-    # [x] addEventReceptionWithEvent [x] impl [x] docstring [x] test
-    # [x] addLink                  [x] impl  [x] docstring  [x] test
-    # [x] addLinkToPartViaPort     [x] impl  [x] docstring  [x] test
-    # [x] addReception             [x] impl  [x] docstring  [x] test
-    # [x] addTriggeredOperation    [x] impl  [x] docstring  [x] test
-    # [x] addType                  [x] impl  [x] docstring  [x] test
-    # [x] deleteClass              [x] impl  [x] docstring  [x] test
-    # [x] deleteConstructor        [x] impl  [x] docstring  [x] test
-    # [x] deleteDestructor         [x] impl  [x] docstring  [x] test
-    # [x] deleteEventReception     [x] impl  [x] docstring  [x] test
-    # [x] deleteReception          [x] impl  [x] docstring  [x] test
-    # [x] deleteSuperclass         [x] impl  [x] docstring  [x] test
-    # [x] deleteType               [x] impl  [x] docstring  [x] test
-    # [x] getIsActive              [x] impl  [x] docstring  [x] test
-    # [x] getIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
-    # [x] getIsComposite           [x] impl  [x] docstring  [x] test
-    # [x] getIsFinal               [x] impl  [x] docstring  [x] test
-    # [x] getIsReactive            [x] impl  [x] docstring  [x] test
-    # [x] setIsAbstract            [x] impl  [x] docstring  [x] test
-    # [x] setIsActive              [x] impl  [x] docstring  [x] test
-    # [x] setIsBehaviorOverriden   [x] impl  [x] docstring  [x] test
-    # [x] setIsFinal               [x] impl  [x] docstring  [x] test
-    # [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
+    # [x] add_class                 [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_constructor           [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_destructor            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_superclass            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_is_abstract            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] add_event_reception        [x] impl  [x] docstring  [x] test
+    # [x] add_event_reception_with_event [x] impl [x] docstring [x] test
+    # [x] add_link                  [x] impl  [x] docstring  [x] test
+    # [x] add_link_to_part_via_port     [x] impl  [x] docstring  [x] test
+    # [x] add_reception             [x] impl  [x] docstring  [x] test
+    # [x] add_triggered_operation    [x] impl  [x] docstring  [x] test
+    # [x] add_type                  [x] impl  [x] docstring  [x] test
+    # [x] delete_class              [x] impl  [x] docstring  [x] test
+    # [x] delete_constructor        [x] impl  [x] docstring  [x] test
+    # [x] delete_destructor         [x] impl  [x] docstring  [x] test
+    # [x] delete_event_reception     [x] impl  [x] docstring  [x] test
+    # [x] delete_reception          [x] impl  [x] docstring  [x] test
+    # [x] delete_superclass         [x] impl  [x] docstring  [x] test
+    # [x] delete_type               [x] impl  [x] docstring  [x] test
+    # [x] get_is_active              [x] impl  [x] docstring  [x] test
+    # [x] get_is_behavior_overriden   [x] impl  [x] docstring  [x] test
+    # [x] get_is_composite           [x] impl  [x] docstring  [x] test
+    # [x] get_is_final               [x] impl  [x] docstring  [x] test
+    # [x] get_is_reactive            [x] impl  [x] docstring  [x] test
+    # [x] set_is_abstract            [x] impl  [x] docstring  [x] test
+    # [x] set_is_active              [x] impl  [x] docstring  [x] test
+    # [x] set_is_behavior_overriden   [x] impl  [x] docstring  [x] test
+    # [x] set_is_final               [x] impl  [x] docstring  [x] test
+    # [x] update_contained_diagrams_on_server [x] impl [x] docstring [x] test
     # No deprecated methods in IRPClass.
 
-    def addSuperclass(self, super_class: "RPClass") -> None:
+    def add_superclass(self, super_class: "RPClass") -> None:
         """Adds a superclass to this class.
 
         Args:
@@ -58,7 +58,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addSuperclass(super_class._com))
 
-    def addConstructor(self, arguments_data: str) -> "RPOperation":
+    def add_constructor(self, arguments_data: str) -> "RPOperation":
         """Adds a constructor operation to this class.
 
         Args:
@@ -72,7 +72,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addConstructor(arguments_data))))
 
-    def addDestructor(self) -> "RPOperation":
+    def add_destructor(self) -> "RPOperation":
         """Adds a destructor operation to this class.
 
         Returns:
@@ -83,7 +83,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDestructor())))
 
-    def getIsAbstract(self) -> bool:
+    def get_is_abstract(self) -> bool:
         """Checks whether this class is abstract.
 
         Returns:
@@ -94,7 +94,7 @@ class RPClass(RPClassifier):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsAbstract", "isAbstract"))
 
-    def addClass(self, name: str) -> "RPClass":
+    def add_class(self, name: str) -> "RPClass":
         """Adds a nested class to this class.
 
         Args:
@@ -108,10 +108,10 @@ class RPClass(RPClassifier):
         """
         return cast("RPClass", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addClass(name))))
 
-    def addEventReception(self, name: str) -> "RPEventReception":
+    def add_event_reception(self, name: str) -> "RPEventReception":
         """Adds an event reception to the current class.
 
-        It is preferable to use :meth:`addReception` instead.
+        It is preferable to use :meth:`add_reception` instead.
 
         Args:
             name: The name to use for the new event reception.
@@ -124,7 +124,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReception(name))))
 
-    def addEventReceptionWithEvent(self, name: str, event: RPModelElement) -> "RPEventReception":
+    def add_event_reception_with_event(self, name: str, event: RPModelElement) -> "RPEventReception":
         """Adds a new event reception, using the specified event.
 
         Args:
@@ -142,7 +142,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReceptionWithEvent(name, event._com))))
 
-    def addLink(
+    def add_link(
         self,
         from_part: RPModelElement,
         to_part: RPModelElement,
@@ -179,7 +179,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPLink", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addLink(from_part._com, to_part._com, assoc._com, from_port._com, to_port._com))))
 
-    def addLinkToPartViaPort(
+    def add_link_to_part_via_port(
         self,
         to_part: RPModelElement,
         part_port: RPModelElement,
@@ -213,7 +213,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPLink", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addLinkToPartViaPort(to_part._com, part_port._com, class_port._com, assoc._com))))
 
-    def addReception(self, name: str) -> "RPEventReception":
+    def add_reception(self, name: str) -> "RPEventReception":
         """Adds a reception to the current class.
 
         Args:
@@ -227,7 +227,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addReception(name))))
 
-    def addTriggeredOperation(self, name: str) -> "RPOperation":
+    def add_triggered_operation(self, name: str) -> "RPOperation":
         """Adds a new triggered operation to the current class.
 
         Args:
@@ -241,7 +241,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addTriggeredOperation(name))))
 
-    def addType(self, name: str) -> "RPType":
+    def add_type(self, name: str) -> "RPType":
         """Adds a new type to the current class.
 
         Args:
@@ -255,7 +255,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPType", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addType(name))))
 
-    def deleteClass(self, name: str) -> None:
+    def delete_class(self, name: str) -> None:
         """Deletes the specified class from the current class.
 
         Args:
@@ -266,7 +266,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteClass(name))
 
-    def deleteConstructor(self, constructor: RPModelElement) -> None:
+    def delete_constructor(self, constructor: RPModelElement) -> None:
         """Deletes the specified constructor from the current class.
 
         Args:
@@ -277,7 +277,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteConstructor(constructor._com))
 
-    def deleteDestructor(self) -> None:
+    def delete_destructor(self) -> None:
         """Deletes the destructor for the class.
 
         Reference:
@@ -285,10 +285,10 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteDestructor())
 
-    def deleteEventReception(self, p_val: RPModelElement) -> None:
+    def delete_event_reception(self, p_val: RPModelElement) -> None:
         """Deletes the specified event reception.
 
-        It is preferable to use :meth:`deleteReception` instead.
+        It is preferable to use :meth:`delete_reception` instead.
 
         Args:
             p_val: The reception that should be deleted.
@@ -298,7 +298,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteEventReception(p_val._com))
 
-    def deleteReception(self, p_val: RPModelElement) -> None:
+    def delete_reception(self, p_val: RPModelElement) -> None:
         """Deletes the specified reception from the current class.
 
         Args:
@@ -309,7 +309,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteReception(p_val._com))
 
-    def deleteSuperclass(self, super_class: "RPClass") -> None:
+    def delete_superclass(self, super_class: "RPClass") -> None:
         """Removes the inheritance relationship with the specified base class.
 
         Args:
@@ -320,7 +320,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteSuperclass(super_class._com))
 
-    def deleteType(self, name: str) -> None:
+    def delete_type(self, name: str) -> None:
         """Deletes the specified type from the current class.
 
         Args:
@@ -331,7 +331,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteType(name))
 
-    def getIsActive(self) -> int:
+    def get_is_active(self) -> int:
         """Checks whether the class was defined as "active".
 
         "Active" means that during execution it runs on its own thread.
@@ -344,7 +344,7 @@ class RPClass(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsActive", "isActive"))
 
-    def getIsBehaviorOverriden(self) -> int:
+    def get_is_behavior_overriden(self) -> int:
         """Checks whether a class does not inherit the behavior of its base class statechart.
 
         Returns:
@@ -355,7 +355,7 @@ class RPClass(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehaviorOverriden", "isBehaviorOverriden"))
 
-    def getIsComposite(self) -> int:
+    def get_is_composite(self) -> int:
         """Checks whether the class is a composite class.
 
         Returns:
@@ -366,7 +366,7 @@ class RPClass(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsComposite", "isComposite"))
 
-    def getIsFinal(self) -> int:
+    def get_is_final(self) -> int:
         """Checks whether the class is a final class.
 
         Relevant only for Java classes.
@@ -379,7 +379,7 @@ class RPClass(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsFinal", "isFinal"))
 
-    def getIsReactive(self) -> int:
+    def get_is_reactive(self) -> int:
         """Checks whether the class is a reactive class.
 
         A reactive class has a statechart or activity diagram so that it
@@ -393,7 +393,7 @@ class RPClass(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsReactive", "isReactive"))
 
-    def setIsAbstract(self, is_abstract: int) -> None:
+    def set_is_abstract(self, is_abstract: int) -> None:
         """Specifies that the class should be abstract.
 
         Args:
@@ -404,7 +404,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsAbstract", "isAbstract", is_abstract)
 
-    def setIsActive(self, is_active: int) -> None:
+    def set_is_active(self, is_active: int) -> None:
         """Specifies that the class should be defined as "active".
 
         Args:
@@ -415,7 +415,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsActive", "isActive", is_active)
 
-    def setIsBehaviorOverriden(self, is_behavior_overriden: int) -> None:
+    def set_is_behavior_overriden(self, is_behavior_overriden: int) -> None:
         """Specifies whether a class should inherit the statechart behavior of its base class.
 
         Args:
@@ -426,7 +426,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsBehaviorOverriden", "isBehaviorOverriden", is_behavior_overriden)
 
-    def setIsFinal(self, new_val: int) -> None:
+    def set_is_final(self, new_val: int) -> None:
         """Specifies that the class should be a final class.
 
         Relevant only for Java classes.
@@ -439,7 +439,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsFinal", "isFinal", new_val)
 
-    def updateContainedDiagramsOnServer(self, enforce_update: int) -> int:
+    def update_contained_diagrams_on_server(self, enforce_update: int) -> int:
         """Updates the views on the Rhapsody Model Manager server for all diagrams.
 
         Args:

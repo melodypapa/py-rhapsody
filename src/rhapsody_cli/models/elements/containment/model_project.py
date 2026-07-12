@@ -21,14 +21,14 @@ class RPProject(RPPackage):
     # [ ] addComponent  [ ] impl  [ ] docstring  [ ] test
     # [ ] addCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] test
     # [ ] addCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] test
-    # [x] addPackage  [x] impl  [x] docstring  [x] test
+    # [x] add_package  [x] impl  [x] docstring  [x] test
     # [ ] addProfile  [ ] impl  [ ] docstring  [ ] test
     # [ ] addSpellCheckerResult  [ ] impl  [ ] docstring  [ ] test
     # [ ] allowAutoSave  [ ] impl  [ ] docstring  [ ] test
     # [ ] allowNonUniqueNames  [ ] impl  [ ] docstring  [ ] test
     # [ ] applyBrowserCustomViewsOnDiagrams  [ ] impl  [ ] docstring  [ ] test
     # [ ] applyRoundtripDiffMerge  [ ] impl  [ ] docstring  [ ] test
-    # [x] becomeActiveProject  [x] impl  [x] docstring  [x] test
+    # [x] become_active_project  [x] impl  [x] docstring  [x] test
     # [ ] checkEventsBaseIdsSolveCollisions  [ ] impl  [ ] docstring  [ ] test
     # [ ] cleanUnresolvedElements  [ ] impl  [ ] docstring  [ ] test
     # [x] close  [x] impl  [x] docstring  [x] test
@@ -36,10 +36,10 @@ class RPProject(RPPackage):
     # [ ] deleteComponent  [ ] impl  [ ] docstring  [ ] test
     # [ ] enableRhapsodyModelManager  [ ] impl  [ ] docstring  [ ] test
     # [ ] endTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] test
-    # [x] findComponent  [x] impl  [x] docstring  [x] test
+    # [x] find_component  [x] impl  [x] docstring  [x] test
     # [ ] findElementByBinaryID  [ ] impl  [ ] docstring  [ ] test
     # [ ] findElementByFileName  [ ] impl  [ ] docstring  [ ] test
-    # [x] findElementByGUID  [x] impl  [x] docstring  [x] test
+    # [x] find_element_by_guid  [x] impl  [x] docstring  [x] test
     # [ ] findElementsWithOSLCLink  [ ] impl  [ ] docstring  [ ] test
     # [ ] getActiveComponent  [ ] impl  [ ] docstring  [ ] test
     # [ ] getActiveConfiguration  [ ] impl  [ ] docstring  [ ] test
@@ -48,7 +48,7 @@ class RPProject(RPPackage):
     # [ ] getAllStereotypes  [ ] impl  [ ] docstring  [ ] test
     # [ ] getCgSimplifiedModelPackage  [ ] impl  [ ] docstring  [ ] test
     # [ ] getCodeGeneratedFiles  [ ] impl  [ ] docstring  [ ] test
-    # [x] getComponents  [x] impl  [x] docstring  [x] test
+    # [x] get_components  [x] impl  [x] docstring  [x] test
     # [ ] getDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] test
     # [ ] getNewCollaboration  [ ] impl  [ ] docstring  [ ] test
     # [ ] getNewProgressBar  [ ] impl  [ ] docstring  [ ] test
@@ -88,7 +88,7 @@ class RPProject(RPPackage):
     # [inherited] IRPPackage / IRPUnit / IRPModelElement methods (covered by RPPackage / RPUnit / RPModelElement checklists)
     # Deprecated IRPProject methods listed above.
 
-    def addPackage(self, name: str) -> "RPPackage":
+    def add_package(self, name: str) -> "RPPackage":
         """Adds a new package to the project.
 
         Args:
@@ -110,7 +110,7 @@ class RPProject(RPPackage):
         """
         AbstractRPModelElement.call_com(lambda: self._com.close())
 
-    def becomeActiveProject(self) -> None:
+    def become_active_project(self) -> None:
         """Makes this project the active project in Rhapsody.
 
         Used when you have multiple projects open in Rhapsody.
@@ -120,7 +120,7 @@ class RPProject(RPPackage):
         """
         AbstractRPModelElement.call_com(lambda: self._com.becomeActiveProject())
 
-    def findComponent(self, name: str) -> "RPComponent":
+    def find_component(self, name: str) -> "RPComponent":
         """Finds a component in the project by name.
 
         Args:
@@ -134,7 +134,7 @@ class RPProject(RPPackage):
         """
         return cast("RPComponent", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findComponent(name))))
 
-    def getPackages(self) -> RPCollection:
+    def get_packages(self) -> RPCollection:
         """Returns all top-level packages in the project.
 
         Returns:
@@ -145,7 +145,7 @@ class RPProject(RPPackage):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPackages", "packages"))
 
-    def getRoot(self) -> "RPProject":
+    def get_root(self) -> "RPProject":
         """Returns the root project element.
 
         Returns:
@@ -153,7 +153,7 @@ class RPProject(RPPackage):
         """
         return self
 
-    def addClass(self, name: str) -> "RPClass":
+    def add_class(self, name: str) -> "RPClass":
         """Adds a new class to the project's top level.
 
         Args:
@@ -167,7 +167,7 @@ class RPProject(RPPackage):
         """
         return cast("RPClass", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addClass(name))))
 
-    def addActor(self, name: str) -> "RPActor":
+    def add_actor(self, name: str) -> "RPActor":
         """Adds a new actor to the project's top level.
 
         Args:
@@ -181,7 +181,7 @@ class RPProject(RPPackage):
         """
         return cast("RPActor", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActor(name))))
 
-    def getComponents(self) -> RPCollection:
+    def get_components(self) -> RPCollection:
         """Returns all components in the project.
 
         Returns:
@@ -192,7 +192,7 @@ class RPProject(RPPackage):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getComponents", "components"))
 
-    def findByName(self, name: str) -> Any:
+    def find_by_name(self, name: str) -> Any:
         """Finds an element in the project by name.
 
         Args:
@@ -203,7 +203,7 @@ class RPProject(RPPackage):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findByName(name)))
 
-    def findByMetaClass(self, meta_class: str) -> RPCollection:
+    def find_by_meta_class(self, meta_class: str) -> RPCollection:
         """Finds all elements in the project with a given metaclass.
 
         Args:
@@ -214,7 +214,7 @@ class RPProject(RPPackage):
         """
         return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.findByMetaClass(meta_class)))
 
-    def findElementByGUID(self, guid: str) -> "RPModelElement":
+    def find_element_by_guid(self, guid: str) -> "RPModelElement":
         """Finds an element in the project by GUID.
 
         Args:
@@ -228,7 +228,7 @@ class RPProject(RPPackage):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findElementByGUID(guid)))
 
-    def getIsDirty(self) -> int:
+    def get_is_dirty(self) -> int:
         """Checks whether the project has unsaved changes.
 
         Returns:
@@ -236,7 +236,7 @@ class RPProject(RPPackage):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsDirty", "isDirty"))
 
-    def setDirty(self, is_dirty: int) -> None:
+    def set_dirty(self, is_dirty: int) -> None:
         """Sets the dirty flag of the project.
 
         Args:

@@ -24,7 +24,7 @@ class ProjectOpenAction(RhapsodyContextAction):
         project_path = args.project_path
         try:
             app = self._connect_app()
-            self._project = app.openProject(project_path)
+            self._project = app.open_project(project_path)
             self.logger.info("Opened project: %s", project_path)
         except RhapsodyConnectionError as e:
             self._handle_connection_error(e, "Failed to open project")
@@ -48,13 +48,13 @@ class ProjectListAction(RhapsodyContextAction):
         """List open projects."""
         try:
             app = self._connect_app()
-            projects = app.getProjects()
+            projects = app.get_projects()
 
             if not projects or len(projects) == 0:
                 self.logger.info("No open projects")
                 return
 
-            rows = [[proj.getName(), proj.getFilename()] for proj in projects]
+            rows = [[proj.get_name(), proj.get_filename()] for proj in projects]
 
             # NOTE: This is the command's result data (not a status/log
             # message), so it is written directly to stdout via print()
@@ -111,7 +111,7 @@ class ProjectNewAction(RhapsodyContextAction):
         project_name = args.project_name
         try:
             app = self._connect_app()
-            self._project = app.createNewProject(project_location, project_name)
+            self._project = app.create_new_project(project_location, project_name)
             self.logger.info("Created project: %s at %s", project_name, project_location)
         except RhapsodyConnectionError as e:
             self._handle_connection_error(e, "Failed to create project")

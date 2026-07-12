@@ -11,7 +11,7 @@ def test_port_is_an_instance() -> None:
     port = RPPort(fake)
 
     assert isinstance(port, RPInstance)
-    assert port.getName() == "clientPort"
+    assert port.get_name() == "clientPort"
 
 
 def test_port_is_registered_for_meta_class_port() -> None:
@@ -26,7 +26,7 @@ def test_port_get_is_behavioral_delegates_to_com() -> None:
     fake = make_fake_element("Port", getIsBehavioral=1)
     port = RPPort(fake)
 
-    assert port.getIsBehavioral() == 1
+    assert port.get_is_behavioral() == 1
 
     fake.getIsBehavioral.assert_called_once_with()
 
@@ -35,7 +35,7 @@ def test_port_set_is_behavioral_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.setIsBehavioral(1)
+    port.set_is_behavioral(1)
 
     fake.setIsBehavioral.assert_called_once_with(1)
 
@@ -44,7 +44,7 @@ def test_port_get_is_reversed_delegates_to_com() -> None:
     fake = make_fake_element("Port", getIsReversed=0)
     port = RPPort(fake)
 
-    assert port.getIsReversed() == 0
+    assert port.get_is_reversed() == 0
 
     fake.getIsReversed.assert_called_once_with()
 
@@ -53,7 +53,7 @@ def test_port_set_is_reversed_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.setIsReversed(1)
+    port.set_is_reversed(1)
 
     fake.setIsReversed.assert_called_once_with(1)
 
@@ -64,10 +64,10 @@ def test_port_get_port_contract_wraps_result() -> None:
     fake.getPortContract.return_value = contract_fake
     port = RPPort(fake)
 
-    result = port.getPortContract()
+    result = port.get_port_contract()
 
     assert isinstance(result, RPClass)
-    assert result.getName() == "IEngine"
+    assert result.get_name() == "IEngine"
 
 
 def test_port_set_port_contract_delegates_to_com() -> None:
@@ -76,7 +76,7 @@ def test_port_set_port_contract_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.setPortContract(contract)
+    port.set_port_contract(contract)
 
     fake.setPortContract.assert_called_once_with(contract_fake)
 
@@ -87,11 +87,11 @@ def test_port_get_provided_interfaces_returns_collection() -> None:
     fake.getProvidedInterfaces.return_value = make_fake_collection([interface])
     port = RPPort(fake)
 
-    result = port.getProvidedInterfaces()
+    result = port.get_provided_interfaces()
 
     assert isinstance(result, RPCollection)
     assert len(result) == 1
-    assert result[0].getName() == "IProvided"
+    assert result[0].get_name() == "IProvided"
 
 
 def test_port_add_provided_interface_delegates_to_com() -> None:
@@ -100,7 +100,7 @@ def test_port_add_provided_interface_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.addProvidedInterface(interface)
+    port.add_provided_interface(interface)
 
     fake.addProvidedInterface.assert_called_once_with(interface_fake)
 
@@ -111,7 +111,7 @@ def test_port_remove_provided_interface_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.removeProvidedInterface(interface)
+    port.remove_provided_interface(interface)
 
     fake.removeProvidedInterface.assert_called_once_with(interface_fake)
 
@@ -122,11 +122,11 @@ def test_port_get_required_interfaces_returns_collection() -> None:
     fake.getRequiredInterfaces.return_value = make_fake_collection([interface])
     port = RPPort(fake)
 
-    result = port.getRequiredInterfaces()
+    result = port.get_required_interfaces()
 
     assert isinstance(result, RPCollection)
     assert len(result) == 1
-    assert result[0].getName() == "IRequired"
+    assert result[0].get_name() == "IRequired"
 
 
 def test_port_add_required_interface_delegates_to_com() -> None:
@@ -135,7 +135,7 @@ def test_port_add_required_interface_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.addRequiredInterface(interface)
+    port.add_required_interface(interface)
 
     fake.addRequiredInterface.assert_called_once_with(interface_fake)
 
@@ -146,7 +146,7 @@ def test_port_remove_required_interface_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.removeRequiredInterface(interface)
+    port.remove_required_interface(interface)
 
     fake.removeRequiredInterface.assert_called_once_with(interface_fake)
 
@@ -157,10 +157,10 @@ def test_port_get_contract_wraps_result() -> None:
     fake.getContract.return_value = contract_fake
     port = RPPort(fake)
 
-    result = port.getContract()
+    result = port.get_contract()
 
     assert isinstance(result, RPClass)
-    assert result.getName() == "IEngine"
+    assert result.get_name() == "IEngine"
 
 
 def test_port_set_contract_delegates_to_com() -> None:
@@ -169,7 +169,7 @@ def test_port_set_contract_delegates_to_com() -> None:
     fake = make_fake_element("Port")
     port = RPPort(fake)
 
-    port.setContract(contract)
+    port.set_contract(contract)
 
     fake.setContract.assert_called_once_with(contract_fake)
 
@@ -179,8 +179,8 @@ def test_classifier_get_ports_returns_actual_rpport_instances() -> None:
     fake.getPorts.return_value = make_fake_collection([make_fake_element("Port", getName="clientPort")])
     classifier = RPClassifier(fake)
 
-    result = classifier.getPorts()
+    result = classifier.get_ports()
 
     assert len(result) == 1
     assert isinstance(result[0], RPPort)
-    assert result[0].getName() == "clientPort"
+    assert result[0].get_name() == "clientPort"

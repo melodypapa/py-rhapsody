@@ -18,7 +18,7 @@ dev = [
     "pytest>=7.4",
     "pytest-cov>=4.1",
     "ruff>=0.4",
-    "black>=24.1",
+    "black>=24.1,<25",
     "mypy>=1.8,<2",
 ]
 cli = [
@@ -48,7 +48,7 @@ line-length = 200
 target-version = "py38"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
+select = ["E", "F", "I", "UP", "B", "N"]
 
 [tool.mypy]
 python_version = "3.9"

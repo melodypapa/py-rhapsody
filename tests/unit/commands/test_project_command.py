@@ -39,17 +39,17 @@ class TestProjectOpenAction:
         assert callable(action.execute)
 
     def test_open_action_calls_open_project_on_connected_app(self) -> None:
-        """Test: open action connects, then calls app.openProject() with the given path."""
+        """Test: open action connects, then calls app.open_project() with the given path."""
         action = ProjectOpenAction()
         args = argparse.Namespace(project_path="MyProject.rpy", verbose=False)
         fake_project = MagicMock(name="FakeProject")
         fake_app = MagicMock(name="FakeApplication")
-        fake_app.openProject.return_value = fake_project
+        fake_app.open_project.return_value = fake_project
 
         with patch.object(ProjectOpenAction, "_connect_app", return_value=fake_app):
             action.execute(args)
 
-        fake_app.openProject.assert_called_once_with("MyProject.rpy")
+        fake_app.open_project.assert_called_once_with("MyProject.rpy")
         assert action._project is fake_project
 
 
@@ -57,22 +57,22 @@ class TestProjectListAction:
     """Tests for ProjectListAction."""
 
     def test_list_action_prints_name_and_filename_for_each_project(self) -> None:
-        """Regression test: the list action must call getFilename() (not the
-        non-existent getPath()) on each project to render its table row."""
+        """Regression test: the list action must call get_filename() (not the
+        non-existent get_path()) on each project to render its table row."""
         action = ProjectListAction()
         args = argparse.Namespace(verbose=False)
 
         fake_project = MagicMock(name="FakeProject")
-        fake_project.getName.return_value = "MyProject"
-        fake_project.getFilename.return_value = "C:/models/MyProject.rpyx"
+        fake_project.get_name.return_value = "MyProject"
+        fake_project.get_filename.return_value = "C:/models/MyProject.rpyx"
         fake_app = MagicMock(name="FakeApplication")
-        fake_app.getProjects.return_value = [fake_project]
+        fake_app.get_projects.return_value = [fake_project]
 
         with patch.object(ProjectListAction, "_connect_app", return_value=fake_app):
             # Should not raise
             action.execute(args)
 
-        fake_project.getFilename.assert_called_once_with()
+        fake_project.get_filename.assert_called_once_with()
 
 
 class TestProjectCloseAction:
@@ -110,15 +110,15 @@ class TestProjectNewAction:
     """Tests for ProjectNewAction."""
 
     def test_new_action_calls_create_project_with_arguments(self) -> None:
-        """Test: new action delegates to app.createNewProject with given args."""
+        """Test: new action delegates to app.create_new_project with given args."""
         action = ProjectNewAction()
         args = argparse.Namespace(project_location=".", project_name="MyNewProject", verbose=False)
         fake_project = MagicMock(name="FakeProject")
         fake_app = MagicMock(name="FakeApplication")
-        fake_app.createNewProject.return_value = fake_project
+        fake_app.create_new_project.return_value = fake_project
 
         with patch.object(ProjectNewAction, "_connect_app", return_value=fake_app):
             action.execute(args)
 
-        fake_app.createNewProject.assert_called_once_with(".", "MyNewProject")
+        fake_app.create_new_project.assert_called_once_with(".", "MyNewProject")
         assert action._project is fake_project

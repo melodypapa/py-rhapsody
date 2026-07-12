@@ -66,7 +66,7 @@ def demo_project_operation_errors(app: RhapsodyApplication) -> None:
     try:
         non_existent_path = r"C:\NonExistent\Project.rpy"
         print(f"  Attempting to open: {non_existent_path}")
-        project = app.openProject(non_existent_path)
+        project = app.open_project(non_existent_path)
         print("  [-] Unexpected success (should have failed)")
     except RhapsodyRuntimeException as e:
         print(f"  [OK] Expected error caught: {type(e).__name__}")
@@ -77,7 +77,7 @@ def demo_project_operation_errors(app: RhapsodyApplication) -> None:
     try:
         invalid_path = r"C:\Invalid\Path\That\Does\Not\Exist"
         print(f"  Attempting to create project at: {invalid_path}")
-        project = app.createNewProject(invalid_path, "TestProject")
+        project = app.create_new_project(invalid_path, "TestProject")
         print("  [-] Unexpected success (should have failed)")
     except RhapsodyRuntimeException as e:
         print(f"  [OK] Expected error caught: {type(e).__name__}")
@@ -87,9 +87,9 @@ def demo_project_operation_errors(app: RhapsodyApplication) -> None:
     print("\nTest 3: Getting active project (may not exist)")
     try:
         print("  Attempting to get active project")
-        project = app.activeProject()
+        project = app.active_project()
         if project:
-            print(f"  [OK] Active project found: {project.getName()}")
+            print(f"  [OK] Active project found: {project.get_name()}")
         else:
             print("  [OK] No active project (handled gracefully)")
     except RhapsodyRuntimeException as e:
@@ -111,22 +111,22 @@ def demo_element_not_found_errors(app: RhapsodyApplication) -> None:
 
     try:
         # Try to get active project first
-        project = app.activeProject()
+        project = app.active_project()
         if not project:
             print("  No active project available for element operations")
             print("  Skipping element not found tests")
             return
 
-        print(f"Using project: {project.getName()}")
+        print(f"Using project: {project.get_name()}")
 
         # Test 1: Try to find non-existent element
         print("\nTest 1: Finding non-existent element")
         try:
             non_existent_name = "ThisElementDoesNotExist12345"
             print(f"  Searching for: {non_existent_name}")
-            element = project.findNestedElement(non_existent_name, "Class")
+            element = project.find_nested_element(non_existent_name, "Class")
             if element and element._com:
-                print(f"  [-] Unexpected: Found element {element.getName()}")
+                print(f"  [-] Unexpected: Found element {element.get_name()}")
             else:
                 print("  [OK] Element not found (handled gracefully)")
         except RhapsodyRuntimeException as e:
@@ -138,7 +138,7 @@ def demo_element_not_found_errors(app: RhapsodyApplication) -> None:
         try:
             invalid_metaclass = "InvalidMetaClass12345"
             print(f"  Querying for: {invalid_metaclass}")
-            elements = project.getNestedElementsByMetaClass(invalid_metaclass, 1)
+            elements = project.get_nested_elements_by_meta_class(invalid_metaclass, 1)
             if elements and len(elements) > 0:
                 print(f"  [-] Unexpected: Found {len(elements)} elements")
             else:
@@ -151,12 +151,12 @@ def demo_element_not_found_errors(app: RhapsodyApplication) -> None:
         print("\nTest 3: Accessing nested elements on non-container")
         try:
             # Get a simple element (like an attribute) that doesn't have nested elements
-            classes = project.getNestedElementsByMetaClass("Class", 1)
+            classes = project.get_nested_elements_by_meta_class("Class", 1)
             if classes and len(classes) > 0:
                 test_class = classes[0]
-                print(f"  Using class: {test_class.getName()}")
+                print(f"  Using class: {test_class.get_name()}")
                 # Try to get packages from a class (should fail or return empty)
-                nested = test_class.getPackages()
+                nested = test_class.get_packages()
                 print(f"  [OK] Operation handled (returned {len(nested)} items)")
         except RhapsodyRuntimeException as e:
             print(f"  [OK] Error caught: {type(e).__name__}")
@@ -182,9 +182,9 @@ def demo_safe_operation_patterns(app: RhapsodyApplication) -> None:
         # Pattern 1: Safe project access
         print("\nPattern 1: Safe project access")
         try:
-            project = app.activeProject()
+            project = app.active_project()
             if project:
-                print(f"  [OK] Working with project: {project.getName()}")
+                print(f"  [OK] Working with project: {project.get_name()}")
             else:
                 print("  [OK] No active project - continuing with other tests")
         except RhapsodyRuntimeException as e:
@@ -195,15 +195,15 @@ def demo_safe_operation_patterns(app: RhapsodyApplication) -> None:
         if project:
             print("\nPattern 2: Safe element iteration")
             try:
-                classes = project.getNestedElementsByMetaClass("Class", 1)
+                classes = project.get_nested_elements_by_meta_class("Class", 1)
                 print(f"  Processing {len(classes)} classes safely")
 
                 # Limit to first 5 classes
                 for i in range(min(5, len(classes))):
                     try:
                         cls = classes[i]
-                        name = cls.getName()
-                        guid = cls.getGUID()
+                        name = cls.get_name()
+                        guid = cls.get_guid()
                         print(f"  {i + 1}. {name} (GUID: {guid[:8]}...)")
                     except Exception as e:
                         print(f"  {i + 1}. Error processing class: {e}")
@@ -215,7 +215,7 @@ def demo_safe_operation_patterns(app: RhapsodyApplication) -> None:
         if project:
             print("\nPattern 3: Safe nested operations")
             try:
-                packages = project.getPackages()
+                packages = project.get_packages()
                 success_count = 0
                 error_count = 0
 
@@ -223,8 +223,8 @@ def demo_safe_operation_patterns(app: RhapsodyApplication) -> None:
                 for i in range(min(3, len(packages))):
                     try:
                         pkg = packages[i]
-                        pkg_name = pkg.getName()
-                        classes = pkg.getClasses()
+                        pkg_name = pkg.get_name()
+                        classes = pkg.get_classes()
                         success_count += 1
                         print(f"  [OK] {pkg_name}: {len(classes)} classes")
                     except Exception as e:
@@ -255,9 +255,9 @@ def demo_cleanup_after_errors(app: RhapsodyApplication) -> None:
     # Scenario 1: Cleanup after successful operation
     print("Scenario 1: Cleanup after successful operation")
     try:
-        project = app.activeProject()
+        project = app.active_project()
         if project:
-            print(f"  [OK] Successfully worked with: {project.getName()}")
+            print(f"  [OK] Successfully worked with: {project.get_name()}")
         print("  [OK] Normal cleanup completed")
     except Exception as e:
         print(f"  [-] Error occurred: {e}")
@@ -267,10 +267,10 @@ def demo_cleanup_after_errors(app: RhapsodyApplication) -> None:
     print("\nScenario 2: Cleanup using finally block")
     temp_project = None
     try:
-        temp_project = app.activeProject()
+        temp_project = app.active_project()
         if temp_project:
             # Simulate some work
-            print(f"  [OK] Working with: {temp_project.getName()}")
+            print(f"  [OK] Working with: {temp_project.get_name()}")
             # Intentionally cause an error for demonstration
             raise Exception("Simulated error for cleanup demo")
     except Exception as e:
@@ -300,8 +300,8 @@ def demo_comprehensive_error_handling() -> None:
             # Open the demo project first for testing
             print("\nStep 1b: Open demo project")
             try:
-                project = app.openProject(DEMO_PROJECT_PATH)
-                print(f"[OK] Opened project: {project.getName()}")
+                project = app.open_project(DEMO_PROJECT_PATH)
+                print(f"[OK] Opened project: {project.get_name()}")
             except RhapsodyRuntimeException as e:
                 print(f"[-] Failed to open demo project: {e}")
                 return

@@ -17,16 +17,16 @@ class RPStatechart(RPClass):
     # [ ] addImage  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewEdgeByType  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewEdgeForElement  [ ] impl  [ ] docstring  [ ] test
-    # [x] addNewNodeByType  [x] impl  [x] docstring  [x] test
+    # [x] add_new_node_by_type  [x] impl  [x] docstring  [x] test
     # [ ] addNewNodeForElement  [ ] impl  [ ] docstring  [ ] test
     # [ ] addTextBox  [ ] impl  [ ] docstring  [ ] test
     # [ ] openDiagramView  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewAcceptEventAction  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewAcceptTimeEvent  [ ] impl  [ ] docstring  [ ] test
-    # [x] closeDiagram  [x] impl  [x] docstring  [x] test
-    # [x] createGraphics  [x] impl  [x] docstring  [x] test
-    # [x] deleteState  [x] impl  [x] docstring  [x] test
-    # [x] findTrigger  [x] impl  [x] docstring  [x] test   (inherited from RPClassifier)
+    # [x] close_diagram  [x] impl  [x] docstring  [x] test
+    # [x] create_graphics  [x] impl  [x] docstring  [x] test
+    # [x] delete_state  [x] impl  [x] docstring  [x] test
+    # [x] find_trigger  [x] impl  [x] docstring  [x] test   (inherited from RPClassifier)
     # [ ] getAllTriggers  [ ] impl  [ ] docstring  [ ] test
     # [ ] getElementsInDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] getGraphicalElements  [ ] impl  [ ] docstring  [ ] test
@@ -48,7 +48,7 @@ class RPStatechart(RPClass):
     # [inherited] IRPClass / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClass / RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPStatechart methods.
 
-    def addNewNodeByType(self, meta_type: str, x_position: int, y_position: int, width: int, height: int) -> "RPGraphNode":
+    def add_new_node_by_type(self, meta_type: str, x_position: int, y_position: int, width: int, height: int) -> "RPGraphNode":
         """Adds a statechart element of the specified type to the statechart.
 
         The element is placed at the given position with the given dimensions.
@@ -72,7 +72,7 @@ class RPStatechart(RPClass):
         """
         return cast("RPGraphNode", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNewNodeByType(meta_type, x_position, y_position, width, height))))
 
-    def createGraphics(self) -> None:
+    def create_graphics(self) -> None:
         """Creates the graphical representation of the statechart's elements.
 
         When a statechart is created through the API, its graphical
@@ -85,7 +85,7 @@ class RPStatechart(RPClass):
         """
         AbstractRPModelElement.call_com(lambda: self._com.createGraphics())
 
-    def closeDiagram(self) -> None:
+    def close_diagram(self) -> None:
         """Closes the statechart diagram.
 
         Reference:
@@ -93,7 +93,7 @@ class RPStatechart(RPClass):
         """
         AbstractRPModelElement.call_com(lambda: self._com.closeDiagram())
 
-    def deleteState(self, state: RPModelElement) -> None:
+    def delete_state(self, state: RPModelElement) -> None:
         """Deletes a state from the statechart.
 
         Args:

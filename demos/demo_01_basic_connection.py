@@ -46,9 +46,9 @@ def demo_attach_only() -> bool:
 
         # Get active project if available
         try:
-            active_project = app.activeProject()
+            active_project = app.active_project()
             if active_project and active_project._com:
-                print(f"  - Active project: {active_project.getName()}")
+                print(f"  - Active project: {active_project.get_name()}")
             else:
                 print("  - Active project: None")
         except Exception as e:
@@ -82,11 +82,11 @@ def demo_launch_new() -> bool:
         app = RhapsodyApplication.connect()
         print("[OK] Successfully launched Rhapsody!")
 
-        app.openProject(DEMO_PROJECT_PATH)
+        app.open_project(DEMO_PROJECT_PATH)
 
         # Display application information
         print("\nApplication Information:")
-        print(f"  - Project: {app.activeProject().getName()}")
+        print(f"  - Project: {app.active_project().get_name()}")
 
         # Clean up
         print("\nClosing Rhapsody...")
@@ -119,18 +119,18 @@ def demo_smart_connect() -> bool:
         # Determine if we attached or launched
         try:
             # Try to get active project - this helps us understand the state
-            active_project = app.activeProject()
+            active_project = app.active_project()
             has_active_project = bool(active_project and active_project._com)
             connection_method = "attach" if has_active_project else "launch"
             print(f"\nConnection method used: {connection_method}")
 
             if has_active_project:
-                print(f"  - Active project: {active_project.getName()}")
+                print(f"  - Active project: {active_project.get_name()}")
             else:
                 # A freshly launched instance has no active project yet;
                 # open the demo project so the rest of the demo has one.
                 print("  - Active project: None (new instance launched)")
-                active_project = app.openProject(DEMO_PROJECT_PATH)
+                active_project = app.open_project(DEMO_PROJECT_PATH)
 
         except Exception as e:
             print(f"  - Unable to determine connection method: {e}")
@@ -139,7 +139,7 @@ def demo_smart_connect() -> bool:
         # Display application information
         print("\nApplication Information:")
         if active_project and active_project._com:
-            print(f"  - Project: {active_project.getName()}")
+            print(f"  - Project: {active_project.get_name()}")
 
         # Clean up
         print("\nDisconnecting from Rhapsody...")

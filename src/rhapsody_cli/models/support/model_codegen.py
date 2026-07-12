@@ -23,7 +23,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
     # [ ] writeCodeGenMessage          [ ] impl  [ ] docstring  [ ] test
     # No deprecated IRPBaseExternalCodeGeneratorTool methods.
 
-    def advanceCodeGenProgressBar(self) -> None:
+    def advance_code_gen_progress_bar(self) -> None:
         """Advances the code generation progress bar.
 
         Raises:
@@ -34,7 +34,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         """
         self.call_com(lambda: self._com.advanceCodeGenProgressBar())
 
-    def shouldAbortCodeGeneration(self) -> int:
+    def should_abort_code_generation(self) -> int:
         """Returns whether code generation should be aborted.
 
         Returns:
@@ -48,7 +48,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         """
         return self.call_com(lambda: self._com.shouldAbortCodeGeneration())
 
-    def writeCodeGenMessage(self, msg: str) -> None:
+    def write_code_gen_message(self, msg: str) -> None:
         """Writes a code generation message.
 
         Args:
@@ -67,12 +67,12 @@ class RPCodeGenerator(RPModelElement):
     """Wraps ``IRPCodeGenerator``."""
 
     # IRPCodeGenerator method parity checklist:
-    # [x] getCodeAnnotations           [x] impl  [x] docstring  [x] test
-    # [x] getGeneratedFileNames        [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] get_code_annotations           [x] impl  [x] docstring  [x] test
+    # [x] get_generated_file_names        [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPCodeGenerator methods.
 
-    def getCodeAnnotations(self, element: "RPModelElement", b_spec_file: int) -> "RPCollection":
+    def get_code_annotations(self, element: "RPModelElement", b_spec_file: int) -> "RPCollection":
         """Returns code annotations for the given model element.
 
         Args:
@@ -90,7 +90,7 @@ class RPCodeGenerator(RPModelElement):
         """
         return RPCollection(self.call_com(lambda: self._com.getCodeAnnotations(element._com, b_spec_file)))
 
-    def getGeneratedFileNames(self, element: "RPModelElement") -> "RPCollection":
+    def get_generated_file_names(self, element: "RPModelElement") -> "RPCollection":
         """Returns the generated file names for the given model element.
 
         Args:
@@ -112,17 +112,17 @@ class RPDiagSynthAPI(RPModelElement):
     """Wraps ``IRPDiagSynthAPI``."""
 
     # IRPDiagSynthAPI method parity checklist:
-    # [x] addInstance                  [x] impl  [x] docstring  [x] test
-    # [x] addSynthSDToModel2           [x] impl  [x] docstring  [x] test
-    # [x] createSD2                    [x] impl  [x] docstring  [x] test
-    # [x] receiveMessage               [x] impl  [x] docstring  [x] test
-    # [x] removeSynthSDToModel2        [x] impl  [x] docstring  [x] test
-    # [x] sDAddConditionMark           [x] impl  [x] docstring  [x] test
-    # [x] sendMessage                  [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] add_instance                  [x] impl  [x] docstring  [x] test
+    # [x] add_synth_sd_to_model2           [x] impl  [x] docstring  [x] test
+    # [x] create_sd2                    [x] impl  [x] docstring  [x] test
+    # [x] receive_message               [x] impl  [x] docstring  [x] test
+    # [x] remove_synth_sd_to_model2        [x] impl  [x] docstring  [x] test
+    # [x] s_d_add_condition_mark           [x] impl  [x] docstring  [x] test
+    # [x] send_message                  [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPDiagSynthAPI methods.
 
-    def addInstance(self, added_to_s_d: int, instance_nav_exp: str) -> int:
+    def add_instance(self, added_to_s_d: int, instance_nav_exp: str) -> int:
         """Adds an instance to a sequence diagram.
 
         Args:
@@ -140,7 +140,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         return self.call_com(lambda: self._com.addInstance(added_to_s_d, instance_nav_exp))
 
-    def addSynthSDToModel2(self, p_msc_orig: "RPSequenceDiagram", synth_s_d: int, open_s_d: int) -> int:
+    def add_synth_sd_to_model2(self, p_msc_orig: "RPSequenceDiagram", synth_s_d: int, open_s_d: int) -> int:
         """Adds a synthesized sequence diagram to the model.
 
         Args:
@@ -159,7 +159,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         return self.call_com(lambda: self._com.addSynthSDToModel2(p_msc_orig._com, synth_s_d, open_s_d))
 
-    def createSD2(self, p_msc_orig: "RPSequenceDiagram", testedmscname: str) -> int:
+    def create_sd2(self, p_msc_orig: "RPSequenceDiagram", testedmscname: str) -> int:
         """Creates a sequence diagram.
 
         Args:
@@ -177,7 +177,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         return self.call_com(lambda: self._com.createSD2(p_msc_orig._com, testedmscname))
 
-    def receiveMessage(self, p_tested_s_d: int, p_event_sent: int) -> None:
+    def receive_message(self, p_tested_s_d: int, p_event_sent: int) -> None:
         """Receives a sequence diagram message.
 
         Args:
@@ -192,7 +192,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         self.call_com(lambda: self._com.receiveMessage(p_tested_s_d, p_event_sent))
 
-    def removeSynthSDToModel2(self, p_msc_orig: "RPSequenceDiagram") -> int:
+    def remove_synth_sd_to_model2(self, p_msc_orig: "RPSequenceDiagram") -> int:
         """Removes a synthesized sequence diagram from the model.
 
         Args:
@@ -210,7 +210,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         return self.call_com(lambda: self._com.removeSynthSDToModel2(p_msc_orig._com))
 
-    def sDAddConditionMark(self, p_tested_s_d: int, instance: str, text: str, type_: str) -> int:
+    def s_d_add_condition_mark(self, p_tested_s_d: int, instance: str, text: str, type_: str) -> int:
         """Sends a condition mark to an instance in a sequence diagram.
 
         Args:
@@ -230,7 +230,7 @@ class RPDiagSynthAPI(RPModelElement):
         """
         return self.call_com(lambda: self._com.sDAddConditionMark(p_tested_s_d, instance, text, type_))
 
-    def sendMessage(self, p_tested_s_d: int, source: str, target: str, event: str, operation: str, type_: str) -> int:
+    def send_message(self, p_tested_s_d: int, source: str, target: str, event: str, operation: str, type_: str) -> int:
         """Sends a sequence diagram message.
 
         Args:
@@ -260,12 +260,12 @@ class RPExternalCheckRegistry(RPModelElement):
     """Wraps ``IRPExternalCheckRegistry``."""
 
     # IRPExternalCheckRegistry method parity checklist:
-    # [x] appendFailedElementsComments [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] setFailedElementsComments    [x] impl  [x] docstring  [x] test
+    # [x] append_failed_elements_comments [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] set_failed_elements_comments    [x] impl  [x] docstring  [x] test
     # No deprecated IRPExternalCheckRegistry methods.
 
-    def appendFailedElementsComments(self, str_val: str) -> None:
+    def append_failed_elements_comments(self, str_val: str) -> None:
         """Appends comments for failed elements.
 
         Args:
@@ -279,7 +279,7 @@ class RPExternalCheckRegistry(RPModelElement):
         """
         self.call_com(lambda: self._com.appendFailedElementsComments(str_val))
 
-    def setFailedElementsComments(self, str_val: str) -> None:
+    def set_failed_elements_comments(self, str_val: str) -> None:
         """Sets the comments for failed elements.
 
         Args:
@@ -298,7 +298,7 @@ class RPExternalRoundtripInvoker(RPModelElement):
     """Wraps ``IRPExternalRoundtripInvoker``."""
 
     # IRPExternalRoundtripInvoker method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPExternalRoundtripInvoker methods.
 
 
@@ -306,7 +306,7 @@ class RPIntegrator(RPModelElement):
     """Wraps ``IRPIntegrator``."""
 
     # IRPIntegrator method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPIntegrator methods.
 
 
@@ -314,14 +314,14 @@ class RPRhapsodyServer(RPModelElement):
     """Wraps ``IRPRhapsodyServer``."""
 
     # IRPRhapsodyServer method parity checklist:
-    # [x] getApplication               [x] impl  [x] docstring  [x] test
-    # [x] getHiddenApplication         [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] getUninitializedApplication  [x] impl  [x] docstring  [x] test
-    # [x] initializeApplication        [x] impl  [x] docstring  [x] test
+    # [x] get_application               [x] impl  [x] docstring  [x] test
+    # [x] get_hidden_application         [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_uninitialized_application  [x] impl  [x] docstring  [x] test
+    # [x] initialize_application        [x] impl  [x] docstring  [x] test
     # No deprecated IRPRhapsodyServer methods.
 
-    def getApplication(self) -> "RhapsodyApplication":
+    def get_application(self) -> "RhapsodyApplication":
         """Returns the Rhapsody application.
 
         Returns:
@@ -335,7 +335,7 @@ class RPRhapsodyServer(RPModelElement):
         """
         return RhapsodyApplication(self.call_com(lambda: self._com.getApplication()))
 
-    def getHiddenApplication(self) -> "RhapsodyApplication":
+    def get_hidden_application(self) -> "RhapsodyApplication":
         """Returns a hidden Rhapsody application instance.
 
         Returns:
@@ -349,7 +349,7 @@ class RPRhapsodyServer(RPModelElement):
         """
         return RhapsodyApplication(self.call_com(lambda: self._com.getHiddenApplication()))
 
-    def getUninitializedApplication(self) -> "RhapsodyApplication":
+    def get_uninitialized_application(self) -> "RhapsodyApplication":
         """Returns an uninitialized Rhapsody application instance.
 
         Returns:
@@ -363,7 +363,7 @@ class RPRhapsodyServer(RPModelElement):
         """
         return RhapsodyApplication(self.call_com(lambda: self._com.getUninitializedApplication()))
 
-    def initializeApplication(self, p_val: "RhapsodyApplication") -> None:
+    def initialize_application(self, p_val: "RhapsodyApplication") -> None:
         """Initializes the Rhapsody application.
 
         Args:
@@ -382,11 +382,11 @@ class RPRoundTrip(RPModelElement):
     """Wraps ``IRPRoundTrip``."""
 
     # IRPRoundTrip method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] roundtripFile                [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] roundtrip_file                [x] impl  [x] docstring  [x] test
     # No deprecated IRPRoundTrip methods.
 
-    def roundtripFile(self, filename: str, re_generate_file: int) -> "RPCollection":
+    def roundtrip_file(self, filename: str, re_generate_file: int) -> "RPCollection":
         """Roundtrips a file, importing external changes back into the model.
 
         Args:
@@ -409,14 +409,14 @@ class RPSearchManager(RPModelElement):
     """Wraps ``IRPSearchManager``: used to carry out a search in a Rhapsody model."""
 
     # IRPSearchManager method parity checklist:
-    # [x] createSearchQuery            [x] impl  [x] docstring  [x] test
+    # [x] create_search_query            [x] impl  [x] docstring  [x] test
     # [x] search                       [x] impl  [x] docstring  [x] test
-    # [x] searchAndShowResults         [x] impl  [x] docstring  [x] test
-    # [x] searchAsync                  [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] search_and_show_results         [x] impl  [x] docstring  [x] test
+    # [x] search_async                  [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPSearchManager methods.
 
-    def createSearchQuery(self) -> "RPSearchQuery":
+    def create_search_query(self) -> "RPSearchQuery":
         """Creates a search query object.
 
         Returns:
@@ -447,7 +447,7 @@ class RPSearchManager(RPModelElement):
         """
         return RPCollection(self.call_com(lambda: self._com.search(p_search_query._com)))
 
-    def searchAndShowResults(self, p_search_query: "RPSearchQuery") -> None:
+    def search_and_show_results(self, p_search_query: "RPSearchQuery") -> None:
         """Searches the model using the specified search query, and shows the
         results in the Search tab of the Output window.
 
@@ -462,7 +462,7 @@ class RPSearchManager(RPModelElement):
         """
         self.call_com(lambda: self._com.searchAndShowResults(p_search_query._com))
 
-    def searchAsync(self, p_search_query: "RPSearchQuery") -> None:
+    def search_async(self, p_search_query: "RPSearchQuery") -> None:
         """Searches the model asynchronously, allowing you to continue working
         in Rhapsody.
 
@@ -482,82 +482,82 @@ class RPSearchQuery(RPModelElement):
     """Wraps ``IRPSearchQuery``: represents the search criteria objects that are used by IRPSearchManager to carry out searches."""
 
     # IRPSearchQuery method parity checklist:
-    # [x] addDiagramToViewsList        [x] impl  [x] docstring  [x] test
-    # [x] addFilterElementType         [x] impl  [x] docstring  [x] test
-    # [x] addFilterSearchInField       [x] impl  [x] docstring  [x] test
-    # [x] addFilterStereotype          [x] impl  [x] docstring  [x] test
-    # [x] addFilterSubQuery            [x] impl  [x] docstring  [x] test
-    # [x] addMatrixToViewsList         [x] impl  [x] docstring  [x] test
-    # [x] addSearchScope               [x] impl  [x] docstring  [x] test
-    # [x] addTableToViewsList          [x] impl  [x] docstring  [x] test
-    # [x] getFilterElementTypes        [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceIncludeReferencedElementsInSearchResults [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceNameOfReferencedElements [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceNumberOfReferences [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceQuantityOperator [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceRelationKind [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceStereotypeOfReferencedElements [x] impl  [x] docstring  [x] test
-    # [x] getFilterReferenceTypeOfReferencedElements [x] impl  [x] docstring  [x] test
-    # [x] getFilterSearchInFields      [x] impl  [x] docstring  [x] test
-    # [x] getFilterStereotypes         [x] impl  [x] docstring  [x] test
-    # [x] getFilterSubQueries          [x] impl  [x] docstring  [x] test
-    # [x] getFilterSubQueryUseWithNotOperator [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagFindAs           [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagMatchCase        [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagMatchWholeWord   [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagName             [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagValue            [x] impl  [x] docstring  [x] test
-    # [x] getSearchScopeElements       [x] impl  [x] docstring  [x] test
-    # [x] getView                      [x] impl  [x] docstring  [x] test
-    # [x] getViewCount                 [x] impl  [x] docstring  [x] test
-    # [x] loadFromQuery                [x] impl  [x] docstring  [x] test
-    # [x] removeFilterElementTypes     [x] impl  [x] docstring  [x] test
-    # [x] removeFilterReferences       [x] impl  [x] docstring  [x] test
-    # [x] removeFilterSearchInFields   [x] impl  [x] docstring  [x] test
-    # [x] removeFilterStereotypes      [x] impl  [x] docstring  [x] test
-    # [x] removeFilterSubQueries       [x] impl  [x] docstring  [x] test
-    # [x] removeFilterSubQuery         [x] impl  [x] docstring  [x] test
-    # [x] removeFilterTag              [x] impl  [x] docstring  [x] test
-    # [x] removeSearchScopeElement     [x] impl  [x] docstring  [x] test
-    # [x] removeView                   [x] impl  [x] docstring  [x] test
-    # [x] resetSearchScope             [x] impl  [x] docstring  [x] test
-    # [x] saveAsQuery                  [x] impl  [x] docstring  [x] test
-    # [x] setFilterReference           [x] impl  [x] docstring  [x] test
-    # [x] setFilterTag                 [x] impl  [x] docstring  [x] test
-    # [x] getFilterSubQueriesOperator  [x] impl  [x] docstring  [x] test
-    # [x] getFilterTagLocalOnly        [x] impl  [x] docstring  [x] test
-    # [x] getFilterUnitsOnly           [x] impl  [x] docstring  [x] test
-    # [x] getFilterUnresolvedKind      [x] impl  [x] docstring  [x] test
-    # [x] getIncludeDescendants        [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] getMatchCase                 [x] impl  [x] docstring  [x] test
-    # [x] getMatchSpecifiedCriteria    [x] impl  [x] docstring  [x] test
-    # [x] getMatchWholeWord            [x] impl  [x] docstring  [x] test
-    # [x] getSearchFindAsOption        [x] impl  [x] docstring  [x] test
-    # [x] getSearchScopeObject         [x] impl  [x] docstring  [x] test
-    # [x] getSearchText                [x] impl  [x] docstring  [x] test
-    # [x] getViewIncludeModelElements  [x] impl  [x] docstring  [x] test
-    # [x] getViewsToSearch             [x] impl  [x] docstring  [x] test
-    # [x] setFilterSubQueriesOperator  [x] impl  [x] docstring  [x] test
-    # [x] setFilterTagLocalOnly        [x] impl  [x] docstring  [x] test
-    # [x] setFilterUnitsOnly           [x] impl  [x] docstring  [x] test
-    # [x] setFilterUnresolvedKind      [x] impl  [x] docstring  [x] test
-    # [x] setIncludeDescendants        [x] impl  [x] docstring  [x] test
-    # [x] setMatchCase                 [x] impl  [x] docstring  [x] test
-    # [x] setMatchSpecifiedCriteria    [x] impl  [x] docstring  [x] test
-    # [x] setMatchWholeWord            [x] impl  [x] docstring  [x] test
-    # [x] setSearchFindAsOption        [x] impl  [x] docstring  [x] test
-    # [x] setSearchScopeObject         [x] impl  [x] docstring  [x] test
-    # [x] setSearchText                [x] impl  [x] docstring  [x] test
-    # [x] setViewIncludeModelElements  [x] impl  [x] docstring  [x] test
-    # [x] setViewsToSearch             [x] impl  [x] docstring  [x] test
+    # [x] add_diagram_to_views_list        [x] impl  [x] docstring  [x] test
+    # [x] add_filter_element_type         [x] impl  [x] docstring  [x] test
+    # [x] add_filter_search_in_field       [x] impl  [x] docstring  [x] test
+    # [x] add_filter_stereotype          [x] impl  [x] docstring  [x] test
+    # [x] add_filter_sub_query            [x] impl  [x] docstring  [x] test
+    # [x] add_matrix_to_views_list         [x] impl  [x] docstring  [x] test
+    # [x] add_search_scope               [x] impl  [x] docstring  [x] test
+    # [x] add_table_to_views_list          [x] impl  [x] docstring  [x] test
+    # [x] get_filter_element_types        [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_include_referenced_elements_in_search_results [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_name_of_referenced_elements [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_number_of_references [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_quantity_operator [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_relation_kind [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_stereotype_of_referenced_elements [x] impl  [x] docstring  [x] test
+    # [x] get_filter_reference_type_of_referenced_elements [x] impl  [x] docstring  [x] test
+    # [x] get_filter_search_in_fields      [x] impl  [x] docstring  [x] test
+    # [x] get_filter_stereotypes         [x] impl  [x] docstring  [x] test
+    # [x] get_filter_sub_queries          [x] impl  [x] docstring  [x] test
+    # [x] get_filter_sub_query_use_with_not_operator [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_find_as           [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_match_case        [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_match_whole_word   [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_name             [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_value            [x] impl  [x] docstring  [x] test
+    # [x] get_search_scope_elements       [x] impl  [x] docstring  [x] test
+    # [x] get_view                      [x] impl  [x] docstring  [x] test
+    # [x] get_view_count                 [x] impl  [x] docstring  [x] test
+    # [x] load_from_query                [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_element_types     [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_references       [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_search_in_fields   [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_stereotypes      [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_sub_queries       [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_sub_query         [x] impl  [x] docstring  [x] test
+    # [x] remove_filter_tag              [x] impl  [x] docstring  [x] test
+    # [x] remove_search_scope_element     [x] impl  [x] docstring  [x] test
+    # [x] remove_view                   [x] impl  [x] docstring  [x] test
+    # [x] reset_search_scope             [x] impl  [x] docstring  [x] test
+    # [x] save_as_query                  [x] impl  [x] docstring  [x] test
+    # [x] set_filter_reference           [x] impl  [x] docstring  [x] test
+    # [x] set_filter_tag                 [x] impl  [x] docstring  [x] test
+    # [x] get_filter_sub_queries_operator  [x] impl  [x] docstring  [x] test
+    # [x] get_filter_tag_local_only        [x] impl  [x] docstring  [x] test
+    # [x] get_filter_units_only           [x] impl  [x] docstring  [x] test
+    # [x] get_filter_unresolved_kind      [x] impl  [x] docstring  [x] test
+    # [x] get_include_descendants        [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_match_case                 [x] impl  [x] docstring  [x] test
+    # [x] get_match_specified_criteria    [x] impl  [x] docstring  [x] test
+    # [x] get_match_whole_word            [x] impl  [x] docstring  [x] test
+    # [x] get_search_find_as_option        [x] impl  [x] docstring  [x] test
+    # [x] get_search_scope_object         [x] impl  [x] docstring  [x] test
+    # [x] get_search_text                [x] impl  [x] docstring  [x] test
+    # [x] get_view_include_model_elements  [x] impl  [x] docstring  [x] test
+    # [x] get_views_to_search             [x] impl  [x] docstring  [x] test
+    # [x] set_filter_sub_queries_operator  [x] impl  [x] docstring  [x] test
+    # [x] set_filter_tag_local_only        [x] impl  [x] docstring  [x] test
+    # [x] set_filter_units_only           [x] impl  [x] docstring  [x] test
+    # [x] set_filter_unresolved_kind      [x] impl  [x] docstring  [x] test
+    # [x] set_include_descendants        [x] impl  [x] docstring  [x] test
+    # [x] set_match_case                 [x] impl  [x] docstring  [x] test
+    # [x] set_match_specified_criteria    [x] impl  [x] docstring  [x] test
+    # [x] set_match_whole_word            [x] impl  [x] docstring  [x] test
+    # [x] set_search_find_as_option        [x] impl  [x] docstring  [x] test
+    # [x] set_search_scope_object         [x] impl  [x] docstring  [x] test
+    # [x] set_search_text                [x] impl  [x] docstring  [x] test
+    # [x] set_view_include_model_elements  [x] impl  [x] docstring  [x] test
+    # [x] set_views_to_search             [x] impl  [x] docstring  [x] test
     # [deprecated] addSearchScope  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeElements  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] setSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
     # No non-deprecated IRPSearchQuery methods.
 
-    def addDiagramToViewsList(self, view: "RPDiagram") -> int:
+    def add_diagram_to_views_list(self, view: "RPDiagram") -> int:
         """Adds the specified diagram to the list of views to be searched for
         the search text.
 
@@ -575,7 +575,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.addDiagramToViewsList(view._com))
 
-    def addFilterElementType(self, element_type: str) -> None:
+    def add_filter_element_type(self, element_type: str) -> None:
         """Adds an element type to the list of element types that the search
         should be applied to.
 
@@ -591,7 +591,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.addFilterElementType(element_type))
 
-    def addFilterSearchInField(self, search_in_field: str) -> None:
+    def add_filter_search_in_field(self, search_in_field: str) -> None:
         """Adds an element field to the list of element fields that the search
         should be applied to, for example, element name or element description.
 
@@ -604,7 +604,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.addFilterSearchInField(search_in_field))
 
-    def addFilterStereotype(self, stereotype: "RPStereotype") -> None:
+    def add_filter_stereotype(self, stereotype: "RPStereotype") -> None:
         """Specifies that the search should be limited to model elements with a
         specific stereotype applied to them.
 
@@ -621,7 +621,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.addFilterStereotype(stereotype._com))
 
-    def addFilterSubQuery(self, sub_query: "RPTableLayout", use_with_not_operator: int) -> None:
+    def add_filter_sub_query(self, sub_query: "RPTableLayout", use_with_not_operator: int) -> None:
         """Adds a subquery to the list of subqueries specified for the search.
 
         Args:
@@ -637,7 +637,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.addFilterSubQuery(sub_query._com, use_with_not_operator))
 
-    def addMatrixToViewsList(self, view: "RPMatrixView") -> int:
+    def add_matrix_to_views_list(self, view: "RPMatrixView") -> int:
         """Adds the specified matrix to the list of views to be searched for
         the search text.
 
@@ -655,7 +655,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.addMatrixToViewsList(view._com))
 
-    def addSearchScope(self, scope_element: "RPModelElement") -> None:
+    def add_search_scope(self, scope_element: "RPModelElement") -> None:
         """Adds an element to the scope for the search.
 
         Args:
@@ -670,7 +670,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.addSearchScope(scope_element._com))
 
-    def addTableToViewsList(self, view: "RPTableView") -> int:
+    def add_table_to_views_list(self, view: "RPTableView") -> int:
         """Adds the specified table to the list of views to be searched for
         the search text.
 
@@ -688,7 +688,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.addTableToViewsList(view._com))
 
-    def getFilterElementTypes(self) -> "RPCollection":
+    def get_filter_element_types(self) -> "RPCollection":
         """Returns the element types that are to be searched for the search text.
 
         Returns:
@@ -702,7 +702,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFilterElementTypes", "filterElementTypes"))
 
-    def getFilterReferenceIncludeReferencedElementsInSearchResults(self) -> int:
+    def get_filter_reference_include_referenced_elements_in_search_results(self) -> int:
         """Checks whether the reference search criterion specified that the
         referenced elements should also be displayed in the search results.
 
@@ -718,7 +718,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterReferenceIncludeReferencedElementsInSearchResults", "filterReferenceIncludeReferencedElementsInSearchResults"))
 
-    def getFilterReferenceNameOfReferencedElements(self) -> str:
+    def get_filter_reference_name_of_referenced_elements(self) -> str:
         """Returns the model element name that was specified for the reference
         criterion that was defined.
 
@@ -733,7 +733,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterReferenceNameOfReferencedElements", "filterReferenceNameOfReferencedElements"))
 
-    def getFilterReferenceNumberOfReferences(self) -> int:
+    def get_filter_reference_number_of_references(self) -> int:
         """Returns the number of references that was specified as a search
         criterion.
 
@@ -749,7 +749,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterReferenceNumberOfReferences", "filterReferenceNumberOfReferences"))
 
-    def getFilterReferenceQuantityOperator(self) -> str:
+    def get_filter_reference_quantity_operator(self) -> str:
         """Returns a value indicating whether the reference criterion was an
         exact number of references, less than that number, or more than that
         number.
@@ -766,7 +766,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterReferenceQuantityOperator", "filterReferenceQuantityOperator"))
 
-    def getFilterReferenceRelationKind(self) -> str:
+    def get_filter_reference_relation_kind(self) -> str:
         """Returns the type of reference used in the search criterion, for
         example, aggregates or incoming relations.
 
@@ -781,7 +781,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterReferenceRelationKind", "filterReferenceRelationKind"))
 
-    def getFilterReferenceStereotypeOfReferencedElements(self) -> str:
+    def get_filter_reference_stereotype_of_referenced_elements(self) -> str:
         """Returns the stereotype that was specified for the reference criterion
         that was defined.
 
@@ -796,7 +796,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterReferenceStereotypeOfReferencedElements", "filterReferenceStereotypeOfReferencedElements"))
 
-    def getFilterReferenceTypeOfReferencedElements(self) -> str:
+    def get_filter_reference_type_of_referenced_elements(self) -> str:
         """Returns the model element type that was specified for the reference
         criterion that was defined.
 
@@ -811,7 +811,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterReferenceTypeOfReferencedElements", "filterReferenceTypeOfReferencedElements"))
 
-    def getFilterSearchInFields(self) -> "RPCollection":
+    def get_filter_search_in_fields(self) -> "RPCollection":
         """Returns the list of element fields that the search is to be applied
         to.
 
@@ -827,7 +827,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFilterSearchInFields", "filterSearchInFields"))
 
-    def getFilterStereotypes(self) -> "RPCollection":
+    def get_filter_stereotypes(self) -> "RPCollection":
         """Returns the names of the stereotypes that were specified as search
         criteria.
 
@@ -843,7 +843,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFilterStereotypes", "filterStereotypes"))
 
-    def getFilterSubQueries(self) -> "RPCollection":
+    def get_filter_sub_queries(self) -> "RPCollection":
         """Returns the subqueries that were specified for the search.
 
         Returns:
@@ -857,7 +857,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getFilterSubQueries", "filterSubQueries"))
 
-    def getFilterSubQueryUseWithNotOperator(self, sub_query: "RPTableLayout") -> int:
+    def get_filter_sub_query_use_with_not_operator(self, sub_query: "RPTableLayout") -> int:
         """Checks whether the NOT operator was specified for the specified
         subquery.
 
@@ -876,7 +876,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.getFilterSubQueryUseWithNotOperator(sub_query._com))
 
-    def getFilterTagFindAs(self) -> str:
+    def get_filter_tag_find_as(self) -> str:
         """Returns the type of search that was specified for the tag name and
         tag value search criteria.
 
@@ -892,7 +892,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterTagFindAs", "filterTagFindAs"))
 
-    def getFilterTagMatchCase(self) -> int:
+    def get_filter_tag_match_case(self) -> int:
         """Checks whether an exact match was specified for the tag name and tag
         value search criteria, in terms of upper and lower case.
 
@@ -908,7 +908,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterTagMatchCase", "filterTagMatchCase"))
 
-    def getFilterTagMatchWholeWord(self) -> int:
+    def get_filter_tag_match_whole_word(self) -> int:
         """Checks whether a whole word match was specified for the tag name and
         tag value search criteria.
 
@@ -924,7 +924,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterTagMatchWholeWord", "filterTagMatchWholeWord"))
 
-    def getFilterTagName(self) -> str:
+    def get_filter_tag_name(self) -> str:
         """Returns the tag name specified as a criterion for the search.
 
         Returns:
@@ -938,7 +938,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterTagName", "filterTagName"))
 
-    def getFilterTagValue(self) -> str:
+    def get_filter_tag_value(self) -> str:
         """Returns the tag value specified as a criterion for the search.
 
         Returns:
@@ -952,7 +952,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterTagValue", "filterTagValue"))
 
-    def getSearchScopeElements(self) -> "RPCollection":
+    def get_search_scope_elements(self) -> "RPCollection":
         """Returns a collection of the model elements that constitute the scope
         for the search.
 
@@ -968,7 +968,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getSearchScopeElements", "searchScopeElements"))
 
-    def getView(self, index: int) -> "RPModelElement":
+    def get_view(self, index: int) -> "RPModelElement":
         """Retrieves the specified item from the list of tables, matrices, and
         diagrams that are to be searched.
 
@@ -987,7 +987,7 @@ class RPSearchQuery(RPModelElement):
         """
         return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getView(index)))
 
-    def getViewCount(self) -> int:
+    def get_view_count(self) -> int:
         """Returns the number of views in the list of views that are to be
         searched.
 
@@ -1002,7 +1002,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getViewCount", "viewCount"))
 
-    def loadFromQuery(self, query: "RPTableLayout") -> None:
+    def load_from_query(self, query: "RPTableLayout") -> None:
         """Loads the settings from the specified query into the search query
         object.
 
@@ -1018,7 +1018,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.loadFromQuery(query._com))
 
-    def removeFilterElementTypes(self) -> None:
+    def remove_filter_element_types(self) -> None:
         """Removes any element type filters that you defined to limit the search
         to certain element types.
 
@@ -1030,7 +1030,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterElementTypes())
 
-    def removeFilterReferences(self) -> None:
+    def remove_filter_references(self) -> None:
         """Removes reference search criterion that was defined for the search
         query.
 
@@ -1042,7 +1042,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterReferences())
 
-    def removeFilterSearchInFields(self) -> None:
+    def remove_filter_search_in_fields(self) -> None:
         """Removes any element field filters that you defined to limit the
         search to certain element fields.
 
@@ -1054,7 +1054,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterSearchInFields())
 
-    def removeFilterStereotypes(self) -> None:
+    def remove_filter_stereotypes(self) -> None:
         """Removes any stereotype filter that was defined to limit the search to
         model elements that have certain stereotypes applied to them.
 
@@ -1066,7 +1066,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterStereotypes())
 
-    def removeFilterSubQueries(self) -> None:
+    def remove_filter_sub_queries(self) -> None:
         """Removes the subquery criteria that were specified for the search.
 
         Raises:
@@ -1077,7 +1077,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterSubQueries())
 
-    def removeFilterSubQuery(self, sub_query: "RPTableLayout") -> int:
+    def remove_filter_sub_query(self, sub_query: "RPTableLayout") -> int:
         """Removes the specified subquery from the search.
 
         Args:
@@ -1095,7 +1095,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.removeFilterSubQuery(sub_query._com))
 
-    def removeFilterTag(self) -> None:
+    def remove_filter_tag(self) -> None:
         """Removes the tag name and tag value criteria that were defined for
         the search query.
 
@@ -1107,7 +1107,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeFilterTag())
 
-    def removeSearchScopeElement(self, scope_element: "RPModelElement") -> int:
+    def remove_search_scope_element(self, scope_element: "RPModelElement") -> int:
         """Removes the specified model element from the scope for the search.
 
         Args:
@@ -1125,7 +1125,7 @@ class RPSearchQuery(RPModelElement):
         """
         return self.call_com(lambda: self._com.removeSearchScopeElement(scope_element._com))
 
-    def removeView(self, index: int) -> None:
+    def remove_view(self, index: int) -> None:
         """Removes the specified view from the list of views to be searched for
         the search text.
 
@@ -1140,7 +1140,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.removeView(index))
 
-    def resetSearchScope(self) -> None:
+    def reset_search_scope(self) -> None:
         """Resets the search scope to include the entire project, or all
         projects if multiple projects are open.
 
@@ -1152,7 +1152,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.resetSearchScope())
 
-    def saveAsQuery(self, query_owner: "RPPackage") -> "RPTableLayout":
+    def save_as_query(self, query_owner: "RPPackage") -> "RPTableLayout":
         """Saves the search query object that you defined as a query in your
         model.
 
@@ -1171,7 +1171,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPTableLayout(self.call_com(lambda: self._com.saveAsQuery(query_owner._com)))
 
-    def setFilterReference(
+    def set_filter_reference(
         self,
         quantity_operator: str,
         number_of_references: int,
@@ -1220,7 +1220,7 @@ class RPSearchQuery(RPModelElement):
             )
         )
 
-    def setFilterTag(self, tag_name: str, tag_value: str, match_case: int, match_whole_word: int, find_as: str) -> None:
+    def set_filter_tag(self, tag_name: str, tag_value: str, match_case: int, match_whole_word: int, find_as: str) -> None:
         """Sets tag name and tag value criteria for the search query.
 
         Args:
@@ -1240,7 +1240,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setFilterTag(tag_name, tag_value, match_case, match_whole_word, find_as))
 
-    def getFilterSubQueriesOperator(self) -> str:
+    def get_filter_sub_queries_operator(self) -> str:
         """Returns indication of how the specified subqueries are to be combined
         in the search.
 
@@ -1253,7 +1253,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterSubQueriesOperator", "filterSubQueriesOperator"))
 
-    def getFilterTagLocalOnly(self) -> int:
+    def get_filter_tag_local_only(self) -> int:
         """Checks whether the tag criterion set for a search is limited to only
         local tags.
 
@@ -1269,7 +1269,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterTagLocalOnly", "filterTagLocalOnly"))
 
-    def getFilterUnitsOnly(self) -> int:
+    def get_filter_units_only(self) -> int:
         """Checks whether the search is limited to model elements that are
         saved units.
 
@@ -1284,7 +1284,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getFilterUnitsOnly", "filterUnitsOnly"))
 
-    def getFilterUnresolvedKind(self) -> str:
+    def get_filter_unresolved_kind(self) -> str:
         """Returns the method that was specified for handling unresolved
         elements in the search.
 
@@ -1297,7 +1297,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getFilterUnresolvedKind", "filterUnresolvedKind"))
 
-    def getIncludeDescendants(self) -> int:
+    def get_include_descendants(self) -> int:
         """Checks whether the scope of the search is to include the descendants
         of the elements specified for the scope.
 
@@ -1313,7 +1313,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getIncludeDescendants", "includeDescendants"))
 
-    def getMatchCase(self) -> int:
+    def get_match_case(self) -> int:
         """Checks whether an exact match was specified for the query in terms of
         upper and lower case.
 
@@ -1329,7 +1329,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getMatchCase", "matchCase"))
 
-    def getMatchSpecifiedCriteria(self) -> int:
+    def get_match_specified_criteria(self) -> int:
         """Checks whether the query is to return the model elements that match
         the criteria specified, or the model elements that do not match the
         criteria specified.
@@ -1346,7 +1346,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getMatchSpecifiedCriteria", "matchSpecifiedCriteria"))
 
-    def getMatchWholeWord(self) -> int:
+    def get_match_whole_word(self) -> int:
         """Checks whether a whole word match was specified for the search.
 
         Returns:
@@ -1360,7 +1360,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getMatchWholeWord", "matchWholeWord"))
 
-    def getSearchFindAsOption(self) -> str:
+    def get_search_find_as_option(self) -> str:
         """Returns the type of search that was specified for the search text -
         regular text, wildcard, regular expression, or empty string.
 
@@ -1376,7 +1376,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getSearchFindAsOption", "searchFindAsOption"))
 
-    def getSearchScopeObject(self) -> "RPModelElement":
+    def get_search_scope_object(self) -> "RPModelElement":
         """Returns the scope specified for the search.
 
         Deprecated. Use getSearchScopeElements instead, as Rhapsody now
@@ -1390,7 +1390,7 @@ class RPSearchQuery(RPModelElement):
         """
         return AbstractRPModelElement.wrap(self._get_method_or_property(self._com, "getSearchScopeObject", "searchScopeObject"))
 
-    def getSearchText(self) -> str:
+    def get_search_text(self) -> str:
         """Returns the text that was specified as the text to search for.
 
         Returns:
@@ -1404,7 +1404,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getSearchText", "searchText"))
 
-    def getViewIncludeModelElements(self) -> int:
+    def get_view_include_model_elements(self) -> int:
         """Checks whether the query specifies that the search results should
         also include model elements that were found by the search but are not
         referenced in any of the views specified.
@@ -1421,7 +1421,7 @@ class RPSearchQuery(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getViewIncludeModelElements", "viewIncludeModelElements"))
 
-    def getViewsToSearch(self) -> str:
+    def get_views_to_search(self) -> str:
         """Returns indication of which views (diagrams, tables, and matrices)
         are supposed to be searched.
 
@@ -1434,7 +1434,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getViewsToSearch", "viewsToSearch"))
 
-    def setFilterSubQueriesOperator(self, filter_sub_queries_operator: str) -> None:
+    def set_filter_sub_queries_operator(self, filter_sub_queries_operator: str) -> None:
         """Specifies how the various subqueries specified should be combined -
         as an AND operation or an OR operation.
 
@@ -1448,7 +1448,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setFilterSubQueriesOperator(filter_sub_queries_operator))
 
-    def setFilterTagLocalOnly(self, filter_tag_local_only: int) -> None:
+    def set_filter_tag_local_only(self, filter_tag_local_only: int) -> None:
         """Specifies whether the tag criterion for a search should be limited to
         only local tags.
 
@@ -1464,7 +1464,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setFilterTagLocalOnly(filter_tag_local_only))
 
-    def setFilterUnitsOnly(self, filter_units_only: int) -> None:
+    def set_filter_units_only(self, filter_units_only: int) -> None:
         """Specifies whether the search should be limited to model elements that
         are saved units.
 
@@ -1480,7 +1480,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setFilterUnitsOnly(filter_units_only))
 
-    def setFilterUnresolvedKind(self, filter_unresolved_kind: str) -> None:
+    def set_filter_unresolved_kind(self, filter_unresolved_kind: str) -> None:
         """Specifies how unresolved elements should be handled in the search.
 
         Args:
@@ -1493,7 +1493,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setFilterUnresolvedKind(filter_unresolved_kind))
 
-    def setIncludeDescendants(self, include_descendants: int) -> None:
+    def set_include_descendants(self, include_descendants: int) -> None:
         """Specifies whether the scope for the search should include the
         descendants of the elements specified for the scope.
 
@@ -1509,7 +1509,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setIncludeDescendants(include_descendants))
 
-    def setMatchCase(self, match_case: int) -> None:
+    def set_match_case(self, match_case: int) -> None:
         """Specifies whether the search should require an exact match in terms
         of upper and lower case.
 
@@ -1525,7 +1525,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setMatchCase(match_case))
 
-    def setMatchSpecifiedCriteria(self, match_specified_criteria: int) -> None:
+    def set_match_specified_criteria(self, match_specified_criteria: int) -> None:
         """Specifies whether the query should return the model elements that
         match the criteria specified, or the model elements that do not match
         the criteria specified.
@@ -1543,7 +1543,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setMatchSpecifiedCriteria(match_specified_criteria))
 
-    def setMatchWholeWord(self, match_whole_word: int) -> None:
+    def set_match_whole_word(self, match_whole_word: int) -> None:
         """Specifies whether the search should require whole word matches.
 
         Args:
@@ -1558,7 +1558,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setMatchWholeWord(match_whole_word))
 
-    def setSearchFindAsOption(self, search_find_as_option: str) -> None:
+    def set_search_find_as_option(self, search_find_as_option: str) -> None:
         """Sets the type of search that should be used for the search text -
         regular text, wildcard, regular expression, or empty string.
 
@@ -1574,7 +1574,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setSearchFindAsOption(search_find_as_option))
 
-    def setSearchScopeObject(self, search_scope_object: "RPModelElement") -> None:
+    def set_search_scope_object(self, search_scope_object: "RPModelElement") -> None:
         """Sets the scope for the search.
 
         Deprecated. Use addSearchScope instead, as Rhapsody now allows
@@ -1589,7 +1589,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setSearchScopeObject(search_scope_object._com))
 
-    def setSearchText(self, search_text: str) -> None:
+    def set_search_text(self, search_text: str) -> None:
         """Specifies the text that should be searched for.
 
         Args:
@@ -1603,7 +1603,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setSearchText(search_text))
 
-    def setViewIncludeModelElements(self, view_include_model_elements: int) -> None:
+    def set_view_include_model_elements(self, view_include_model_elements: int) -> None:
         """Specifies whether the search results should also include model
         elements that were found by the search but are not referenced in any of
         the views specified.
@@ -1621,7 +1621,7 @@ class RPSearchQuery(RPModelElement):
         """
         self.call_com(lambda: self._com.setViewIncludeModelElements(view_include_model_elements))
 
-    def setViewsToSearch(self, views_to_search: str) -> None:
+    def set_views_to_search(self, views_to_search: str) -> None:
         """Specifies which views (tables, matrices, and diagrams) should be
         searched - all, none, all open, or just the views that were specified.
 
@@ -1643,14 +1643,14 @@ class RPSearchResult(RPModelElement):
     """Wraps ``IRPSearchResult``."""
 
     # IRPSearchResult method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] getMatchedField              [x] impl  [x] docstring  [x] test
-    # [x] getMatchedFields             [x] impl  [x] docstring  [x] test
-    # [x] getMatchedObject             [x] impl  [x] docstring  [x] test
-    # [x] getName                      [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_matched_field              [x] impl  [x] docstring  [x] test
+    # [x] get_matched_fields             [x] impl  [x] docstring  [x] test
+    # [x] get_matched_object             [x] impl  [x] docstring  [x] test
+    # [x] get_name                      [x] impl  [x] docstring  [x] test
     # No deprecated IRPSearchResult methods.
 
-    def getMatchedField(self) -> str:
+    def get_matched_field(self) -> str:
         """Returns the property matchedField.
 
         Returns:
@@ -1664,7 +1664,7 @@ class RPSearchResult(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getMatchedField", "matchedField"))
 
-    def getMatchedFields(self) -> "RPCollection":
+    def get_matched_fields(self) -> "RPCollection":
         """Returns the property matchedFields.
 
         Returns:
@@ -1678,7 +1678,7 @@ class RPSearchResult(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getMatchedFields", "matchedFields"))
 
-    def getMatchedObject(self) -> "RPModelElement":
+    def get_matched_object(self) -> "RPModelElement":
         """Returns the property matchedObject.
 
         Returns:
@@ -1692,7 +1692,7 @@ class RPSearchResult(RPModelElement):
         """
         return AbstractRPModelElement.wrap(self._get_method_or_property(self._com, "getMatchedObject", "matchedObject"))
 
-    def getName(self) -> str:
+    def get_name(self) -> str:
         """Returns the property name.
 
         Returns:
@@ -1711,12 +1711,12 @@ class RPCodeGenSimplifiersRegistry(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPCodeGenSimplifiersRegistry``."""
 
     # IRPCodeGenSimplifiersRegistry method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] notifySimplificationDone     [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] notify_simplification_done     [x] impl  [x] docstring  [x] test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPCodeGenSimplifiersRegistry methods.
 
-    def notifySimplificationDone(self) -> None:
+    def notify_simplification_done(self) -> None:
         """Notifies that simplification is done.
 
         Raises:
@@ -1732,12 +1732,12 @@ class RPExternalCodeGeneratorInvoker(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPExternalCodeGeneratorInvoker``."""
 
     # IRPExternalCodeGeneratorInvoker method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
-    # [x] notifyGenerationDone         [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] notify_generation_done         [x] impl  [x] docstring  [x] test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPExternalCodeGeneratorInvoker methods.
 
-    def notifyGenerationDone(self) -> None:
+    def notify_generation_done(self) -> None:
         """Notifies that code generation is done.
 
         Raises:

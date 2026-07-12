@@ -9,7 +9,7 @@ def test_project_is_a_package() -> None:
     project = RPProject(fake)
 
     assert isinstance(project, RPPackage)
-    assert project.getName() == "MyProject"
+    assert project.get_name() == "MyProject"
 
 
 def test_project_add_package_delegates_to_com() -> None:
@@ -18,10 +18,10 @@ def test_project_add_package_delegates_to_com() -> None:
     fake.addPackage.return_value = new_pkg
     project = RPProject(fake)
 
-    result = project.addPackage("NewPkg")
+    result = project.add_package("NewPkg")
 
     fake.addPackage.assert_called_once_with("NewPkg")
-    assert result.getName() == "NewPkg"
+    assert result.get_name() == "NewPkg"
 
 
 def test_project_close_delegates_to_com() -> None:
@@ -37,7 +37,7 @@ def test_project_become_active_project_delegates_to_com() -> None:
     fake = make_fake_element("Project")
     project = RPProject(fake)
 
-    project.becomeActiveProject()
+    project.become_active_project()
 
     fake.becomeActiveProject.assert_called_once_with()
 
@@ -48,10 +48,10 @@ def test_project_find_component_wraps_result() -> None:
     fake.findComponent.return_value = found
     project = RPProject(fake)
 
-    result = project.findComponent("Comp1")
+    result = project.find_component("Comp1")
 
     fake.findComponent.assert_called_once_with("Comp1")
-    assert result.getName() == "Comp1"
+    assert result.get_name() == "Comp1"
 
 
 def test_project_get_packages_returns_collection() -> None:
@@ -61,11 +61,11 @@ def test_project_get_packages_returns_collection() -> None:
     fake.getPackages.return_value = make_fake_collection([make_fake_element("Package", getName="P1")])
     project = RPProject(fake)
 
-    packages = project.getPackages()
+    packages = project.get_packages()
 
     assert isinstance(packages, RPCollection)
     assert len(packages) == 1
-    assert packages[0].getName() == "P1"
+    assert packages[0].get_name() == "P1"
 
 
 def test_project_is_registered_for_meta_class_project() -> None:
@@ -84,10 +84,10 @@ def test_project_add_class_returns_wrapped_element() -> None:
     fake.addClass.return_value = cls
     project = RPProject(fake)
 
-    result = project.addClass("Class1")
+    result = project.add_class("Class1")
 
     fake.addClass.assert_called_once_with("Class1")
-    assert result.getName() == "Class1"
+    assert result.get_name() == "Class1"
 
 
 def test_project_add_actor_returns_wrapped_element() -> None:
@@ -96,10 +96,10 @@ def test_project_add_actor_returns_wrapped_element() -> None:
     fake.addActor.return_value = actor
     project = RPProject(fake)
 
-    result = project.addActor("Actor1")
+    result = project.add_actor("Actor1")
 
     fake.addActor.assert_called_once_with("Actor1")
-    assert result.getName() == "Actor1"
+    assert result.get_name() == "Actor1"
 
 
 def test_project_get_components_returns_collection() -> None:
@@ -110,7 +110,7 @@ def test_project_get_components_returns_collection() -> None:
     fake.getComponents.return_value = make_fake_collection([comp1])
     project = RPProject(fake)
 
-    result = project.getComponents()
+    result = project.get_components()
 
     assert isinstance(result, RPCollection)
 
@@ -121,10 +121,10 @@ def test_project_find_by_name_returns_wrapped_element() -> None:
     fake.findByName.return_value = found
     project = RPProject(fake)
 
-    result = project.findByName("MyClass")
+    result = project.find_by_name("MyClass")
 
     fake.findByName.assert_called_once_with("MyClass")
-    assert result.getName() == "MyClass"
+    assert result.get_name() == "MyClass"
 
 
 def test_project_find_by_meta_class_returns_collection() -> None:
@@ -135,7 +135,7 @@ def test_project_find_by_meta_class_returns_collection() -> None:
     fake.findByMetaClass.return_value = make_fake_collection([cls1])
     project = RPProject(fake)
 
-    result = project.findByMetaClass("Class")
+    result = project.find_by_meta_class("Class")
 
     assert isinstance(result, RPCollection)
 
@@ -146,17 +146,17 @@ def test_project_find_element_by_guid_returns_wrapped_element() -> None:
     fake.findElementByGUID.return_value = found
     project = RPProject(fake)
 
-    result = project.findElementByGUID("12345")
+    result = project.find_element_by_guid("12345")
 
     fake.findElementByGUID.assert_called_once_with("12345")
-    assert result.getName() == "MyClass"
+    assert result.get_name() == "MyClass"
 
 
 def test_project_is_dirty_returns_int() -> None:
     fake = make_fake_element("Project", getIsDirty=1)
     project = RPProject(fake)
 
-    result = project.getIsDirty()
+    result = project.get_is_dirty()
 
     fake.getIsDirty.assert_called_once_with()
     assert result == 1
@@ -166,6 +166,6 @@ def test_project_set_dirty_delegates_to_com() -> None:
     fake = make_fake_element("Project")
     project = RPProject(fake)
 
-    project.setDirty(1)
+    project.set_dirty(1)
 
     fake.setDirty.assert_called_once_with(1)

@@ -28,7 +28,7 @@ class RPStateVertex(RPModelElement):
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPStateVertex methods.
 
-    def addFlow(self, type_: str, to: "RPStateVertex") -> "RPTransition":
+    def add_flow(self, type_: str, to: "RPStateVertex") -> "RPTransition":
         """Adds a control flow or object flow from this element to the specified element.
 
         Args:
@@ -44,7 +44,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def addTransition(self, to: "RPStateVertex") -> "RPTransition":
+    def add_transition(self, to: "RPStateVertex") -> "RPTransition":
         """Adds a transition from this element to the specified element.
 
         Args:
@@ -58,7 +58,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def deleteTransition(self, transition: "RPTransition") -> None:
+    def delete_transition(self, transition: "RPTransition") -> None:
         """Deletes the specified transition.
 
         Args:
@@ -69,7 +69,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def getInTransitions(self) -> "RPCollection":
+    def get_in_transitions(self) -> "RPCollection":
         """Returns all of the transitions that enter the element.
 
         Internal transitions are also included in the returned collection. To
@@ -85,7 +85,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def getOutTransitions(self) -> "RPCollection":
+    def get_out_transitions(self) -> "RPCollection":
         """Returns all of the transitions that exit the element.
 
         Internal transitions are also included in the returned collection. To
@@ -101,7 +101,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def getParent(self) -> "RPState":
+    def get_parent(self) -> "RPState":
         """Returns the element's parent.
 
         If the element is not contained in a specific state, the root state of
@@ -115,7 +115,7 @@ class RPStateVertex(RPModelElement):
         """
         raise NotImplementedError
 
-    def setParent(self, parent: "RPState") -> None:
+    def set_parent(self, parent: "RPState") -> None:
         """Sets the parent state of the element.
 
         Args:
@@ -185,7 +185,7 @@ class RPState(RPStateVertex):
     # [deprecated] createSubStatechart  - skipped (deprecated in Rhapsody Java API)
     # No non-deprecated IRPState methods.
 
-    def addActivityFinal(self) -> "RPState":
+    def add_activity_final(self) -> "RPState":
         """Adds an ActivityFinal element to an Activity.
 
         This method should be called on the root state of the diagram, which you
@@ -199,7 +199,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def addConnector(self, type_: str) -> "RPConnector":
+    def add_connector(self, type_: str) -> "RPConnector":
         """Adds a connector element of the specified type to the state.
 
         Args:
@@ -215,7 +215,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def addInternalTransition(self, trigger: "RPInterfaceItem") -> "RPTransition":
+    def add_internal_transition(self, trigger: "RPInterfaceItem") -> "RPTransition":
         """Adds an internal transition to the state.
 
         Args:
@@ -232,7 +232,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def addState(self, name: str) -> "RPState":
+    def add_state(self, name: str) -> "RPState":
         """Adds a new substate to this state.
 
         To add a new top-level state to a statechart, call this method on the
@@ -250,7 +250,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def addStaticReaction(self, trigger: "RPInterfaceItem") -> "RPTransition":
+    def add_static_reaction(self, trigger: "RPInterfaceItem") -> "RPTransition":
         """Adds an internal transition to the state.
 
         Args:
@@ -264,7 +264,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def addTerminationState(self) -> "RPState":
+    def add_termination_state(self) -> "RPState":
         """Adds a termination state to a statechart.
 
         This method should be called on the root state of the statechart, which
@@ -278,7 +278,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def createDefaultTransition(self, from_: "RPState") -> "RPTransition":
+    def create_default_transition(self, from_: "RPState") -> "RPTransition":
         """Creates a default transition to this state from the state specified with the parameter.
 
         Args:
@@ -293,7 +293,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def createNestedStatechart(self) -> "RPStatechart":
+    def create_nested_statechart(self) -> "RPStatechart":
         """Deprecated. Use ``createSubStatechart()`` instead.
 
         Reference:
@@ -301,7 +301,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def createSubStatechart(self) -> "RPStatechart":
+    def create_sub_statechart(self) -> "RPStatechart":
         """Creates a sub-statechart for the state.
 
         Returns:
@@ -315,7 +315,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def deleteConnector(self, connector: "RPConnector") -> None:
+    def delete_connector(self, connector: "RPConnector") -> None:
         """Deletes the specified connector element.
 
         Args:
@@ -326,7 +326,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def deleteInternalTransition(self, p_val: "RPTransition") -> None:
+    def delete_internal_transition(self, p_val: "RPTransition") -> None:
         """Deletes the specified internal transition.
 
         Args:
@@ -340,7 +340,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def deleteStaticReaction(self, p_val: "RPTransition") -> None:
+    def delete_static_reaction(self, p_val: "RPTransition") -> None:
         """Deletes the specified internal transition.
 
         Args:
@@ -351,7 +351,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getDefaultTransition(self) -> "RPTransition":
+    def get_default_transition(self) -> "RPTransition":
         """Returns the default transition within the state.
 
         Returns:
@@ -362,7 +362,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getEntryAction(self) -> str:
+    def get_entry_action(self) -> str:
         """Returns the entry action that was defined for the state.
 
         Returns:
@@ -373,7 +373,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getExitAction(self) -> str:
+    def get_exit_action(self) -> str:
         """Returns the exit action that was defined for the state.
 
         Returns:
@@ -384,7 +384,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getFullNameInStatechart(self) -> str:
+    def get_full_name_in_statechart(self) -> str:
         """Returns the full name of the state within the statechart, including its hierarchical position.
 
         For example, if the statechart includes a state called ``Listening``
@@ -399,7 +399,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getInheritsFrom(self) -> "RPState":
+    def get_inherits_from(self) -> "RPState":
         """Returns the corresponding state from the statechart of the class that this class is derived from.
 
         Returns:
@@ -411,7 +411,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getInternalTransitions(self) -> "RPCollection":
+    def get_internal_transitions(self) -> "RPCollection":
         """Returns a collection of the state's internal transitions.
 
         Returns:
@@ -422,7 +422,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getIsOverridden(self) -> int:
+    def get_is_overridden(self) -> int:
         """Checks whether there is still an inheritance relationship between this state and the corresponding state from the statechart of the class that this class is derived from.
 
         Returns:
@@ -434,7 +434,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getIsReferenceActivity(self) -> int:
+    def get_is_reference_activity(self) -> int:
         """Checks whether this element is a call behavior element.
 
         The Rhapsody API does not provide a method to change an existing
@@ -450,7 +450,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getItsStatechart(self) -> "RPStatechart":
+    def get_its_statechart(self) -> "RPStatechart":
         """Returns the statechart that this state belongs to.
 
         Returns:
@@ -461,7 +461,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getItsSwimlane(self) -> "RPSwimlane":
+    def get_its_swimlane(self) -> "RPSwimlane":
         """Returns the swimlane that the action is located in.
 
         Returns:
@@ -472,7 +472,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getLogicalStates(self) -> "RPCollection":
+    def get_logical_states(self) -> "RPCollection":
         """Returns a collection of all the substates of the current state and all the first-level substates of those states, down to the second level.
 
         Returns:
@@ -484,7 +484,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getNestedStatechart(self) -> "RPStatechart":
+    def get_nested_statechart(self) -> "RPStatechart":
         """Returns the state's sub-statechart.
 
         Returns:
@@ -495,7 +495,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getReferenceToActivity(self) -> "RPModelElement":
+    def get_reference_to_activity(self) -> "RPModelElement":
         """For call behavior elements, returns the activity that is referenced.
 
         Returns:
@@ -506,7 +506,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getSendAction(self) -> "RPSendAction":
+    def get_send_action(self) -> "RPSendAction":
         """Returns the Send Action element associated with the state.
 
         A Send Action element is an object of type ``IRPState`` for which the
@@ -522,7 +522,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getStateType(self) -> str:
+    def get_state_type(self) -> str:
         """Returns the type of the state, for example, an And state or a Termination state.
 
         For the full list of state types, see the documentation for
@@ -536,7 +536,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getStaticReactions(self) -> "RPCollection":
+    def get_static_reactions(self) -> "RPCollection":
         """Returns a collection of the state's internal transitions.
 
         Returns:
@@ -547,7 +547,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getSubStateVertices(self) -> "RPCollection":
+    def get_sub_state_vertices(self) -> "RPCollection":
         """Returns a collection of all the first-level elements contained in this state, including both node and connector elements.
 
         The method does not return elements nested within these first-level
@@ -562,7 +562,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getSubStates(self) -> "RPCollection":
+    def get_sub_states(self) -> "RPCollection":
         """Returns a collection of the substates contained in this state.
 
         Note that this will not work if a state contains a sub-statechart. In
@@ -578,7 +578,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getTheEntryAction(self) -> "RPAction":
+    def get_the_entry_action(self) -> "RPAction":
         """Returns the entry action element of the state.
 
         Returns:
@@ -592,7 +592,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def getTheExitAction(self) -> "RPAction":
+    def get_the_exit_action(self) -> "RPAction":
         """Returns the exit action element of the state.
 
         Returns:
@@ -606,7 +606,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def isAnd(self) -> int:
+    def is_and(self) -> int:
         """Checks whether the state contains one or more And Lines.
 
         Returns:
@@ -617,7 +617,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def isCompound(self) -> int:
+    def is_compound(self) -> int:
         """Checks whether the state is a compound state, meaning a state that contains one or more substates.
 
         Returns:
@@ -628,7 +628,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def isLeaf(self) -> int:
+    def is_leaf(self) -> int:
         """Checks whether the state is a leaf state, meaning a state that does not contain any substates.
 
         Returns:
@@ -640,7 +640,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def isRoot(self) -> int:
+    def is_root(self) -> int:
         """Checks whether the state is the root state of the statechart.
 
         Returns:
@@ -651,7 +651,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def isSendActionState(self) -> int:
+    def is_send_action_state(self) -> int:
         """Checks whether the state is a Send Action element.
 
         Returns:
@@ -662,7 +662,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def overrideInheritance(self) -> None:
+    def override_inheritance(self) -> None:
         """Breaks the inheritance relationship between this state and the corresponding state from the statechart of the class that this class is derived from.
 
         Reference:
@@ -670,7 +670,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def resetEntryActionInheritance(self) -> "RPState":
+    def reset_entry_action_inheritance(self) -> "RPState":
         """Restores the inheritance relationship between this state and the corresponding state from the statechart of the class that this class is derived from, for the entry action.
 
         Returns:
@@ -681,7 +681,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def resetExitActionInheritance(self) -> "RPState":
+    def reset_exit_action_inheritance(self) -> "RPState":
         """Restores the inheritance relationship between this state and the corresponding state from the statechart of the class that this class is derived from, for the exit action.
 
         Returns:
@@ -692,7 +692,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setEntryAction(self, entry_action: str) -> None:
+    def set_entry_action(self, entry_action: str) -> None:
         """Sets the entry action for the state.
 
         Args:
@@ -703,7 +703,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setExitAction(self, exit_action: str) -> None:
+    def set_exit_action(self, exit_action: str) -> None:
         """Sets the exit action for the state.
 
         Args:
@@ -714,7 +714,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setInternalTransition(self, trig_val: str, guard_val: str, action_val: str) -> None:
+    def set_internal_transition(self, trig_val: str, guard_val: str, action_val: str) -> None:
         """Sets the internal transition for the state.
 
         Args:
@@ -730,7 +730,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setItsSwimlane(self, its_swimlane: "RPSwimlane") -> None:
+    def set_its_swimlane(self, its_swimlane: "RPSwimlane") -> None:
         """Specifies the swimlane that the action should be in.
 
         Args:
@@ -741,7 +741,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setReferenceToActivity(self, reference_to_activity: "RPModelElement") -> None:
+    def set_reference_to_activity(self, reference_to_activity: "RPModelElement") -> None:
         """For call behavior elements, sets the activity that is referenced by the element.
 
         Args:
@@ -753,7 +753,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setStateType(self, state_type: str) -> None:
+    def set_state_type(self, state_type: str) -> None:
         """Specifies the type of the state.
 
         Args:
@@ -768,7 +768,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def setStaticReaction(self, trig_val: str, guard_val: str, action_val: str) -> None:
+    def set_static_reaction(self, trig_val: str, guard_val: str, action_val: str) -> None:
         """Adds a new internal transition to the state.
 
         Args:
@@ -781,7 +781,7 @@ class RPState(RPStateVertex):
         """
         raise NotImplementedError
 
-    def unoverrideInheritance(self) -> None:
+    def unoverride_inheritance(self) -> None:
         """Restores the inheritance relationship between this state and the corresponding state from the statechart of the class that this class is derived from.
 
         This method is used to restore the relationship that was severed with

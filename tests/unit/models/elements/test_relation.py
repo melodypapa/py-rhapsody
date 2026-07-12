@@ -11,7 +11,7 @@ def test_relation_is_a_unit() -> None:
     relation = RPRelation(fake)
 
     assert isinstance(relation, RPUnit)
-    assert relation.getName() == "assoc1"
+    assert relation.get_name() == "assoc1"
 
 
 def test_relation_add_qualifier_delegates_to_com() -> None:
@@ -19,7 +19,7 @@ def test_relation_add_qualifier_delegates_to_com() -> None:
     qualifier = make_fake_element("Class", getName="Key")
     relation = RPRelation(fake)
 
-    relation.addQualifier(AbstractRPModelElement.wrap(qualifier))
+    relation.add_qualifier(AbstractRPModelElement.wrap(qualifier))
 
     fake.addQualifier.assert_called_once_with(qualifier)
 
@@ -30,10 +30,10 @@ def test_relation_get_association_class_wraps_result() -> None:
     fake.getAssociationClass.return_value = assoc_class
     relation = RPRelation(fake)
 
-    result = relation.getAssociationClass()
+    result = relation.get_association_class()
 
     fake.getAssociationClass.assert_called_once_with()
-    assert result.getName() == "LinkClass"
+    assert result.get_name() == "LinkClass"
 
 
 def test_relation_get_inverse_wraps_result() -> None:
@@ -42,31 +42,31 @@ def test_relation_get_inverse_wraps_result() -> None:
     fake.getInverse.return_value = inverse
     relation = RPRelation(fake)
 
-    result = relation.getInverse()
+    result = relation.get_inverse()
 
     fake.getInverse.assert_called_once_with()
-    assert result.getName() == "inverseAssoc"
+    assert result.get_name() == "inverseAssoc"
 
 
 def test_relation_get_is_navigable_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getIsNavigable=1)
     relation = RPRelation(fake)
 
-    assert relation.getIsNavigable() is True
+    assert relation.get_is_navigable() is True
 
 
 def test_relation_get_is_symmetric_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getIsSymmetric=0)
     relation = RPRelation(fake)
 
-    assert relation.getIsSymmetric() is False
+    assert relation.get_is_symmetric() is False
 
 
 def test_relation_get_multiplicity_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getMultiplicity="0..*")
     relation = RPRelation(fake)
 
-    assert relation.getMultiplicity() == "0..*"
+    assert relation.get_multiplicity() == "0..*"
 
 
 def test_relation_get_object_as_object_type_wraps_result() -> None:
@@ -75,10 +75,10 @@ def test_relation_get_object_as_object_type_wraps_result() -> None:
     fake.getObjectAsObjectType.return_value = klass
     relation = RPRelation(fake)
 
-    result = relation.getObjectAsObjectType()
+    result = relation.get_object_as_object_type()
 
     fake.getObjectAsObjectType.assert_called_once_with()
-    assert result.getName() == "Widget"
+    assert result.get_name() == "Widget"
 
 
 def test_relation_get_of_class_wraps_result() -> None:
@@ -87,10 +87,10 @@ def test_relation_get_of_class_wraps_result() -> None:
     fake.getOfClass.return_value = klass
     relation = RPRelation(fake)
 
-    result = relation.getOfClass()
+    result = relation.get_of_class()
 
     fake.getOfClass.assert_called_once_with()
-    assert result.getName() == "Widget"
+    assert result.get_name() == "Widget"
 
 
 def test_relation_get_other_class_wraps_result() -> None:
@@ -99,17 +99,17 @@ def test_relation_get_other_class_wraps_result() -> None:
     fake.getOtherClass.return_value = klass
     relation = RPRelation(fake)
 
-    result = relation.getOtherClass()
+    result = relation.get_other_class()
 
     fake.getOtherClass.assert_called_once_with()
-    assert result.getName() == "Other"
+    assert result.get_name() == "Other"
 
 
 def test_relation_get_qualifier_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getQualifier="key")
     relation = RPRelation(fake)
 
-    assert relation.getQualifier() == "key"
+    assert relation.get_qualifier() == "key"
 
 
 def test_relation_get_qualifiers_returns_collection() -> None:
@@ -118,7 +118,7 @@ def test_relation_get_qualifiers_returns_collection() -> None:
     fake.getQualifiers.return_value = make_fake_collection([inner])
     relation = RPRelation(fake)
 
-    result = relation.getQualifiers()
+    result = relation.get_qualifiers()
 
     assert isinstance(result, RPCollection)
     assert len(result) == 1
@@ -130,59 +130,59 @@ def test_relation_get_qualifier_type_wraps_result() -> None:
     fake.getQualifierType.return_value = klass
     relation = RPRelation(fake)
 
-    result = relation.getQualifierType()
+    result = relation.get_qualifier_type()
 
     fake.getQualifierType.assert_called_once_with()
-    assert result.getName() == "KeyType"
+    assert result.get_name() == "KeyType"
 
 
 def test_relation_get_relation_label_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getRelationLabel="owns")
     relation = RPRelation(fake)
 
-    assert relation.getRelationLabel() == "owns"
+    assert relation.get_relation_label() == "owns"
 
 
 def test_relation_get_relation_link_name_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getRelationLinkName="Ownership")
     relation = RPRelation(fake)
 
-    assert relation.getRelationLinkName() == "Ownership"
+    assert relation.get_relation_link_name() == "Ownership"
 
 
 def test_relation_get_relation_role_name_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getRelationRoleName="owner")
     relation = RPRelation(fake)
 
-    assert relation.getRelationRoleName() == "owner"
+    assert relation.get_relation_role_name() == "owner"
 
 
 def test_relation_get_relation_type_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getRelationType="Association")
     relation = RPRelation(fake)
 
-    assert relation.getRelationType() == "Association"
+    assert relation.get_relation_type() == "Association"
 
 
 def test_relation_get_visibility_delegates_to_com() -> None:
     fake = make_fake_element("Relation", getVisibility="public")
     relation = RPRelation(fake)
 
-    assert relation.getVisibility() == "public"
+    assert relation.get_visibility() == "public"
 
 
 def test_relation_is_typeless_object_delegates_to_com() -> None:
     fake = make_fake_element("Relation", isTypelessObject=1)
     relation = RPRelation(fake)
 
-    assert relation.isTypelessObject() is True
+    assert relation.is_typeless_object() is True
 
 
 def test_relation_make_unidirect_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.makeUnidirect()
+    relation.make_unidirect()
 
     fake.makeUnidirect.assert_called_once_with()
 
@@ -192,7 +192,7 @@ def test_relation_remove_qualifier_delegates_to_com() -> None:
     qualifier = make_fake_element("Class", getName="Key")
     relation = RPRelation(fake)
 
-    relation.removeQualifier(AbstractRPModelElement.wrap(qualifier))
+    relation.remove_qualifier(AbstractRPModelElement.wrap(qualifier))
 
     fake.removeQualifier.assert_called_once_with(qualifier)
 
@@ -201,7 +201,7 @@ def test_relation_set_inverse_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setInverse("owner", "Association")
+    relation.set_inverse("owner", "Association")
 
     fake.setInverse.assert_called_once_with("owner", "Association")
 
@@ -210,7 +210,7 @@ def test_relation_set_is_navigable_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setIsNavigable(True)
+    relation.set_is_navigable(True)
 
     fake.setIsNavigable.assert_called_once_with(1)
 
@@ -219,7 +219,7 @@ def test_relation_set_multiplicity_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setMultiplicity("0..*")
+    relation.set_multiplicity("0..*")
 
     fake.setMultiplicity.assert_called_once_with("0..*")
 
@@ -229,7 +229,7 @@ def test_relation_set_of_class_delegates_to_com() -> None:
     klass_fake = make_fake_element("Class", getName="Widget")
     relation = RPRelation(fake)
 
-    relation.setOfClass(RPClassifier(klass_fake))
+    relation.set_of_class(RPClassifier(klass_fake))
 
     fake.setOfClass.assert_called_once_with(klass_fake)
 
@@ -239,7 +239,7 @@ def test_relation_set_other_class_delegates_to_com() -> None:
     klass_fake = make_fake_element("Class", getName="Other")
     relation = RPRelation(fake)
 
-    relation.setOtherClass(RPClassifier(klass_fake))
+    relation.set_other_class(RPClassifier(klass_fake))
 
     fake.setOtherClass.assert_called_once_with(klass_fake)
 
@@ -248,7 +248,7 @@ def test_relation_set_qualifier_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setQualifier("key")
+    relation.set_qualifier("key")
 
     fake.setQualifier.assert_called_once_with("key")
 
@@ -258,7 +258,7 @@ def test_relation_set_qualifier_type_delegates_to_com() -> None:
     klass_fake = make_fake_element("Class", getName="KeyType")
     relation = RPRelation(fake)
 
-    relation.setQualifierType(AbstractRPModelElement.wrap(klass_fake))
+    relation.set_qualifier_type(AbstractRPModelElement.wrap(klass_fake))
 
     fake.setQualifierType.assert_called_once_with(klass_fake)
 
@@ -267,7 +267,7 @@ def test_relation_set_relation_label_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setRelationLabel("owns")
+    relation.set_relation_label("owns")
 
     fake.setRelationLabel.assert_called_once_with("owns")
 
@@ -276,7 +276,7 @@ def test_relation_set_relation_link_name_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setRelationLinkName("Ownership")
+    relation.set_relation_link_name("Ownership")
 
     fake.setRelationLinkName.assert_called_once_with("Ownership")
 
@@ -285,7 +285,7 @@ def test_relation_set_relation_role_name_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setRelationRoleName("owner")
+    relation.set_relation_role_name("owner")
 
     fake.setRelationRoleName.assert_called_once_with("owner")
 
@@ -294,6 +294,6 @@ def test_relation_set_relation_type_delegates_to_com() -> None:
     fake = make_fake_element("Relation")
     relation = RPRelation(fake)
 
-    relation.setRelationType("Association")
+    relation.set_relation_type("Association")
 
     fake.setRelationType.assert_called_once_with("Association")

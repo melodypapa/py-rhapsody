@@ -43,19 +43,19 @@ def demo_create_package(project: Any) -> Any:
         print(f"Creating package: {package_name}...")
 
         # Create the package
-        new_package = project.addPackage(package_name)
+        new_package = project.add_package(package_name)
         print("[OK] Package created successfully")
 
         print("\nPackage Details:")
-        print(f"  - Name: {new_package.getName()}")
-        print(f"  - Type: {new_package.getMetaClass()}")
-        print(f"  - GUID: {new_package.getGUID()}")
-        print(f"  - Full path name: {new_package.getFullPathName()}")
+        print(f"  - Name: {new_package.get_name()}")
+        print(f"  - Type: {new_package.get_meta_class()}")
+        print(f"  - GUID: {new_package.get_guid()}")
+        print(f"  - Full path name: {new_package.get_full_path_name()}")
 
         # Set description
         description = "Package created by rhapsody-cli demo"
-        new_package.setDescription(description)
-        print(f"  - Description: {new_package.getDescription()}")
+        new_package.set_description(description)
+        print(f"  - Description: {new_package.get_description()}")
 
         return new_package
 
@@ -84,26 +84,26 @@ def demo_create_class(package: Any) -> Any:
 
     try:
         class_name = "DemoClass"
-        print(f"Creating class: {class_name} in package: {package.getName()}...")
+        print(f"Creating class: {class_name} in package: {package.get_name()}...")
 
         # Create the class
-        new_class = package.addClass(class_name)
+        new_class = package.add_class(class_name)
         print("[OK] Class created successfully")
 
         print("\nClass Details:")
-        print(f"  - Name: {new_class.getName()}")
-        print(f"  - Type: {new_class.getMetaClass()}")
-        print(f"  - GUID: {new_class.getGUID()}")
-        print(f"  - Full path name: {new_class.getFullPathName()}")
+        print(f"  - Name: {new_class.get_name()}")
+        print(f"  - Type: {new_class.get_meta_class()}")
+        print(f"  - GUID: {new_class.get_guid()}")
+        print(f"  - Full path name: {new_class.get_full_path_name()}")
 
         # Set properties
         description = "Class created by rhapsody-cli demo"
-        new_class.setDescription(description)
-        print(f"  - Description: {new_class.getDescription()}")
+        new_class.set_description(description)
+        print(f"  - Description: {new_class.get_description()}")
 
         # Set as non-abstract (default)
-        new_class.setIsAbstract(0)
-        print(f"  - Is Abstract: {bool(new_class.getIsAbstract())}")
+        new_class.set_is_abstract(0)
+        print(f"  - Is Abstract: {bool(new_class.get_is_abstract())}")
 
         return new_class
 
@@ -135,30 +135,30 @@ def demo_add_attributes(cls: Any) -> None:
             ("count", "int", "Item counter"),
         ]
 
-        print(f"Adding {len(attributes)} attributes to class: {cls.getName()}...")
+        print(f"Adding {len(attributes)} attributes to class: {cls.get_name()}...")
 
         for attr_name, attr_type, attr_desc in attributes:
             # Create attribute
-            attribute = cls.addAttribute(attr_name)
-            attribute.setTypeDeclaration(attr_type)
+            attribute = cls.add_attribute(attr_name)
+            attribute.set_type_declaration(attr_type)
 
             # Set default value and description
             if attr_type == "int":
-                attribute.setDefaultValue("0")
+                attribute.set_default_value("0")
             elif attr_type == "bool":
-                attribute.setDefaultValue("false")
+                attribute.set_default_value("false")
 
-            attribute.setDescription(attr_desc)
+            attribute.set_description(attr_desc)
 
             print(f"  [OK] Added: {attr_name} ({attr_type})")
 
         # Display all attributes
-        print(f"\nVerifying attributes in {cls.getName()}:")
-        all_attributes = cls.getAttributes()
+        print(f"\nVerifying attributes in {cls.get_name()}:")
+        all_attributes = cls.get_attributes()
         for i, attr in enumerate(all_attributes, 1):
-            type_decl = attr.getDeclaration()
-            default = attr.getDefaultValue()
-            print(f"  {i}. {attr.getName()}: {type_decl} (default: {default})")
+            type_decl = attr.get_declaration()
+            default = attr.get_default_value()
+            print(f"  {i}. {attr.get_name()}: {type_decl} (default: {default})")
 
     except RhapsodyRuntimeException as e:
         print(f"[-] Failed to add attributes: {e}")
@@ -188,29 +188,29 @@ def demo_add_operations(cls: Any) -> None:
             ("increment", "void", "Increment the counter", []),
         ]
 
-        print(f"Adding {len(operations)} operations to class: {cls.getName()}...")
+        print(f"Adding {len(operations)} operations to class: {cls.get_name()}...")
 
         for op_name, return_type, op_desc, parameters in operations:
             # Create operation
-            operation = cls.addOperation(op_name)
-            operation.setReturnTypeDeclaration(return_type)
-            operation.setDescription(op_desc)
+            operation = cls.add_operation(op_name)
+            operation.set_return_type_declaration(return_type)
+            operation.set_description(op_desc)
 
             # Add parameters
             for param_name, param_type in parameters:
-                parameter = operation.addArgument(param_name)
-                parameter.setTypeDeclaration(param_type)
+                parameter = operation.add_argument(param_name)
+                parameter.set_type_declaration(param_type)
 
             print(f"  [OK] Added: {op_name}({', '.join([p[0] for p in parameters])}) -> {return_type}")
 
         # Display all operations
-        print(f"\nVerifying operations in {cls.getName()}:")
-        all_operations = cls.getOperations()
+        print(f"\nVerifying operations in {cls.get_name()}:")
+        all_operations = cls.get_operations()
         for i, op in enumerate(all_operations, 1):
-            params = op.getArguments()
-            param_list = ", ".join([f"{p.getName()}: {p.getDeclaration()}" for p in params])
-            return_decl = op.getReturnTypeDeclaration()
-            print(f"  {i}. {op.getName()}({param_list}): {return_decl}")
+            params = op.get_arguments()
+            param_list = ", ".join([f"{p.get_name()}: {p.get_declaration()}" for p in params])
+            return_decl = op.get_return_type_declaration()
+            print(f"  {i}. {op.get_name()}({param_list}): {return_decl}")
 
     except RhapsodyRuntimeException as e:
         print(f"[-] Failed to add operations: {e}")
@@ -243,12 +243,12 @@ def demo_create_multiple_classes(package: Any) -> list[Any]:
 
         created_classes = []
 
-        print(f"Creating {len(classes_config)} classes in package: {package.getName()}...")
+        print(f"Creating {len(classes_config)} classes in package: {package.get_name()}...")
 
         for class_name, description in classes_config:
             # Create class
-            new_class = package.addClass(class_name)
-            new_class.setDescription(description)
+            new_class = package.add_class(class_name)
+            new_class.set_description(description)
 
             created_classes.append(new_class)
             print(f"  [OK] Created: {class_name}")
@@ -260,7 +260,7 @@ def demo_create_multiple_classes(package: Any) -> list[Any]:
                 # Make UserService inherit from a base (if we had one)
                 # For now, just show that we can access the created classes
                 for cls in created_classes:
-                    print(f"  - {cls.getName()}: {cls.getDescription()}")
+                    print(f"  - {cls.get_name()}: {cls.get_description()}")
             except Exception as e:
                 print(f"  Note: Relationship creation: {e}")
 
@@ -290,24 +290,24 @@ def demo_save_and_verify(project: Any) -> None:
         print("\nVerifying created elements...")
 
         # Check for our demo package
-        demo_package = project.findNestedElement("DemoPackage", "Package")
+        demo_package = project.find_nested_element("DemoPackage", "Package")
         if demo_package:
             print("[OK] DemoPackage verified")
         else:
             print("[-] DemoPackage not found")
 
         # Check for our demo class
-        demo_class = project.findNestedElement("DemoClass", "Class")
+        demo_class = project.find_nested_element("DemoClass", "Class")
         if demo_class:
             print("[OK] DemoClass verified")
-            print(f"  - Attributes: {len(demo_class.getAttributes())}")
-            print(f"  - Operations: {len(demo_class.getOperations())}")
+            print(f"  - Attributes: {len(demo_class.get_attributes())}")
+            print(f"  - Operations: {len(demo_class.get_operations())}")
         else:
             print("[-] DemoClass not found")
 
         # Count total elements
-        total_classes = project.getNestedElementsByMetaClass("Class", 1)
-        total_packages = project.getNestedElementsByMetaClass("Package", 1)
+        total_classes = project.get_nested_elements_by_meta_class("Class", 1)
+        total_packages = project.get_nested_elements_by_meta_class("Package", 1)
         print("\nProject Statistics:")
         print(f"  - Total classes: {len(total_classes)}")
         print(f"  - Total packages: {len(total_packages)}")
@@ -335,13 +335,13 @@ def main() -> None:
     try:
         # Open the shipped demo project
         print(f"Opening project: {DEMO_PROJECT_PATH}...")
-        project = app.openProject(DEMO_PROJECT_PATH)
+        project = app.open_project(DEMO_PROJECT_PATH)
 
         if not project or not project._com:
             print("[-] Failed to open demos/demo_project")
             sys.exit(1)
 
-        project_name = project.getName()
+        project_name = project.get_name()
         print(f"[OK] Active project: {project_name}")
 
         # Track created elements for cleanup
@@ -368,9 +368,9 @@ def main() -> None:
 
         for element in created_elements:
             try:
-                element_name = element.getName()
-                print(f"Deleting {element.getMetaClass()}: {element_name}...")
-                element.deleteFromProject()
+                element_name = element.get_name()
+                print(f"Deleting {element.get_meta_class()}: {element_name}...")
+                element.delete_from_project()
                 print(f"[OK] Deleted {element_name}")
             except Exception as e:
                 print(f"[!] Could not delete element: {e}")

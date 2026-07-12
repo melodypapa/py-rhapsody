@@ -205,7 +205,7 @@ class ElementManagementAction(RhapsodyContextAction):
         """
         try:
             app = self._connect_app()
-            self._project = app.activeProject()
+            self._project = app.active_project()
             return self._project
         except RhapsodyConnectionError as e:
             self._handle_connection_error(e)
@@ -216,7 +216,7 @@ class ElementManagementAction(RhapsodyContextAction):
         Returns:
             The root model element of the active project.
         """
-        return self._get_active_project().getRoot()
+        return self._get_active_project().get_root()
 
     def _resolve_container_or_element(
         self,

@@ -10,21 +10,21 @@ def test_requirement_is_an_annotation() -> None:
     requirement = RPRequirement(fake)
 
     assert isinstance(requirement, RPAnnotation)
-    assert requirement.getName() == "REQ-1"
+    assert requirement.get_name() == "REQ-1"
 
 
 def test_requirement_get_requirement_id_delegates_to_com() -> None:
     fake = make_fake_element("Requirement", getRequirementID="REQ-001")
     requirement = RPRequirement(fake)
 
-    assert requirement.getRequirementID() == "REQ-001"
+    assert requirement.get_requirement_id() == "REQ-001"
 
 
 def test_requirement_set_requirement_id_delegates_to_com() -> None:
     fake = make_fake_element("Requirement")
     requirement = RPRequirement(fake)
 
-    requirement.setRequirementID("REQ-002")
+    requirement.set_requirement_id("REQ-002")
 
     fake.setRequirementID.assert_called_once_with("REQ-002")
 

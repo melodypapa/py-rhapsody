@@ -11,7 +11,7 @@ def test_module_is_an_instance() -> None:
     module = RPModule(fake)
 
     assert isinstance(module, RPInstance)
-    assert module.getName() == "Module1"
+    assert module.get_name() == "Module1"
 
 
 def test_module_is_registered_for_meta_class_module() -> None:

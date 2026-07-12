@@ -10,7 +10,7 @@ def test_configuration_is_a_unit() -> None:
     config = RPConfiguration(fake)
 
     assert isinstance(config, RPUnit)
-    assert config.getName() == "Config1"
+    assert config.get_name() == "Config1"
 
 
 def test_configuration_is_registered_for_meta_class_configuration() -> None:
