@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import RPModelElement, RPUnit
 from rhapsody_cli.models.elements.model_interactions import RPMessage
-from rhapsody_cli.models.elements.model_statemachine import RPStateVertex
+from rhapsody_cli.models.elements.statemachine.model_statemachine import RPStateVertex
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
@@ -20,7 +20,7 @@ if TYPE_CHECKING:
         RPClassifierRole,
         RPSysMLPort,
     )
-    from rhapsody_cli.models.elements.model_statemachine import RPState
+    from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
     from rhapsody_cli.models.elements.relations.model_instance import RPInstance
     from rhapsody_cli.models.elements.relations.model_port import RPPort
     from rhapsody_cli.models.elements.relations.model_relation import RPRelation

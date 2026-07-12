@@ -15,7 +15,7 @@ if TYPE_CHECKING:
         RPClassifierRole,
         RPSysMLPort,
     )
-    from rhapsody_cli.models.elements.model_statemachine import RPState, RPStateVertex
+    from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState, RPStateVertex
     from rhapsody_cli.models.elements.relations.model_association_role import (
         RPAssociationRole,
     )

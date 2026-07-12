@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import RPModelElement
 from rhapsody_cli.models.elements.model_interactions import RPMessage
-from rhapsody_cli.models.elements.model_statemachine import RPState
+from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 from rhapsody_cli.models.elements.values.model_values import RPValueSpecification
 
 if TYPE_CHECKING:

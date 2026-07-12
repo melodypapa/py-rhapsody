@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from rhapsody_cli.models.core import RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 from rhapsody_cli.models.elements.classifiers.model_statechart import RPStatechart
-from rhapsody_cli.models.elements.model_statemachine import RPState
+from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
