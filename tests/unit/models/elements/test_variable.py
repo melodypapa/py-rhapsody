@@ -2,7 +2,7 @@
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPUnit
 from rhapsody_cli.models.elements.classifiers import RPClassifier
-from rhapsody_cli.models.elements.model_variables import RPVariable
+from rhapsody_cli.models.elements.variables.model_variables import RPVariable
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 

@@ -1,7 +1,7 @@
 """Tests for rhapsody_cli.models.elements.misc wrappers."""
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
-from rhapsody_cli.models.elements.model_misc import (
+from rhapsody_cli.models.elements.common.model_misc import (
     RPComment,
     RPConstraint,
     RPEnumerationLiteral,

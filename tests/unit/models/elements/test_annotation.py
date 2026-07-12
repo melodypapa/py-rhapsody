@@ -1,7 +1,7 @@
 """Tests for rhapsody_cli.models.elements.requirements.RPAnnotation."""
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPUnit
-from rhapsody_cli.models.elements.model_requirements import RPAnnotation
+from rhapsody_cli.models.elements.requirements.model_requirements import RPAnnotation
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 

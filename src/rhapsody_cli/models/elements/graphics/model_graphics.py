@@ -3,27 +3,27 @@
 from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import RPModelElement, RPUnit
-from rhapsody_cli.models.elements.model_interactions import RPMessage
-from rhapsody_cli.models.elements.model_statemachine import RPStateVertex
+from rhapsody_cli.models.elements.interactions.model_interactions import RPMessage
+from rhapsody_cli.models.elements.statemachine.model_statemachine import RPStateVertex
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
+    from rhapsody_cli.models.elements.activity.model_activity import RPFlow, RPSwimlane
     from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
-    from rhapsody_cli.models.elements.model_activity import RPFlow, RPSwimlane
-    from rhapsody_cli.models.elements.model_diagrams import RPDiagram
-    from rhapsody_cli.models.elements.model_interactions import (
+    from rhapsody_cli.models.elements.common.model_other_model import (
+        RPClassifierRole,
+        RPSysMLPort,
+    )
+    from rhapsody_cli.models.elements.diagrams.model_diagrams import RPDiagram
+    from rhapsody_cli.models.elements.interactions.model_interactions import (
         RPInteractionOccurrence,
         RPInteractionOperator,
         RPTransition,
     )
-    from rhapsody_cli.models.elements.model_other_model import (
-        RPClassifierRole,
-        RPSysMLPort,
-    )
-    from rhapsody_cli.models.elements.model_statemachine import RPState
     from rhapsody_cli.models.elements.relations.model_instance import RPInstance
     from rhapsody_cli.models.elements.relations.model_port import RPPort
     from rhapsody_cli.models.elements.relations.model_relation import RPRelation
+    from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 
 
 class RPConditionMark(RPMessage):

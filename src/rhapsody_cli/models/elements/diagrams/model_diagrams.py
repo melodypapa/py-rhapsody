@@ -10,7 +10,7 @@ from rhapsody_cli.models.core import (
 )
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.model_graphics import RPGraphElement
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPGraphElement
 
 
 class RPDiagram(RPUnit):

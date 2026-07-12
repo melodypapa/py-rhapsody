@@ -7,9 +7,9 @@ from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifi
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
-    from rhapsody_cli.models.elements.model_graphics import RPLink
-    from rhapsody_cli.models.elements.model_interactions import RPEventReception
-    from rhapsody_cli.models.elements.model_other_model import RPType
+    from rhapsody_cli.models.elements.common.model_other_model import RPType
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPLink
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEventReception
 
 
 class RPClass(RPClassifier):

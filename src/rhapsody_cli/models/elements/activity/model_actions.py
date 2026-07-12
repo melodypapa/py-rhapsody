@@ -3,14 +3,14 @@
 from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import RPModelElement
-from rhapsody_cli.models.elements.model_interactions import RPMessage
-from rhapsody_cli.models.elements.model_statemachine import RPState
-from rhapsody_cli.models.elements.model_values import RPValueSpecification
+from rhapsody_cli.models.elements.interactions.model_interactions import RPMessage
+from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
+from rhapsody_cli.models.elements.values.model_values import RPValueSpecification
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_interface_item import RPInterfaceItem
-    from rhapsody_cli.models.elements.model_interactions import RPEvent
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEvent
     from rhapsody_cli.models.elements.relations.model_relation import RPRelation
 
 

@@ -1,7 +1,7 @@
 """Tests for rhapsody_cli.models.elements.variables.RPTag."""
 
 from rhapsody_cli.models.core import AbstractRPModelElement
-from rhapsody_cli.models.elements.model_variables import RPTag, RPVariable
+from rhapsody_cli.models.elements.variables.model_variables import RPTag, RPVariable
 from tests.unit.models.fakes import make_fake_element
 
 

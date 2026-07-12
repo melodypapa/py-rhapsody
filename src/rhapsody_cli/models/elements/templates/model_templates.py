@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import RPModelElement
-from rhapsody_cli.models.elements.model_variables import RPVariable
+from rhapsody_cli.models.elements.variables.model_variables import RPVariable
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection

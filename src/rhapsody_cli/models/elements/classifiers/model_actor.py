@@ -6,7 +6,7 @@ from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.model_interactions import RPEventReception
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEventReception
 
 
 class RPActor(RPClassifier):

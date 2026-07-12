@@ -2,13 +2,13 @@
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers import RPClass, RPClassifier, RPStereotype
+from rhapsody_cli.models.elements.common.model_misc import RPComment, RPConstraint, RPEnumerationLiteral
 from rhapsody_cli.models.elements.containment import (
     RPComponent,
     RPConfiguration,
     RPPackage,
     RPProfile,
 )
-from rhapsody_cli.models.elements.model_misc import RPComment, RPConstraint, RPEnumerationLiteral
 from rhapsody_cli.models.elements.relations import (
     RPAssociationRole,
     RPDependency,
@@ -140,7 +140,7 @@ def test_wrap_dispatches_association_class_to_rpassociation_class() -> None:
 
 
 def test_wrap_dispatches_tag_to_rptag() -> None:
-    from rhapsody_cli.models.elements.model_variables import RPTag
+    from rhapsody_cli.models.elements.variables.model_variables import RPTag
 
     fake = make_fake_element("Tag", getName="MyTag")
 
@@ -167,24 +167,24 @@ def test_all_new_wrappers_exist() -> None:
         RPAssociationClass,
         RPStereotype,
     )
+    from rhapsody_cli.models.elements.common.model_misc import (
+        RPComment,
+        RPConstraint,
+        RPEnumerationLiteral,
+    )
     from rhapsody_cli.models.elements.containment import (
         RPCollaboration,
         RPComponentInstance,
         RPModule,
         RPNode,
     )
-    from rhapsody_cli.models.elements.model_misc import (
-        RPComment,
-        RPConstraint,
-        RPEnumerationLiteral,
-    )
-    from rhapsody_cli.models.elements.model_variables import RPTag
     from rhapsody_cli.models.elements.relations import (
         RPAssociationRole,
         RPDependency,
         RPGeneralization,
         RPHyperLink,
     )
+    from rhapsody_cli.models.elements.variables.model_variables import RPTag
 
     # All imports should succeed
     assert RPAssociationClass is not None

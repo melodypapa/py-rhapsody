@@ -1,7 +1,7 @@
-"""Tests for rhapsody_cli.models.elements.model_variables.RPArgument."""
+"""Tests for rhapsody_cli.models.elements.variables.model_variables.RPArgument."""
 
 from rhapsody_cli.models.core import AbstractRPModelElement
-from rhapsody_cli.models.elements.model_variables import RPArgument, RPVariable
+from rhapsody_cli.models.elements.variables.model_variables import RPArgument, RPVariable
 from tests.unit.models.fakes import make_fake_element
 
 

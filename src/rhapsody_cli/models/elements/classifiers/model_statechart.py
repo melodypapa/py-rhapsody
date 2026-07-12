@@ -6,7 +6,7 @@ from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_class import RPClass
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.model_graphics import RPGraphNode
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPGraphNode
 
 
 class RPStatechart(RPClass):

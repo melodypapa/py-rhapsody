@@ -9,9 +9,9 @@ if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_stereotype import RPStereotype
     from rhapsody_cli.models.elements.containment.model_package import RPPackage
-    from rhapsody_cli.models.elements.model_diagram_types import RPSequenceDiagram
-    from rhapsody_cli.models.elements.model_diagrams import RPDiagram
-    from rhapsody_cli.models.elements.model_graphics import RPMatrixView, RPTableLayout, RPTableView
+    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPSequenceDiagram
+    from rhapsody_cli.models.elements.diagrams.model_diagrams import RPDiagram
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPMatrixView, RPTableLayout, RPTableView
 
 
 class RPBaseExternalCodeGeneratorTool(RPModelElement):

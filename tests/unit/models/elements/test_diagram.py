@@ -1,7 +1,7 @@
 """Tests for rhapsody_cli.elements.diagram.RPDiagram."""
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement, RPUnit
-from rhapsody_cli.models.elements.model_diagrams import RPDiagram
+from rhapsody_cli.models.elements.diagrams.model_diagrams import RPDiagram
 from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 

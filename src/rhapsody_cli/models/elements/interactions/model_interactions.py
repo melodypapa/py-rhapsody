@@ -8,18 +8,18 @@ from rhapsody_cli.models.elements.containment.model_collaboration import RPColla
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
+    from rhapsody_cli.models.elements.activity.model_actions import RPAction
     from rhapsody_cli.models.elements.classifiers.model_statechart import RPStatechart
-    from rhapsody_cli.models.elements.model_actions import RPAction
-    from rhapsody_cli.models.elements.model_diagram_types import RPSequenceDiagram
-    from rhapsody_cli.models.elements.model_other_model import (
+    from rhapsody_cli.models.elements.common.model_other_model import (
         RPClassifierRole,
         RPSysMLPort,
     )
-    from rhapsody_cli.models.elements.model_statemachine import RPState, RPStateVertex
+    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPSequenceDiagram
     from rhapsody_cli.models.elements.relations.model_association_role import (
         RPAssociationRole,
     )
     from rhapsody_cli.models.elements.relations.model_port import RPPort
+    from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState, RPStateVertex
 
 
 class RPEvent(RPInterfaceItem):

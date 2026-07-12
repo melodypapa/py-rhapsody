@@ -6,7 +6,7 @@ from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.model_variables import RPArgument
+    from rhapsody_cli.models.elements.variables.model_variables import RPArgument
 
 
 class RPInterfaceItem(RPClassifier):
