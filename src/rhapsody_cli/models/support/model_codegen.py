@@ -2,16 +2,16 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import RPModelElement
+from rhapsody_cli.application import RhapsodyApplication
+from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
+from rhapsody_cli.models.elements.graphics.model_graphics import RPTableLayout
 
 if TYPE_CHECKING:
-    from rhapsody_cli.application import RhapsodyApplication
-    from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_stereotype import RPStereotype
     from rhapsody_cli.models.elements.containment.model_package import RPPackage
     from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPSequenceDiagram
     from rhapsody_cli.models.elements.diagrams.model_diagrams import RPDiagram
-    from rhapsody_cli.models.elements.graphics.model_graphics import RPMatrixView, RPTableLayout, RPTableView
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPMatrixView, RPTableView
 
 
 class RPBaseExternalCodeGeneratorTool(RPModelElement):
@@ -32,7 +32,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPBaseExternalCodeGeneratorTool::advanceCodeGenProgressBar()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.advanceCodeGenProgressBar())
 
     def should_abort_code_generation(self) -> int:
         """Returns whether code generation should be aborted.
@@ -46,7 +46,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPBaseExternalCodeGeneratorTool::shouldAbortCodeGeneration()
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.shouldAbortCodeGeneration())
 
     def write_code_gen_message(self, msg: str) -> None:
         """Writes a code generation message.
@@ -60,16 +60,16 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPBaseExternalCodeGeneratorTool::writeCodeGenMessage(java.lang.String msg)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.writeCodeGenMessage(msg))
 
 
 class RPCodeGenerator(RPModelElement):
     """Wraps ``IRPCodeGenerator``."""
 
     # IRPCodeGenerator method parity checklist:
-    # [ ] getCodeAnnotations           [ ] impl  [ ] docstring  [ ] test
-    # [ ] getGeneratedFileNames        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
+    # [x] getCodeAnnotations           [x] impl  [x] docstring  [x] test
+    # [x] getGeneratedFileNames        [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
     # No deprecated IRPCodeGenerator methods.
 
     def get_code_annotations(self, element: "RPModelElement", b_spec_file: int) -> "RPCollection":
@@ -88,7 +88,7 @@ class RPCodeGenerator(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPCodeGenerator::getCodeAnnotations(com.telelogic.rhapsody.core.IRPModelElement element, int bSpecFile)
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getCodeAnnotations(element._com, b_spec_file)))
 
     def get_generated_file_names(self, element: "RPModelElement") -> "RPCollection":
         """Returns the generated file names for the given model element.
@@ -105,35 +105,21 @@ class RPCodeGenerator(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPCodeGenerator::getGeneratedFileNames(com.telelogic.rhapsody.core.IRPModelElement element)
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPCodeGenerator::getInterfaceName()
-        """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getGeneratedFileNames(element._com)))
 
 
 class RPDiagSynthAPI(RPModelElement):
     """Wraps ``IRPDiagSynthAPI``."""
 
     # IRPDiagSynthAPI method parity checklist:
-    # [ ] addInstance                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] addSynthSDToModel2           [ ] impl  [ ] docstring  [ ] test
-    # [ ] createSD2                    [ ] impl  [ ] docstring  [ ] test
-    # [ ] receiveMessage               [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeSynthSDToModel2        [ ] impl  [ ] docstring  [ ] test
-    # [ ] sDAddConditionMark           [ ] impl  [ ] docstring  [ ] test
-    # [ ] sendMessage                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
+    # [x] addInstance                  [x] impl  [x] docstring  [x] test
+    # [x] addSynthSDToModel2           [x] impl  [x] docstring  [x] test
+    # [x] createSD2                    [x] impl  [x] docstring  [x] test
+    # [x] receiveMessage               [x] impl  [x] docstring  [x] test
+    # [x] removeSynthSDToModel2        [x] impl  [x] docstring  [x] test
+    # [x] sDAddConditionMark           [x] impl  [x] docstring  [x] test
+    # [x] sendMessage                  [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
     # No deprecated IRPDiagSynthAPI methods.
 
     def add_instance(self, added_to_s_d: int, instance_nav_exp: str) -> int:
@@ -152,7 +138,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::addInstance(long addedToSD, java.lang.String instanceNavExp)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.addInstance(added_to_s_d, instance_nav_exp))
 
     def add_synth_s_d_to_model2(self, p_msc_orig: "RPSequenceDiagram", synth_s_d: int, open_s_d: int) -> int:
         """Adds a synthesized sequence diagram to the model.
@@ -171,7 +157,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::addSynthSDToModel2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig, long synthSD, int openSD)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.addSynthSDToModel2(p_msc_orig._com, synth_s_d, open_s_d))
 
     def create_s_d2(self, p_msc_orig: "RPSequenceDiagram", testedmscname: str) -> int:
         """Creates a sequence diagram.
@@ -189,7 +175,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::createSD2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig, java.lang.String testedmscname)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.createSD2(p_msc_orig._com, testedmscname))
 
     def receive_message(self, p_tested_s_d: int, p_event_sent: int) -> None:
         """Receives a sequence diagram message.
@@ -204,7 +190,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::receiveMessage(long pTestedSD, long pEventSent)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.receiveMessage(p_tested_s_d, p_event_sent))
 
     def remove_synth_s_d_to_model2(self, p_msc_orig: "RPSequenceDiagram") -> int:
         """Removes a synthesized sequence diagram from the model.
@@ -222,7 +208,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::removeSynthSDToModel2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.removeSynthSDToModel2(p_msc_orig._com))
 
     def s_d_add_condition_mark(self, p_tested_s_d: int, instance: str, text: str, type_: str) -> int:
         """Sends a condition mark to an instance in a sequence diagram.
@@ -242,7 +228,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::sDAddConditionMark(long pTestedSD, java.lang.String instance, java.lang.String text, java.lang.String type)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.sDAddConditionMark(p_tested_s_d, instance, text, type_))
 
     def send_message(self, p_tested_s_d: int, source: str, target: str, event: str, operation: str, type_: str) -> int:
         """Sends a sequence diagram message.
@@ -267,30 +253,16 @@ class RPDiagSynthAPI(RPModelElement):
                 java.lang.String target, java.lang.String event,
                 java.lang.String operation, java.lang.String type)
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPDiagSynthAPI::getInterfaceName()
-        """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.sendMessage(p_tested_s_d, source, target, event, operation, type_))
 
 
 class RPExternalCheckRegistry(RPModelElement):
     """Wraps ``IRPExternalCheckRegistry``."""
 
     # IRPExternalCheckRegistry method parity checklist:
-    # [ ] appendFailedElementsComments [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFailedElementsComments    [ ] impl  [ ] docstring  [ ] test
+    # [x] appendFailedElementsComments [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] setFailedElementsComments    [x] impl  [x] docstring  [x] test
     # No deprecated IRPExternalCheckRegistry methods.
 
     def append_failed_elements_comments(self, str_val: str) -> None:
@@ -305,21 +277,7 @@ class RPExternalCheckRegistry(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPExternalCheckRegistry::appendFailedElementsComments(java.lang.String strVal)
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPExternalCheckRegistry::getInterfaceName()
-        """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.appendFailedElementsComments(str_val))
 
     def set_failed_elements_comments(self, str_val: str) -> None:
         """Sets the comments for failed elements.
@@ -333,62 +291,34 @@ class RPExternalCheckRegistry(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPExternalCheckRegistry::setFailedElementsComments(java.lang.String strVal)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFailedElementsComments(str_val))
 
 
 class RPExternalRoundtripInvoker(RPModelElement):
     """Wraps ``IRPExternalRoundtripInvoker``."""
 
     # IRPExternalRoundtripInvoker method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
     # No deprecated IRPExternalRoundtripInvoker methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPExternalRoundtripInvoker::getInterfaceName()
-        """
-        raise NotImplementedError
 
 
 class RPIntegrator(RPModelElement):
     """Wraps ``IRPIntegrator``."""
 
     # IRPIntegrator method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
     # No deprecated IRPIntegrator methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPIntegrator::getInterfaceName()
-        """
-        raise NotImplementedError
 
 
 class RPRhapsodyServer(RPModelElement):
     """Wraps ``IRPRhapsodyServer``."""
 
     # IRPRhapsodyServer method parity checklist:
-    # [ ] getApplication               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getHiddenApplication         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getUninitializedApplication  [ ] impl  [ ] docstring  [ ] test
-    # [ ] initializeApplication        [ ] impl  [ ] docstring  [ ] test
+    # [x] getApplication               [x] impl  [x] docstring  [x] test
+    # [x] getHiddenApplication         [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] getUninitializedApplication  [x] impl  [x] docstring  [x] test
+    # [x] initializeApplication        [x] impl  [x] docstring  [x] test
     # No deprecated IRPRhapsodyServer methods.
 
     def get_application(self) -> "RhapsodyApplication":
@@ -403,7 +333,7 @@ class RPRhapsodyServer(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPRhapsodyServer::getApplication()
         """
-        raise NotImplementedError
+        return RhapsodyApplication(self.call_com(lambda: self._com.getApplication()))
 
     def get_hidden_application(self) -> "RhapsodyApplication":
         """Returns a hidden Rhapsody application instance.
@@ -417,21 +347,7 @@ class RPRhapsodyServer(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPRhapsodyServer::getHiddenApplication()
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPRhapsodyServer::getInterfaceName()
-        """
-        raise NotImplementedError
+        return RhapsodyApplication(self.call_com(lambda: self._com.getHiddenApplication()))
 
     def get_uninitialized_application(self) -> "RhapsodyApplication":
         """Returns an uninitialized Rhapsody application instance.
@@ -445,7 +361,7 @@ class RPRhapsodyServer(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPRhapsodyServer::getUninitializedApplication()
         """
-        raise NotImplementedError
+        return RhapsodyApplication(self.call_com(lambda: self._com.getUninitializedApplication()))
 
     def initialize_application(self, p_val: "RhapsodyApplication") -> None:
         """Initializes the Rhapsody application.
@@ -459,30 +375,16 @@ class RPRhapsodyServer(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPRhapsodyServer::initializeApplication(com.telelogic.rhapsody.core.IRPApplication pVal)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.initializeApplication(p_val._com))
 
 
 class RPRoundTrip(RPModelElement):
     """Wraps ``IRPRoundTrip``."""
 
     # IRPRoundTrip method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] roundtripFile                [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] roundtripFile                [x] impl  [x] docstring  [x] test
     # No deprecated IRPRoundTrip methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPRoundTrip::getInterfaceName()
-        """
-        raise NotImplementedError
 
     def roundtrip_file(self, filename: str, re_generate_file: int) -> "RPCollection":
         """Roundtrips a file, importing external changes back into the model.
@@ -500,18 +402,18 @@ class RPRoundTrip(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPRoundTrip::roundtripFile(java.lang.String filename, int reGenerateFile)
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.roundtripFile(filename, re_generate_file)))
 
 
 class RPSearchManager(RPModelElement):
     """Wraps ``IRPSearchManager``: used to carry out a search in a Rhapsody model."""
 
     # IRPSearchManager method parity checklist:
-    # [ ] createSearchQuery            [ ] impl  [ ] docstring  [ ] test
-    # [ ] search                       [ ] impl  [ ] docstring  [ ] test
-    # [ ] searchAndShowResults         [ ] impl  [ ] docstring  [ ] test
-    # [ ] searchAsync                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
+    # [x] createSearchQuery            [x] impl  [x] docstring  [x] test
+    # [x] search                       [x] impl  [x] docstring  [x] test
+    # [x] searchAndShowResults         [x] impl  [x] docstring  [x] test
+    # [x] searchAsync                  [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
     # No deprecated IRPSearchManager methods.
 
     def create_search_query(self) -> "RPSearchQuery":
@@ -526,7 +428,7 @@ class RPSearchManager(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchManager::createSearchQuery()
         """
-        raise NotImplementedError
+        return RPSearchQuery(self.call_com(lambda: self._com.createSearchQuery()))
 
     def search(self, p_search_query: "RPSearchQuery") -> "RPCollection":
         """Searches the model using the specified search query.
@@ -543,7 +445,7 @@ class RPSearchManager(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchManager::search(com.telelogic.rhapsody.core.IRPSearchQuery pSearchQuery)
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.search(p_search_query._com)))
 
     def search_and_show_results(self, p_search_query: "RPSearchQuery") -> None:
         """Searches the model using the specified search query, and shows the
@@ -558,7 +460,7 @@ class RPSearchManager(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchManager::searchAndShowResults(com.telelogic.rhapsody.core.IRPSearchQuery pSearchQuery)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.searchAndShowResults(p_search_query._com))
 
     def search_async(self, p_search_query: "RPSearchQuery") -> None:
         """Searches the model asynchronously, allowing you to continue working
@@ -573,98 +475,82 @@ class RPSearchManager(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchManager::searchAsync(com.telelogic.rhapsody.core.IRPSearchQuery pSearchQuery)
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the name of the API interface corresponding to the current
-        element, for example, IRPClass for a class element, IRPOperation for an
-        operation element.
-
-        Returns:
-            str: The name of the API interface corresponding to the current element.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPSearchManager::getInterfaceName()
-        """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.searchAsync(p_search_query._com))
 
 
 class RPSearchQuery(RPModelElement):
     """Wraps ``IRPSearchQuery``: represents the search criteria objects that are used by IRPSearchManager to carry out searches."""
 
     # IRPSearchQuery method parity checklist:
-    # [ ] addDiagramToViewsList        [ ] impl  [ ] docstring  [ ] test
-    # [ ] addFilterElementType         [ ] impl  [ ] docstring  [ ] test
-    # [ ] addFilterSearchInField       [ ] impl  [ ] docstring  [ ] test
-    # [ ] addFilterStereotype          [ ] impl  [ ] docstring  [ ] test
-    # [ ] addFilterSubQuery            [ ] impl  [ ] docstring  [ ] test
-    # [ ] addMatrixToViewsList         [ ] impl  [ ] docstring  [ ] test
-    # [ ] addSearchScope               [ ] impl  [ ] docstring  [ ] test
-    # [ ] addTableToViewsList          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterElementTypes        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceIncludeReferencedElementsInSearchResults [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceNameOfReferencedElements [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceNumberOfReferences [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceQuantityOperator [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceRelationKind [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceStereotypeOfReferencedElements [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterReferenceTypeOfReferencedElements [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterSearchInFields      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterStereotypes         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterSubQueries          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterSubQueryUseWithNotOperator [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagFindAs           [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagMatchCase        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagMatchWholeWord   [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagValue            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSearchScopeElements       [ ] impl  [ ] docstring  [ ] test
-    # [ ] getView                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getViewCount                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] loadFromQuery                [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterElementTypes     [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterReferences       [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterSearchInFields   [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterStereotypes      [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterSubQueries       [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterSubQuery         [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeFilterTag              [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeSearchScopeElement     [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeView                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] resetSearchScope             [ ] impl  [ ] docstring  [ ] test
-    # [ ] saveAsQuery                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterReference           [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterTag                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterSubQueriesOperator  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterTagLocalOnly        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterUnitsOnly           [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFilterUnresolvedKind      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIncludeDescendants        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchCase                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchSpecifiedCriteria    [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchWholeWord            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSearchFindAsOption        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSearchScopeObject         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSearchText                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getViewIncludeModelElements  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getViewsToSearch             [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterSubQueriesOperator  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterTagLocalOnly        [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterUnitsOnly           [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFilterUnresolvedKind      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIncludeDescendants        [ ] impl  [ ] docstring  [ ] test
-    # [ ] setMatchCase                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setMatchSpecifiedCriteria    [ ] impl  [ ] docstring  [ ] test
-    # [ ] setMatchWholeWord            [ ] impl  [ ] docstring  [ ] test
-    # [ ] setSearchFindAsOption        [ ] impl  [ ] docstring  [ ] test
-    # [ ] setSearchScopeObject         [ ] impl  [ ] docstring  [ ] test
-    # [ ] setSearchText                [ ] impl  [ ] docstring  [ ] test
-    # [ ] setViewIncludeModelElements  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setViewsToSearch             [ ] impl  [ ] docstring  [ ] test
+    # [x] addDiagramToViewsList        [x] impl  [x] docstring  [x] test
+    # [x] addFilterElementType         [x] impl  [x] docstring  [x] test
+    # [x] addFilterSearchInField       [x] impl  [x] docstring  [x] test
+    # [x] addFilterStereotype          [x] impl  [x] docstring  [x] test
+    # [x] addFilterSubQuery            [x] impl  [x] docstring  [x] test
+    # [x] addMatrixToViewsList         [x] impl  [x] docstring  [x] test
+    # [x] addSearchScope               [x] impl  [x] docstring  [x] test
+    # [x] addTableToViewsList          [x] impl  [x] docstring  [x] test
+    # [x] getFilterElementTypes        [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceIncludeReferencedElementsInSearchResults [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceNameOfReferencedElements [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceNumberOfReferences [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceQuantityOperator [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceRelationKind [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceStereotypeOfReferencedElements [x] impl  [x] docstring  [x] test
+    # [x] getFilterReferenceTypeOfReferencedElements [x] impl  [x] docstring  [x] test
+    # [x] getFilterSearchInFields      [x] impl  [x] docstring  [x] test
+    # [x] getFilterStereotypes         [x] impl  [x] docstring  [x] test
+    # [x] getFilterSubQueries          [x] impl  [x] docstring  [x] test
+    # [x] getFilterSubQueryUseWithNotOperator [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagFindAs           [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagMatchCase        [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagMatchWholeWord   [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagName             [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagValue            [x] impl  [x] docstring  [x] test
+    # [x] getSearchScopeElements       [x] impl  [x] docstring  [x] test
+    # [x] getView                      [x] impl  [x] docstring  [x] test
+    # [x] getViewCount                 [x] impl  [x] docstring  [x] test
+    # [x] loadFromQuery                [x] impl  [x] docstring  [x] test
+    # [x] removeFilterElementTypes     [x] impl  [x] docstring  [x] test
+    # [x] removeFilterReferences       [x] impl  [x] docstring  [x] test
+    # [x] removeFilterSearchInFields   [x] impl  [x] docstring  [x] test
+    # [x] removeFilterStereotypes      [x] impl  [x] docstring  [x] test
+    # [x] removeFilterSubQueries       [x] impl  [x] docstring  [x] test
+    # [x] removeFilterSubQuery         [x] impl  [x] docstring  [x] test
+    # [x] removeFilterTag              [x] impl  [x] docstring  [x] test
+    # [x] removeSearchScopeElement     [x] impl  [x] docstring  [x] test
+    # [x] removeView                   [x] impl  [x] docstring  [x] test
+    # [x] resetSearchScope             [x] impl  [x] docstring  [x] test
+    # [x] saveAsQuery                  [x] impl  [x] docstring  [x] test
+    # [x] setFilterReference           [x] impl  [x] docstring  [x] test
+    # [x] setFilterTag                 [x] impl  [x] docstring  [x] test
+    # [x] getFilterSubQueriesOperator  [x] impl  [x] docstring  [x] test
+    # [x] getFilterTagLocalOnly        [x] impl  [x] docstring  [x] test
+    # [x] getFilterUnitsOnly           [x] impl  [x] docstring  [x] test
+    # [x] getFilterUnresolvedKind      [x] impl  [x] docstring  [x] test
+    # [x] getIncludeDescendants        [x] impl  [x] docstring  [x] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] getMatchCase                 [x] impl  [x] docstring  [x] test
+    # [x] getMatchSpecifiedCriteria    [x] impl  [x] docstring  [x] test
+    # [x] getMatchWholeWord            [x] impl  [x] docstring  [x] test
+    # [x] getSearchFindAsOption        [x] impl  [x] docstring  [x] test
+    # [x] getSearchScopeObject         [x] impl  [x] docstring  [x] test
+    # [x] getSearchText                [x] impl  [x] docstring  [x] test
+    # [x] getViewIncludeModelElements  [x] impl  [x] docstring  [x] test
+    # [x] getViewsToSearch             [x] impl  [x] docstring  [x] test
+    # [x] setFilterSubQueriesOperator  [x] impl  [x] docstring  [x] test
+    # [x] setFilterTagLocalOnly        [x] impl  [x] docstring  [x] test
+    # [x] setFilterUnitsOnly           [x] impl  [x] docstring  [x] test
+    # [x] setFilterUnresolvedKind      [x] impl  [x] docstring  [x] test
+    # [x] setIncludeDescendants        [x] impl  [x] docstring  [x] test
+    # [x] setMatchCase                 [x] impl  [x] docstring  [x] test
+    # [x] setMatchSpecifiedCriteria    [x] impl  [x] docstring  [x] test
+    # [x] setMatchWholeWord            [x] impl  [x] docstring  [x] test
+    # [x] setSearchFindAsOption        [x] impl  [x] docstring  [x] test
+    # [x] setSearchScopeObject         [x] impl  [x] docstring  [x] test
+    # [x] setSearchText                [x] impl  [x] docstring  [x] test
+    # [x] setViewIncludeModelElements  [x] impl  [x] docstring  [x] test
+    # [x] setViewsToSearch             [x] impl  [x] docstring  [x] test
     # [deprecated] addSearchScope  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeElements  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
@@ -687,7 +573,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addDiagramToViewsList(com.telelogic.rhapsody.core.IRPDiagram view)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.addDiagramToViewsList(view._com))
 
     def add_filter_element_type(self, element_type: str) -> None:
         """Adds an element type to the list of element types that the search
@@ -703,7 +589,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addFilterElementType(java.lang.String elementType)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addFilterElementType(element_type))
 
     def add_filter_search_in_field(self, search_in_field: str) -> None:
         """Adds an element field to the list of element fields that the search
@@ -716,7 +602,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addFilterSearchInField(java.lang.String searchInField)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addFilterSearchInField(search_in_field))
 
     def add_filter_stereotype(self, stereotype: "RPStereotype") -> None:
         """Specifies that the search should be limited to model elements with a
@@ -733,7 +619,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addFilterStereotype(com.telelogic.rhapsody.core.IRPStereotype stereotype)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addFilterStereotype(stereotype._com))
 
     def add_filter_sub_query(self, sub_query: "RPTableLayout", use_with_not_operator: int) -> None:
         """Adds a subquery to the list of subqueries specified for the search.
@@ -749,7 +635,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addFilterSubQuery(com.telelogic.rhapsody.core.IRPTableLayout subQuery, int useWithNotOperator)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addFilterSubQuery(sub_query._com, use_with_not_operator))
 
     def add_matrix_to_views_list(self, view: "RPMatrixView") -> int:
         """Adds the specified matrix to the list of views to be searched for
@@ -767,7 +653,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addMatrixToViewsList(com.telelogic.rhapsody.core.IRPMatrixView view)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.addMatrixToViewsList(view._com))
 
     def add_search_scope(self, scope_element: "RPModelElement") -> None:
         """Adds an element to the scope for the search.
@@ -782,7 +668,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addSearchScope(com.telelogic.rhapsody.core.IRPModelElement scopeElement)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addSearchScope(scope_element._com))
 
     def add_table_to_views_list(self, view: "RPTableView") -> int:
         """Adds the specified table to the list of views to be searched for
@@ -800,7 +686,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addTableToViewsList(com.telelogic.rhapsody.core.IRPTableView view)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.addTableToViewsList(view._com))
 
     def get_filter_element_types(self) -> "RPCollection":
         """Returns the element types that are to be searched for the search text.
@@ -814,7 +700,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterElementTypes()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getFilterElementTypes", "filterElementTypes"))
 
     def get_filter_reference_include_referenced_elements_in_search_results(self) -> int:
         """Checks whether the reference search criterion specified that the
@@ -830,7 +716,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceIncludeReferencedElementsInSearchResults()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterReferenceIncludeReferencedElementsInSearchResults", "filterReferenceIncludeReferencedElementsInSearchResults"))
 
     def get_filter_reference_name_of_referenced_elements(self) -> str:
         """Returns the model element name that was specified for the reference
@@ -845,7 +731,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceNameOfReferencedElements()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterReferenceNameOfReferencedElements", "filterReferenceNameOfReferencedElements"))
 
     def get_filter_reference_number_of_references(self) -> int:
         """Returns the number of references that was specified as a search
@@ -861,7 +747,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceNumberOfReferences()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterReferenceNumberOfReferences", "filterReferenceNumberOfReferences"))
 
     def get_filter_reference_quantity_operator(self) -> str:
         """Returns a value indicating whether the reference criterion was an
@@ -878,7 +764,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceQuantityOperator()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterReferenceQuantityOperator", "filterReferenceQuantityOperator"))
 
     def get_filter_reference_relation_kind(self) -> str:
         """Returns the type of reference used in the search criterion, for
@@ -893,7 +779,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceRelationKind()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterReferenceRelationKind", "filterReferenceRelationKind"))
 
     def get_filter_reference_stereotype_of_referenced_elements(self) -> str:
         """Returns the stereotype that was specified for the reference criterion
@@ -908,7 +794,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceStereotypeOfReferencedElements()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterReferenceStereotypeOfReferencedElements", "filterReferenceStereotypeOfReferencedElements"))
 
     def get_filter_reference_type_of_referenced_elements(self) -> str:
         """Returns the model element type that was specified for the reference
@@ -923,7 +809,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterReferenceTypeOfReferencedElements()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterReferenceTypeOfReferencedElements", "filterReferenceTypeOfReferencedElements"))
 
     def get_filter_search_in_fields(self) -> "RPCollection":
         """Returns the list of element fields that the search is to be applied
@@ -939,7 +825,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterSearchInFields()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getFilterSearchInFields", "filterSearchInFields"))
 
     def get_filter_stereotypes(self) -> "RPCollection":
         """Returns the names of the stereotypes that were specified as search
@@ -955,7 +841,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterStereotypes()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getFilterStereotypes", "filterStereotypes"))
 
     def get_filter_sub_queries(self) -> "RPCollection":
         """Returns the subqueries that were specified for the search.
@@ -969,7 +855,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterSubQueries()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getFilterSubQueries", "filterSubQueries"))
 
     def get_filter_sub_query_use_with_not_operator(self, sub_query: "RPTableLayout") -> int:
         """Checks whether the NOT operator was specified for the specified
@@ -988,7 +874,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterSubQueryUseWithNotOperator(com.telelogic.rhapsody.core.IRPTableLayout subQuery)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.getFilterSubQueryUseWithNotOperator(sub_query._com))
 
     def get_filter_tag_find_as(self) -> str:
         """Returns the type of search that was specified for the tag name and
@@ -1004,7 +890,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagFindAs()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterTagFindAs", "filterTagFindAs"))
 
     def get_filter_tag_match_case(self) -> int:
         """Checks whether an exact match was specified for the tag name and tag
@@ -1020,7 +906,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagMatchCase()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterTagMatchCase", "filterTagMatchCase"))
 
     def get_filter_tag_match_whole_word(self) -> int:
         """Checks whether a whole word match was specified for the tag name and
@@ -1036,7 +922,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagMatchWholeWord()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterTagMatchWholeWord", "filterTagMatchWholeWord"))
 
     def get_filter_tag_name(self) -> str:
         """Returns the tag name specified as a criterion for the search.
@@ -1050,7 +936,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagName()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterTagName", "filterTagName"))
 
     def get_filter_tag_value(self) -> str:
         """Returns the tag value specified as a criterion for the search.
@@ -1064,7 +950,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagValue()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterTagValue", "filterTagValue"))
 
     def get_search_scope_elements(self) -> "RPCollection":
         """Returns a collection of the model elements that constitute the scope
@@ -1080,7 +966,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getSearchScopeElements()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getSearchScopeElements", "searchScopeElements"))
 
     def get_view(self, index: int) -> "RPModelElement":
         """Retrieves the specified item from the list of tables, matrices, and
@@ -1099,7 +985,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getView(int Index)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getView(index)))
 
     def get_view_count(self) -> int:
         """Returns the number of views in the list of views that are to be
@@ -1114,7 +1000,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getViewCount()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getViewCount", "viewCount"))
 
     def load_from_query(self, query: "RPTableLayout") -> None:
         """Loads the settings from the specified query into the search query
@@ -1130,7 +1016,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::loadFromQuery(com.telelogic.rhapsody.core.IRPTableLayout query)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.loadFromQuery(query._com))
 
     def remove_filter_element_types(self) -> None:
         """Removes any element type filters that you defined to limit the search
@@ -1142,7 +1028,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterElementTypes()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterElementTypes())
 
     def remove_filter_references(self) -> None:
         """Removes reference search criterion that was defined for the search
@@ -1154,7 +1040,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterReferences()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterReferences())
 
     def remove_filter_search_in_fields(self) -> None:
         """Removes any element field filters that you defined to limit the
@@ -1166,7 +1052,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterSearchInFields()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterSearchInFields())
 
     def remove_filter_stereotypes(self) -> None:
         """Removes any stereotype filter that was defined to limit the search to
@@ -1178,7 +1064,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterStereotypes()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterStereotypes())
 
     def remove_filter_sub_queries(self) -> None:
         """Removes the subquery criteria that were specified for the search.
@@ -1189,7 +1075,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterSubQueries()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterSubQueries())
 
     def remove_filter_sub_query(self, sub_query: "RPTableLayout") -> int:
         """Removes the specified subquery from the search.
@@ -1207,7 +1093,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterSubQuery(com.telelogic.rhapsody.core.IRPTableLayout subQuery)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.removeFilterSubQuery(sub_query._com))
 
     def remove_filter_tag(self) -> None:
         """Removes the tag name and tag value criteria that were defined for
@@ -1219,7 +1105,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterTag()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeFilterTag())
 
     def remove_search_scope_element(self, scope_element: "RPModelElement") -> int:
         """Removes the specified model element from the scope for the search.
@@ -1237,7 +1123,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeSearchScopeElement(com.telelogic.rhapsody.core.IRPModelElement scopeElement)
         """
-        raise NotImplementedError
+        return self.call_com(lambda: self._com.removeSearchScopeElement(scope_element._com))
 
     def remove_view(self, index: int) -> None:
         """Removes the specified view from the list of views to be searched for
@@ -1252,7 +1138,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeView(int Index)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeView(index))
 
     def reset_search_scope(self) -> None:
         """Resets the search scope to include the entire project, or all
@@ -1264,7 +1150,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::resetSearchScope()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.resetSearchScope())
 
     def save_as_query(self, query_owner: "RPPackage") -> "RPTableLayout":
         """Saves the search query object that you defined as a query in your
@@ -1283,7 +1169,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::saveAsQuery(com.telelogic.rhapsody.core.IRPPackage queryOwner)
         """
-        raise NotImplementedError
+        return RPTableLayout(self.call_com(lambda: self._com.saveAsQuery(query_owner._com)))
 
     def set_filter_reference(
         self,
@@ -1322,7 +1208,17 @@ class RPSearchQuery(RPModelElement):
                 java.lang.String nameOfReferencedElements,
                 int includeReferencedElementsInSearchResults)
         """
-        raise NotImplementedError
+        self.call_com(
+            lambda: self._com.setFilterReference(
+                quantity_operator,
+                number_of_references,
+                relation_kind,
+                type_of_referenced_elements,
+                stereotype_of_referenced_elements,
+                name_of_referenced_elements,
+                include_referenced_elements_in_search_results,
+            )
+        )
 
     def set_filter_tag(self, tag_name: str, tag_value: str, match_case: int, match_whole_word: int, find_as: str) -> None:
         """Sets tag name and tag value criteria for the search query.
@@ -1342,7 +1238,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setFilterTag(java.lang.String tagName, java.lang.String tagValue, int matchCase, int matchWholeWord, char findAs)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFilterTag(tag_name, tag_value, match_case, match_whole_word, find_as))
 
     def get_filter_sub_queries_operator(self) -> str:
         """Returns indication of how the specified subqueries are to be combined
@@ -1355,7 +1251,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterSubQueriesOperator()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterSubQueriesOperator", "filterSubQueriesOperator"))
 
     def get_filter_tag_local_only(self) -> int:
         """Checks whether the tag criterion set for a search is limited to only
@@ -1371,7 +1267,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterTagLocalOnly()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterTagLocalOnly", "filterTagLocalOnly"))
 
     def get_filter_units_only(self) -> int:
         """Checks whether the search is limited to model elements that are
@@ -1386,7 +1282,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterUnitsOnly()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getFilterUnitsOnly", "filterUnitsOnly"))
 
     def get_filter_unresolved_kind(self) -> str:
         """Returns the method that was specified for handling unresolved
@@ -1399,7 +1295,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterUnresolvedKind()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getFilterUnresolvedKind", "filterUnresolvedKind"))
 
     def get_include_descendants(self) -> int:
         """Checks whether the scope of the search is to include the descendants
@@ -1415,21 +1311,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getIncludeDescendants()
         """
-        raise NotImplementedError
-
-    def get_interface_name(self) -> str:
-        """Returns the name of the interface (IRPSearchQuery).
-
-        Returns:
-            str: The name of the interface (IRPSearchQuery).
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPSearchQuery::getInterfaceName()
-        """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getIncludeDescendants", "includeDescendants"))
 
     def get_match_case(self) -> int:
         """Checks whether an exact match was specified for the query in terms of
@@ -1445,7 +1327,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getMatchCase()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getMatchCase", "matchCase"))
 
     def get_match_specified_criteria(self) -> int:
         """Checks whether the query is to return the model elements that match
@@ -1462,7 +1344,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getMatchSpecifiedCriteria()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getMatchSpecifiedCriteria", "matchSpecifiedCriteria"))
 
     def get_match_whole_word(self) -> int:
         """Checks whether a whole word match was specified for the search.
@@ -1476,7 +1358,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getMatchWholeWord()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getMatchWholeWord", "matchWholeWord"))
 
     def get_search_find_as_option(self) -> str:
         """Returns the type of search that was specified for the search text -
@@ -1492,7 +1374,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getSearchFindAsOption()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getSearchFindAsOption", "searchFindAsOption"))
 
     def get_search_scope_object(self) -> "RPModelElement":
         """Returns the scope specified for the search.
@@ -1506,7 +1388,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getSearchScopeObject()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self._get_method_or_property(self._com, "getSearchScopeObject", "searchScopeObject"))
 
     def get_search_text(self) -> str:
         """Returns the text that was specified as the text to search for.
@@ -1520,7 +1402,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getSearchText()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getSearchText", "searchText"))
 
     def get_view_include_model_elements(self) -> int:
         """Checks whether the query specifies that the search results should
@@ -1537,7 +1419,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getViewIncludeModelElements()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getViewIncludeModelElements", "viewIncludeModelElements"))
 
     def get_views_to_search(self) -> str:
         """Returns indication of which views (diagrams, tables, and matrices)
@@ -1550,7 +1432,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getViewsToSearch()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getViewsToSearch", "viewsToSearch"))
 
     def set_filter_sub_queries_operator(self, filter_sub_queries_operator: str) -> None:
         """Specifies how the various subqueries specified should be combined -
@@ -1564,7 +1446,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setFilterSubQueriesOperator(java.lang.String filterSubQueriesOperator)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFilterSubQueriesOperator(filter_sub_queries_operator))
 
     def set_filter_tag_local_only(self, filter_tag_local_only: int) -> None:
         """Specifies whether the tag criterion for a search should be limited to
@@ -1580,7 +1462,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setFilterTagLocalOnly(int filterTagLocalOnly)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFilterTagLocalOnly(filter_tag_local_only))
 
     def set_filter_units_only(self, filter_units_only: int) -> None:
         """Specifies whether the search should be limited to model elements that
@@ -1596,7 +1478,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setFilterUnitsOnly(int filterUnitsOnly)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFilterUnitsOnly(filter_units_only))
 
     def set_filter_unresolved_kind(self, filter_unresolved_kind: str) -> None:
         """Specifies how unresolved elements should be handled in the search.
@@ -1609,7 +1491,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setFilterUnresolvedKind(java.lang.String filterUnresolvedKind)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setFilterUnresolvedKind(filter_unresolved_kind))
 
     def set_include_descendants(self, include_descendants: int) -> None:
         """Specifies whether the scope for the search should include the
@@ -1625,7 +1507,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setIncludeDescendants(int includeDescendants)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setIncludeDescendants(include_descendants))
 
     def set_match_case(self, match_case: int) -> None:
         """Specifies whether the search should require an exact match in terms
@@ -1641,7 +1523,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setMatchCase(int matchCase)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setMatchCase(match_case))
 
     def set_match_specified_criteria(self, match_specified_criteria: int) -> None:
         """Specifies whether the query should return the model elements that
@@ -1659,7 +1541,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setMatchSpecifiedCriteria(int matchSpecifiedCriteria)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setMatchSpecifiedCriteria(match_specified_criteria))
 
     def set_match_whole_word(self, match_whole_word: int) -> None:
         """Specifies whether the search should require whole word matches.
@@ -1674,7 +1556,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setMatchWholeWord(int matchWholeWord)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setMatchWholeWord(match_whole_word))
 
     def set_search_find_as_option(self, search_find_as_option: str) -> None:
         """Sets the type of search that should be used for the search text -
@@ -1690,7 +1572,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setSearchFindAsOption(char searchFindAsOption)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setSearchFindAsOption(search_find_as_option))
 
     def set_search_scope_object(self, search_scope_object: "RPModelElement") -> None:
         """Sets the scope for the search.
@@ -1705,7 +1587,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setSearchScopeObject(com.telelogic.rhapsody.core.IRPModelElement searchScopeObject)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setSearchScopeObject(search_scope_object._com))
 
     def set_search_text(self, search_text: str) -> None:
         """Specifies the text that should be searched for.
@@ -1719,7 +1601,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setSearchText(java.lang.String searchText)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setSearchText(search_text))
 
     def set_view_include_model_elements(self, view_include_model_elements: int) -> None:
         """Specifies whether the search results should also include model
@@ -1737,7 +1619,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setViewIncludeModelElements(int viewIncludeModelElements)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setViewIncludeModelElements(view_include_model_elements))
 
     def set_views_to_search(self, views_to_search: str) -> None:
         """Specifies which views (tables, matrices, and diagrams) should be
@@ -1754,33 +1636,19 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::setViewsToSearch(java.lang.String viewsToSearch)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setViewsToSearch(views_to_search))
 
 
 class RPSearchResult(RPModelElement):
     """Wraps ``IRPSearchResult``."""
 
     # IRPSearchResult method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchedField              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchedFields             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getMatchedObject             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getName                      [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] getMatchedField              [x] impl  [x] docstring  [x] test
+    # [x] getMatchedFields             [x] impl  [x] docstring  [x] test
+    # [x] getMatchedObject             [x] impl  [x] docstring  [x] test
+    # [x] getName                      [x] impl  [x] docstring  [x] test
     # No deprecated IRPSearchResult methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPSearchResult::getInterfaceName()
-        """
-        raise NotImplementedError
 
     def get_matched_field(self) -> str:
         """Returns the property matchedField.
@@ -1794,7 +1662,7 @@ class RPSearchResult(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchResult::getMatchedField()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getMatchedField", "matchedField"))
 
     def get_matched_fields(self) -> "RPCollection":
         """Returns the property matchedFields.
@@ -1808,7 +1676,7 @@ class RPSearchResult(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchResult::getMatchedFields()
         """
-        raise NotImplementedError
+        return RPCollection(self._get_method_or_property(self._com, "getMatchedFields", "matchedFields"))
 
     def get_matched_object(self) -> "RPModelElement":
         """Returns the property matchedObject.
@@ -1822,7 +1690,7 @@ class RPSearchResult(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchResult::getMatchedObject()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self._get_method_or_property(self._com, "getMatchedObject", "matchedObject"))
 
     def get_name(self) -> str:
         """Returns the property name.
@@ -1836,31 +1704,17 @@ class RPSearchResult(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchResult::getName()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getName", "name"))
 
 
 class RPCodeGenSimplifiersRegistry(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPCodeGenSimplifiersRegistry``."""
 
     # IRPCodeGenSimplifiersRegistry method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] notifySimplificationDone     [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] notifySimplificationDone     [x] impl  [x] docstring  [x] test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPCodeGenSimplifiersRegistry methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPCodeGenSimplifiersRegistry::getInterfaceName()
-        """
-        raise NotImplementedError
 
     def notify_simplification_done(self) -> None:
         """Notifies that simplification is done.
@@ -1871,31 +1725,17 @@ class RPCodeGenSimplifiersRegistry(RPBaseExternalCodeGeneratorTool):
         Reference:
             com.telelogic.rhapsody.core.IRPCodeGenSimplifiersRegistry::notifySimplificationDone()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.notifySimplificationDone())
 
 
 class RPExternalCodeGeneratorInvoker(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPExternalCodeGeneratorInvoker``."""
 
     # IRPExternalCodeGeneratorInvoker method parity checklist:
-    # [ ] getInterfaceName             [ ] impl  [ ] docstring  [ ] test
-    # [ ] notifyGenerationDone         [ ] impl  [ ] docstring  [ ] test
+    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)
+    # [x] notifyGenerationDone         [x] impl  [x] docstring  [x] test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPExternalCodeGeneratorInvoker methods.
-
-    def get_interface_name(self) -> str:
-        """Returns the property interfaceName.
-
-        Returns:
-            str: The interface name.
-
-        Raises:
-            RhapsodyRuntimeException: If an error occurs in the Rhapsody API.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPExternalCodeGeneratorInvoker::getInterfaceName()
-        """
-        raise NotImplementedError
 
     def notify_generation_done(self) -> None:
         """Notifies that code generation is done.
@@ -1906,4 +1746,4 @@ class RPExternalCodeGeneratorInvoker(RPBaseExternalCodeGeneratorTool):
         Reference:
             com.telelogic.rhapsody.core.IRPExternalCodeGeneratorInvoker::notifyGenerationDone()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.notifyGenerationDone())

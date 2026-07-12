@@ -1,10 +1,16 @@
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection
-from tests.unit.models.fakes import make_fake_collection, make_fake_element
 from rhapsody_cli.models.support.model_ide import (
-    RPAXViewCtrl, RPExternalIDERegistry, RPInternalOEMPlugin, RPJavaPlugins,
-    RPPlugInWindow, RPProgressBar, RPSelection, RPowListListener,
-    RPowPaneMgr, RPowTextListener,
+    RPAXViewCtrl,
+    RPExternalIDERegistry,
+    RPInternalOEMPlugin,
+    RPowListListener,
+    RPowPaneMgr,
+    RPowTextListener,
+    RPPlugInWindow,
+    RPProgressBar,
+    RPSelection,
 )
+from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_RPAXViewCtrl_do_command_delegates_to_com():
@@ -16,7 +22,7 @@ def test_RPAXViewCtrl_do_command_delegates_to_com():
 
 def test_RPAXViewCtrl_execute_command_delegates_to_com():
     fake = make_fake_element("AXViewCtrl")
-    coll = RPCollection(make_fake_collection([make_fake_element('X')]))
+    coll = RPCollection(make_fake_collection([make_fake_element("X")]))
     obj = RPAXViewCtrl(fake)
     obj.execute_command("x", coll, coll)
     fake.executeCommand.assert_called_once_with("x", coll._com, coll._com)

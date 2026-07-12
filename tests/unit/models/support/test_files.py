@@ -1,8 +1,11 @@
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection
-from tests.unit.models.fakes import make_fake_collection, make_fake_element
 from rhapsody_cli.models.support.model_files import (
-    RPASCIIFile, RPControlledFile, RPFile, RPFileFragment,
+    RPASCIIFile,
+    RPControlledFile,
+    RPFile,
+    RPFileFragment,
 )
+from tests.unit.models.fakes import make_fake_collection, make_fake_element
 
 
 def test_RPASCIIFile_close_delegates_to_com():

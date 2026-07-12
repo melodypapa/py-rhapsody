@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import RPModelElement, RPCollection
+from rhapsody_cli.models.core import RPCollection, RPModelElement
 
 if TYPE_CHECKING:
     from rhapsody_cli.application import RhapsodyApplication
