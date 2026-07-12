@@ -13,14 +13,14 @@ class RPActor(RPClassifier):
     """Wraps ``IRPActor``: represents an actor in the model."""
 
     # IRPActor method parity checklist:
-    # [x] addEventReceptionWithEvent  [x] impl  [x] docstring  [x] test
-    # [x] getIsBehaviorOverriden  [x] impl  [x] docstring  [x] test
-    # [x] setIsBehaviorOverriden  [x] impl  [x] docstring  [x] test
+    # [x] add_event_reception_with_event  [x] impl  [x] docstring  [x] test
+    # [x] get_is_behavior_overriden  [x] impl  [x] docstring  [x] test
+    # [x] set_is_behavior_overriden  [x] impl  [x] docstring  [x] test
     # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
     # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPActor methods.
 
-    def addEventReceptionWithEvent(self, name: str, event: RPModelElement) -> "RPEventReception":
+    def add_event_reception_with_event(self, name: str, event: RPModelElement) -> "RPEventReception":
         """Adds a new event reception to the actor, using the specified event.
 
         Args:
@@ -39,7 +39,7 @@ class RPActor(RPClassifier):
         """
         return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReceptionWithEvent(name, event._com))))
 
-    def getIsBehaviorOverriden(self) -> bool:
+    def get_is_behavior_overriden(self) -> bool:
         """Checks whether the actor overrides the behavior defined in its base class's statechart.
 
         When you create a statechart for an actor, by default it inherits the
@@ -56,7 +56,7 @@ class RPActor(RPClassifier):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehaviorOverriden", "isBehaviorOverriden"))
 
-    def setIsBehaviorOverriden(self, is_overridden: bool) -> None:
+    def set_is_behavior_overriden(self, is_overridden: bool) -> None:
         """Specifies whether the actor should inherit the behavior defined in its base class's statechart.
 
         When you create a statechart for an actor, by default it inherits the

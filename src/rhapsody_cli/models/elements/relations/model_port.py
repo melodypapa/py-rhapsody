@@ -13,22 +13,22 @@ class RPPort(RPInstance):
     """Wraps ``IRPPort``: represents a port on a classifier in the model."""
 
     # IRPPort method parity checklist:
-    # [x] addProvidedInterface      [x] impl  [x] docstring  [x] test
-    # [x] addRequiredInterface      [x] impl  [x] docstring  [x] test
-    # [x] getIsBehavioral           [x] impl  [x] docstring  [x] test
-    # [x] getIsReversed             [x] impl  [x] docstring  [x] test
-    # [x] getPortContract           [x] impl  [x] docstring  [x] test
-    # [x] getProvidedInterfaces     [x] impl  [x] docstring  [x] test
-    # [x] getRequiredInterfaces     [x] impl  [x] docstring  [x] test
-    # [x] removeProvidedInterface   [x] impl  [x] docstring  [x] test
-    # [x] removeRequiredInterface   [x] impl  [x] docstring  [x] test
-    # [x] setIsBehavioral           [x] impl  [x] docstring  [x] test
-    # [x] setIsReversed             [x] impl  [x] docstring  [x] test
-    # [x] setPortContract           [x] impl  [x] docstring  [x] test
-    # [x] getContract (deprecated, use getPortContract) [x] impl [x] docstring [x] test
-    # [x] setContract (deprecated, use setPortContract) [x] impl [x] docstring [x] test
+    # [x] add_provided_interface      [x] impl  [x] docstring  [x] test
+    # [x] add_required_interface      [x] impl  [x] docstring  [x] test
+    # [x] get_is_behavioral           [x] impl  [x] docstring  [x] test
+    # [x] get_is_reversed             [x] impl  [x] docstring  [x] test
+    # [x] get_port_contract           [x] impl  [x] docstring  [x] test
+    # [x] get_provided_interfaces     [x] impl  [x] docstring  [x] test
+    # [x] get_required_interfaces     [x] impl  [x] docstring  [x] test
+    # [x] remove_provided_interface   [x] impl  [x] docstring  [x] test
+    # [x] remove_required_interface   [x] impl  [x] docstring  [x] test
+    # [x] set_is_behavioral           [x] impl  [x] docstring  [x] test
+    # [x] set_is_reversed             [x] impl  [x] docstring  [x] test
+    # [x] set_port_contract           [x] impl  [x] docstring  [x] test
+    # [x] get_contract (deprecated, use getPortContract) [x] impl [x] docstring [x] test
+    # [x] set_contract (deprecated, use setPortContract) [x] impl [x] docstring [x] test
 
-    def getIsBehavioral(self) -> int:
+    def get_is_behavioral(self) -> int:
         """Checks whether the port is a behavioral port.
 
         Returns:
@@ -42,7 +42,7 @@ class RPPort(RPInstance):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsBehavioral", "isBehavioral"))
 
-    def setIsBehavioral(self, is_behavioral: int) -> None:
+    def set_is_behavioral(self, is_behavioral: int) -> None:
         """Specifies whether the port should be a behavioral port.
 
         Args:
@@ -56,7 +56,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsBehavioral", "isBehavioral", is_behavioral)
 
-    def getIsReversed(self) -> int:
+    def get_is_reversed(self) -> int:
         """Checks whether the port's direction is reversed.
 
         Returns:
@@ -70,7 +70,7 @@ class RPPort(RPInstance):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsReversed", "isReversed"))
 
-    def setIsReversed(self, is_reversed: int) -> None:
+    def set_is_reversed(self, is_reversed: int) -> None:
         """Specifies whether the port's direction should be reversed.
 
         Args:
@@ -84,7 +84,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsReversed", "isReversed", is_reversed)
 
-    def getPortContract(self) -> "RPClass":
+    def get_port_contract(self) -> "RPClass":
         """Returns the contract defined for the port.
 
         Returns:
@@ -98,7 +98,7 @@ class RPPort(RPInstance):
         """
         return cast("RPClass", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getPortContract", "portContract")))
 
-    def setPortContract(self, port_contract: RPModelElement) -> None:
+    def set_port_contract(self, port_contract: RPModelElement) -> None:
         """Specifies the contract to use for the port.
 
         Args:
@@ -109,7 +109,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setPortContract", "portContract", port_contract._com)
 
-    def getProvidedInterfaces(self) -> RPCollection:
+    def get_provided_interfaces(self) -> RPCollection:
         """Returns the interfaces provided by the port.
 
         Returns:
@@ -123,7 +123,7 @@ class RPPort(RPInstance):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getProvidedInterfaces", "providedInterfaces"))
 
-    def addProvidedInterface(self, new_val: RPModelElement) -> None:
+    def add_provided_interface(self, new_val: RPModelElement) -> None:
         """Adds a provided interface to the port.
 
         Args:
@@ -137,7 +137,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addProvidedInterface(new_val._com))
 
-    def removeProvidedInterface(self, new_val: RPModelElement) -> None:
+    def remove_provided_interface(self, new_val: RPModelElement) -> None:
         """Removes a provided interface from the port.
 
         Args:
@@ -151,7 +151,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement.call_com(lambda: self._com.removeProvidedInterface(new_val._com))
 
-    def getRequiredInterfaces(self) -> RPCollection:
+    def get_required_interfaces(self) -> RPCollection:
         """Returns the interfaces required by the port.
 
         Returns:
@@ -165,7 +165,7 @@ class RPPort(RPInstance):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRequiredInterfaces", "requiredInterfaces"))
 
-    def addRequiredInterface(self, new_val: RPModelElement) -> None:
+    def add_required_interface(self, new_val: RPModelElement) -> None:
         """Adds a required interface to the port.
 
         Args:
@@ -179,7 +179,7 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addRequiredInterface(new_val._com))
 
-    def removeRequiredInterface(self, new_val: RPModelElement) -> None:
+    def remove_required_interface(self, new_val: RPModelElement) -> None:
         """Removes a required interface from the port.
 
         Args:
@@ -193,12 +193,12 @@ class RPPort(RPInstance):
         """
         AbstractRPModelElement.call_com(lambda: self._com.removeRequiredInterface(new_val._com))
 
-    def getContract(self) -> "RPClass":
+    def get_contract(self) -> "RPClass":
         """Returns the contract defined for the port.
 
         Deprecated:
             This method exists for backward compatibility. Use
-            :meth:`getPortContract` instead.
+            :meth:`get_port_contract` instead.
 
         Returns:
             The wrapped ``IRPClass`` used as the port's contract.
@@ -208,12 +208,12 @@ class RPPort(RPInstance):
         """
         return cast("RPClass", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getContract", "contract")))
 
-    def setContract(self, contract: RPModelElement) -> None:
+    def set_contract(self, contract: RPModelElement) -> None:
         """Specifies the contract to use for the port.
 
         Deprecated:
             This method exists for backward compatibility. Use
-            :meth:`setPortContract` instead.
+            :meth:`set_port_contract` instead.
 
         Args:
             contract: The class (``IRPClass``) to use as the port's contract.

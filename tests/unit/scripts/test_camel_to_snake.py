@@ -1,4 +1,5 @@
 import sys
+
 sys.path.insert(0, "scripts")
 
 from camel_to_snake import camel_to_snake
@@ -30,22 +31,10 @@ def test_no_get_set_prefix():
 
 
 def test_long_compound_name():
-    assert (
-        camel_to_snake("getPropertyValueConditionalExplicit")
-        == "get_property_value_conditional_explicit"
-    )
-    assert (
-        camel_to_snake("getNestedElementsByMetaClass")
-        == "get_nested_elements_by_meta_class"
-    )
-    assert (
-        camel_to_snake("becomeTemplateInstantiationOf")
-        == "become_template_instantiation_of"
-    )
-    assert (
-        camel_to_snake("synchronizeTemplateInstantiation")
-        == "synchronize_template_instantiation"
-    )
+    assert camel_to_snake("getPropertyValueConditionalExplicit") == "get_property_value_conditional_explicit"
+    assert camel_to_snake("getNestedElementsByMetaClass") == "get_nested_elements_by_meta_class"
+    assert camel_to_snake("becomeTemplateInstantiationOf") == "become_template_instantiation_of"
+    assert camel_to_snake("synchronizeTemplateInstantiation") == "synchronize_template_instantiation"
 
 
 def test_ti_and_id():

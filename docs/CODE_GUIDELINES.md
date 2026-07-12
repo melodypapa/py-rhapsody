@@ -629,7 +629,7 @@ class RhapsodyContext:
         if self._app is None:
             self.connect()
         assert self._app is not None
-        self._project = self._app.openProject(project_path)
+        self._project = self._app.open_project(project_path)
         return self._project
 
     def close_project(self) -> None:
@@ -682,7 +682,7 @@ def test_context_open_project_calls_app_open_project():
     ctx = RhapsodyContext()
     mock_app = Mock(spec=RhapsodyApplication)
     mock_project = Mock(spec=RPProject)
-    mock_app.openProject.return_value = mock_project
+    mock_app.open_project.return_value = mock_project
     ctx._app = mock_app
     
     # ACT
@@ -690,7 +690,7 @@ def test_context_open_project_calls_app_open_project():
     
     # ASSERT
     assert result == mock_project
-    mock_app.openProject.assert_called_once_with("/path/to/project.rpy")
+    mock_app.open_project.assert_called_once_with("/path/to/project.rpy")
 ```
 
 ### CLI Integration Tests

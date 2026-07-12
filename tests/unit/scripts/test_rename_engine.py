@@ -1,9 +1,10 @@
 import sys
+
 sys.path.insert(0, "scripts")
 
 from pathlib import Path
-from rename_engine import apply_rename
 
+from rename_engine import apply_rename
 
 MODEL_INPUT = """class RPModelElement:
     def getName(self):

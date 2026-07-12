@@ -12,12 +12,12 @@ class RPAXViewCtrl(RPModelElement):
     """Wraps ``IRPAXViewCtrl``."""
 
     # IRPAXViewCtrl method parity checklist:
-    # [x] doCommand                    [x] impl  [x] docstring  [x] test
-    # [x] executeCommand               [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] do_command                    [x] impl  [x] docstring  [x] test
+    # [x] execute_command               [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPAXViewCtrl methods.
 
-    def doCommand(self, command_i_d: int) -> None:
+    def do_command(self, command_i_d: int) -> None:
         """Execute command by command ID.
 
         Args:
@@ -31,7 +31,7 @@ class RPAXViewCtrl(RPModelElement):
         """
         self.call_com(lambda: self._com.doCommand(command_i_d))
 
-    def executeCommand(self, command_type: str, p_command_initialization: "RPCollection", p_command_result: "RPCollection") -> None:
+    def execute_command(self, command_type: str, p_command_initialization: "RPCollection", p_command_result: "RPCollection") -> None:
         """Execute command.
 
         Args:
@@ -55,13 +55,13 @@ class RPExternalIDERegistry(RPModelElement):
     """Wraps ``IRPExternalIDERegistry``."""
 
     # IRPExternalIDERegistry method parity checklist:
-    # [x] progressTaskAsynchCallback   [x] impl  [x] docstring  [x] test
-    # [x] progressTaskAsynchEliminate  [x] impl  [x] docstring  [x] test
-    # [x] sendIDETextMessage           [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] progress_task_asynch_callback   [x] impl  [x] docstring  [x] test
+    # [x] progress_task_asynch_eliminate  [x] impl  [x] docstring  [x] test
+    # [x] send_ide_text_message           [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPExternalIDERegistry methods.
 
-    def progressTaskAsynchCallback(self, n_group_number: int, n_task_number: int) -> None:
+    def progress_task_asynch_callback(self, n_group_number: int, n_task_number: int) -> None:
         """Initiate progress task execution.
 
         Args:
@@ -76,7 +76,7 @@ class RPExternalIDERegistry(RPModelElement):
         """
         self.call_com(lambda: self._com.progressTaskAsynchCallback(n_group_number, n_task_number))
 
-    def progressTaskAsynchEliminate(self, n_group_number: int, n_task_number: int) -> None:
+    def progress_task_asynch_eliminate(self, n_group_number: int, n_task_number: int) -> None:
         """Initiate progress task execution.
 
         Args:
@@ -91,7 +91,7 @@ class RPExternalIDERegistry(RPModelElement):
         """
         self.call_com(lambda: self._com.progressTaskAsynchEliminate(n_group_number, n_task_number))
 
-    def sendIDETextMessage(self, message: str) -> None:
+    def send_ide_text_message(self, message: str) -> None:
         """Send an IDE text message.
 
         Args:
@@ -110,23 +110,23 @@ class RPInternalOEMPlugin(RPModelElement):
     """Wraps ``IRPInternalOEMPlugin``."""
 
     # IRPInternalOEMPlugin method parity checklist:
-    # [x] activeProjectAboutToChange   [x] impl  [x] docstring  [x] test
-    # [x] activeProjectHasChanged      [x] impl  [x] docstring  [x] test
-    # [x] onMenuItemSelect             [x] impl  [x] docstring  [x] test
-    # [x] onMenuItemSelectWithParameters [x] impl  [x] docstring  [x] test
-    # [x] rhapPluginAnimationStopped   [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginAnimationStarted    [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginCleanup             [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginDoCommand           [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginFinalCleanup        [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginInit                [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginInvokeItem          [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginOnIDEBuildDone      [x] impl  [x] docstring  [x] test
-    # [x] rhpPluginSetApplication      [x] impl  [x] docstring  [x] test
-    # [x] rhpSavingProject             [x] impl  [x] docstring  [x] test
+    # [x] active_project_about_to_change   [x] impl  [x] docstring  [x] test
+    # [x] active_project_has_changed      [x] impl  [x] docstring  [x] test
+    # [x] on_menu_item_select             [x] impl  [x] docstring  [x] test
+    # [x] on_menu_item_select_with_parameters [x] impl  [x] docstring  [x] test
+    # [x] rhap_plugin_animation_stopped   [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_animation_started    [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_cleanup             [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_do_command           [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_final_cleanup        [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_init                [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_invoke_item          [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_on_ide_build_done      [x] impl  [x] docstring  [x] test
+    # [x] rhp_plugin_set_application      [x] impl  [x] docstring  [x] test
+    # [x] rhp_saving_project             [x] impl  [x] docstring  [x] test
     # No deprecated IRPInternalOEMPlugin methods.
 
-    def activeProjectAboutToChange(self) -> int:
+    def active_project_about_to_change(self) -> int:
         """Notify the plugin that the active project is about to change.
 
         Returns:
@@ -140,7 +140,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.activeProjectAboutToChange()))
 
-    def activeProjectHasChanged(self) -> int:
+    def active_project_has_changed(self) -> int:
         """Notify the plugin that the active project has changed.
 
         Returns:
@@ -154,7 +154,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.activeProjectHasChanged()))
 
-    def onMenuItemSelect(self, menu_item: str) -> str:
+    def on_menu_item_select(self, menu_item: str) -> str:
         """Select a given menu item.
 
         Args:
@@ -171,7 +171,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return str(self.call_com(lambda: self._com.onMenuItemSelect(menu_item)))
 
-    def onMenuItemSelectWithParameters(self, menu_item: str, parameters: str) -> str:
+    def on_menu_item_select_with_parameters(self, menu_item: str, parameters: str) -> str:
         """For internal use only.
 
         Args:
@@ -186,7 +186,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return str(self.call_com(lambda: self._com.onMenuItemSelectWithParameters(menu_item, parameters)))
 
-    def rhapPluginAnimationStopped(self) -> int:
+    def rhap_plugin_animation_stopped(self) -> int:
         """Notify the plugin that animation has stopped.
 
         Returns:
@@ -200,7 +200,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhapPluginAnimationStopped()))
 
-    def rhpPluginAnimationStarted(self) -> int:
+    def rhp_plugin_animation_started(self) -> int:
         """Notify the plugin that animation has started.
 
         Returns:
@@ -214,7 +214,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginAnimationStarted()))
 
-    def rhpPluginCleanup(self) -> int:
+    def rhp_plugin_cleanup(self) -> int:
         """Perform cleanup of the plugin.
 
         Returns:
@@ -228,7 +228,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginCleanup()))
 
-    def rhpPluginDoCommand(self, the_command: str) -> None:
+    def rhp_plugin_do_command(self, the_command: str) -> None:
         """Notify the plugin to execute a command.
 
         Args:
@@ -242,7 +242,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         self.call_com(lambda: self._com.rhpPluginDoCommand(the_command))
 
-    def rhpPluginFinalCleanup(self) -> int:
+    def rhp_plugin_final_cleanup(self) -> int:
         """Perform final cleanup of the plugin.
 
         Returns:
@@ -256,7 +256,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginFinalCleanup()))
 
-    def rhpPluginInit(self) -> int:
+    def rhp_plugin_init(self) -> int:
         """Initialize the plugin.
 
         Returns:
@@ -270,7 +270,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginInit()))
 
-    def rhpPluginInvokeItem(self) -> int:
+    def rhp_plugin_invoke_item(self) -> int:
         """Invoke an item of the plugin.
 
         Returns:
@@ -284,7 +284,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginInvokeItem()))
 
-    def rhpPluginOnIDEBuildDone(self, build_status: str) -> None:
+    def rhp_plugin_on_ide_build_done(self, build_status: str) -> None:
         """Notify the plugin that an IDE build is done.
 
         Args:
@@ -298,7 +298,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         self.call_com(lambda: self._com.rhpPluginOnIDEBuildDone(build_status))
 
-    def rhpPluginSetApplication(self, p_r_p_app: "RhapsodyApplication") -> int:
+    def rhp_plugin_set_application(self, p_r_p_app: "RhapsodyApplication") -> int:
         """Set the IRPApplication of the plugin.
 
         Args:
@@ -315,7 +315,7 @@ class RPInternalOEMPlugin(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.rhpPluginSetApplication(p_r_p_app._com)))
 
-    def rhpSavingProject(self) -> int:
+    def rhp_saving_project(self) -> int:
         """Notify the plugin that a Rhapsody save is occurring.
 
         Returns:
@@ -334,7 +334,7 @@ class RPJavaPlugins(RPModelElement):
     """Wraps ``IRPJavaPlugins``."""
 
     # IRPJavaPlugins method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPJavaPlugins methods.
 
 
@@ -342,18 +342,18 @@ class RPPlugInWindow(RPModelElement):
     """Wraps ``IRPPlugInWindow``."""
 
     # IRPPlugInWindow method parity checklist:
-    # [x] destroyWindow                [x] impl  [x] docstring  [x] test
-    # [x] getDocking                   [x] impl  [x] docstring  [x] test
-    # [x] getPosString                 [x] impl  [x] docstring  [x] test
-    # [x] getWindowHandle              [x] impl  [x] docstring  [x] test
-    # [x] setDocking                   [x] impl  [x] docstring  [x] test
-    # [x] setPosString                 [x] impl  [x] docstring  [x] test
-    # [x] setTitle                     [x] impl  [x] docstring  [x] test
-    # [x] showWindow                   [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] destroy_window                [x] impl  [x] docstring  [x] test
+    # [x] get_docking                   [x] impl  [x] docstring  [x] test
+    # [x] get_pos_string                 [x] impl  [x] docstring  [x] test
+    # [x] get_window_handle              [x] impl  [x] docstring  [x] test
+    # [x] set_docking                   [x] impl  [x] docstring  [x] test
+    # [x] set_pos_string                 [x] impl  [x] docstring  [x] test
+    # [x] set_title                     [x] impl  [x] docstring  [x] test
+    # [x] show_window                   [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPPlugInWindow methods.
 
-    def destroyWindow(self) -> None:
+    def destroy_window(self) -> None:
         """Destroy the window.
 
         Raises:
@@ -364,7 +364,7 @@ class RPPlugInWindow(RPModelElement):
         """
         self.call_com(lambda: self._com.destroyWindow())
 
-    def getDocking(self) -> int:
+    def get_docking(self) -> int:
         """Get the docking mode.
 
         Returns:
@@ -378,7 +378,7 @@ class RPPlugInWindow(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getDocking", "docking"))
 
-    def getPosString(self) -> str:
+    def get_pos_string(self) -> str:
         """Get the position string.
 
         Returns:
@@ -392,7 +392,7 @@ class RPPlugInWindow(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getPosString", "posString"))
 
-    def getWindowHandle(self) -> int:
+    def get_window_handle(self) -> int:
         """Get the window handle.
 
         Returns:
@@ -406,7 +406,7 @@ class RPPlugInWindow(RPModelElement):
         """
         return int(self._get_method_or_property(self._com, "getWindowHandle", "windowHandle"))
 
-    def setDocking(self, n_dock_pos: int) -> None:
+    def set_docking(self, n_dock_pos: int) -> None:
         """Set the docking mode.
 
         Args:
@@ -420,7 +420,7 @@ class RPPlugInWindow(RPModelElement):
         """
         self._set_method_or_property(self._com, "setDocking", "docking", n_dock_pos)
 
-    def setPosString(self, s_pos: str) -> None:
+    def set_pos_string(self, s_pos: str) -> None:
         """Set the position string.
 
         Args:
@@ -434,7 +434,7 @@ class RPPlugInWindow(RPModelElement):
         """
         self._set_method_or_property(self._com, "setPosString", "posString", s_pos)
 
-    def setTitle(self, s_title: str) -> None:
+    def set_title(self, s_title: str) -> None:
         """Set the window title.
 
         Args:
@@ -448,7 +448,7 @@ class RPPlugInWindow(RPModelElement):
         """
         self._set_method_or_property(self._com, "setTitle", "title", s_title)
 
-    def showWindow(self, n_show: int) -> None:
+    def show_window(self, n_show: int) -> None:
         """Show or hide the window.
 
         Args:
@@ -467,7 +467,7 @@ class RPProgressBar(RPModelElement):
     """Wraps ``IRPProgressBar``."""
 
     # IRPProgressBar method parity checklist:
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # [x] reset                        [x] impl  [x] docstring  [x] test
     # [x] tick                         [x] impl  [x] docstring  [x] test
     # No deprecated IRPProgressBar methods.
@@ -502,18 +502,18 @@ class RPSelection(RPModelElement):
     """Wraps ``IRPSelection``: contains methods for cutting, copying, pasting, and deleting graphic elements on diagrams."""
 
     # IRPSelection method parity checklist:
-    # [x] canCopy                      [x] impl  [x] docstring  [x] test
-    # [x] canCut                       [x] impl  [x] docstring  [x] test
-    # [x] canDelete                    [x] impl  [x] docstring  [x] test
-    # [x] canPaste                     [x] impl  [x] docstring  [x] test
-    # [x] copySelected                 [x] impl  [x] docstring  [x] test
-    # [x] cutSelected                  [x] impl  [x] docstring  [x] test
-    # [x] deleteSelected               [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
-    # [x] pasteSelected                [x] impl  [x] docstring  [x] test
+    # [x] can_copy                      [x] impl  [x] docstring  [x] test
+    # [x] can_cut                       [x] impl  [x] docstring  [x] test
+    # [x] can_delete                    [x] impl  [x] docstring  [x] test
+    # [x] can_paste                     [x] impl  [x] docstring  [x] test
+    # [x] copy_selected                 [x] impl  [x] docstring  [x] test
+    # [x] cut_selected                  [x] impl  [x] docstring  [x] test
+    # [x] delete_selected               [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] paste_selected                [x] impl  [x] docstring  [x] test
     # No deprecated IRPSelection methods.
 
-    def canCopy(self) -> int:
+    def can_copy(self) -> int:
         """Check whether the current selection can be copied.
 
         Returns:
@@ -527,7 +527,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.canCopy()))
 
-    def canCut(self) -> int:
+    def can_cut(self) -> int:
         """Check whether the current selection can be cut.
 
         Returns:
@@ -541,7 +541,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.canCut()))
 
-    def canDelete(self) -> int:
+    def can_delete(self) -> int:
         """Check whether the current selection can be deleted.
 
         Returns:
@@ -555,7 +555,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.canDelete()))
 
-    def canPaste(self) -> int:
+    def can_paste(self) -> int:
         """Check whether the item in the clipboard can be pasted to the diagram that has the focus.
 
         Returns:
@@ -569,7 +569,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.canPaste()))
 
-    def copySelected(self) -> int:
+    def copy_selected(self) -> int:
         """Copy the currently selected graphic element.
 
         Returns:
@@ -583,7 +583,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.copySelected()))
 
-    def cutSelected(self) -> int:
+    def cut_selected(self) -> int:
         """Cut the currently selected graphic element.
 
         Returns:
@@ -597,7 +597,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.cutSelected()))
 
-    def deleteSelected(self) -> int:
+    def delete_selected(self) -> int:
         """Delete the currently selected graphic element.
 
         Returns:
@@ -611,7 +611,7 @@ class RPSelection(RPModelElement):
         """
         return int(self.call_com(lambda: self._com.deleteSelected()))
 
-    def pasteSelected(self) -> int:
+    def paste_selected(self) -> int:
         """Paste the item in the clipboard to the diagram that has the focus.
 
         Returns:
@@ -630,12 +630,12 @@ class RPowListListener(RPModelElement):
     """Wraps ``IRPowListListener``."""
 
     # IRPowListListener method parity checklist:
-    # [x] dblClickNotify               [x] impl  [x] docstring  [x] test
-    # [x] setObjID                     [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] dbl_click_notify               [x] impl  [x] docstring  [x] test
+    # [x] set_obj_id                     [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPowListListener methods.
 
-    def dblClickNotify(self, n_row: int, n_col: int, s_content: str) -> None:
+    def dbl_click_notify(self, n_row: int, n_col: int, s_content: str) -> None:
         """Notify on double-click in the list.
 
         Args:
@@ -651,7 +651,7 @@ class RPowListListener(RPModelElement):
         """
         self.call_com(lambda: self._com.dblClickNotify(n_row, n_col, s_content))
 
-    def setObjID(self, bstr_obj_i_d: str) -> None:
+    def set_obj_id(self, bstr_obj_i_d: str) -> None:
         """Set the object ID.
 
         Args:
@@ -670,14 +670,14 @@ class RPowPaneMgr(RPModelElement):
     """Wraps ``IRPowPaneMgr``."""
 
     # IRPowPaneMgr method parity checklist:
-    # [x] addTabNotify                 [x] impl  [x] docstring  [x] test
-    # [x] closeTabNotify               [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
-    # [x] getOWListListener            [x] impl  [x] docstring  [x] test
-    # [x] getOWTextListener            [x] impl  [x] docstring  [x] test
+    # [x] add_tab_notify                 [x] impl  [x] docstring  [x] test
+    # [x] close_tab_notify               [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] get_ow_list_listener            [x] impl  [x] docstring  [x] test
+    # [x] get_ow_text_listener            [x] impl  [x] docstring  [x] test
     # No deprecated IRPowPaneMgr methods.
 
-    def addTabNotify(self, n_type: int, n_sub_type: int, s_obj_i_d: str, s_title: str) -> None:
+    def add_tab_notify(self, n_type: int, n_sub_type: int, s_obj_i_d: str, s_title: str) -> None:
         """Notify when a tab is added.
 
         Args:
@@ -694,7 +694,7 @@ class RPowPaneMgr(RPModelElement):
         """
         self.call_com(lambda: self._com.addTabNotify(n_type, n_sub_type, s_obj_i_d, s_title))
 
-    def closeTabNotify(self, s_obj_i_d: str) -> None:
+    def close_tab_notify(self, s_obj_i_d: str) -> None:
         """Notify when a tab is closed.
 
         Args:
@@ -708,7 +708,7 @@ class RPowPaneMgr(RPModelElement):
         """
         self.call_com(lambda: self._com.closeTabNotify(s_obj_i_d))
 
-    def getOWListListener(self, s_obj_i_d: str) -> "RPowListListener":
+    def get_ow_list_listener(self, s_obj_i_d: str) -> "RPowListListener":
         """Get the list listener for the given object ID.
 
         Args:
@@ -725,7 +725,7 @@ class RPowPaneMgr(RPModelElement):
         """
         return RPowListListener(self.call_com(lambda: self._com.getOWListListener(s_obj_i_d)))
 
-    def getOWTextListener(self, s_obj_i_d: str) -> "RPowTextListener":
+    def get_ow_text_listener(self, s_obj_i_d: str) -> "RPowTextListener":
         """Get the text listener for the given object ID.
 
         Args:
@@ -747,12 +747,12 @@ class RPowTextListener(RPModelElement):
     """Wraps ``IRPowTextListener``."""
 
     # IRPowTextListener method parity checklist:
-    # [x] dblClickNotify               [x] impl  [x] docstring  [x] test
-    # [x] setObjID                     [x] impl  [x] docstring  [x] test
-    # [x] getInterfaceName             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
+    # [x] dbl_click_notify               [x] impl  [x] docstring  [x] test
+    # [x] set_obj_id                     [x] impl  [x] docstring  [x] test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
     # No deprecated IRPowTextListener methods.
 
-    def dblClickNotify(self, n_line: int, sz_line: str) -> None:
+    def dbl_click_notify(self, n_line: int, sz_line: str) -> None:
         """Notify on double-click in the text pane.
 
         Args:
@@ -767,7 +767,7 @@ class RPowTextListener(RPModelElement):
         """
         self.call_com(lambda: self._com.dblClickNotify(n_line, sz_line))
 
-    def setObjID(self, bstr_obj_i_d: str) -> None:
+    def set_obj_id(self, bstr_obj_i_d: str) -> None:
         """Set the object ID.
 
         Args:

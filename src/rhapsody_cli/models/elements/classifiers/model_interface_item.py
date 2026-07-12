@@ -16,17 +16,18 @@ class RPInterfaceItem(RPClassifier):
     """
 
     # IRPInterfaceItem method parity checklist:
-    # [x] addArgument  [x] impl  [x] docstring  [x] test
-    # [x] addArgumentBeforePosition  [x] impl  [x] docstring  [x] test
-    # [x] getArguments  [x] impl  [x] docstring  [x] test
-    # [x] getSignature  [x] impl  [x] docstring  [x] test
-    # [x] getSignatureNoArgNames  [x] impl  [x] docstring  [x] test
-    # [x] getSignatureNoArgTypes  [x] impl  [x] docstring  [x] test
-    # [x] matchOnSignature  [x] impl  [x] docstring  [x] test
+    # [x] add_argument  [x] impl  [x] docstring  [x] test
+    # [x] add_argument_before_position  [x] impl  [x] docstring  [x] test
+    # [x] get_arguments  [x] impl  [x] docstring  [x] test
+    # [x] get_signature  [x] impl  [x] docstring  [x] test
+    # [x] get_signature_no_arg_names  [x] impl  [x] docstring  [x] test
+    # [x] get_signature_no_arg_types  [x] impl  [x] docstring  [x] test
+    # [x] match_on_signature  [x] impl  [x] docstring  [x] test
+    # [x] set_arguments  [x] impl  [x] docstring  [ ] test
     # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPInterfaceItem methods.
 
-    def addArgument(self, new_val: str) -> "RPArgument":
+    def add_argument(self, new_val: str) -> "RPArgument":
         """Adds a new argument to the end of the argument list.
 
         Only the name is taken from the supplied string; the argument's type
@@ -44,10 +45,10 @@ class RPInterfaceItem(RPClassifier):
         """
         return cast("RPArgument", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addArgument(new_val))))
 
-    def addArgumentBeforePosition(self, new_val: str, pos: int) -> "RPArgument":
+    def add_argument_before_position(self, new_val: str, pos: int) -> "RPArgument":
         """Adds a new argument at the specified position in the argument list.
 
-        As with :meth:`addArgument`, only the name is taken from the supplied
+        As with :meth:`add_argument`, only the name is taken from the supplied
         string and the argument's type defaults to ``int``; change the type via
         the returned ``IRPArgument`` object's type setter.
 
@@ -63,7 +64,7 @@ class RPInterfaceItem(RPClassifier):
         """
         return cast("RPArgument", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addArgumentBeforePosition(new_val, pos))))
 
-    def getArguments(self) -> RPCollection:
+    def get_arguments(self) -> RPCollection:
         """Returns all the arguments for the operation.
 
         Returns:
@@ -74,7 +75,18 @@ class RPInterfaceItem(RPClassifier):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getArguments", "arguments"))
 
-    def getSignature(self) -> str:
+    def set_arguments(self, new_val: str) -> None:
+        """Sets the argument signature for the operation.
+
+        Args:
+            new_val: The argument signature string (e.g. ``"int x, float y"``).
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPInterfaceItem::setArguments(java.lang.String newVal)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setArguments(new_val))
+
+    def get_signature(self) -> str:
         """Returns the signature of the operation.
 
         Returns:
@@ -85,7 +97,7 @@ class RPInterfaceItem(RPClassifier):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignature", "signature"))
 
-    def getSignatureNoArgNames(self) -> str:
+    def get_signature_no_arg_names(self) -> str:
         """Returns the signature of the operation without the argument names.
 
         Returns:
@@ -96,7 +108,7 @@ class RPInterfaceItem(RPClassifier):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignatureNoArgNames", "signatureNoArgNames"))
 
-    def getSignatureNoArgTypes(self) -> str:
+    def get_signature_no_arg_types(self) -> str:
         """Returns the signature of the operation without the argument types.
 
         Returns:
@@ -107,7 +119,7 @@ class RPInterfaceItem(RPClassifier):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSignatureNoArgTypes", "signatureNoArgTypes"))
 
-    def matchOnSignature(self, item: "RPInterfaceItem") -> bool:
+    def match_on_signature(self, item: "RPInterfaceItem") -> bool:
         """Compares the signature of this operation with another operation's signature.
 
         This is useful when moving an operation from one class to another,

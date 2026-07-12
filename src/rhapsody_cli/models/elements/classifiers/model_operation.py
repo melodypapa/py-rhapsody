@@ -13,42 +13,42 @@ class RPOperation(RPInterfaceItem):
     """Wraps ``IRPOperation``: represents an operation or method in a classifier."""
 
     # IRPOperation method parity checklist:
-    # [x] createAutoFlowChart  [x] impl  [x] docstring  [x] test
+    # [x] create_auto_flow_chart  [x] impl  [x] docstring  [x] test
     # [ ] deleteArgument  [ ] impl  [ ] docstring  [ ] test
     # [ ] deleteFlowchart  [ ] impl  [ ] docstring  [ ] test
-    # [x] getBody  [x] impl  [x] docstring  [x] test
+    # [x] get_body  [x] impl  [x] docstring  [x] test
     # [ ] getFlowchart  [ ] impl  [ ] docstring  [ ] test
     # [ ] getImplementationSignature  [ ] impl  [ ] docstring  [ ] test
     # [ ] getInitializer  [ ] impl  [ ] docstring  [ ] test
-    # [x] getIsAbstract  [x] impl  [x] docstring  [x] test
+    # [x] get_is_abstract  [x] impl  [x] docstring  [x] test
     # [ ] getIsCgDerived  [ ] impl  [ ] docstring  [ ] test
     # [ ] getIsConst  [ ] impl  [ ] docstring  [ ] test
     # [ ] getIsCtor  [ ] impl  [ ] docstring  [ ] test
     # [ ] getIsDtor  [ ] impl  [ ] docstring  [ ] test
     # [ ] getIsFinal  [ ] impl  [ ] docstring  [ ] test
     # [ ] getIsInline  [ ] impl  [ ] docstring  [ ] test
-    # [x] getIsStatic  [x] impl  [x] docstring  [x] test
+    # [x] get_is_static  [x] impl  [x] docstring  [x] test
     # [ ] getIsTrigger  [ ] impl  [ ] docstring  [ ] test
-    # [x] getIsVirtual  [x] impl  [x] docstring  [x] test
-    # [x] getReturnTypeDeclaration  [x] impl  [x] docstring  [x] test
-    # [x] getReturns  [x] impl  [x] docstring  [x] test
+    # [x] get_is_virtual  [x] impl  [x] docstring  [x] test
+    # [x] get_return_type_declaration  [x] impl  [x] docstring  [x] test
+    # [x] get_returns  [x] impl  [x] docstring  [x] test
     # [ ] getVisibility  [ ] impl  [ ] docstring  [ ] test
     # [ ] setBody  [ ] impl  [ ] docstring  [ ] test
     # [ ] setFlowchart  [ ] impl  [ ] docstring  [ ] test
     # [ ] setInitializer  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsAbstract  [ ] impl  [ ] docstring  [ ] test
+    # [x] set_is_abstract  [x] impl  [x] docstring  [ ] test
     # [ ] setIsConst  [ ] impl  [ ] docstring  [ ] test
     # [ ] setIsFinal  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsStatic  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsVirtual  [ ] impl  [ ] docstring  [ ] test
-    # [x] setReturnTypeDeclaration  [x] impl  [x] docstring  [x] test
-    # [x] setReturns  [x] impl  [x] docstring  [x] test
+    # [x] set_is_static  [x] impl  [x] docstring  [ ] test
+    # [x] set_is_virtual  [x] impl  [x] docstring  [ ] test
+    # [x] set_return_type_declaration  [x] impl  [x] docstring  [x] test
+    # [x] set_returns  [x] impl  [x] docstring  [x] test
     # [ ] setVisibility  [ ] impl  [ ] docstring  [ ] test
     # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
     # [inherited] IRPInterfaceItem / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPInterfaceItem / RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPOperation methods.
 
-    def getBody(self) -> str:
+    def get_body(self) -> str:
         """Returns the body/implementation of the operation.
 
         Returns:
@@ -59,7 +59,7 @@ class RPOperation(RPInterfaceItem):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getBody", "body"))
 
-    def getIsAbstract(self) -> bool:
+    def get_is_abstract(self) -> bool:
         """Checks whether this operation is abstract.
 
         Returns:
@@ -70,7 +70,18 @@ class RPOperation(RPInterfaceItem):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsAbstract", "isAbstract"))
 
-    def getIsStatic(self) -> bool:
+    def set_is_abstract(self, is_abstract: int) -> None:
+        """Sets whether this operation is abstract.
+
+        Args:
+            is_abstract: ``1`` to mark the operation as abstract, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::setIsAbstract(boolean isAbstract)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setIsAbstract(is_abstract))
+
+    def get_is_static(self) -> bool:
         """Checks whether this operation is static.
 
         Returns:
@@ -81,7 +92,18 @@ class RPOperation(RPInterfaceItem):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsStatic", "isStatic"))
 
-    def getIsVirtual(self) -> bool:
+    def set_is_static(self, is_static: int) -> None:
+        """Sets whether this operation is static.
+
+        Args:
+            is_static: ``1`` to mark the operation as static, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::setIsStatic(boolean isStatic)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setIsStatic(is_static))
+
+    def get_is_virtual(self) -> bool:
         """Checks whether this operation is virtual (for C++ or C# classes).
 
         Returns:
@@ -92,7 +114,18 @@ class RPOperation(RPInterfaceItem):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "getIsVirtual", "isVirtual"))
 
-    def getReturns(self) -> "RPClassifier":
+    def set_is_virtual(self, is_virtual: int) -> None:
+        """Sets whether this operation is virtual (for C++ or C# classes).
+
+        Args:
+            is_virtual: ``1`` to mark the operation as virtual, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPOperation::setIsVirtual(boolean isVirtual)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setIsVirtual(is_virtual))
+
+    def get_returns(self) -> "RPClassifier":
         """Returns the type specification for the operation's return value.
 
         Returns:
@@ -103,7 +136,7 @@ class RPOperation(RPInterfaceItem):
         """
         return cast("RPClassifier", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getReturns", "returns")))
 
-    def getReturnTypeDeclaration(self) -> str:
+    def get_return_type_declaration(self) -> str:
         """Returns the on-the-fly return type declaration for the operation.
 
         Returns:
@@ -114,7 +147,7 @@ class RPOperation(RPInterfaceItem):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getReturnTypeDeclaration", "returnTypeDeclaration"))
 
-    def createAutoFlowChart(self) -> None:
+    def create_auto_flow_chart(self) -> None:
         """Automatically generates a flowchart for the operation.
 
         Reference:
@@ -122,7 +155,7 @@ class RPOperation(RPInterfaceItem):
         """
         AbstractRPModelElement.call_com(lambda: self._com.createAutoFlowChart())
 
-    def setReturns(self, returns: "RPClassifier") -> None:
+    def set_returns(self, returns: "RPClassifier") -> None:
         """Sets the return type of the operation to an existing classifier.
 
         Args:
@@ -133,7 +166,7 @@ class RPOperation(RPInterfaceItem):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setReturns", "returns", returns._com)
 
-    def setReturnTypeDeclaration(self, new_val: str) -> None:
+    def set_return_type_declaration(self, new_val: str) -> None:
         """Specifies an on-the-fly return type declaration for the operation.
 
         Args:

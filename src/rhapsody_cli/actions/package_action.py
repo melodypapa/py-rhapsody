@@ -48,7 +48,7 @@ class AbstractPackageAction(ElementManagementAction):
         root = self._get_active_root()
         container = self._resolve_container_or_element(root, path, resolve_element=False, operation=f"resolve package path '{path}'")
 
-        meta_class = container.getMetaClass()
+        meta_class = container.get_meta_class()
         if meta_class != "Package":
             raise CliExecutionError(f"Path '{path}' does not resolve to a Package (found {meta_class})")
 
@@ -147,9 +147,9 @@ class PackageCreateAction(AbstractPackageAction):
         try:
             # Call the appropriate creation method based on location
             if is_root:
-                package = container.addPackage(name)
+                package = container.add_package(name)
             else:
-                package = container.addNestedPackage(name)
+                package = container.add_nested_package(name)
         except Exception as e:
             error_str = str(e)
             # Check if error indicates the package already exists
@@ -194,16 +194,16 @@ class PackageCreateAction(AbstractPackageAction):
 
         try:
             if is_root:
-                existing_packages = container.getPackages()
+                existing_packages = container.get_packages()
                 container_desc = "project root"
             else:
-                existing_packages = container.getNestedPackages()
-                parent_name = container.getName()
+                existing_packages = container.get_nested_packages()
+                parent_name = container.get_name()
                 container_desc = f"package '{parent_name}'"
 
             # Search for duplicate by name
             for pkg in existing_packages:
-                pkg_name = pkg.getName()
+                pkg_name = pkg.get_name()
                 if pkg_name == name:
                     raise CliExecutionError(f"Package '{name}' already exists in {container_desc}")
         except CliExecutionError:
@@ -254,33 +254,33 @@ class PackageCreateAction(AbstractPackageAction):
     def _set_basic_attributes(self, package: Any, attrs: Dict[str, Any]) -> None:
         """Set basic attributes."""
         if "description" in attrs:
-            package.setDescription(attrs["description"])
+            package.set_description(attrs["description"])
         if "description_html" in attrs:
-            package.setDescriptionHTML(attrs["description_html"])
+            package.set_description_html(attrs["description_html"])
         if "description_rtf" in attrs:
-            package.setDescriptionRTF(attrs["description_rtf"])
+            package.set_description_rtf(attrs["description_rtf"])
         if "display_name" in attrs:
-            package.setDisplayName(attrs["display_name"])
+            package.set_display_name(attrs["display_name"])
         if "display_name_rtf" in attrs:
-            package.setDisplayNameRTF(attrs["display_name_rtf"])
+            package.set_display_name_rtf(attrs["display_name_rtf"])
 
     def _set_properties(self, package: Any, attrs: Dict[str, Any]) -> None:
         """Set custom properties."""
         if "properties" in attrs:
             for key, val in attrs["properties"].items():
-                package.setPropertyValue(key, val)
+                package.set_property_value(key, val)
 
     def _set_stereotypes(self, package: Any, attrs: Dict[str, Any]) -> None:
         """Apply stereotypes."""
         if "stereotypes" in attrs:
             for stereotype in attrs["stereotypes"]:
-                package.addStereotype(stereotype, "Package")
+                package.add_stereotype(stereotype, "Package")
 
     def _set_tags(self, package: Any, attrs: Dict[str, Any]) -> None:
         """Set tags."""
         if "tags" in attrs:
             for key, val in attrs["tags"].items():
-                package.setPropertyValue(key, val)
+                package.set_property_value(key, val)
 
 
 class PackageDeleteAction(AbstractPackageAction):
@@ -307,7 +307,7 @@ class PackageDeleteAction(AbstractPackageAction):
 
         try:
             self.logger.info("Deleting package '%s'...", args.path)
-            package.deleteFromProject()
+            package.delete_from_project()
             self.logger.info("Successfully deleted package '%s'", args.path)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete package '{args.path}'")
@@ -359,11 +359,11 @@ class PackageViewAction(AbstractPackageAction):
     def _collect_package_data(self, package: Any) -> Dict[str, str]:
         """Collect package details into a data dictionary."""
         return {
-            "name": package.getName(),
-            "guid": package.getGUID(),
-            "description": package.getDescription(),
-            "metaClass": package.getMetaClass(),
-            "fullPath": package.getFullPathName(),
+            "name": package.get_name(),
+            "guid": package.get_guid(),
+            "description": package.get_description(),
+            "metaClass": package.get_meta_class(),
+            "fullPath": package.get_full_path_name(),
         }
 
     def _format_output(self, data: Dict[str, str], format_type: str) -> str:
@@ -432,8 +432,8 @@ class PackageListAction(AbstractPackageAction):
 
     def _collect_nested_package_names(self, package: Any) -> List[str]:
         """Collect names of nested packages."""
-        nested_packages = package.getNestedPackages()
-        return [pkg.getName() for pkg in nested_packages]
+        nested_packages = package.get_nested_packages()
+        return [pkg.get_name() for pkg in nested_packages]
 
     def _format_output(self, package_names: List[str], format_type: str) -> str:
         """Format output based on format parameter."""
@@ -498,10 +498,10 @@ class PackageUpdateAction(AbstractPackageAction):
             CliExecutionError: If GUID not found or element is not a Package.
         """
         project = self._get_active_root()
-        element = project.findElementByGUID(guid)
+        element = project.find_element_by_guid(guid)
         if element is None:
             raise CliExecutionError(f"GUID '{guid}' not found")
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Package":
             raise CliExecutionError(f"GUID '{guid}' does not resolve to a Package (found {meta_class})")
         return element
@@ -557,20 +557,20 @@ class PackageUpdateAction(AbstractPackageAction):
                 self.logger.warning("Skipping unknown attribute: %s", key)
                 continue
             if key == "name":
-                package.setName(value)
+                package.set_name(value)
             elif key == "description":
-                package.setDescription(value)
+                package.set_description(value)
             elif key == "display_name":
-                package.setDisplayName(value)
+                package.set_display_name(value)
             elif key == "stereotypes":
                 for stereotype in value:
-                    package.addStereotype(stereotype, "Package")
+                    package.add_stereotype(stereotype, "Package")
             elif key == "tags":
                 for tag_key, tag_value in value.items():
-                    package.setPropertyValue(tag_key, tag_value)
+                    package.set_property_value(tag_key, tag_value)
             elif key == "properties":
                 for prop_key, prop_value in value.items():
-                    package.setPropertyValue(prop_key, prop_value)
+                    package.set_property_value(prop_key, prop_value)
 
     def execute(self, args: argparse.Namespace) -> None:
         """Execute package update.
@@ -589,4 +589,4 @@ class PackageUpdateAction(AbstractPackageAction):
             package = self._resolve_and_validate_package(args.path)
         data = self._load_json_data(args)
         self._set_attributes(package, data)
-        self.logger.info("Successfully updated package: %s", package.getName())
+        self.logger.info("Successfully updated package: %s", package.get_name())

@@ -10,7 +10,7 @@ def test_package_is_a_unit() -> None:
     package = RPPackage(fake)
 
     assert isinstance(package, RPUnit)
-    assert package.getName() == "MyPkg"
+    assert package.get_name() == "MyPkg"
 
 
 def test_package_add_class_delegates_to_com_and_wraps_result() -> None:
@@ -19,10 +19,10 @@ def test_package_add_class_delegates_to_com_and_wraps_result() -> None:
     fake.addClass.return_value = new_class
     package = RPPackage(fake)
 
-    result = package.addClass("Widget")
+    result = package.add_class("Widget")
 
     fake.addClass.assert_called_once_with("Widget")
-    assert result.getName() == "Widget"
+    assert result.get_name() == "Widget"
 
 
 def test_package_add_nested_package_delegates_to_com() -> None:
@@ -31,10 +31,10 @@ def test_package_add_nested_package_delegates_to_com() -> None:
     fake.addNestedPackage.return_value = nested
     package = RPPackage(fake)
 
-    result = package.addNestedPackage("Nested")
+    result = package.add_nested_package("Nested")
 
     fake.addNestedPackage.assert_called_once_with("Nested")
-    assert result.getName() == "Nested"
+    assert result.get_name() == "Nested"
 
 
 def test_package_add_actor_delegates_to_com() -> None:
@@ -43,10 +43,10 @@ def test_package_add_actor_delegates_to_com() -> None:
     fake.addActor.return_value = actor
     package = RPPackage(fake)
 
-    result = package.addActor("Driver")
+    result = package.add_actor("Driver")
 
     fake.addActor.assert_called_once_with("Driver")
-    assert result.getName() == "Driver"
+    assert result.get_name() == "Driver"
 
 
 def test_package_add_global_function_delegates_to_com() -> None:
@@ -55,10 +55,10 @@ def test_package_add_global_function_delegates_to_com() -> None:
     fake.addGlobalFunction.return_value = func
     package = RPPackage(fake)
 
-    result = package.addGlobalFunction("doThing")
+    result = package.add_global_function("doThing")
 
     fake.addGlobalFunction.assert_called_once_with("doThing")
-    assert result.getName() == "doThing"
+    assert result.get_name() == "doThing"
 
 
 def test_package_is_registered_for_meta_class_package() -> None:
@@ -78,13 +78,13 @@ def test_package_get_nested_packages_returns_collection() -> None:
     fake.getNestedPackages.return_value = make_fake_collection([nested1, nested2])
     package = RPPackage(fake)
 
-    result = package.getNestedPackages()
+    result = package.get_nested_packages()
 
     fake.getNestedPackages.assert_called_once_with()
     assert isinstance(result, RPCollection)
     assert len(result) == 2
-    assert result[0].getName() == "Nested1"
-    assert result[1].getName() == "Nested2"
+    assert result[0].get_name() == "Nested1"
+    assert result[1].get_name() == "Nested2"
 
 
 def test_package_get_classes_returns_collection() -> None:
@@ -96,7 +96,7 @@ def test_package_get_classes_returns_collection() -> None:
     fake.getClasses.return_value = make_fake_collection([class1, class2])
     package = RPPackage(fake)
 
-    result = package.getClasses()
+    result = package.get_classes()
 
     fake.getClasses.assert_called_once_with()
     assert isinstance(result, RPCollection)
@@ -111,7 +111,7 @@ def test_package_get_actors_returns_collection() -> None:
     fake.getActors.return_value = make_fake_collection([actor1])
     package = RPPackage(fake)
 
-    result = package.getActors()
+    result = package.get_actors()
 
     fake.getActors.assert_called_once_with()
     assert isinstance(result, RPCollection)
@@ -126,7 +126,7 @@ def test_package_get_use_cases_returns_collection() -> None:
     fake.getUseCases.return_value = make_fake_collection([uc1])
     package = RPPackage(fake)
 
-    result = package.getUseCases()
+    result = package.get_use_cases()
 
     fake.getUseCases.assert_called_once_with()
     assert isinstance(result, RPCollection)
@@ -138,10 +138,10 @@ def test_package_add_use_case_returns_wrapped_element() -> None:
     fake.addUseCase.return_value = uc
     package = RPPackage(fake)
 
-    result = package.addUseCase("UC1")
+    result = package.add_use_case("UC1")
 
     fake.addUseCase.assert_called_once_with("UC1")
-    assert result.getName() == "UC1"
+    assert result.get_name() == "UC1"
 
 
 def test_package_add_interface_returns_wrapped_element() -> None:
@@ -150,10 +150,10 @@ def test_package_add_interface_returns_wrapped_element() -> None:
     fake.addInterface.return_value = iface
     package = RPPackage(fake)
 
-    result = package.addInterface("IFoo")
+    result = package.add_interface("IFoo")
 
     fake.addInterface.assert_called_once_with("IFoo")
-    assert result.getName() == "IFoo"
+    assert result.get_name() == "IFoo"
 
 
 def test_package_add_signal_returns_wrapped_element() -> None:
@@ -162,7 +162,7 @@ def test_package_add_signal_returns_wrapped_element() -> None:
     fake.addSignal.return_value = sig
     package = RPPackage(fake)
 
-    package.addSignal("Signal1")
+    package.add_signal("Signal1")
 
     fake.addSignal.assert_called_once_with("Signal1")
 
@@ -173,7 +173,7 @@ def test_package_add_exception_returns_wrapped_element() -> None:
     fake.addException.return_value = exc
     package = RPPackage(fake)
 
-    package.addException("Exception1")
+    package.add_exception("Exception1")
 
     fake.addException.assert_called_once_with("Exception1")
 
@@ -184,7 +184,7 @@ def test_package_add_enumeration_returns_wrapped_element() -> None:
     fake.addEnumeration.return_value = enum
     package = RPPackage(fake)
 
-    package.addEnumeration("Enum1")
+    package.add_enumeration("Enum1")
 
     fake.addEnumeration.assert_called_once_with("Enum1")
 
@@ -197,6 +197,6 @@ def test_package_get_enumerations_returns_collection() -> None:
     fake.getEnumerations.return_value = make_fake_collection([enum1])
     package = RPPackage(fake)
 
-    result = package.getEnumerations()
+    result = package.get_enumerations()
 
     assert isinstance(result, RPCollection)

@@ -35,24 +35,24 @@ def demo_navigate_packages(project: Any) -> None:
 
     try:
         print("Getting top-level packages...")
-        packages = project.getPackages()
+        packages = project.get_packages()
 
         if packages and len(packages) > 0:
             print(f"[OK] Found {len(packages)} top-level package(s)")
 
             for i, pkg in enumerate(packages, 1):
                 print(f"\nPackage {i}:")
-                print(f"  - Name: {pkg.getName()}")
-                print(f"  - Type: {pkg.getMetaClass()}")
-                print(f"  - GUID: {pkg.getGUID()}")
+                print(f"  - Name: {pkg.get_name()}")
+                print(f"  - Type: {pkg.get_meta_class()}")
+                print(f"  - GUID: {pkg.get_guid()}")
 
                 # Try to get classes in this package
                 try:
-                    classes = pkg.getClasses()
+                    classes = pkg.get_classes()
                     if classes and len(classes) > 0:
                         print(f"  - Classes: {len(classes)}")
                         for cls in classes:
-                            print(f"    - {cls.getName()}")
+                            print(f"    - {cls.get_name()}")
                 except Exception as e:
                     print(f"  - Classes: Unable to retrieve ({type(e).__name__})")
         else:
@@ -78,7 +78,7 @@ def demo_query_by_metaclass(project: Any) -> None:
     for meta_class in metaclasses:
         try:
             print(f"\nQuerying for {meta_class} elements...")
-            elements = project.getNestedElementsByMetaClass(meta_class, 1)  # 1 = recursive
+            elements = project.get_nested_elements_by_meta_class(meta_class, 1)  # 1 = recursive
 
             if elements and len(elements) > 0:
                 print(f"[OK] Found {len(elements)} {meta_class}(es)")
@@ -86,9 +86,9 @@ def demo_query_by_metaclass(project: Any) -> None:
                 # Show first few elements
                 display_count = min(5, len(elements))
                 for i, element in enumerate(elements[:display_count], 1):
-                    guid = element.getGUID()
+                    guid = element.get_guid()
                     guid_short = str(guid)[:16] if guid else "<unknown>"
-                    print(f"  {i}. {element.getName()} (GUID: {guid_short}...)")
+                    print(f"  {i}. {element.get_name()} (GUID: {guid_short}...)")
 
                 if len(elements) > display_count:
                     print(f"  ... and {len(elements) - display_count} more")
@@ -120,18 +120,18 @@ def demo_find_specific_element(project: Any) -> None:
         for meta_class in ["Class", "Actor", "Package", "UseCase"]:
             try:
                 print(f"\nSearching for '{name}' (type: {meta_class})...")
-                element = project.findNestedElementRecursive(name, meta_class)
+                element = project.find_nested_element_recursive(name, meta_class)
 
                 if element and element._com:
-                    print(f"[OK] Found: {element.getMetaClass()} '{element.getName()}'")
-                    print(f"  - GUID: {element.getGUID()}")
-                    print(f"  - Full path name: {element.getFullPathName()}")
+                    print(f"[OK] Found: {element.get_meta_class()} '{element.get_name()}'")
+                    print(f"  - GUID: {element.get_guid()}")
+                    print(f"  - Full path name: {element.get_full_path_name()}")
 
                     # Try to get parent
                     try:
-                        parent = element.getOwner()
+                        parent = element.get_owner()
                         if parent and parent._com:
-                            print(f"  - Parent: {parent.getMetaClass()} '{parent.getName()}'")
+                            print(f"  - Parent: {parent.get_meta_class()} '{parent.get_name()}'")
                     except Exception:
                         pass
 
@@ -156,7 +156,7 @@ def demo_display_class_details(project: Any) -> None:
 
     try:
         # Get a few classes to examine
-        classes = project.getNestedElementsByMetaClass("Class", 1)
+        classes = project.get_nested_elements_by_meta_class("Class", 1)
 
         if not classes or len(classes) == 0:
             print("[-] No classes found to examine")
@@ -167,18 +167,18 @@ def demo_display_class_details(project: Any) -> None:
         print(f"Showing details for {display_count} class(es):\n")
 
         for i, cls in enumerate(classes[:display_count], 1):
-            print(f"Class {i}: {cls.getName()}")
-            print(f"  - GUID: {cls.getGUID()}")
-            print(f"  - Full path name: {cls.getFullPathName()}")
+            print(f"Class {i}: {cls.get_name()}")
+            print(f"  - GUID: {cls.get_guid()}")
+            print(f"  - Full path name: {cls.get_full_path_name()}")
 
             # Get attributes
             try:
-                attributes = cls.getAttributes()
+                attributes = cls.get_attributes()
                 print(f"  - Attributes: {len(attributes)}")
                 for attr in attributes[:3]:  # Show first 3
-                    attr_type = attr.getType()
-                    type_name = attr_type.getName() if attr_type and attr_type._com else "<unresolved>"
-                    print(f"    - {attr.getName()}: {type_name}")
+                    attr_type = attr.get_type()
+                    type_name = attr_type.get_name() if attr_type and attr_type._com else "<unresolved>"
+                    print(f"    - {attr.get_name()}: {type_name}")
                 if len(attributes) > 3:
                     print(f"    ... and {len(attributes) - 3} more")
             except Exception as e:
@@ -186,10 +186,10 @@ def demo_display_class_details(project: Any) -> None:
 
             # Get operations
             try:
-                operations = cls.getOperations()
+                operations = cls.get_operations()
                 print(f"  - Operations: {len(operations)}")
                 for op in operations[:3]:  # Show first 3
-                    print(f"    - {op.getName()}(): {op.getReturnTypeDeclaration()}")
+                    print(f"    - {op.get_name()}(): {op.get_return_type_declaration()}")
                 if len(operations) > 3:
                     print(f"    ... and {len(operations) - 3} more")
             except Exception as e:
@@ -197,11 +197,11 @@ def demo_display_class_details(project: Any) -> None:
 
             # Get relationships
             try:
-                supers = cls.getBaseClassifiers()
+                supers = cls.get_base_classifiers()
                 if supers and len(supers) > 0:
                     print(f"  - Base classifiers: {len(supers)}")
                     for sup in supers:
-                        print(f"    - {sup.getName()}")
+                        print(f"    - {sup.get_name()}")
             except Exception as e:
                 print(f"  - Base classifiers: Unable to retrieve ({e})")
 
@@ -223,7 +223,7 @@ def demo_collection_iteration(project: Any) -> None:
 
     try:
         # Get packages collection
-        packages = project.getPackages()
+        packages = project.get_packages()
 
         if not packages or len(packages) == 0:
             print("[-] No packages found for collection demonstration")
@@ -238,21 +238,21 @@ def demo_collection_iteration(project: Any) -> None:
         print("\n2. Indexing access:")
         try:
             first_package = packages[0]  # 0-based Python indexing
-            print(f"   - First package: {first_package.getName()}")
+            print(f"   - First package: {first_package.get_name()}")
         except Exception as e:
             print(f"   - Indexing error: {e}")
 
         # Iteration
         print("\n3. Iteration:")
         for i, pkg in enumerate(packages, 1):
-            print(f"   {i}. {pkg.getName()}")
+            print(f"   {i}. {pkg.get_name()}")
 
         # Slicing (if supported)
         print("\n4. Slicing (first 2):")
         try:
             first_two = packages[:2]
             for pkg in first_two:
-                print(f"   - {pkg.getName()}")
+                print(f"   - {pkg.get_name()}")
         except Exception as e:
             print(f"   - Slicing not supported: {e}")
 
@@ -279,13 +279,13 @@ def main() -> None:
     try:
         # Open the shipped demo project
         print(f"Opening project: {DEMO_PROJECT_PATH}...")
-        project = app.openProject(DEMO_PROJECT_PATH)
+        project = app.open_project(DEMO_PROJECT_PATH)
 
         if not project or not project._com:
             print("[-] Failed to open demos/demo_project")
             sys.exit(1)
 
-        print(f"[OK] Active project: {project.getName()}")
+        print(f"[OK] Active project: {project.get_name()}")
 
         # Run navigation demos
         demo_navigate_packages(project)

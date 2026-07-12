@@ -49,19 +49,19 @@ def demo_get_active_project(app: RhapsodyApplication) -> Any:
 
     try:
         print("Getting active project from Rhapsody...")
-        project = app.activeProject()
+        project = app.active_project()
 
         if project and project._com:
-            print(f"[OK] Active project found: {project.getName()}")
+            print(f"[OK] Active project found: {project.get_name()}")
             print("\nProject Details:")
-            print(f"  - Name: {project.getName()}")
-            print(f"  - Filename: {project.getFilename()}")
-            print(f"  - GUID: {project.getGUID()}")
+            print(f"  - Name: {project.get_name()}")
+            print(f"  - Filename: {project.get_filename()}")
+            print(f"  - GUID: {project.get_guid()}")
 
             # Get some basic statistics
             try:
-                packages = project.getPackages()
-                classes = project.getNestedElementsByMetaClass("Class", 1)
+                packages = project.get_packages()
+                classes = project.get_nested_elements_by_meta_class("Class", 1)
                 print(f"  - Packages: {len(packages)}")
                 print(f"  - Classes (total): {len(classes)}")
             except Exception as e:
@@ -90,24 +90,24 @@ def demo_list_all_projects(app: RhapsodyApplication) -> None:
 
     try:
         print("Getting all open projects...")
-        projects = app.getProjects()
+        projects = app.get_projects()
 
         if projects and len(projects) > 0:
             print(f"[OK] Found {len(projects)} open project(s)")
 
             active_guid = None
             try:
-                active_project = app.activeProject()
+                active_project = app.active_project()
                 if active_project and active_project._com:
-                    active_guid = active_project.getGUID()
+                    active_guid = active_project.get_guid()
             except RhapsodyRuntimeException:
                 pass
 
             for i, project in enumerate(projects, 1):
                 print(f"\nProject {i}:")
-                print(f"  - Name: {project.getName()}")
-                print(f"  - Filename: {project.getFilename()}")
-                status = "Active" if active_guid and project.getGUID() == active_guid else "Inactive"
+                print(f"  - Name: {project.get_name()}")
+                print(f"  - Filename: {project.get_filename()}")
+                status = "Active" if active_guid and project.get_guid() == active_guid else "Inactive"
                 print(f"  - Status: {status}")
         else:
             print("[-] No open projects found")
@@ -139,12 +139,12 @@ def demo_open_existing_project(app: RhapsodyApplication, project_path: str) -> A
             print("  Hint: Provide a valid path to an .rpy file")
             return None
 
-        project = app.openProject(project_path)
-        print(f"[OK] Successfully opened project: {project.getName()}")
+        project = app.open_project(project_path)
+        print(f"[OK] Successfully opened project: {project.get_name()}")
 
         print("\nProject Details:")
-        print(f"  - Name: {project.getName()}")
-        print(f"  - Filename: {project.getFilename()}")
+        print(f"  - Name: {project.get_name()}")
+        print(f"  - Filename: {project.get_filename()}")
 
         return project
 
@@ -184,12 +184,12 @@ def demo_create_new_project(app: RhapsodyApplication) -> Any:
         project_name = f"ScratchProject_{timestamp}"
         print(f"Creating new project '{project_name}' at {scratch_dir}...")
 
-        project = app.createNewProject(scratch_dir, project_name)
+        project = app.create_new_project(scratch_dir, project_name)
         print("[OK] Successfully created new project!")
 
         print("\nProject Details:")
-        print(f"  - Name: {project.getName()}")
-        print(f"  - Filename: {project.getFilename()}")
+        print(f"  - Name: {project.get_name()}")
+        print(f"  - Filename: {project.get_filename()}")
 
         # Save the new project
         print("\nSaving new project...")
@@ -198,7 +198,7 @@ def demo_create_new_project(app: RhapsodyApplication) -> Any:
 
         # Capture the filename - getFilename() may return relative path or just name
         # so construct the full absolute path using scratch_dir
-        relative_filename = project.getFilename()
+        relative_filename = project.get_filename()
 
         # Build the full path to the project file
         # Rhapsody creates .rpyx files, so if no extension, add it
@@ -238,7 +238,7 @@ def demo_save_and_close_project(project: Any, scratch_dir: Optional[str] = None)
         return
 
     try:
-        project_name = project.getName()
+        project_name = project.get_name()
 
         print(f"Saving project: {project_name}...")
         project.save()
@@ -299,7 +299,7 @@ def main() -> None:
 
         if created_project_filename:
             # Step 2: Get active project (the one we just created)
-            scratch_project = app.activeProject()
+            scratch_project = app.active_project()
 
             if scratch_project and scratch_project._com:
                 # Step 3: Close the created project WITHOUT cleanup (we need the file to reopen)

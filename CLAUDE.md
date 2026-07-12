@@ -75,13 +75,13 @@ Three layers, each building on the one below:
 ### Layer 1 — Core Model Wrapping (`src/rhapsody_cli/models/`)
 
 Base infrastructure in `core.py`:
-- `RPModelElement` (`models/core.py:94`) — base class for all wrapped COM objects. Mirrors `IRPModelElement`. Method names match Java API exactly (`getName`, `setName`, `getMetaClass`, `getGUID`).
-- `RPUnit` (`models/core.py:1349`) — elements that can be saved as files (`save()`, `getFilename()`, `getNestedElements()`).
+- `RPModelElement` (`models/core.py:94`) — base class for all wrapped COM objects. Mirrors `IRPModelElement`. Wrapper method names are snake_case (`get_name`, `set_name`, `get_meta_class`, `get_guid`); internal COM calls stay camelCase (`self._com.methodName(...)`).
+- `RPUnit` (`models/core.py:1349`) — elements that can be saved as files (`save()`, `get_filename()`, `get_nested_elements()`).
 - `RPCollection` (`models/core.py:1627`) — iterable/indexable wrapper over `IRPCollection`. 1-based COM indexing is translated to 0-based Python indexing in `__getitem__`.
 - `call_com(func)` (`models/core.py:42`) — invokes a COM call, translating `pywintypes.com_error` into `RhapsodyRuntimeException`. **All COM calls must go through `call_com(lambda: ...)`** or through the helper accessors.
 - `wrap(com_obj)` (`models/core.py:61`) — factory that dispatches a raw COM object to the correct wrapper subclass using `_WRAPPER_REGISTRY`.
 - `register_wrapper(meta_class, cls)` (`models/core.py:37`) — registers a wrapper class for a given `getMetaClass()` string.
-- `_get_method_or_property` / `_set_method_or_property` — helpers that prefer Java-style methods (`getName()`) but fall back to bare COM properties (`name`) because different Rhapsody Prog IDs expose attributes differently. The app uses `Rhapsody2.Application.1` (property-style).
+- `_get_method_or_property` / `_set_method_or_property` — helpers that prefer Java-style COM methods (`getName()`) but fall back to bare COM properties (`name`) because different Rhapsody Prog IDs expose attributes differently. The app uses `Rhapsody2.Application.1` (property-style).
 
 Concrete element wrappers live in `models/elements/` and register themselves at import time:
 - `containment.py` — `RPPackage`, `RPProject`
@@ -138,7 +138,7 @@ CLI argv → main() → AbstractCommand (argparse) → AbstractAction.execute()
 
 ### API Mirroring
 
-Method names and class hierarchy **exactly mirror** the Rhapsody Java API (`com.telelogic.rhapsody.core`). Java `com.telelogic.rhapsody.core.IRPClass` → Python `rhapsody_cli.models.elements.classifiers.RPClass`. Java `getNestedElements()` → Python `getNestedElements()`. Preserve this mirroring when adding wrappers.
+Wrapper method names are snake_case versions of the Rhapsody Java API (`com.telelogic.rhapsody.core`). Java `com.telelogic.rhapsody.core.IRPClass` → Python `rhapsody_cli.models.elements.classifiers.RPClass`. Java `getNestedElements()` → Python `get_nested_elements()`. Use snake_case when adding wrapper methods; internal COM calls use the original camelCase.
 
 ### Wrapper Registry Pattern
 

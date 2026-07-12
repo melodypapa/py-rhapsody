@@ -64,7 +64,7 @@ class AbstractAttributeAction(ElementManagementAction):
         Raises:
             CliExecutionError: If attribute not found.
         """
-        attribute = classifier.findAttribute(name)
+        attribute = classifier.find_attribute(name)
         if attribute is None:
             raise CliExecutionError(f"Attribute '{name}' not found in classifier")
         return attribute
@@ -85,14 +85,14 @@ class AbstractAttributeAction(ElementManagementAction):
         """
         project = self._get_active_project()
         try:
-            element = project.findElementByGUID(guid)
+            element = project.find_element_by_guid(guid)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to locate attribute by GUID '{guid}'")
 
         if element is None:
             raise CliExecutionError(f"No element found with GUID '{guid}'")
 
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Attribute":
             raise CliExecutionError(f"GUID '{guid}' does not resolve to an Attribute (found {meta_class})")
 
@@ -168,7 +168,7 @@ class AttributeCreateAction(AbstractAttributeAction):
         if unknown:
             self.logger.warning("Skipping unknown attributes: %s", unknown)
 
-        attribute = classifier.addAttribute(name)
+        attribute = classifier.add_attribute(name)
         self._set_attributes(classifier, attribute, attr_attrs)
 
         full_path = f"{parent_path}/{name}"
@@ -207,17 +207,17 @@ class AttributeCreateAction(AbstractAttributeAction):
     def _set_attributes(self, classifier: Any, attribute: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on attribute."""
         if "name" in attrs:
-            attribute.setName(attrs["name"])
+            attribute.set_name(attrs["name"])
         if "defaultValue" in attrs:
-            attribute.setDefaultValue(attrs["defaultValue"])
+            attribute.set_default_value(attrs["defaultValue"])
         if "multiplicity" in attrs:
-            attribute.setMultiplicity(attrs["multiplicity"])
+            attribute.set_multiplicity(attrs["multiplicity"])
         if "visibility" in attrs:
-            attribute.setVisibility(attrs["visibility"])
+            attribute.set_visibility(attrs["visibility"])
         if "declaration" in attrs:
-            attribute.setDeclaration(attrs["declaration"])
+            attribute.set_declaration(attrs["declaration"])
         if "description" in attrs:
-            attribute.setDescription(attrs["description"])
+            attribute.set_description(attrs["description"])
         self._set_boolean_flags(attribute, attrs)
         self._set_type(classifier, attribute, attrs)
 
@@ -227,7 +227,7 @@ class AttributeCreateAction(AbstractAttributeAction):
         SWR_ATTR_00012: IsStatic Flag Support
         """
         if "isStatic" in attrs:
-            attribute.setIsStatic(1 if attrs["isStatic"] else 0)
+            attribute.set_is_static(1 if attrs["isStatic"] else 0)
 
     def _set_type(self, classifier: Any, attribute: Any, attrs: Dict[str, Any]) -> None:
         """Resolve and set the attribute type.
@@ -236,11 +236,11 @@ class AttributeCreateAction(AbstractAttributeAction):
         """
         if "type" in attrs:
             type_name = attrs["type"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(type_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(type_name)
             if target is None:
                 raise CliExecutionError(f"Type '{type_name}' not found")
-            attribute.setType(target)
+            attribute.set_type(target)
 
 
 class AttributeDeleteAction(AbstractAttributeAction):
@@ -274,7 +274,7 @@ class AttributeDeleteAction(AbstractAttributeAction):
 
         if has_guid:
             attribute = self._resolve_attribute_by_guid(args.guid)
-            classifier = attribute.getOwner()
+            classifier = attribute.get_owner()
             label = f"GUID '{args.guid}'"
         else:
             classifier = self._resolve_classifier(args.path)
@@ -282,7 +282,7 @@ class AttributeDeleteAction(AbstractAttributeAction):
             label = args.name
 
         try:
-            classifier.deleteAttribute(attribute)
+            classifier.delete_attribute(attribute)
             self.logger.info("Deleted attribute: %s", label)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete attribute '{label}'")
@@ -327,8 +327,8 @@ class AttributeListAction(AbstractAttributeAction):
 
     def _collect_attribute_names(self, classifier: Any) -> List[str]:
         """Collect names of attributes on a classifier."""
-        attributes = classifier.getAttributes()
-        return [attr.getName() for attr in attributes]
+        attributes = classifier.get_attributes()
+        return [attr.get_name() for attr in attributes]
 
     def _format_output(self, attr_names: List[str], format_type: str) -> str:
         """Format output based on format parameter."""
@@ -434,20 +434,20 @@ class AttributeViewAction(AbstractAttributeAction):
 
         Normalizes boolean flags to int for clean JSON round-trip.
         """
-        attr_type = attribute.getType()
-        type_name = attr_type.getName() if attr_type is not None else ""
+        attr_type = attribute.get_type()
+        type_name = attr_type.get_name() if attr_type is not None else ""
         return {
-            "name": attribute.getName(),
-            "guid": attribute.getGUID(),
-            "description": attribute.getDescription(),
+            "name": attribute.get_name(),
+            "guid": attribute.get_guid(),
+            "description": attribute.get_description(),
             "type": type_name,
-            "defaultValue": attribute.getDefaultValue(),
-            "multiplicity": attribute.getMultiplicity(),
-            "isStatic": int(attribute.getIsStatic()),
-            "visibility": attribute.getVisibility(),
-            "declaration": attribute.getDeclaration(),
-            "metaClass": attribute.getMetaClass(),
-            "fullPath": attribute.getFullPathName(),
+            "defaultValue": attribute.get_default_value(),
+            "multiplicity": attribute.get_multiplicity(),
+            "isStatic": int(attribute.get_is_static()),
+            "visibility": attribute.get_visibility(),
+            "declaration": attribute.get_declaration(),
+            "metaClass": attribute.get_meta_class(),
+            "fullPath": attribute.get_full_path_name(),
         }
 
     def _format_output(self, data: Dict[str, Any], format_type: str) -> str:
@@ -529,7 +529,7 @@ class AttributeUpdateAction(AbstractAttributeAction):
 
         if has_guid:
             attribute = self._resolve_attribute_by_guid(args.guid)
-            classifier = attribute.getOwner()
+            classifier = attribute.get_owner()
         else:
             classifier = self._resolve_classifier(args.path)
             attribute = self._resolve_attribute(classifier, args.name)
@@ -546,7 +546,7 @@ class AttributeUpdateAction(AbstractAttributeAction):
 
         self._set_attributes(classifier, attribute, data)
 
-        self.logger.info("Successfully updated attribute: %s", attribute.getName())
+        self.logger.info("Successfully updated attribute: %s", attribute.get_name())
 
     def _load_json_data(self, attributes_input: str) -> Any:
         """Load JSON data from inline string or external file.
@@ -573,23 +573,23 @@ class AttributeUpdateAction(AbstractAttributeAction):
     def _set_attributes(self, classifier: Any, attribute: Any, attrs: Dict[str, Any]) -> None:
         """Set validated attributes on attribute (partial update)."""
         if "name" in attrs:
-            attribute.setName(attrs["name"])
+            attribute.set_name(attrs["name"])
         if "defaultValue" in attrs:
-            attribute.setDefaultValue(attrs["defaultValue"])
+            attribute.set_default_value(attrs["defaultValue"])
         if "multiplicity" in attrs:
-            attribute.setMultiplicity(attrs["multiplicity"])
+            attribute.set_multiplicity(attrs["multiplicity"])
         if "visibility" in attrs:
-            attribute.setVisibility(attrs["visibility"])
+            attribute.set_visibility(attrs["visibility"])
         if "declaration" in attrs:
-            attribute.setDeclaration(attrs["declaration"])
+            attribute.set_declaration(attrs["declaration"])
         if "description" in attrs:
-            attribute.setDescription(attrs["description"])
+            attribute.set_description(attrs["description"])
         if "isStatic" in attrs:
-            attribute.setIsStatic(1 if attrs["isStatic"] else 0)
+            attribute.set_is_static(1 if attrs["isStatic"] else 0)
         if "type" in attrs:
             type_name = attrs["type"]
-            owner = classifier.getOwner()
-            target = owner.findNestedClassifierRecursive(type_name)
+            owner = classifier.get_owner()
+            target = owner.find_nested_classifier_recursive(type_name)
             if target is None:
                 raise CliExecutionError(f"Type '{type_name}' not found")
-            attribute.setType(target)
+            attribute.set_type(target)

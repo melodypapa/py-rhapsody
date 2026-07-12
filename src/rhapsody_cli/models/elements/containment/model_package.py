@@ -16,15 +16,15 @@ class RPPackage(RPUnit):
 
     # IRPPackage method parity checklist:
     # [ ] addActivityDiagram  [ ] impl  [ ] docstring  [ ] test
-    # [x] addActor  [x] impl  [x] docstring  [x] test
-    # [x] addClass  [x] impl  [x] docstring  [x] test
+    # [x] add_actor  [x] impl  [x] docstring  [x] test
+    # [x] add_class  [x] impl  [x] docstring  [x] test
     # [ ] addCollaborationDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addComponentDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addDeploymentDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addEvent  [ ] impl  [ ] docstring  [ ] test
     # [ ] addFlowItems  [ ] impl  [ ] docstring  [ ] test
     # [ ] addFlows  [ ] impl  [ ] docstring  [ ] test
-    # [x] addGlobalFunction  [x] impl  [x] docstring  [x] test
+    # [x] add_global_function  [x] impl  [x] docstring  [x] test
     # [ ] addGlobalObject  [ ] impl  [ ] docstring  [ ] test
     # [ ] addGlobalVariable  [ ] impl  [ ] docstring  [ ] test
     # [ ] addImplicitObject  [ ] impl  [ ] docstring  [ ] test
@@ -32,7 +32,7 @@ class RPPackage(RPUnit):
     # [ ] addLink  [ ] impl  [ ] docstring  [ ] test
     # [ ] addLinkBetweenSYSMLPorts  [ ] impl  [ ] docstring  [ ] test
     # [ ] addModule  [ ] impl  [ ] docstring  [ ] test
-    # [x] addNestedPackage  [x] impl  [x] docstring  [x] test
+    # [x] add_nested_package  [x] impl  [x] docstring  [x] test
     # [ ] addNode  [ ] impl  [ ] docstring  [ ] test
     # [ ] addObjectModelDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addPanelDiagram  [ ] impl  [ ] docstring  [ ] test
@@ -40,7 +40,7 @@ class RPPackage(RPUnit):
     # [ ] addStatechart  [ ] impl  [ ] docstring  [ ] test
     # [ ] addTimingDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addType  [ ] impl  [ ] docstring  [ ] test
-    # [x] addUseCase  [x] impl  [x] docstring  [x] test
+    # [x] add_use_case  [x] impl  [x] docstring  [x] test
     # [ ] addUseCaseDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] deleteActor  [ ] impl  [ ] docstring  [ ] test
     # [ ] deleteClass  [ ] impl  [ ] docstring  [ ] test
@@ -73,10 +73,10 @@ class RPPackage(RPUnit):
     # [ ] findType  [ ] impl  [ ] docstring  [ ] test
     # [ ] findUsage  [ ] impl  [ ] docstring  [ ] test
     # [ ] findUseCase  [ ] impl  [ ] docstring  [ ] test
-    # [x] getActors  [x] impl  [x] docstring  [x] test
+    # [x] get_actors  [x] impl  [x] docstring  [x] test
     # [ ] getAllNestedElements  [ ] impl  [ ] docstring  [ ] test
     # [ ] getBehavioralDiagrams  [ ] impl  [ ] docstring  [ ] test
-    # [x] getClasses  [x] impl  [x] docstring  [x] test
+    # [x] get_classes  [x] impl  [x] docstring  [x] test
     # [ ] getCollaborationDiagrams  [ ] impl  [ ] docstring  [ ] test
     # [ ] getComponentDiagrams  [ ] impl  [ ] docstring  [ ] test
     # [ ] getDeploymentDiagrams  [ ] impl  [ ] docstring  [ ] test
@@ -105,7 +105,7 @@ class RPPackage(RPUnit):
     # [ ] getTimingDiagrams  [ ] impl  [ ] docstring  [ ] test
     # [ ] getTypes  [ ] impl  [ ] docstring  [ ] test
     # [ ] getUseCaseDiagrams  [ ] impl  [ ] docstring  [ ] test
-    # [x] getUseCases  [x] impl  [x] docstring  [x] test
+    # [x] get_use_cases  [x] impl  [x] docstring  [x] test
     # [ ] getUserDefinedStereotypes  [ ] impl  [ ] docstring  [ ] test
     # [ ] loginToRemoteArtifactServer  [ ] impl  [ ] docstring  [ ] test
     # [ ] populateRemoteRequirements  [ ] impl  [ ] docstring  [ ] test
@@ -118,7 +118,7 @@ class RPPackage(RPUnit):
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPPackage methods.
 
-    def addClass(self, name: str) -> "RPClass":
+    def add_class(self, name: str) -> "RPClass":
         """Adds a new class to the package.
 
         Args:
@@ -132,7 +132,7 @@ class RPPackage(RPUnit):
         """
         return cast("RPClass", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addClass(name))))
 
-    def addNestedPackage(self, name: str) -> "RPPackage":
+    def add_nested_package(self, name: str) -> "RPPackage":
         """Adds a nested package to this package.
 
         Args:
@@ -146,7 +146,7 @@ class RPPackage(RPUnit):
         """
         return cast("RPPackage", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNestedPackage(name))))
 
-    def addActor(self, name: str) -> "RPActor":
+    def add_actor(self, name: str) -> "RPActor":
         """Adds a new actor to the package.
 
         Args:
@@ -160,7 +160,7 @@ class RPPackage(RPUnit):
         """
         return cast("RPActor", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addActor(name))))
 
-    def addGlobalFunction(self, name: str) -> "RPOperation":
+    def add_global_function(self, name: str) -> "RPOperation":
         """Adds a new global function to the package.
 
         Args:
@@ -174,7 +174,7 @@ class RPPackage(RPUnit):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addGlobalFunction(name))))
 
-    def getNestedPackages(self) -> "RPCollection":
+    def get_nested_packages(self) -> "RPCollection":
         """Returns all nested packages in this package.
 
         Returns:
@@ -182,7 +182,7 @@ class RPPackage(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedPackages", "nestedPackages"))
 
-    def getClasses(self) -> "RPCollection":
+    def get_classes(self) -> "RPCollection":
         """Returns all classes contained in this package.
 
         Returns:
@@ -193,7 +193,7 @@ class RPPackage(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getClasses", "classes"))
 
-    def getActors(self) -> "RPCollection":
+    def get_actors(self) -> "RPCollection":
         """Returns all actors contained in this package.
 
         Returns:
@@ -204,7 +204,7 @@ class RPPackage(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getActors", "actors"))
 
-    def getUseCases(self) -> "RPCollection":
+    def get_use_cases(self) -> "RPCollection":
         """Returns all use cases contained in this package.
 
         Returns:
@@ -215,7 +215,7 @@ class RPPackage(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getUseCases", "useCases"))
 
-    def addUseCase(self, name: str) -> "RPUseCase":
+    def add_use_case(self, name: str) -> "RPUseCase":
         """Adds a new use case to the package.
 
         Args:
@@ -229,7 +229,7 @@ class RPPackage(RPUnit):
         """
         return cast("RPUseCase", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addUseCase(name))))
 
-    def addInterface(self, name: str) -> Any:
+    def add_interface(self, name: str) -> Any:
         """Adds a new interface to the package.
 
         Args:
@@ -240,7 +240,7 @@ class RPPackage(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addInterface(name)))
 
-    def addSignal(self, name: str) -> Any:
+    def add_signal(self, name: str) -> Any:
         """Adds a new signal to the package.
 
         Args:
@@ -251,7 +251,7 @@ class RPPackage(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addSignal(name)))
 
-    def addException(self, name: str) -> Any:
+    def add_exception(self, name: str) -> Any:
         """Adds a new exception to the package.
 
         Args:
@@ -262,7 +262,7 @@ class RPPackage(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addException(name)))
 
-    def addEnumeration(self, name: str) -> Any:
+    def add_enumeration(self, name: str) -> Any:
         """Adds a new enumeration to the package.
 
         Args:
@@ -273,7 +273,7 @@ class RPPackage(RPUnit):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEnumeration(name)))
 
-    def getEnumerations(self) -> "RPCollection":
+    def get_enumerations(self) -> "RPCollection":
         """Returns all enumerations contained in this package.
 
         Returns:

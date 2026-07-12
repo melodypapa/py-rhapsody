@@ -10,7 +10,7 @@ def test_stereotype_is_a_classifier() -> None:
     stereo = RPStereotype(fake)
 
     assert isinstance(stereo, RPClassifier)
-    assert stereo.getName() == "MyStereo"
+    assert stereo.get_name() == "MyStereo"
 
 
 def test_stereotype_is_registered_for_meta_class_stereotype() -> None:

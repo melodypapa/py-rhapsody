@@ -94,10 +94,10 @@ class RhapsodyApplication:
                 raise
         app = cls._launch()
         if show_gui:
-            app.setHiddenUI(False)
+            app.set_hidden_ui(False)
         return app
 
-    def openProject(self, filename: str) -> RPProject:
+    def open_project(self, filename: str) -> RPProject:
         """Open an existing Rhapsody project.
 
         Args:
@@ -111,7 +111,7 @@ class RhapsodyApplication:
         """
         return RPProject(com_utils.call_com(lambda: self._com.openProject(filename)))
 
-    def createNewProject(self, project_location: str, project_name: str) -> RPProject:
+    def create_new_project(self, project_location: str, project_name: str) -> RPProject:
         """Create a new Rhapsody project.
 
         Args:
@@ -125,9 +125,9 @@ class RhapsodyApplication:
             com.telelogic.rhapsody.core.IRPApplication::createNewProject(java.lang.String projectLocation, java.lang.String projectName)
         """
         com_utils.call_com(lambda: self._com.createNewProject(project_location, project_name))
-        return self.activeProject()
+        return self.active_project()
 
-    def activeProject(self) -> RPProject:
+    def active_project(self) -> RPProject:
         """Return the project currently open in Rhapsody.
 
         Returns:
@@ -145,7 +145,7 @@ class RhapsodyApplication:
             raise RhapsodyRuntimeException("No active project is open in Rhapsody")
         return RPProject(result)
 
-    def getProjects(self) -> RPCollection:
+    def get_projects(self) -> RPCollection:
         """Return all open projects in Rhapsody.
 
         Returns:
@@ -176,7 +176,7 @@ class RhapsodyApplication:
         """Disconnect from Rhapsody. Calls quit() and provides a cleanup hook."""
         self.quit()
 
-    def getIsHiddenUI(self) -> bool:
+    def get_is_hidden_ui(self) -> bool:
         """Return whether the Rhapsody GUI is hidden.
 
         Mirrors ``IRPApplication.getIsHiddenUI()``.
@@ -192,7 +192,7 @@ class RhapsodyApplication:
         """
         return bool(com_utils._get_method_or_property(self._com, "getIsHiddenUI", "isHiddenUI"))
 
-    def setHiddenUI(self, hidden: bool) -> None:
+    def set_hidden_ui(self, hidden: bool) -> None:
         """Set whether the Rhapsody GUI is hidden.
 
         Mirrors ``IRPApplication.setHiddenUI()``. Rhapsody instances launched via
@@ -210,7 +210,7 @@ class RhapsodyApplication:
         """
         com_utils._set_method_or_property(self._com, "setHiddenUI", "isHiddenUI", hidden)
 
-    def bringWindowToTop(self) -> None:
+    def bring_window_to_top(self) -> None:
         """Bring the Rhapsody application window to the top.
 
         Mirrors ``IRPApplication.bringWindowToTop()``. Brings an already-visible
@@ -225,11 +225,11 @@ class RhapsodyApplication:
         """
         com_utils.call_com(lambda: self._com.bringWindowToTop())
 
-    def closeAllProjects(self) -> None:
+    def close_all_projects(self) -> None:
         """Close all open projects without quitting Rhapsody."""
         com_utils.call_com(lambda: self._com.closeAllProjects())
 
-    def saveAll(self) -> None:
+    def save_all(self) -> None:
         """Save all open projects.
 
         Raises:
@@ -240,7 +240,7 @@ class RhapsodyApplication:
         """
         com_utils.call_com(lambda: self._com.saveAll())
 
-    def getVersion(self) -> str:
+    def get_version(self) -> str:
         """Get the Rhapsody version string.
 
         Returns:
@@ -248,7 +248,7 @@ class RhapsodyApplication:
         """
         return str(com_utils.call_com(lambda: self._com.getVersion()))
 
-    def getBuildNo(self) -> str:
+    def get_build_no(self) -> str:
         """Return the Rhapsody build number.
 
         Returns:
@@ -262,7 +262,7 @@ class RhapsodyApplication:
         """
         return str(com_utils.call_com(lambda: self._com.getBuildNo()))
 
-    def getRhapsodyDir(self) -> str:
+    def get_rhapsody_dir(self) -> str:
         """Get the Rhapsody installation directory.
 
         Returns:
@@ -270,7 +270,7 @@ class RhapsodyApplication:
         """
         return str(com_utils.call_com(lambda: self._com.getRhapsodyDir()))
 
-    def getOMROOT(self) -> str:
+    def get_omroot(self) -> str:
         """Return the OMROOT directory path.
 
         Returns:
@@ -296,7 +296,7 @@ class RhapsodyApplication:
         """
         com_utils.call_com(lambda: self._com.generate())
 
-    def generateElements(self, elements: RPCollection) -> None:
+    def generate_elements(self, elements: RPCollection) -> None:
         """Generate code for the given elements.
 
         Args:
@@ -310,7 +310,7 @@ class RhapsodyApplication:
         """
         com_utils.call_com(lambda: self._com.generateElements(elements._com))
 
-    def generateEntireProject(self) -> None:
+    def generate_entire_project(self) -> None:
         """Generate code for the entire active project.
 
         Raises:
@@ -332,12 +332,12 @@ class RhapsodyApplication:
         """
         com_utils.call_com(lambda: self._com.regenerate())
 
-    def addToModel(self, filename: str, withDescendant: int) -> None:
+    def add_to_model(self, filename: str, with_descendant: int) -> None:
         """Add a model element from a file to the model.
 
         Args:
             filename: Path to the file to add.
-            withDescendant: 1 to also add descendants, 0 otherwise.
+            with_descendant: 1 to also add descendants, 0 otherwise.
 
         Raises:
             RhapsodyRuntimeException: If the underlying COM call fails.
@@ -345,30 +345,30 @@ class RhapsodyApplication:
         Reference:
             com.telelogic.rhapsody.core.IRPApplication::addToModel(java.lang.String filename, int withDescendant)
         """
-        com_utils.call_com(lambda: self._com.addToModel(filename, withDescendant))
+        com_utils.call_com(lambda: self._com.addToModel(filename, with_descendant))
 
-    def addToModelEx(self, filename: str, mode: int, addSubUnits: int, addDependents: int) -> None:
+    def add_to_model_ex(self, filename: str, mode: int, add_sub_units: int, add_dependents: int) -> None:
         """Add a unit to the model with extended options.
 
         Args:
             filename: The full path to the file to add to the model.
             mode: How the unit should be added (see IRPApplication.AddToModel_Mode).
-            addSubUnits: 1 to also add the unit's sub-units, 0 otherwise. Ignored
+            add_sub_units: 1 to also add the unit's sub-units, 0 otherwise. Ignored
                 when ``mode`` equals IRPApplication.AddToModel_Mode.AS_UNIT_WITHOUT_COPY.
-            addDependents: 1 to also add units that elements in the unit depend
+            add_dependents: 1 to also add units that elements in the unit depend
                 on, 0 otherwise. Ignored when ``mode`` equals
                 IRPApplication.AddToModel_Mode.AS_UNIT_WITHOUT_COPY.
 
         Reference:
             com.telelogic.rhapsody.core.IRPApplication::addToModelEx(java.lang.String filename, int addToModelMode, int addSubUnits, int addDependents)
         """
-        com_utils.call_com(lambda: self._com.addToModelEx(filename, mode, addSubUnits, addDependents))
+        com_utils.call_com(lambda: self._com.addToModelEx(filename, mode, add_sub_units, add_dependents))
 
-    def setLog(self, fullPathname: str) -> None:
+    def set_log(self, full_pathname: str) -> None:
         """Set the log file path.
 
         Args:
-            fullPathname: Full path to the log file.
+            full_pathname: Full path to the log file.
 
         Raises:
             RhapsodyRuntimeException: If the underlying COM call fails.
@@ -376,9 +376,9 @@ class RhapsodyApplication:
         Reference:
             com.telelogic.rhapsody.core.IRPApplication::setLog(java.lang.String logFile)
         """
-        com_utils.call_com(lambda: self._com.setLog(fullPathname))
+        com_utils.call_com(lambda: self._com.setLog(full_pathname))
 
-    def checkModel(self) -> None:
+    def check_model(self) -> None:
         """Run model checking on the active project.
 
         Raises:

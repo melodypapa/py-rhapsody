@@ -11,7 +11,7 @@ def test_component_instance_is_an_instance() -> None:
     comp_inst = RPComponentInstance(fake)
 
     assert isinstance(comp_inst, RPInstance)
-    assert comp_inst.getName() == "CompInst1"
+    assert comp_inst.get_name() == "CompInst1"
 
 
 def test_component_instance_is_registered_for_meta_class_component_instance() -> None:

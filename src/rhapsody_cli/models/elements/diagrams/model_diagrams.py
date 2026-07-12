@@ -23,9 +23,9 @@ class RPDiagram(RPUnit):
     # [ ] addNewEdgeForElement  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewNodeByType  [ ] impl  [ ] docstring  [ ] test
     # [ ] addNewNodeForElement  [ ] impl  [ ] docstring  [ ] test
-    # [x] addTextBox  [x] impl  [x] docstring  [x] test
+    # [x] add_text_box  [x] impl  [x] docstring  [x] test
     # [ ] createDiagramView  [ ] impl  [ ] docstring  [ ] test
-    # [x] getCustomViews  [x] impl  [x] docstring  [x] test
+    # [x] get_custom_views  [x] impl  [x] docstring  [x] test
     # [ ] getDiagramViewOf  [ ] impl  [ ] docstring  [ ] test
     # [ ] getDiagramViews  [ ] impl  [ ] docstring  [ ] test
     # [ ] isDiagramView  [ ] impl  [ ] docstring  [ ] test
@@ -33,9 +33,9 @@ class RPDiagram(RPUnit):
     # [ ] rearrangePorts  [ ] impl  [ ] docstring  [ ] test
     # [ ] setCustomViews  [ ] impl  [ ] docstring  [ ] test
     # [ ] updateViewOnServer  [ ] impl  [ ] docstring  [ ] test
-    # [x] closeDiagram  [x] impl  [x] docstring  [x] test
+    # [x] close_diagram  [x] impl  [x] docstring  [x] test
     # [ ] completeRelations  [ ] impl  [ ] docstring  [ ] test
-    # [x] getCorrespondingGraphicElements  [x] impl  [x] docstring  [x] test
+    # [x] get_corresponding_graphic_elements  [x] impl  [x] docstring  [x] test
     # [ ] getElementsInDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] getGraphicalElements  [ ] impl  [ ] docstring  [ ] test
     # [ ] getLastVisualizationModifiedTime  [ ] impl  [ ] docstring  [ ] test
@@ -53,7 +53,7 @@ class RPDiagram(RPUnit):
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPDiagram methods.
 
-    def closeDiagram(self) -> None:
+    def close_diagram(self) -> None:
         """Closes the diagram.
 
         Reference:
@@ -61,7 +61,7 @@ class RPDiagram(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.closeDiagram())
 
-    def addTextBox(self, text: str, x_position: int, y_position: int, width: int, height: int) -> "RPGraphElement":
+    def add_text_box(self, text: str, x_position: int, y_position: int, width: int, height: int) -> "RPGraphElement":
         """Adds a text box using the specified text, starting point, width, and height.
 
         Args:
@@ -79,7 +79,7 @@ class RPDiagram(RPUnit):
         """
         return cast("RPGraphElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addTextBox(text, x_position, y_position, width, height))))
 
-    def getCustomViews(self) -> RPCollection:
+    def get_custom_views(self) -> RPCollection:
         """Gets the custom views that were applied to this diagram view.
 
         Returns:
@@ -93,7 +93,7 @@ class RPDiagram(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getCustomViews", "customViews"))
 
-    def getCorrespondingGraphicElements(self, model_element: RPModelElement) -> RPCollection:
+    def get_corresponding_graphic_elements(self, model_element: RPModelElement) -> RPCollection:
         """Returns the graphical elements that represent the specified model element.
 
         In cases where the same model element appears multiple times in a single

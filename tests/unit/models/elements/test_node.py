@@ -10,7 +10,7 @@ def test_node_is_a_unit() -> None:
     node = RPNode(fake)
 
     assert isinstance(node, RPUnit)
-    assert node.getName() == "Node1"
+    assert node.get_name() == "Node1"
 
 
 def test_node_is_registered_for_meta_class_node() -> None:

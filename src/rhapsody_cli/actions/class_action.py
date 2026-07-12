@@ -57,7 +57,7 @@ class AbstractClassAction(ElementManagementAction):
         root = self._get_active_root()
         container = self._resolve_container_or_element(root, path, resolve_element=False, operation=f"resolve package path '{path}'")
 
-        meta_class = container.getMetaClass()
+        meta_class = container.get_meta_class()
         if meta_class not in self._PACKAGE_META_CLASSES:
             raise CliExecutionError(f"Path '{path}' does not resolve to a Package or Project (found {meta_class})")
 
@@ -80,7 +80,7 @@ class AbstractClassAction(ElementManagementAction):
         root = self._get_active_root()
         element = self._resolve_container_or_element(root, path, resolve_element=True, operation=f"resolve class path '{path}'")
 
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Class":
             raise CliExecutionError(f"Path '{path}' does not resolve to a Class (found {meta_class})")
 
@@ -102,14 +102,14 @@ class AbstractClassAction(ElementManagementAction):
         """
         project = self._get_active_project()
         try:
-            element = project.findElementByGUID(guid)
+            element = project.find_element_by_guid(guid)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to locate class by GUID '{guid}'")
 
         if element is None:
             raise CliExecutionError(f"No element found with GUID '{guid}'")
 
-        meta_class = element.getMetaClass()
+        meta_class = element.get_meta_class()
         if meta_class != "Class":
             raise CliExecutionError(f"GUID '{guid}' does not resolve to a Class (found {meta_class})")
 
@@ -187,7 +187,7 @@ class ClassCreateAction(AbstractClassAction):
         if unknown:
             self.logger.warning("Skipping unknown attributes: %s", unknown)
 
-        cls = parent.addClass(name)
+        cls = parent.add_class(name)
         self._set_attributes(parent, cls, cls_attrs)
 
         full_path = f"{parent_path}/{name}"
@@ -236,7 +236,7 @@ class ClassCreateAction(AbstractClassAction):
     def _set_basic_attributes(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Set basic attributes."""
         if "description" in attrs:
-            cls.setDescription(attrs["description"])
+            cls.set_description(attrs["description"])
 
     def _set_boolean_flags(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Set boolean flags isAbstract, isFinal, isActive.
@@ -244,35 +244,35 @@ class ClassCreateAction(AbstractClassAction):
         SWR_CLS_00012: Boolean Flag Support
         """
         if "isAbstract" in attrs:
-            cls.setIsAbstract(1 if attrs["isAbstract"] else 0)
+            cls.set_is_abstract(1 if attrs["isAbstract"] else 0)
         if "isFinal" in attrs:
-            cls.setIsFinal(1 if attrs["isFinal"] else 0)
+            cls.set_is_final(1 if attrs["isFinal"] else 0)
         if "isActive" in attrs:
-            cls.setIsActive(1 if attrs["isActive"] else 0)
+            cls.set_is_active(1 if attrs["isActive"] else 0)
 
     def _set_properties(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Set custom properties (tags)."""
         if "tags" in attrs:
             for key, val in attrs["tags"].items():
-                cls.setPropertyValue(key, val)
+                cls.set_property_value(key, val)
 
     def _set_stereotypes(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Apply stereotypes."""
         if "stereotypes" in attrs:
             for stereotype in attrs["stereotypes"]:
-                cls.addStereotype(stereotype, "Class")
+                cls.add_stereotype(stereotype, "Class")
 
     def _set_operations(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Add operations."""
         if "operations" in attrs:
             for op_name in attrs["operations"]:
-                cls.addOperation(op_name)
+                cls.add_operation(op_name)
 
     def _set_attributes_list(self, cls: Any, attrs: Dict[str, Any]) -> None:
         """Add attributes."""
         if "attributes" in attrs:
             for attr_name in attrs["attributes"]:
-                cls.addAttribute(attr_name)
+                cls.add_attribute(attr_name)
 
     def _set_superclasses(self, parent: Any, cls: Any, attrs: Dict[str, Any]) -> None:
         """Add generalization relationships to superclasses.
@@ -281,10 +281,10 @@ class ClassCreateAction(AbstractClassAction):
         """
         if "superclasses" in attrs:
             for name in attrs["superclasses"]:
-                target = parent.findNestedClassifierRecursive(name)
+                target = parent.find_nested_classifier_recursive(name)
                 if target is None:
                     raise CliExecutionError(f"Superclass '{name}' not found in package")
-                cls.addGeneralization(target)
+                cls.add_generalization(target)
 
 
 class ClassDeleteAction(AbstractClassAction):
@@ -320,7 +320,7 @@ class ClassDeleteAction(AbstractClassAction):
             label = args.path
 
         try:
-            cls.deleteFromProject()
+            cls.delete_from_project()
             self.logger.info("Deleted class: %s", label)
         except Exception as e:
             self._handle_execution_error(e, f"Failed to delete class '{label}'")
@@ -365,8 +365,8 @@ class ClassListAction(AbstractClassAction):
 
     def _collect_class_names(self, package: Any) -> List[str]:
         """Collect names of classes in package."""
-        classes = package.getClasses()
-        return [cls.getName() for cls in classes]
+        classes = package.get_classes()
+        return [cls.get_name() for cls in classes]
 
     def _format_output(self, class_names: List[str], format_type: str) -> str:
         """Format output based on format parameter."""
@@ -469,21 +469,21 @@ class ClassViewAction(AbstractClassAction):
 
         Normalizes IsAbstract (bool) to int for clean JSON round-trip.
         """
-        operations = cls.getOperations()
-        attributes = cls.getAttributes()
+        operations = cls.get_operations()
+        attributes = cls.get_attributes()
         return {
-            "name": cls.getName(),
-            "guid": cls.getGUID(),
-            "description": cls.getDescription(),
-            "isAbstract": int(cls.getIsAbstract()),
-            "isActive": int(cls.getIsActive()),
-            "isFinal": int(cls.getIsFinal()),
-            "isComposite": int(cls.getIsComposite()),
-            "isReactive": int(cls.getIsReactive()),
-            "metaClass": cls.getMetaClass(),
-            "fullPath": cls.getFullPathName(),
-            "operations": [op.getName() for op in operations],
-            "attributes": [attr.getName() for attr in attributes],
+            "name": cls.get_name(),
+            "guid": cls.get_guid(),
+            "description": cls.get_description(),
+            "isAbstract": int(cls.get_is_abstract()),
+            "isActive": int(cls.get_is_active()),
+            "isFinal": int(cls.get_is_final()),
+            "isComposite": int(cls.get_is_composite()),
+            "isReactive": int(cls.get_is_reactive()),
+            "metaClass": cls.get_meta_class(),
+            "fullPath": cls.get_full_path_name(),
+            "operations": [op.get_name() for op in operations],
+            "attributes": [attr.get_name() for attr in attributes],
         }
 
     def _format_output(self, data: Dict[str, Any], format_type: str) -> str:
@@ -563,20 +563,20 @@ class ClassLinkAction(AbstractClassAction):
             source = self._resolve_and_validate_class(args.path)
 
         target_name = args.add if args.add else args.remove
-        target = source.findNestedClassifierRecursive(target_name)
+        target = source.find_nested_classifier_recursive(target_name)
         if target is None:
             raise CliExecutionError(f"Class '{target_name}' not found")
 
         try:
             if args.add:
-                source.addGeneralization(target)
+                source.add_generalization(target)
                 self.logger.info(
                     "Added generalization: %s -> %s",
                     args.path or args.guid,
                     target_name,
                 )
             else:
-                source.deleteGeneralization(target)
+                source.delete_generalization(target)
                 self.logger.info(
                     "Removed generalization: %s -/-> %s",
                     args.path or args.guid,
@@ -672,21 +672,21 @@ class ClassUpdateAction(AbstractClassAction):
                 self.logger.warning("Skipping unknown attribute: %s", key)
                 continue
             if key == "name":
-                cls.setName(value)
+                cls.set_name(value)
             elif key == "description":
-                cls.setDescription(value)
+                cls.set_description(value)
             elif key == "isAbstract":
-                cls.setIsAbstract(1 if value else 0)
+                cls.set_is_abstract(1 if value else 0)
             elif key == "isFinal":
-                cls.setIsFinal(1 if value else 0)
+                cls.set_is_final(1 if value else 0)
             elif key == "isActive":
-                cls.setIsActive(1 if value else 0)
+                cls.set_is_active(1 if value else 0)
             elif key == "stereotypes":
                 for stereotype in value:
-                    cls.addStereotype(stereotype, "Class")
+                    cls.add_stereotype(stereotype, "Class")
             elif key == "tags":
                 for tag_key, tag_value in value.items():
-                    cls.setPropertyValue(tag_key, tag_value)
+                    cls.set_property_value(tag_key, tag_value)
 
     def execute(self, args: argparse.Namespace) -> None:
         """Execute class update.
@@ -705,4 +705,4 @@ class ClassUpdateAction(AbstractClassAction):
             cls = self._resolve_and_validate_class(args.path)
         data = self._load_json_data(args)
         self._set_attributes(cls, data)
-        self.logger.info("Successfully updated class: %s", cls.getName())
+        self.logger.info("Successfully updated class: %s", cls.get_name())

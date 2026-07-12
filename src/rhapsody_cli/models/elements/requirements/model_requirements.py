@@ -17,20 +17,20 @@ class RPAnnotation(RPUnit):
     """
 
     # IRPAnnotation method parity checklist:
-    # [x] addAnchor  [x] impl  [x] docstring  [x] test
-    # [x] getAnchoredByMe  [x] impl  [x] docstring  [x] test
-    # [x] getBody  [x] impl  [x] docstring  [x] test
-    # [x] getSpecification  [x] impl  [x] docstring  [x] test
-    # [x] getSpecificationRTF  [x] impl  [x] docstring  [x] test
-    # [x] isSpecificationRTF  [x] impl  [x] docstring  [x] test
-    # [x] removeAnchor  [x] impl  [x] docstring  [x] test
-    # [x] setBody  [x] impl  [x] docstring  [x] test
-    # [x] setSpecification  [x] impl  [x] docstring  [x] test
-    # [x] setSpecificationRTF  [x] impl  [x] docstring  [x] test
+    # [x] add_anchor  [x] impl  [x] docstring  [x] test
+    # [x] get_anchored_by_me  [x] impl  [x] docstring  [x] test
+    # [x] get_body  [x] impl  [x] docstring  [x] test
+    # [x] get_specification  [x] impl  [x] docstring  [x] test
+    # [x] get_specification_rtf  [x] impl  [x] docstring  [x] test
+    # [x] is_specification_rtf  [x] impl  [x] docstring  [x] test
+    # [x] remove_anchor  [x] impl  [x] docstring  [x] test
+    # [x] set_body  [x] impl  [x] docstring  [x] test
+    # [x] set_specification  [x] impl  [x] docstring  [x] test
+    # [x] set_specification_rtf  [x] impl  [x] docstring  [x] test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPAnnotation methods.
 
-    def addAnchor(self, target: RPModelElement) -> None:
+    def add_anchor(self, target: RPModelElement) -> None:
         """Adds an anchor from the annotation to the specified model element.
 
         Args:
@@ -41,7 +41,7 @@ class RPAnnotation(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addAnchor(target._com))
 
-    def getAnchoredByMe(self) -> RPCollection:
+    def get_anchored_by_me(self) -> RPCollection:
         """Gets the list of model elements that are anchored to the annotation.
 
         Returns:
@@ -52,7 +52,7 @@ class RPAnnotation(RPUnit):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAnchoredByMe", "anchoredByMe"))
 
-    def getBody(self) -> str:
+    def get_body(self) -> str:
         """Gets the text of the specification for the annotation.
 
         Returns:
@@ -63,7 +63,7 @@ class RPAnnotation(RPUnit):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getBody", "body"))
 
-    def getSpecification(self) -> str:
+    def get_specification(self) -> str:
         """Gets the text of the specification for the annotation.
 
         Returns:
@@ -74,7 +74,7 @@ class RPAnnotation(RPUnit):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecification", "specification"))
 
-    def getSpecificationRTF(self) -> str:
+    def get_specification_rtf(self) -> str:
         """Returns the specification of the annotation in RTF format.
 
         Returns:
@@ -85,7 +85,7 @@ class RPAnnotation(RPUnit):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getSpecificationRTF", "specificationRTF"))
 
-    def isSpecificationRTF(self) -> bool:
+    def is_specification_rtf(self) -> bool:
         """Checks whether the specification is in RTF format.
 
         Returns:
@@ -96,7 +96,7 @@ class RPAnnotation(RPUnit):
         """
         return bool(AbstractRPModelElement._get_method_or_property(self._com, "isSpecificationRTF", "specificationRTF"))
 
-    def removeAnchor(self, target: RPModelElement) -> None:
+    def remove_anchor(self, target: RPModelElement) -> None:
         """Removes the anchor to the specified model element.
 
         Args:
@@ -107,7 +107,7 @@ class RPAnnotation(RPUnit):
         """
         AbstractRPModelElement.call_com(lambda: self._com.removeAnchor(target._com))
 
-    def setBody(self, body: str) -> None:
+    def set_body(self, body: str) -> None:
         """Adds a specification to the annotation.
 
         Args:
@@ -118,7 +118,7 @@ class RPAnnotation(RPUnit):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setBody", "body", body)
 
-    def setSpecification(self, specification: str) -> None:
+    def set_specification(self, specification: str) -> None:
         """Adds a specification to the annotation.
 
         Args:
@@ -129,7 +129,7 @@ class RPAnnotation(RPUnit):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setSpecification", "specification", specification)
 
-    def setSpecificationRTF(self, specification_rtf: str) -> None:
+    def set_specification_rtf(self, specification_rtf: str) -> None:
         """Specifies the RTF string to use for the specification of the annotation.
 
         Args:
@@ -145,12 +145,12 @@ class RPRequirement(RPAnnotation):
     """Wraps ``IRPRequirement``: represents a requirement in the model."""
 
     # IRPRequirement method parity checklist:
-    # [x] getRequirementID  [x] impl  [x] docstring  [x] test
-    # [x] setRequirementID  [x] impl  [x] docstring  [x] test
+    # [x] get_requirement_id  [x] impl  [x] docstring  [x] test
+    # [x] set_requirement_id  [x] impl  [x] docstring  [x] test
     # [inherited] IRPAnnotation / IRPUnit / IRPModelElement methods (covered by RPAnnotation / RPUnit / RPModelElement checklists)
     # No deprecated IRPRequirement methods.
 
-    def getRequirementID(self) -> str:
+    def get_requirement_id(self) -> str:
         """Returns the ID that was set for the requirement.
 
         Returns:
@@ -161,7 +161,7 @@ class RPRequirement(RPAnnotation):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getRequirementID", "requirementID"))
 
-    def setRequirementID(self, requirement_id: str) -> None:
+    def set_requirement_id(self, requirement_id: str) -> None:
         """Sets the ID for the requirement.
 
         Args:

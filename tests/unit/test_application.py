@@ -95,11 +95,11 @@ def test_open_project_wraps_result_as_rpproject() -> None:
     fake_app.openProject.return_value = fake_project
     app = RhapsodyApplication(fake_app)
 
-    project = app.openProject("C:/models/MyProject.rpy")
+    project = app.open_project("C:/models/MyProject.rpy")
 
     fake_app.openProject.assert_called_once_with("C:/models/MyProject.rpy")
     assert isinstance(project, RPProject)
-    assert project.getName() == "MyProject"
+    assert project.get_name() == "MyProject"
 
 
 def test_active_project_wraps_result_as_rpproject() -> None:
@@ -108,10 +108,10 @@ def test_active_project_wraps_result_as_rpproject() -> None:
     fake_app.activeProject.return_value = fake_project
     app = RhapsodyApplication(fake_app)
 
-    project = app.activeProject()
+    project = app.active_project()
 
     assert isinstance(project, RPProject)
-    assert project.getName() == "ActiveOne"
+    assert project.get_name() == "ActiveOne"
 
 
 def test_active_project_raises_when_no_project_open() -> None:
@@ -121,7 +121,7 @@ def test_active_project_raises_when_no_project_open() -> None:
     app = RhapsodyApplication(fake_app)
 
     with pytest.raises(RhapsodyRuntimeException, match="No active project is open"):
-        app.activeProject()
+        app.active_project()
 
 
 def test_get_projects_returns_collection_of_rpproject() -> None:
@@ -130,11 +130,11 @@ def test_get_projects_returns_collection_of_rpproject() -> None:
     fake_app.getProjects.return_value = make_fake_collection([fake_project])
     app = RhapsodyApplication(fake_app)
 
-    projects = app.getProjects()
+    projects = app.get_projects()
 
     assert len(projects) == 1
     assert isinstance(projects[0], RPProject)
-    assert projects[0].getName() == "P1"
+    assert projects[0].get_name() == "P1"
 
 
 def test_get_projects_falls_back_to_projects_property_when_method_missing() -> None:
@@ -146,11 +146,11 @@ def test_get_projects_falls_back_to_projects_property_when_method_missing() -> N
     fake_app.projects = make_fake_collection([fake_project])
     app = RhapsodyApplication(fake_app)
 
-    projects = app.getProjects()
+    projects = app.get_projects()
 
     assert len(projects) == 1
     assert isinstance(projects[0], RPProject)
-    assert projects[0].getName() == "P1"
+    assert projects[0].get_name() == "P1"
 
 
 def test_create_new_project_calls_com_and_returns_active_project() -> None:
@@ -159,12 +159,12 @@ def test_create_new_project_calls_com_and_returns_active_project() -> None:
     fake_app.activeProject.return_value = fake_project
     app = RhapsodyApplication(fake_app)
 
-    project = app.createNewProject("C:/models", "NewProject")
+    project = app.create_new_project("C:/models", "NewProject")
 
     fake_app.createNewProject.assert_called_once_with("C:/models", "NewProject")
     fake_app.activeProject.assert_called_once_with()
     assert isinstance(project, RPProject)
-    assert project.getName() == "NewProject"
+    assert project.get_name() == "NewProject"
 
 
 def test_quit_delegates_to_com() -> None:
@@ -190,7 +190,7 @@ def test_get_is_hidden_ui_calls_method_when_present() -> None:
     fake_app.getIsHiddenUI.return_value = 1
     app = RhapsodyApplication(fake_app)
 
-    result = app.getIsHiddenUI()
+    result = app.get_is_hidden_ui()
 
     fake_app.getIsHiddenUI.assert_called_once_with()
     assert result is True
@@ -201,7 +201,7 @@ def test_get_is_hidden_ui_falls_back_to_property_when_method_missing() -> None:
     fake_app.isHiddenUI = 0
     app = RhapsodyApplication(fake_app)
 
-    result = app.getIsHiddenUI()
+    result = app.get_is_hidden_ui()
 
     assert result is False
 
@@ -210,7 +210,7 @@ def test_set_hidden_ui_calls_method_when_present() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.setHiddenUI(False)
+    app.set_hidden_ui(False)
 
     fake_app.setHiddenUI.assert_called_once_with(False)
 
@@ -219,7 +219,7 @@ def test_set_hidden_ui_falls_back_to_property_when_method_missing() -> None:
     fake_app = MagicMock(spec=["isHiddenUI"])
     app = RhapsodyApplication(fake_app)
 
-    app.setHiddenUI(False)
+    app.set_hidden_ui(False)
 
     assert fake_app.isHiddenUI is False
 
@@ -228,7 +228,7 @@ def test_bring_window_to_top_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.bringWindowToTop()
+    app.bring_window_to_top()
 
     fake_app.bringWindowToTop.assert_called_once_with()
 
@@ -240,7 +240,7 @@ def test_close_all_projects_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.closeAllProjects()
+    app.close_all_projects()
 
     fake_app.closeAllProjects.assert_called_once_with()
 
@@ -249,7 +249,7 @@ def test_save_all_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.saveAll()
+    app.save_all()
 
     fake_app.saveAll.assert_called_once_with()
 
@@ -262,7 +262,7 @@ def test_get_version_returns_string() -> None:
     fake_app.getVersion.return_value = "8.3.1"
     app = RhapsodyApplication(fake_app)
 
-    assert app.getVersion() == "8.3.1"
+    assert app.get_version() == "8.3.1"
 
 
 def test_get_build_no_returns_string() -> None:
@@ -270,7 +270,7 @@ def test_get_build_no_returns_string() -> None:
     fake_app.getBuildNo.return_value = "12345"
     app = RhapsodyApplication(fake_app)
 
-    assert app.getBuildNo() == "12345"
+    assert app.get_build_no() == "12345"
 
 
 def test_get_rhapsody_dir_returns_string() -> None:
@@ -278,7 +278,7 @@ def test_get_rhapsody_dir_returns_string() -> None:
     fake_app.getRhapsodyDir.return_value = "C:/Program Files/Rhapsody"
     app = RhapsodyApplication(fake_app)
 
-    assert app.getRhapsodyDir() == "C:/Program Files/Rhapsody"
+    assert app.get_rhapsody_dir() == "C:/Program Files/Rhapsody"
 
 
 def test_get_omroot_returns_string() -> None:
@@ -286,7 +286,7 @@ def test_get_omroot_returns_string() -> None:
     fake_app.getOMROOT.return_value = "C:/Rhapsody/OMROOT"
     app = RhapsodyApplication(fake_app)
 
-    assert app.getOMROOT() == "C:/Rhapsody/OMROOT"
+    assert app.get_omroot() == "C:/Rhapsody/OMROOT"
 
 
 # --- Code generation ---
@@ -306,7 +306,7 @@ def test_generate_elements_passes_collection_com() -> None:
     fake_collection = make_fake_collection([])
     app = RhapsodyApplication(fake_app)
 
-    app.generateElements(RPCollection(fake_collection))
+    app.generate_elements(RPCollection(fake_collection))
 
     fake_app.generateElements.assert_called_once_with(fake_collection)
 
@@ -315,7 +315,7 @@ def test_generate_entire_project_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.generateEntireProject()
+    app.generate_entire_project()
 
     fake_app.generateEntireProject.assert_called_once_with()
 
@@ -336,7 +336,7 @@ def test_add_to_model_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.addToModel("myfile.rpy", 1)
+    app.add_to_model("myfile.rpy", 1)
 
     fake_app.addToModel.assert_called_once_with("myfile.rpy", 1)
 
@@ -345,7 +345,7 @@ def test_add_to_model_ex_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.addToModelEx("myfile.rpy", 1, 1, 1)
+    app.add_to_model_ex("myfile.rpy", 1, 1, 1)
 
     fake_app.addToModelEx.assert_called_once_with("myfile.rpy", 1, 1, 1)
 
@@ -357,7 +357,7 @@ def test_set_log_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.setLog("C:/log.txt")
+    app.set_log("C:/log.txt")
 
     fake_app.setLog.assert_called_once_with("C:/log.txt")
 
@@ -366,6 +366,6 @@ def test_check_model_delegates_to_com() -> None:
     fake_app = MagicMock(name="FakeApplication")
     app = RhapsodyApplication(fake_app)
 
-    app.checkModel()
+    app.check_model()
 
     fake_app.checkModel.assert_called_once_with()

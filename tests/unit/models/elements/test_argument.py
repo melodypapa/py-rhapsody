@@ -10,21 +10,21 @@ def test_argument_is_a_variable() -> None:
     argument = RPArgument(fake)
 
     assert isinstance(argument, RPVariable)
-    assert argument.getName() == "id"
+    assert argument.get_name() == "id"
 
 
 def test_argument_get_argument_direction_delegates_to_com() -> None:
     fake = make_fake_element("Argument", getArgumentDirection="in")
     argument = RPArgument(fake)
 
-    assert argument.getArgumentDirection() == "in"
+    assert argument.get_argument_direction() == "in"
 
 
 def test_argument_set_argument_direction_delegates_to_com() -> None:
     fake = make_fake_element("Argument")
     argument = RPArgument(fake)
 
-    argument.setArgumentDirection("out")
+    argument.set_argument_direction("out")
 
     fake.setArgumentDirection.assert_called_once_with("out")
 

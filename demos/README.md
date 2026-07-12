@@ -50,7 +50,7 @@ for demo in demos/demo_0*.py; do python "$demo"; done
 
 ### 2. demo_02_project_operations.py
 **Demonstrates**: Project management operations
-- Opening `demo_project/DemoProject.rpyx` with `openProject()`
+- Opening `demo_project/DemoProject.rpyx` with `open_project()`
 - Creating temporary scratch projects in `demo_project/_scratch_*/`
 - Full project lifecycle (create → close → reopen)
 - Automatic cleanup of scratch projects after demo
@@ -60,9 +60,9 @@ for demo in demos/demo_0*.py; do python "$demo"; done
 
 ### 3. demo_03_element_navigation.py
 **Demonstrates**: Element navigation and querying on the seeded model
-- Navigating package structure with `getPackages()`, `getClasses()`
-- Querying elements with `getNestedElementsByMetaClass()`
-- Finding specific elements with `findNestedElementRecursive()`
+- Navigating package structure with `get_packages()`, `get_classes()`
+- Querying elements with `get_nested_elements_by_meta_class()`
+- Finding specific elements with `find_nested_element_recursive()`
 - Displaying element properties (name, type, GUID, full path)
 - Collection iteration & slicing patterns
 
@@ -78,12 +78,12 @@ for demo in demos/demo_0*.py; do python "$demo"; done
 
 ### 4. demo_04_basic_element_creation.py
 **Demonstrates**: Creating and cleaning up model elements
-- Creating packages with `addPackage()`
-- Creating classes with `addClass()`
-- Adding attributes with `addAttribute()` and `setTypeDeclaration()`
-- Adding operations with `addOperation()` and parameters with `addArgument()`
+- Creating packages with `add_package()`
+- Creating classes with `add_class()`
+- Adding attributes with `add_attribute()` and `set_type_declaration()`
+- Adding operations with `add_operation()` and parameters with `add_argument()`
 - Setting element properties (name, description, visibility)
-- **Cleanup**: Deletes all created elements via `deleteFromProject()` before save
+- **Cleanup**: Deletes all created elements via `delete_from_project()` before save
 - Verifies `demo_project` remains clean after execution
 
 **Idempotency**: Safe to run multiple times - created elements are cleaned up automatically
@@ -129,22 +129,22 @@ finally:
 ### Safe Element Access
 ```python
 # Check _com attribute to detect "not found" results
-element = project.findNestedElement("Name", "Class")
+element = project.find_nested_element("Name", "Class")
 if element and element._com:
-    print(element.getName())
+    print(element.get_name())
 else:
     print("Element not found")
 ```
 
 ### Type Declarations
 ```python
-attr = cls.addAttribute("id")
-attr.setTypeDeclaration("int")  # Not setType() - use type strings
+attr = cls.add_attribute("id")
+attr.set_type_declaration("int")  # Not set_type() - use type strings
 
-op = cls.addOperation("getId")
-op.setReturnTypeDeclaration("int")
-arg = op.addArgument("count")  # Not addParameter()
-arg.setTypeDeclaration("int")
+op = cls.add_operation("getId")
+op.set_return_type_declaration("int")
+arg = op.add_argument("count")  # Not add_parameter()
+arg.set_type_declaration("int")
 ```
 
 ## Expected Output

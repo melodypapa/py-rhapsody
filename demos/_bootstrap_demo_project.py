@@ -50,77 +50,77 @@ def build_demo_project() -> None:
 
     try:
         print(f"Creating project '{PROJECT_NAME}' at {DEMO_PROJECT_DIR}...")
-        project = app.createNewProject(DEMO_PROJECT_DIR, PROJECT_NAME)
+        project = app.create_new_project(DEMO_PROJECT_DIR, PROJECT_NAME)
 
         # --- Domain package: User class -------------------------------
         print("Creating package 'Domain'...")
-        domain = project.addPackage("Domain")
-        domain.setDescription("Core domain model for the rhapsody-cli demos.")
+        domain = project.add_package("Domain")
+        domain.set_description("Core domain model for the rhapsody-cli demos.")
 
         print("Creating class 'Domain::User'...")
-        user_class = domain.addClass("User")
-        user_class.setDescription("Represents a user in the system.")
+        user_class = domain.add_class("User")
+        user_class.set_description("Represents a user in the system.")
 
-        id_attr = user_class.addAttribute("id")
-        id_attr.setTypeDeclaration("int")
-        id_attr.setDefaultValue("0")
-        id_attr.setDescription("Unique identifier.")
+        id_attr = user_class.add_attribute("id")
+        id_attr.set_type_declaration("int")
+        id_attr.set_default_value("0")
+        id_attr.set_description("Unique identifier.")
 
-        name_attr = user_class.addAttribute("name")
-        name_attr.setTypeDeclaration("String")
-        name_attr.setDescription("Name of the user.")
+        name_attr = user_class.add_attribute("name")
+        name_attr.set_type_declaration("String")
+        name_attr.set_description("Name of the user.")
 
-        active_attr = user_class.addAttribute("active")
-        active_attr.setTypeDeclaration("boolean")
-        active_attr.setDefaultValue("true")
-        active_attr.setDescription("Active status flag.")
+        active_attr = user_class.add_attribute("active")
+        active_attr.set_type_declaration("boolean")
+        active_attr.set_default_value("true")
+        active_attr.set_description("Active status flag.")
 
-        get_id_op = user_class.addOperation("getId")
-        get_id_op.setReturnTypeDeclaration("int")
-        get_id_op.setDescription("Get the unique identifier.")
+        get_id_op = user_class.add_operation("getId")
+        get_id_op.set_return_type_declaration("int")
+        get_id_op.set_description("Get the unique identifier.")
 
-        get_name_op = user_class.addOperation("getName")
-        get_name_op.setReturnTypeDeclaration("String")
-        get_name_op.setDescription("Get the name of the user.")
+        get_name_op = user_class.add_operation("getName")
+        get_name_op.set_return_type_declaration("String")
+        get_name_op.set_description("Get the name of the user.")
 
-        is_active_op = user_class.addOperation("isActive")
-        is_active_op.setReturnTypeDeclaration("boolean")
-        is_active_op.setDescription("Check if the user is active.")
+        is_active_op = user_class.add_operation("isActive")
+        is_active_op.set_return_type_declaration("boolean")
+        is_active_op.set_description("Check if the user is active.")
 
         # --- Services package: UserService class ------------------------
         print("Creating package 'Services'...")
-        services = project.addPackage("Services")
-        services.setDescription("Service layer for the rhapsody-cli demos.")
+        services = project.add_package("Services")
+        services.set_description("Service layer for the rhapsody-cli demos.")
 
         print("Creating class 'Services::UserService'...")
-        user_service_class = services.addClass("UserService")
-        user_service_class.setDescription("Service for managing users.")
+        user_service_class = services.add_class("UserService")
+        user_service_class.set_description("Service for managing users.")
 
-        find_user_op = user_service_class.addOperation("findUser")
-        find_user_arg = find_user_op.addArgument("id")
-        find_user_arg.setTypeDeclaration("int")
-        find_user_op.setReturnTypeDeclaration("User")
-        find_user_op.setDescription("Find a user by identifier.")
+        find_user_op = user_service_class.add_operation("findUser")
+        find_user_arg = find_user_op.add_argument("id")
+        find_user_arg.set_type_declaration("int")
+        find_user_op.set_return_type_declaration("User")
+        find_user_op.set_description("Find a user by identifier.")
 
         # --- UseCases package: actor and use case ------------------------
         # Actors and use cases must live inside a package (adding them
         # directly at the project's top level is rejected by Rhapsody).
         print("Creating package 'UseCases'...")
-        use_cases_pkg = project.addPackage("UseCases")
-        use_cases_pkg.setDescription("Actors and use cases for the rhapsody-cli demos.")
+        use_cases_pkg = project.add_package("UseCases")
+        use_cases_pkg.set_description("Actors and use cases for the rhapsody-cli demos.")
 
         print("Creating actor 'Customer'...")
-        customer_actor = use_cases_pkg.addActor("Customer")
-        customer_actor.setDescription("A customer of the system.")
+        customer_actor = use_cases_pkg.add_actor("Customer")
+        customer_actor.set_description("A customer of the system.")
 
         print("Creating use case 'ManageUsers'...")
-        manage_users_uc = use_cases_pkg.addUseCase("ManageUsers")
-        manage_users_uc.setDescription("Use case for managing users in the system.")
+        manage_users_uc = use_cases_pkg.add_use_case("ManageUsers")
+        manage_users_uc.set_description("Use case for managing users in the system.")
 
         print("Saving project...")
         project.save()
 
-        print(f"\n[OK] Demo project created at: {project.getFilename()}")
+        print(f"\n[OK] Demo project created at: {project.get_filename()}")
     finally:
         print("Closing Rhapsody...")
         app.disconnect()

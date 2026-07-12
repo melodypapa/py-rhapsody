@@ -10,23 +10,23 @@ class RPUseCase(RPClassifier):
     # IRPUseCase method parity checklist:
     # [ ] addDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] addEventReceptionWithEvent  [ ] impl  [ ] docstring  [ ] test
-    # [x] addExtensionPoint  [x] impl  [x] docstring  [x] test
+    # [x] add_extension_point  [x] impl  [x] docstring  [x] test
     # [ ] deleteDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
     # [ ] deleteEntryPoint  [ ] impl  [ ] docstring  [ ] test
     # [ ] deleteExtensionPoint  [ ] impl  [ ] docstring  [ ] test
     # [ ] findEntryPoint  [ ] impl  [ ] docstring  [ ] test
     # [ ] findExtensionPoint  [ ] impl  [ ] docstring  [ ] test
     # [ ] getDescribingDiagram  [ ] impl  [ ] docstring  [ ] test
-    # [x] getDescribingDiagrams  [x] impl  [x] docstring  [x] test
-    # [x] getEntryPoints  [x] impl  [x] docstring  [x] test
-    # [x] getExtensionPoints  [x] impl  [x] docstring  [x] test
+    # [x] get_describing_diagrams  [x] impl  [x] docstring  [x] test
+    # [x] get_entry_points  [x] impl  [x] docstring  [x] test
+    # [x] get_extension_points  [x] impl  [x] docstring  [x] test
     # [ ] getIsBehaviorOverriden  [ ] impl  [ ] docstring  [ ] test
     # [ ] setIsBehaviorOverriden  [ ] impl  [ ] docstring  [ ] test
     # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] test
     # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPUseCase methods.
 
-    def addExtensionPoint(self, entry_point: str) -> None:
+    def add_extension_point(self, entry_point: str) -> None:
         """Adds an extension point to the use case.
 
         Args:
@@ -40,7 +40,7 @@ class RPUseCase(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addExtensionPoint(entry_point))
 
-    def getExtensionPoints(self) -> RPCollection:
+    def get_extension_points(self) -> RPCollection:
         """Returns all extension points defined on the use case.
 
         Returns:
@@ -54,7 +54,7 @@ class RPUseCase(RPClassifier):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getExtensionPoints", "extensionPoints"))
 
-    def getEntryPoints(self) -> RPCollection:
+    def get_entry_points(self) -> RPCollection:
         """Returns all entry points defined on the use case.
 
         Returns:
@@ -68,7 +68,7 @@ class RPUseCase(RPClassifier):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getEntryPoints", "entryPoints"))
 
-    def getDescribingDiagrams(self) -> RPCollection:
+    def get_describing_diagrams(self) -> RPCollection:
         """Returns all diagrams that describe this use case.
 
         Returns:

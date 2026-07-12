@@ -10,7 +10,7 @@ def test_tag_is_a_variable() -> None:
     tag = RPTag(fake)
 
     assert isinstance(tag, RPVariable)
-    assert tag.getName() == "MyTag"
+    assert tag.get_name() == "MyTag"
 
 
 def test_tag_is_registered_for_meta_class_tag() -> None:

@@ -22,7 +22,7 @@ class TestAbstractOperationAction:
         """Test successful classifier resolution."""
         action = AbstractOperationAction()
         mock_classifier = MagicMock()
-        mock_classifier.getMetaClass.return_value = "Class"
+        mock_classifier.get_meta_class.return_value = "Class"
 
         with patch.object(ElementManagementAction, "_get_active_root", return_value=MagicMock()):
             with patch(
@@ -37,17 +37,17 @@ class TestAbstractOperationAction:
         action = AbstractOperationAction()
         mock_classifier = MagicMock()
         mock_op = MagicMock()
-        mock_classifier.findInterfaceItem.return_value = mock_op
+        mock_classifier.find_interface_item.return_value = mock_op
 
         result = action._resolve_operation(mock_classifier, "readValue")
         assert result == mock_op
-        mock_classifier.findInterfaceItem.assert_called_once_with("readValue")
+        mock_classifier.find_interface_item.assert_called_once_with("readValue")
 
     def test_resolve_operation_not_found(self) -> None:
         """Test that missing operation raises CliExecutionError."""
         action = AbstractOperationAction()
         mock_classifier = MagicMock()
-        mock_classifier.findInterfaceItem.return_value = None
+        mock_classifier.find_interface_item.return_value = None
 
         with pytest.raises(CliExecutionError) as exc_info:
             action._resolve_operation(mock_classifier, "missingOp")
@@ -58,21 +58,21 @@ class TestAbstractOperationAction:
         """Test successful operation lookup by GUID."""
         action = AbstractOperationAction()
         mock_op = MagicMock()
-        mock_op.getMetaClass.return_value = "Operation"
+        mock_op.get_meta_class.return_value = "Operation"
 
         mock_project = MagicMock()
-        mock_project.findElementByGUID.return_value = mock_op
+        mock_project.find_element_by_guid.return_value = mock_op
 
         with patch.object(ElementManagementAction, "_get_active_project", return_value=mock_project):
             result = action._resolve_operation_by_guid("12345678-1234-1234-1234-123456789abc")
             assert result == mock_op
-            mock_project.findElementByGUID.assert_called_once_with("12345678-1234-1234-1234-123456789abc")
+            mock_project.find_element_by_guid.assert_called_once_with("12345678-1234-1234-1234-123456789abc")
 
     def test_resolve_operation_by_guid_not_found(self) -> None:
         """Test GUID lookup fails when element is None."""
         action = AbstractOperationAction()
         mock_project = MagicMock()
-        mock_project.findElementByGUID.return_value = None
+        mock_project.find_element_by_guid.return_value = None
 
         with patch.object(ElementManagementAction, "_get_active_project", return_value=mock_project):
             with pytest.raises(CliExecutionError) as exc_info:
@@ -84,10 +84,10 @@ class TestAbstractOperationAction:
         """Test GUID lookup fails for non-operation element."""
         action = AbstractOperationAction()
         mock_class = MagicMock()
-        mock_class.getMetaClass.return_value = "Class"
+        mock_class.get_meta_class.return_value = "Class"
 
         mock_project = MagicMock()
-        mock_project.findElementByGUID.return_value = mock_class
+        mock_project.find_element_by_guid.return_value = mock_class
 
         with patch.object(ElementManagementAction, "_get_active_project", return_value=mock_project):
             with pytest.raises(CliExecutionError) as exc_info:
@@ -119,7 +119,7 @@ class TestOperationCreateAction:
         """UTS_OP_00001: Test creating single operation with inline JSON."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
-        mock_classifier.addOperation.return_value = mock_op
+        mock_classifier.add_operation.return_value = mock_op
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -129,14 +129,14 @@ class TestOperationCreateAction:
 
             action.execute(args)
 
-            mock_classifier.addOperation.assert_called_once_with("readValue")
-            mock_op.setDescription.assert_called_once_with("Reads value")
+            mock_classifier.add_operation.assert_called_once_with("readValue")
+            mock_op.set_description.assert_called_once_with("Reads value")
 
     def test_create_bulk_operations_from_file(self, tmp_path: Any) -> None:
         """UTS_OP_00002: Test creating multiple operations from JSON file."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
-        mock_classifier.addOperation.return_value = mock_op
+        mock_classifier.add_operation.return_value = mock_op
 
         json_file = tmp_path / "operations.json"
         json_file.write_text('[{"name":"readValue"},{"name":"setValue"}]', encoding="utf-8")
@@ -149,13 +149,13 @@ class TestOperationCreateAction:
 
             action.execute(args)
 
-            assert mock_classifier.addOperation.call_count == 2
+            assert mock_classifier.add_operation.call_count == 2
 
     def test_create_with_boolean_flags(self) -> None:
         """UTS_OP_00003: Test isAbstract/isStatic/isVirtual set via setIsX(1/0)."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
-        mock_classifier.addOperation.return_value = mock_op
+        mock_classifier.add_operation.return_value = mock_op
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -165,19 +165,19 @@ class TestOperationCreateAction:
 
             action.execute(args)
 
-            mock_op.setIsAbstract.assert_called_once_with(1)
-            mock_op.setIsStatic.assert_called_once_with(0)
-            mock_op.setIsVirtual.assert_called_once_with(1)
+            mock_op.set_is_abstract.assert_called_once_with(1)
+            mock_op.set_is_static.assert_called_once_with(0)
+            mock_op.set_is_virtual.assert_called_once_with(1)
 
     def test_create_with_returns_type(self) -> None:
         """UTS_OP_00004: Test returns type resolved via findNestedClassifierRecursive."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
-        mock_classifier.addOperation.return_value = mock_op
+        mock_classifier.add_operation.return_value = mock_op
         mock_owner = MagicMock()
         mock_type = MagicMock()
-        mock_classifier.getOwner.return_value = mock_owner
-        mock_owner.findNestedClassifierRecursive.return_value = mock_type
+        mock_classifier.get_owner.return_value = mock_owner
+        mock_owner.find_nested_classifier_recursive.return_value = mock_type
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -187,15 +187,15 @@ class TestOperationCreateAction:
 
             action.execute(args)
 
-            mock_classifier.getOwner.assert_called_once()
-            mock_owner.findNestedClassifierRecursive.assert_called_once_with("Temperature")
-            mock_op.setReturns.assert_called_once_with(mock_type)
+            mock_classifier.get_owner.assert_called_once()
+            mock_owner.find_nested_classifier_recursive.assert_called_once_with("Temperature")
+            mock_op.set_returns.assert_called_once_with(mock_type)
 
     def test_create_skips_unknown_attributes(self) -> None:
         """UTS_OP_00005: Test unknown attributes skipped with warning."""
         action, mock_classifier = self._make_action_with_classifier()
         mock_op = MagicMock()
-        mock_classifier.addOperation.return_value = mock_op
+        mock_classifier.add_operation.return_value = mock_op
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -249,7 +249,7 @@ class TestOperationDeleteAction:
 
                 action.execute(args)
 
-                mock_classifier.deleteOperation.assert_called_once_with(mock_op)
+                mock_classifier.delete_operation.assert_called_once_with(mock_op)
 
     def test_delete_operation_by_guid(self) -> None:
         """UTS_OP_00008: Test successful operation deletion by GUID."""
@@ -257,9 +257,9 @@ class TestOperationDeleteAction:
 
         action = OperationDeleteAction()
         mock_op = MagicMock()
-        mock_op.getMetaClass.return_value = "Operation"
+        mock_op.get_meta_class.return_value = "Operation"
         mock_owner = MagicMock()
-        mock_op.getOwner.return_value = mock_owner
+        mock_op.get_owner.return_value = mock_owner
 
         with patch.object(action, "_resolve_operation_by_guid", return_value=mock_op):
             args = MagicMock()
@@ -269,8 +269,8 @@ class TestOperationDeleteAction:
 
             action.execute(args)
 
-            mock_op.getOwner.assert_called_once()
-            mock_owner.deleteOperation.assert_called_once_with(mock_op)
+            mock_op.get_owner.assert_called_once()
+            mock_owner.delete_operation.assert_called_once_with(mock_op)
 
     def test_delete_operation_guid_wrong_type(self) -> None:
         """UTS_OP_00009: Test that wrong type via --guid raises error."""
@@ -278,10 +278,10 @@ class TestOperationDeleteAction:
 
         action = OperationDeleteAction()
         mock_class = MagicMock()
-        mock_class.getMetaClass.return_value = "Class"
+        mock_class.get_meta_class.return_value = "Class"
 
         mock_project = MagicMock()
-        mock_project.findElementByGUID.return_value = mock_class
+        mock_project.find_element_by_guid.return_value = mock_class
 
         with patch.object(ElementManagementAction, "_get_active_project", return_value=mock_project):
             args = MagicMock()
@@ -322,26 +322,26 @@ class TestOperationViewAction:
     def _make_mock_operation(self) -> MagicMock:
         """Helper: build a fully-populated mock operation."""
         mock_op = MagicMock()
-        mock_op.getMetaClass.return_value = "Operation"
-        mock_op.getName.return_value = "readValue"
-        mock_op.getGUID.return_value = "12345678-1234-1234-1234-123456789abc"
-        mock_op.getDescription.return_value = "Reads the value"
-        mock_op.getBody.return_value = "return threshold;"
-        mock_op.getIsAbstract.return_value = True
-        mock_op.getIsStatic.return_value = 0
-        mock_op.getIsVirtual.return_value = 1
-        mock_op.getVisibility.return_value = "public"
-        mock_op.getFullPathName.return_value = "Sensors/TemperatureSensor/readValue"
+        mock_op.get_meta_class.return_value = "Operation"
+        mock_op.get_name.return_value = "readValue"
+        mock_op.get_guid.return_value = "12345678-1234-1234-1234-123456789abc"
+        mock_op.get_description.return_value = "Reads the value"
+        mock_op.get_body.return_value = "return threshold;"
+        mock_op.get_is_abstract.return_value = True
+        mock_op.get_is_static.return_value = 0
+        mock_op.get_is_virtual.return_value = 1
+        mock_op.get_visibility.return_value = "public"
+        mock_op.get_full_path_name.return_value = "Sensors/TemperatureSensor/readValue"
 
         mock_returns = MagicMock()
-        mock_returns.getName.return_value = "Temperature"
-        mock_op.getReturns.return_value = mock_returns
+        mock_returns.get_name.return_value = "Temperature"
+        mock_op.get_returns.return_value = mock_returns
 
         arg1 = MagicMock()
-        arg1.getName.return_value = "x"
+        arg1.get_name.return_value = "x"
         arg2 = MagicMock()
-        arg2.getName.return_value = "y"
-        mock_op.getArguments.return_value = [arg1, arg2]
+        arg2.get_name.return_value = "y"
+        mock_op.get_arguments.return_value = [arg1, arg2]
 
         return mock_op
 
@@ -459,10 +459,10 @@ class TestOperationListAction:
         action = OperationListAction()
         mock_classifier = MagicMock()
         op1 = MagicMock()
-        op1.getName.return_value = "readValue"
+        op1.get_name.return_value = "readValue"
         op2 = MagicMock()
-        op2.getName.return_value = "setValue"
-        mock_classifier.getOperations.return_value = [op1, op2]
+        op2.get_name.return_value = "setValue"
+        mock_classifier.get_operations.return_value = [op1, op2]
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -482,7 +482,7 @@ class TestOperationListAction:
 
         action = OperationListAction()
         mock_classifier = MagicMock()
-        mock_classifier.getOperations.return_value = []
+        mock_classifier.get_operations.return_value = []
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -503,10 +503,10 @@ class TestOperationListAction:
         action = OperationListAction()
         mock_classifier = MagicMock()
         op1 = MagicMock()
-        op1.getName.return_value = "readValue"
+        op1.get_name.return_value = "readValue"
         op2 = MagicMock()
-        op2.getName.return_value = "setValue"
-        mock_classifier.getOperations.return_value = [op1, op2]
+        op2.get_name.return_value = "setValue"
+        mock_classifier.get_operations.return_value = [op1, op2]
 
         with patch.object(action, "_resolve_classifier", return_value=mock_classifier):
             args = MagicMock()
@@ -547,7 +547,7 @@ class TestOperationUpdateAction:
 
                 action.execute(args)
 
-                mock_op.setBody.assert_called_once_with("return 42;")
+                mock_op.set_body.assert_called_once_with("return 42;")
 
     def test_update_operation_by_guid(self) -> None:
         """UTS_OP_00019: Test updating operation via --guid with type validation."""
@@ -555,7 +555,7 @@ class TestOperationUpdateAction:
 
         action = OperationUpdateAction()
         mock_op = MagicMock()
-        mock_op.getMetaClass.return_value = "Operation"
+        mock_op.get_meta_class.return_value = "Operation"
 
         with patch.object(action, "_resolve_operation_by_guid", return_value=mock_op):
             args = MagicMock()
@@ -567,7 +567,7 @@ class TestOperationUpdateAction:
 
             action.execute(args)
 
-            mock_op.setVisibility.assert_called_once_with("private")
+            mock_op.set_visibility.assert_called_once_with("private")
 
     def test_update_partial_update(self) -> None:
         """UTS_OP_00020: Test that partial update only modifies specified fields."""
@@ -588,9 +588,9 @@ class TestOperationUpdateAction:
 
                 action.execute(args)
 
-                mock_op.setIsAbstract.assert_called_once_with(1)
-                mock_op.setBody.assert_not_called()
-                mock_op.setName.assert_not_called()
+                mock_op.set_is_abstract.assert_called_once_with(1)
+                mock_op.set_body.assert_not_called()
+                mock_op.set_name.assert_not_called()
 
     def test_update_skips_unknown_fields(self) -> None:
         """UTS_OP_00021: Test that unknown fields are skipped with warning."""
@@ -612,6 +612,6 @@ class TestOperationUpdateAction:
                 with patch.object(action.logger, "warning") as mock_warning:
                     action.execute(args)
 
-                    mock_op.setBody.assert_called_once_with("new body")
+                    mock_op.set_body.assert_called_once_with("new body")
                     mock_warning.assert_called()
                     assert "unknown_field" in str(mock_warning.call_args)

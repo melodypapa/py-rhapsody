@@ -13,22 +13,22 @@ class RPInstance(RPRelation):
     """Wraps ``IRPInstance``: represents an instance in the model."""
 
     # IRPInstance method parity checklist:
-    # [x] addRelationToTheWhole        [x] impl  [x] docstring  [x] test
-    # [x] getAllNestedElements         [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getInLinks                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] getInstantiatedBy            [x] impl  [x] docstring  [x] test
-    # [x] getListOfInitializerArguments [x] impl [x] docstring  [x] test
-    # [x] getOutLinks                  [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] setAttributeValue            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] setExplicit                  [x] impl  [x] docstring  [x] test
-    # [x] setImplicit                  [x] impl  [x] docstring  [x] test
-    # [x] setInitializerArgumentValue  [x] impl  [x] docstring  [x] test
-    # [x] setInstantiatedBy            [x] impl  [x] docstring  [x] test
-    # [x] updateContainedDiagramsOnServer [x] impl [x] docstring [x] test
+    # [x] add_relation_to_the_whole        [x] impl  [x] docstring  [x] test
+    # [x] get_all_nested_elements         [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_attribute_value            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_in_links                   [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] get_instantiated_by            [x] impl  [x] docstring  [x] test
+    # [x] get_list_of_initializer_arguments [x] impl [x] docstring  [x] test
+    # [x] get_out_links                  [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] set_attribute_value            [x] impl  [x] docstring  [x] test   (already implemented)
+    # [x] set_explicit                  [x] impl  [x] docstring  [x] test
+    # [x] set_implicit                  [x] impl  [x] docstring  [x] test
+    # [x] set_initializer_argument_value  [x] impl  [x] docstring  [x] test
+    # [x] set_instantiated_by            [x] impl  [x] docstring  [x] test
+    # [x] update_contained_diagrams_on_server [x] impl [x] docstring [x] test
     # No deprecated methods in IRPInstance.
 
-    def getAllNestedElements(self) -> RPCollection:
+    def get_all_nested_elements(self) -> RPCollection:
         """Returns a collection of all the model elements that are directly under the object.
 
         This method should be used instead of the inherited ``getNestedElements``
@@ -46,7 +46,7 @@ class RPInstance(RPRelation):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAllNestedElements", "allNestedElements"))
 
-    def getAttributeValue(self, attribute_name: str) -> str:
+    def get_attribute_value(self, attribute_name: str) -> str:
         """Gets the value of an attribute on the instance.
 
         Args:
@@ -63,7 +63,7 @@ class RPInstance(RPRelation):
         """
         return AbstractRPModelElement.call_com(lambda: str(self._com.getAttributeValue(attribute_name)))
 
-    def setAttributeValue(self, attribute_name: str, attribute_value: str) -> None:
+    def set_attribute_value(self, attribute_name: str, attribute_value: str) -> None:
         """Sets the value of an attribute on the instance.
 
         Args:
@@ -78,7 +78,7 @@ class RPInstance(RPRelation):
         """
         AbstractRPModelElement.call_com(lambda: self._com.setAttributeValue(attribute_name, attribute_value))
 
-    def getInLinks(self) -> RPCollection:
+    def get_in_links(self) -> RPCollection:
         """Returns all incoming links to this instance.
 
         Returns:
@@ -92,7 +92,7 @@ class RPInstance(RPRelation):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getInLinks", "inLinks"))
 
-    def getOutLinks(self) -> RPCollection:
+    def get_out_links(self) -> RPCollection:
         """Returns all outgoing links from this instance.
 
         Returns:
@@ -106,7 +106,7 @@ class RPInstance(RPRelation):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOutLinks", "outLinks"))
 
-    def addRelationToTheWhole(self, rel_name: str) -> "RPRelation":
+    def add_relation_to_the_whole(self, rel_name: str) -> "RPRelation":
         """Adds a relation to the whole for this instance.
 
         Args:
@@ -123,7 +123,7 @@ class RPInstance(RPRelation):
         """
         return cast("RPRelation", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addRelationToTheWhole(rel_name))))
 
-    def getInstantiatedBy(self) -> "RPOperation":
+    def get_instantiated_by(self) -> "RPOperation":
         """Returns the operation that instantiates this instance.
 
         Returns:
@@ -137,7 +137,7 @@ class RPInstance(RPRelation):
         """
         return cast("RPOperation", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getInstantiatedBy", "instantiatedBy")))
 
-    def getListOfInitializerArguments(self) -> RPCollection:
+    def get_list_of_initializer_arguments(self) -> RPCollection:
         """Returns the list of initializer arguments for this instance.
 
         Returns:
@@ -151,7 +151,7 @@ class RPInstance(RPRelation):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getListOfInitializerArguments", "listOfInitializerArguments"))
 
-    def setExplicit(self) -> None:
+    def set_explicit(self) -> None:
         """Sets the instance to be explicit.
 
         Raises:
@@ -162,7 +162,7 @@ class RPInstance(RPRelation):
         """
         AbstractRPModelElement.call_com(lambda: self._com.setExplicit())
 
-    def setImplicit(self) -> None:
+    def set_implicit(self) -> None:
         """Sets the instance to be implicit.
 
         Raises:
@@ -173,7 +173,7 @@ class RPInstance(RPRelation):
         """
         AbstractRPModelElement.call_com(lambda: self._com.setImplicit())
 
-    def setInitializerArgumentValue(self, arg_name: str, arg_value: str) -> None:
+    def set_initializer_argument_value(self, arg_name: str, arg_value: str) -> None:
         """Sets the value of an initializer argument on the instance.
 
         Args:
@@ -188,7 +188,7 @@ class RPInstance(RPRelation):
         """
         AbstractRPModelElement.call_com(lambda: self._com.setInitializerArgumentValue(arg_name, arg_value))
 
-    def setInstantiatedBy(self, instantiated_by: RPModelElement) -> None:
+    def set_instantiated_by(self, instantiated_by: RPModelElement) -> None:
         """Sets the operation that instantiates this instance.
 
         Args:
@@ -202,7 +202,7 @@ class RPInstance(RPRelation):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setInstantiatedBy", "instantiatedBy", instantiated_by._com)
 
-    def updateContainedDiagramsOnServer(self, enforce_update: int) -> int:
+    def update_contained_diagrams_on_server(self, enforce_update: int) -> int:
         """Updates the views on the Rhapsody Model Manager server for all diagrams.
 
         Args:

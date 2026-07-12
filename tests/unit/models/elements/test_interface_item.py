@@ -10,7 +10,7 @@ def test_interface_item_is_a_classifier() -> None:
     item = RPInterfaceItem(fake)
 
     assert isinstance(item, RPClassifier)
-    assert item.getName() == "doIt"
+    assert item.get_name() == "doIt"
 
 
 def test_interface_item_add_argument_wraps_result() -> None:
@@ -19,10 +19,10 @@ def test_interface_item_add_argument_wraps_result() -> None:
     fake.addArgument.return_value = argument
     item = RPInterfaceItem(fake)
 
-    result = item.addArgument("x")
+    result = item.add_argument("x")
 
     fake.addArgument.assert_called_once_with("x")
-    assert result.getName() == "x"
+    assert result.get_name() == "x"
 
 
 def test_interface_item_add_argument_before_position_wraps_result() -> None:
@@ -31,10 +31,10 @@ def test_interface_item_add_argument_before_position_wraps_result() -> None:
     fake.addArgumentBeforePosition.return_value = argument
     item = RPInterfaceItem(fake)
 
-    result = item.addArgumentBeforePosition("y", 1)
+    result = item.add_argument_before_position("y", 1)
 
     fake.addArgumentBeforePosition.assert_called_once_with("y", 1)
-    assert result.getName() == "y"
+    assert result.get_name() == "y"
 
 
 def test_interface_item_get_arguments_returns_collection() -> None:
@@ -43,7 +43,7 @@ def test_interface_item_get_arguments_returns_collection() -> None:
     fake.getArguments.return_value = make_fake_collection([inner])
     item = RPInterfaceItem(fake)
 
-    result = item.getArguments()
+    result = item.get_arguments()
 
     assert isinstance(result, RPCollection)
     assert len(result) == 1
@@ -53,21 +53,21 @@ def test_interface_item_get_signature_delegates_to_com() -> None:
     fake = make_fake_element("InterfaceItem", getSignature="void doIt(int x)")
     item = RPInterfaceItem(fake)
 
-    assert item.getSignature() == "void doIt(int x)"
+    assert item.get_signature() == "void doIt(int x)"
 
 
 def test_interface_item_get_signature_no_arg_names_delegates_to_com() -> None:
     fake = make_fake_element("InterfaceItem", getSignatureNoArgNames="void doIt(int)")
     item = RPInterfaceItem(fake)
 
-    assert item.getSignatureNoArgNames() == "void doIt(int)"
+    assert item.get_signature_no_arg_names() == "void doIt(int)"
 
 
 def test_interface_item_get_signature_no_arg_types_delegates_to_com() -> None:
     fake = make_fake_element("InterfaceItem", getSignatureNoArgTypes="void doIt(x)")
     item = RPInterfaceItem(fake)
 
-    assert item.getSignatureNoArgTypes() == "void doIt(x)"
+    assert item.get_signature_no_arg_types() == "void doIt(x)"
 
 
 def test_interface_item_match_on_signature_delegates_to_com() -> None:
@@ -75,7 +75,7 @@ def test_interface_item_match_on_signature_delegates_to_com() -> None:
     other = make_fake_element("InterfaceItem")
     item = RPInterfaceItem(fake)
 
-    result = item.matchOnSignature(RPInterfaceItem(other))
+    result = item.match_on_signature(RPInterfaceItem(other))
 
     fake.matchOnSignature.assert_called_once_with(other)
     assert result is True

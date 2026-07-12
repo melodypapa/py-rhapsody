@@ -61,7 +61,7 @@ from rhapsody_cli import RhapsodyApplication
 app = RhapsodyApplication.connect()
 
 # Open an existing project
-project = app.openProject(r"C:\Models\MyProject.rpy")
+project = app.open_project(r"C:\Models\MyProject.rpy")
 
 # Create a new package
 package = project.addPackage("Sensors")
@@ -72,10 +72,10 @@ sensor_class.addAttribute("currentTemperature")
 sensor_class.addOperation("readTemperature")
 
 # Navigate existing elements
-for cls in project.getNestedElementsByMetaClass("Class", 1):  # recursive
-    print(f"Class: {cls.getName()}")
-    for attr in cls.getAttributes():
-        print(f"  Attribute: {attr.getName()}")
+for cls in project.get_nested_elements_by_meta_class("Class", 1):  # recursive
+    print(f"Class: {cls.get_name()}")
+    for attr in cls.get_attributes():
+        print(f"  Attribute: {attr.get_name()}")
 
 # Save and quit
 project.save()
@@ -146,8 +146,8 @@ from rhapsody_cli import RhapsodyApplication
 app1 = RhapsodyApplication.attach()  # Attach to first instance
 app2 = RhapsodyApplication.launch()  # Launch second instance
 
-project1 = app1.openProject("project1.rpy")
-project2 = app2.openProject("project2.rpy")
+project1 = app1.open_project("project1.rpy")
+project2 = app2.open_project("project2.rpy")
 
 # Each instance operates independently
 ```
@@ -361,7 +361,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 | Aspect | Java API | rhapsody-cli |
 |--------|----------|--------------|
-| Method Names | `getName()` | `getName()` ✓ |
+| Method Names | `getName()` | `get_name()` ✓ |
 | Class Hierarchy | `IRPClass extends IRPClassifier` | `RPClass(RPClassifier)` ✓ |
 | Collections | `IRPCollection` | `RPCollection` ✓ |
 | Error Handling | COM errors | `RhapsodyRuntimeException` ✓ |
