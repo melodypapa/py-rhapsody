@@ -9,15 +9,15 @@ from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
-    from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
     from rhapsody_cli.models.elements.activity.model_actions import (
         RPAcceptEventAction,
         RPAcceptTimeEvent,
         RPCallOperation,
     )
+    from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
+    from rhapsody_cli.models.elements.common.model_other_model import RPSysMLPort
     from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPActivityDiagram
     from rhapsody_cli.models.elements.graphics.model_graphics import RPPin
-    from rhapsody_cli.models.elements.common.model_other_model import RPSysMLPort
     from rhapsody_cli.models.elements.relations.model_instance import RPInstance
     from rhapsody_cli.models.elements.relations.model_port import RPPort
 

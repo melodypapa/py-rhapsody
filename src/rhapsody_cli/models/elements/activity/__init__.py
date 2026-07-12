@@ -11,8 +11,8 @@ from rhapsody_cli.models.elements.activity.model_actions import (  # noqa: F401
 )
 from rhapsody_cli.models.elements.activity.model_activity import (  # noqa: F401
     RPFlow,
-    RPFlowItem,
     RPFlowchart,
+    RPFlowItem,
     RPObjectNode,
     RPSwimlane,
 )
