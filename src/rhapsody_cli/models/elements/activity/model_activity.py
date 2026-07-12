@@ -10,7 +10,7 @@ from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
-    from rhapsody_cli.models.elements.model_actions import (
+    from rhapsody_cli.models.elements.activity.model_actions import (
         RPAcceptEventAction,
         RPAcceptTimeEvent,
         RPCallOperation,

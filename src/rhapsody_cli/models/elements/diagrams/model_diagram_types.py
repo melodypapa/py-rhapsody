@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_statechart import RPStatechart
     from rhapsody_cli.models.elements.containment.model_collaboration import RPCollaboration
-    from rhapsody_cli.models.elements.model_activity import RPFlowchart
+    from rhapsody_cli.models.elements.activity.model_activity import RPFlowchart
     from rhapsody_cli.models.elements.graphics.model_graphics import RPGraphElement, RPGraphNode
 
 
