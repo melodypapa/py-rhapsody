@@ -214,6 +214,13 @@ pytest -m integration --cov=rhapsody_cli --cov-report=html
 - Example: `create_test_class(name, parent_package)` in test classes
 - Reduces duplication across tests and ensures consistent test data
 
+### Hierarchical Relationship Testing
+
+- **Mixed approach:** Fixtures provide basic project/package structure, tests create specific hierarchical elements they need
+- **Parent-child validation:** Tests verify operations are members of classes, models are under packages, etc.
+- **Exception handling:** Invalid hierarchical relationships throw Rhapsody exceptions that tests validate are properly translated
+- **Helper methods:** Test classes include helpers like `create_class_with_operations(parent_package, operation_names)` to build hierarchies
+
 ### Test Isolation
 
 - Each test creates its own elements within the shared project
