@@ -21,14 +21,14 @@ class RPProject(RPPackage):
     # [ ] gatewayExportToXML  [ ] impl  [ ] docstring  [ ] test
     # [ ] gatewayExportToXML2  [ ] impl  [ ] docstring  [ ] test
     # [ ] generateReport  [ ] impl  [ ] docstring  [ ] test
-    # [ ] addComponent  [ ] impl  [ ] docstring  [ ] test
+    # [x] addComponent  [x] impl  [x] docstring  [ ] test
     # [ ] addCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] test
     # [ ] addCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] test
     # [x] add_package  [x] impl  [x] docstring  [x] test
-    # [ ] addProfile  [ ] impl  [ ] docstring  [ ] test
+    # [x] addProfile  [x] impl  [x] docstring  [ ] test
     # [ ] addSpellCheckerResult  [ ] impl  [ ] docstring  [ ] test
     # [ ] allowAutoSave  [ ] impl  [ ] docstring  [ ] test
-    # [ ] allowNonUniqueNames  [ ] impl  [ ] docstring  [ ] test
+    # [x] allowNonUniqueNames  [x] impl  [x] docstring  [ ] test
     # [ ] applyBrowserCustomViewsOnDiagrams  [ ] impl  [ ] docstring  [ ] test
     # [ ] applyRoundtripDiffMerge  [ ] impl  [ ] docstring  [ ] test
     # [x] become_active_project  [x] impl  [x] docstring  [x] test
@@ -36,35 +36,35 @@ class RPProject(RPPackage):
     # [ ] cleanUnresolvedElements  [ ] impl  [ ] docstring  [ ] test
     # [x] close  [x] impl  [x] docstring  [x] test
     # [ ] closeCSVFile  [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteComponent  [ ] impl  [ ] docstring  [ ] test
+    # [x] deleteComponent  [x] impl  [x] docstring  [ ] test
     # [ ] enableRhapsodyModelManager  [ ] impl  [ ] docstring  [ ] test
     # [ ] endTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] test
     # [x] find_component  [x] impl  [x] docstring  [x] test
-    # [ ] findElementByBinaryID  [ ] impl  [ ] docstring  [ ] test
-    # [ ] findElementByFileName  [ ] impl  [ ] docstring  [ ] test
+    # [x] findElementByBinaryID  [x] impl  [x] docstring  [ ] test
+    # [x] findElementByFileName  [x] impl  [x] docstring  [ ] test
     # [x] find_element_by_guid  [x] impl  [x] docstring  [x] test
     # [ ] findElementsWithOSLCLink  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getActiveComponent  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getActiveConfiguration  [ ] impl  [ ] docstring  [ ] test
+    # [x] getActiveComponent  [x] impl  [x] docstring  [ ] test
+    # [x] getActiveConfiguration  [x] impl  [x] docstring  [ ] test
     # [ ] getActiveCustomViewsOnBrowser  [ ] impl  [ ] docstring  [ ] test
     # [ ] getActiveCustomViewsOnDiagram  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getAllStereotypes  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getCgSimplifiedModelPackage  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getCodeGeneratedFiles  [ ] impl  [ ] docstring  [ ] test
+    # [x] getAllStereotypes  [x] impl  [x] docstring  [ ] test
+    # [x] getCgSimplifiedModelPackage  [x] impl  [x] docstring  [ ] test
+    # [x] getCodeGeneratedFiles  [x] impl  [x] docstring  [ ] test
     # [x] get_components  [x] impl  [x] docstring  [x] test
     # [ ] getDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] test
     # [ ] getNewCollaboration  [ ] impl  [ ] docstring  [ ] test
     # [ ] getNewProgressBar  [ ] impl  [ ] docstring  [ ] test
     # [ ] getNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getProfiles  [ ] impl  [ ] docstring  [ ] test
+    # [x] getProfiles  [x] impl  [x] docstring  [ ] test
     # [ ] getRemoteResourcePackages  [ ] impl  [ ] docstring  [ ] test
     # [ ] getRequirementsByID  [ ] impl  [ ] docstring  [ ] test
     # [ ] getRoundtripShadowModel  [ ] impl  [ ] docstring  [ ] test
-    # [ ] highlightFromCode  [ ] impl  [ ] docstring  [ ] test
+    # [x] highlightFromCode  [x] impl  [x] docstring  [ ] test
     # [ ] importPackageFromRose  [ ] impl  [ ] docstring  [ ] test
     # [ ] importProjectFromRose  [ ] impl  [ ] docstring  [ ] test
     # [ ] isActivelyManaged  [ ] impl  [ ] docstring  [ ] test
-    # [ ] isModifiedRecursive  [ ] impl  [ ] docstring  [ ] test
+    # [x] isModifiedRecursive  [x] impl  [x] docstring  [ ] test
     # [ ] locateInIDE  [ ] impl  [ ] docstring  [ ] test
     # [ ] migrateDesignManagerLinks  [ ] impl  [ ] docstring  [ ] test
     # [deprecated] moveToDesignManager  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
@@ -76,10 +76,10 @@ class RPProject(RPPackage):
     # [ ] removeCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] test
     # [ ] removeCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] test
     # [x] save  [x] impl  [x] docstring  [x] test   (inherited from RPUnit)
-    # [ ] saveAs  [ ] impl  [ ] docstring  [ ] test
+    # [x] saveAs  [x] impl  [x] docstring  [ ] test
     # [ ] saveAsPrevVersion  [ ] impl  [ ] docstring  [ ] test
     # [ ] setActiveComponent  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setActiveConfiguration  [ ] impl  [ ] docstring  [ ] test
+    # [x] setActiveConfiguration  [x] impl  [x] docstring  [ ] test
     # [ ] setDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] test
     # [ ] setGlobalConfiguration  [ ] impl  [ ] docstring  [ ] test
     # [ ] setNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] test

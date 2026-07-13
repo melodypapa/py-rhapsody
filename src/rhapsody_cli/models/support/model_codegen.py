@@ -18,9 +18,9 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
     """Wraps ``IRPBaseExternalCodeGeneratorTool``."""
 
     # IRPBaseExternalCodeGeneratorTool method parity checklist:
-    # [ ] advanceCodeGenProgressBar    [ ] impl  [ ] docstring  [ ] test
-    # [ ] shouldAbortCodeGeneration    [ ] impl  [ ] docstring  [ ] test
-    # [ ] writeCodeGenMessage          [ ] impl  [ ] docstring  [ ] test
+    # [x] advanceCodeGenProgressBar    [x] impl  [x] docstring  [ ] test
+    # [x] shouldAbortCodeGeneration    [x] impl  [x] docstring  [ ] test
+    # [x] writeCodeGenMessage          [x] impl  [x] docstring  [ ] test
     # No deprecated IRPBaseExternalCodeGeneratorTool methods.
 
     def advance_code_gen_progress_bar(self) -> None:

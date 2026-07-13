@@ -17,7 +17,7 @@ class RPCollaborationDiagram(RPDiagram):
     """Wraps ``IRPCollaborationDiagram``: represents collaboration diagrams in a Rhapsody model."""
 
     # IRPCollaborationDiagram method parity checklist:
-    # [ ] getLogicalCollaboration      [ ] impl  [ ] docstring  [ ] test
+    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -88,8 +88,8 @@ class RPSequenceDiagram(RPDiagram):
     """Wraps ``IRPSequenceDiagram``: represents sequence diagrams in a Rhapsody model."""
 
     # IRPSequenceDiagram method parity checklist:
-    # [ ] getLogicalCollaboration      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRelatedUseCases           [ ] impl  [ ] docstring  [ ] test
+    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] test
+    # [x] getRelatedUseCases           [x] impl  [x] docstring  [ ] test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -127,9 +127,9 @@ class RPStatechartDiagram(RPDiagram):
     """Wraps ``IRPStatechartDiagram``: represents statecharts in a Rhapsody model."""
 
     # IRPStatechartDiagram method parity checklist:
-    # [ ] addAndLine                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] createGraphics               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getStatechart                [ ] impl  [ ] docstring  [ ] test
+    # [x] addAndLine                   [x] impl  [x] docstring  [ ] test
+    # [x] createGraphics               [x] impl  [x] docstring  [ ] test
+    # [x] getStatechart                [x] impl  [x] docstring  [ ] test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)

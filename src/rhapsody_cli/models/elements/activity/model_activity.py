@@ -25,23 +25,23 @@ class RPFlow(RPModelElement):
     """Wraps ``IRPFlow``."""
 
     # IRPFlow method parity checklist:
-    # [ ] addConveyed                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getConveyed                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getDirection                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd1                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd1Port                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd1SysMLPort             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd2                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd2Port                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnd2SysMLPort             [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeConveyed               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setDirection                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd1                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd1ViaPort               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd1ViaSysMLPort          [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd2                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd2ViaPort               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEnd2ViaSysMLPort          [ ] impl  [ ] docstring  [ ] test
+    # [x] addConveyed                  [x] impl  [x] docstring  [ ] test
+    # [x] getConveyed                  [x] impl  [x] docstring  [ ] test
+    # [x] getDirection                 [x] impl  [x] docstring  [ ] test
+    # [x] getEnd1                      [x] impl  [x] docstring  [ ] test
+    # [x] getEnd1Port                  [x] impl  [x] docstring  [ ] test
+    # [x] getEnd1SysMLPort             [x] impl  [x] docstring  [ ] test
+    # [x] getEnd2                      [x] impl  [x] docstring  [ ] test
+    # [x] getEnd2Port                  [x] impl  [x] docstring  [ ] test
+    # [x] getEnd2SysMLPort             [x] impl  [x] docstring  [ ] test
+    # [x] removeConveyed               [x] impl  [x] docstring  [ ] test
+    # [x] setDirection                 [x] impl  [x] docstring  [ ] test
+    # [x] setEnd1                      [x] impl  [x] docstring  [ ] test
+    # [x] setEnd1ViaPort               [x] impl  [x] docstring  [ ] test
+    # [x] setEnd1ViaSysMLPort          [x] impl  [x] docstring  [ ] test
+    # [x] setEnd2                      [x] impl  [x] docstring  [ ] test
+    # [x] setEnd2ViaPort               [x] impl  [x] docstring  [ ] test
+    # [x] setEnd2ViaSysMLPort          [x] impl  [x] docstring  [ ] test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPFlow methods.
 
@@ -293,9 +293,9 @@ class RPFlowItem(RPClassifier):
     """Wraps ``IRPFlowItem``: represents item flows in Rhapsody models."""
 
     # IRPFlowItem method parity checklist:
-    # [ ] addRepresented               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRepresented               [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeRepresented            [ ] impl  [ ] docstring  [ ] test
+    # [x] addRepresented               [x] impl  [x] docstring  [ ] test
+    # [x] getRepresented               [x] impl  [x] docstring  [ ] test
+    # [x] removeRepresented            [x] impl  [x] docstring  [ ] test
     # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -339,20 +339,20 @@ class RPFlowchart(RPStatechart):
     """Wraps ``IRPFlowchart``: represents activities in Rhapsody models."""
 
     # IRPFlowchart method parity checklist:
-    # [ ] addAcceptEventAction         [ ] impl  [ ] docstring  [ ] test
-    # [ ] addAcceptTimeEvent           [ ] impl  [ ] docstring  [ ] test
-    # [ ] addActivityParameter         [ ] impl  [ ] docstring  [ ] test
-    # [ ] addCallBehavior              [ ] impl  [ ] docstring  [ ] test
-    # [ ] addCallOperation             [ ] impl  [ ] docstring  [ ] test
-    # [ ] addObjectNode                [ ] impl  [ ] docstring  [ ] test
-    # [ ] addReferenceActivity         [ ] impl  [ ] docstring  [ ] test
-    # [ ] addSwimlane                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFlowchartDiagram          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsAnalysisOnly            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getItsOwner                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSwimlanes                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsAnalysisOnly            [ ] impl  [ ] docstring  [ ] test
-    # [ ] setItsOwner                  [ ] impl  [ ] docstring  [ ] test
+    # [x] addAcceptEventAction         [x] impl  [x] docstring  [ ] test
+    # [x] addAcceptTimeEvent           [x] impl  [x] docstring  [ ] test
+    # [x] addActivityParameter         [x] impl  [x] docstring  [ ] test
+    # [x] addCallBehavior              [x] impl  [x] docstring  [ ] test
+    # [x] addCallOperation             [x] impl  [x] docstring  [ ] test
+    # [x] addObjectNode                [x] impl  [x] docstring  [ ] test
+    # [x] addReferenceActivity         [x] impl  [x] docstring  [ ] test
+    # [x] addSwimlane                  [x] impl  [x] docstring  [ ] test
+    # [x] getFlowchartDiagram          [x] impl  [x] docstring  [ ] test
+    # [x] getIsAnalysisOnly            [x] impl  [x] docstring  [ ] test
+    # [x] getItsOwner                  [x] impl  [x] docstring  [ ] test
+    # [x] getSwimlanes                 [x] impl  [x] docstring  [ ] test
+    # [x] setIsAnalysisOnly            [x] impl  [x] docstring  [ ] test
+    # [x] setItsOwner                  [x] impl  [x] docstring  [ ] test
     # [inherited] IRPClass methods (covered by RPClass checklist)
     # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
@@ -571,13 +571,13 @@ class RPObjectNode(RPState):
     """Wraps ``IRPObjectNode``: represents Object Node elements in activity diagrams."""
 
     # IRPObjectNode method parity checklist:
-    # [ ] addInState                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInState                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInStateList               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRepresents                [ ] impl  [ ] docstring  [ ] test
-    # [ ] removeInState                [ ] impl  [ ] docstring  [ ] test
-    # [ ] setInState                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] setRepresents                [ ] impl  [ ] docstring  [ ] test
+    # [x] addInState                   [x] impl  [x] docstring  [ ] test
+    # [x] getInState                   [x] impl  [x] docstring  [ ] test
+    # [x] getInStateList               [x] impl  [x] docstring  [ ] test
+    # [x] getRepresents                [x] impl  [x] docstring  [ ] test
+    # [x] removeInState                [x] impl  [x] docstring  [ ] test
+    # [x] setInState                   [x] impl  [x] docstring  [ ] test
+    # [x] setRepresents                [x] impl  [x] docstring  [ ] test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPState methods (covered by RPState checklist)
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
@@ -667,11 +667,11 @@ class RPSwimlane(RPModelElement):
     """Wraps ``IRPSwimlane``: represents swimlanes in an activity diagram."""
 
     # IRPSwimlane method parity checklist:
-    # [ ] addSwimlane                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getContents                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRepresents                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSwimlanes                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setRepresents                [ ] impl  [ ] docstring  [ ] test
+    # [x] addSwimlane                  [x] impl  [x] docstring  [ ] test
+    # [x] getContents                  [x] impl  [x] docstring  [ ] test
+    # [x] getRepresents                [x] impl  [x] docstring  [ ] test
+    # [x] getSwimlanes                 [x] impl  [x] docstring  [ ] test
+    # [x] setRepresents                [x] impl  [x] docstring  [ ] test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPSwimlane methods.
 

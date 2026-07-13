@@ -17,13 +17,13 @@ class RPStateVertex(RPModelElement):
     """Wraps ``IRPStateVertex``: represents the characteristics shared by various statechart elements such as states, join/fork connectors, and condition connectors."""
 
     # IRPStateVertex method parity checklist:
-    # [ ] addFlow                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] addTransition                [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteTransition             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInTransitions             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getOutTransitions            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getParent                    [ ] impl  [ ] docstring  [ ] test
-    # [ ] setParent                    [ ] impl  [ ] docstring  [ ] test
+    # [x] addFlow                      [x] impl  [x] docstring  [ ] test
+    # [x] addTransition                [x] impl  [x] docstring  [ ] test
+    # [x] deleteTransition             [x] impl  [x] docstring  [ ] test
+    # [x] getInTransitions             [x] impl  [x] docstring  [ ] test
+    # [x] getOutTransitions            [x] impl  [x] docstring  [ ] test
+    # [x] getParent                    [x] impl  [x] docstring  [ ] test
+    # [x] setParent                    [x] impl  [x] docstring  [ ] test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPStateVertex methods.
 
@@ -130,54 +130,54 @@ class RPState(RPStateVertex):
     """Wraps ``IRPState``: represents states in a statechart."""
 
     # IRPState method parity checklist:
-    # [ ] addActivityFinal             [ ] impl  [ ] docstring  [ ] test
-    # [ ] addConnector                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] addInternalTransition        [ ] impl  [ ] docstring  [ ] test
-    # [ ] addState                     [ ] impl  [ ] docstring  [ ] test
-    # [ ] addStaticReaction            [ ] impl  [ ] docstring  [ ] test
-    # [ ] addTerminationState          [ ] impl  [ ] docstring  [ ] test
-    # [ ] createDefaultTransition      [ ] impl  [ ] docstring  [ ] test
-    # [ ] createNestedStatechart       [ ] impl  [ ] docstring  [ ] test
-    # [ ] createSubStatechart          [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteConnector              [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteInternalTransition     [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteStaticReaction         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getDefaultTransition         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEntryAction               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getExitAction                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFullNameInStatechart      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInheritsFrom              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInternalTransitions       [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsOverridden              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsReferenceActivity       [ ] impl  [ ] docstring  [ ] test
-    # [ ] getItsStatechart             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getItsSwimlane               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getLogicalStates             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getNestedStatechart          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getReferenceToActivity       [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSendAction                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getStateType                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getStaticReactions           [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSubStateVertices          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSubStates                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getTheEntryAction            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getTheExitAction             [ ] impl  [ ] docstring  [ ] test
-    # [ ] isAnd                        [ ] impl  [ ] docstring  [ ] test
-    # [ ] isCompound                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] isLeaf                       [ ] impl  [ ] docstring  [ ] test
-    # [ ] isRoot                       [ ] impl  [ ] docstring  [ ] test
-    # [ ] isSendActionState            [ ] impl  [ ] docstring  [ ] test
-    # [ ] overrideInheritance          [ ] impl  [ ] docstring  [ ] test
-    # [ ] resetEntryActionInheritance  [ ] impl  [ ] docstring  [ ] test
-    # [ ] resetExitActionInheritance   [ ] impl  [ ] docstring  [ ] test
-    # [ ] setEntryAction               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setExitAction                [ ] impl  [ ] docstring  [ ] test
-    # [ ] setInternalTransition        [ ] impl  [ ] docstring  [ ] test
-    # [ ] setItsSwimlane               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setReferenceToActivity       [ ] impl  [ ] docstring  [ ] test
-    # [ ] setStateType                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setStaticReaction            [ ] impl  [ ] docstring  [ ] test
-    # [ ] unoverrideInheritance        [ ] impl  [ ] docstring  [ ] test
+    # [x] addActivityFinal             [x] impl  [x] docstring  [ ] test
+    # [x] addConnector                 [x] impl  [x] docstring  [ ] test
+    # [x] addInternalTransition        [x] impl  [x] docstring  [ ] test
+    # [x] addState                     [x] impl  [x] docstring  [ ] test
+    # [x] addStaticReaction            [x] impl  [x] docstring  [ ] test
+    # [x] addTerminationState          [x] impl  [x] docstring  [ ] test
+    # [x] createDefaultTransition      [x] impl  [x] docstring  [ ] test
+    # [ ] createNestedStatechart       [ ] impl  [x] docstring  [ ] test
+    # [x] createSubStatechart          [x] impl  [x] docstring  [ ] test
+    # [x] deleteConnector              [x] impl  [x] docstring  [ ] test
+    # [x] deleteInternalTransition     [x] impl  [x] docstring  [ ] test
+    # [x] deleteStaticReaction         [x] impl  [x] docstring  [ ] test
+    # [x] getDefaultTransition         [x] impl  [x] docstring  [ ] test
+    # [x] getEntryAction               [x] impl  [x] docstring  [ ] test
+    # [x] getExitAction                [x] impl  [x] docstring  [ ] test
+    # [x] getFullNameInStatechart      [x] impl  [x] docstring  [ ] test
+    # [x] getInheritsFrom              [x] impl  [x] docstring  [ ] test
+    # [x] getInternalTransitions       [x] impl  [x] docstring  [ ] test
+    # [x] getIsOverridden              [x] impl  [x] docstring  [ ] test
+    # [x] getIsReferenceActivity       [x] impl  [x] docstring  [ ] test
+    # [x] getItsStatechart             [x] impl  [x] docstring  [ ] test
+    # [x] getItsSwimlane               [x] impl  [x] docstring  [ ] test
+    # [x] getLogicalStates             [x] impl  [x] docstring  [ ] test
+    # [x] getNestedStatechart          [x] impl  [x] docstring  [ ] test
+    # [x] getReferenceToActivity       [x] impl  [x] docstring  [ ] test
+    # [x] getSendAction                [x] impl  [x] docstring  [ ] test
+    # [x] getStateType                 [x] impl  [x] docstring  [ ] test
+    # [x] getStaticReactions           [x] impl  [x] docstring  [ ] test
+    # [x] getSubStateVertices          [x] impl  [x] docstring  [ ] test
+    # [x] getSubStates                 [x] impl  [x] docstring  [ ] test
+    # [x] getTheEntryAction            [x] impl  [x] docstring  [ ] test
+    # [x] getTheExitAction             [x] impl  [x] docstring  [ ] test
+    # [x] isAnd                        [x] impl  [x] docstring  [ ] test
+    # [x] isCompound                   [x] impl  [x] docstring  [ ] test
+    # [x] isLeaf                       [x] impl  [x] docstring  [ ] test
+    # [x] isRoot                       [x] impl  [x] docstring  [ ] test
+    # [x] isSendActionState            [x] impl  [x] docstring  [ ] test
+    # [x] overrideInheritance          [x] impl  [x] docstring  [ ] test
+    # [x] resetEntryActionInheritance  [x] impl  [x] docstring  [ ] test
+    # [x] resetExitActionInheritance   [x] impl  [x] docstring  [ ] test
+    # [x] setEntryAction               [x] impl  [x] docstring  [ ] test
+    # [x] setExitAction                [x] impl  [x] docstring  [ ] test
+    # [x] setInternalTransition        [x] impl  [x] docstring  [ ] test
+    # [x] setItsSwimlane               [x] impl  [x] docstring  [ ] test
+    # [x] setReferenceToActivity       [x] impl  [x] docstring  [ ] test
+    # [x] setStateType                 [x] impl  [x] docstring  [ ] test
+    # [x] setStaticReaction            [x] impl  [x] docstring  [ ] test
+    # [x] unoverrideInheritance        [x] impl  [x] docstring  [ ] test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
     # [deprecated] createNestedStatechart  - skipped (deprecated in Rhapsody Java API)
