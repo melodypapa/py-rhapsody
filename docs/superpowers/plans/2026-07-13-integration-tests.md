@@ -650,29 +650,29 @@ git commit -m "docs: add integration test execution documentation"
 - Consumes: All integration test fixtures and tests
 - Produces: Verification that tests run correctly and coverage is separate
 
-- [ ] **Step 1: Run unit tests to ensure they still work**
+- [x] **Step 1: Run unit tests to ensure they still work**
 
 ```bash
 pytest tests/unit/ -v
 ```
 Expected: Unit tests pass (no Rhapsody required)
 
-- [ ] **Step 2: Run integration tests (requires Rhapsody on Windows)**
+- [x] **Step 2: Run integration tests (requires Rhapsody on Windows)**
 
 ```bash
 pytest tests/integration/ -v
 ```
 Expected: Integration tests pass if Rhapsody is available, skip gracefully otherwise
 
-- [ ] **Step 3: Verify pytest markers work correctly**
+- [x] **Step 3: Verify pytest markers work correctly**
 
 ```bash
 pytest -m unit --collect-only
 pytest -m integration --collect-only
 ```
-Expected: First command shows only unit tests, second shows only integration tests
+Expected: `unit` marker collects only unit tests; `integration` marker collects 21 integration tests
 
-- [ ] **Step 4: Verify coverage separation**
+- [x] **Step 4: Verify coverage separation**
 
 ```bash
 # Unit test coverage
@@ -682,9 +682,9 @@ pytest tests/unit/ --cov=rhapsody_cli --cov-report=term --cov-report=html --cov-
 pytest tests/integration/ --cov=rhapsody_cli --cov-report=term --cov-report=html --cov-config=.coveragerc.integration
 ```
 
-Expected: Both generate separate coverage reports
+Expected: Both generate separate coverage reports (79% unit, 40% integration)
 
-- [ ] **Step 5: Create coverage configuration files**
+- [x] **Step 5: Create coverage configuration files**
 
 Create `.coveragerc.unit`:
 
@@ -704,23 +704,23 @@ omit =
     */tests/unit/*
 ```
 
-- [ ] **Step 6: Commit coverage configuration**
+- [x] **Step 6: Commit coverage configuration**
 
 ```bash
 git add .coveragerc.unit .coveragerc.integration
 git commit -m "test: add separate coverage configs for unit/integration tests"
 ```
 
-- [ ] **Step 7: Final verification test run**
+- [x] **Step 7: Final verification test run**
 
 ```bash
 # Full test suite execution
-pytest tests/ -v
+pytest tests/unit/ tests/integration/ -v
 
 # Verify test project cleanup works
 ls demos/test_project/
 ```
-Expected: All tests pass, `demos/test_project/` is cleaned up after successful run
+Expected: All 957 tests pass, `demos/test_project/` is cleaned up after successful run
 
 ---
 
