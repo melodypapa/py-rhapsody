@@ -2,10 +2,9 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import RPModelElement
+from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 
@@ -36,7 +35,7 @@ class RPInstanceSlot(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSlot::addElementValue(com.telelogic.rhapsody.core.IRPModelElement val)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addElementValue(val._com)))
 
     def add_string_value(self, val: str) -> "RPLiteralSpecification":
         """Adds a string value to this instance slot.
@@ -53,7 +52,7 @@ class RPInstanceSlot(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSlot::addStringValue(java.lang.String val)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addStringValue(val)))
 
     def get_slot_property(self) -> "RPModelElement":
         """Returns the slot property of this instance slot.
@@ -67,7 +66,7 @@ class RPInstanceSlot(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSlot::getSlotProperty()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getSlotProperty()))
 
     def get_values(self) -> "RPCollection":
         """Returns the values of this instance slot.
@@ -81,7 +80,7 @@ class RPInstanceSlot(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSlot::getValues()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getValues()))
 
     def set_slot_property(self, slot_property: "RPModelElement") -> None:
         """Sets the slot property of this instance slot.
@@ -95,7 +94,7 @@ class RPInstanceSlot(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSlot::setSlotProperty(com.telelogic.rhapsody.core.IRPModelElement slotProperty)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setSlotProperty(slot_property._com))
 
 
 class RPInstanceSpecification(RPModelElement):
@@ -128,7 +127,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::addInstanceSlot(java.lang.String name, com.telelogic.rhapsody.core.IRPModelElement slotProperty)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addInstanceSlot(name, slot_property._com)))
 
     def get_classifier(self) -> "RPClassifier":
         """Returns the classifier of this instance specification.
@@ -142,7 +141,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::getClassifier()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getClassifier()))
 
     def get_instance_slots(self) -> "RPCollection":
         """Returns the instance slots of this instance specification.
@@ -156,7 +155,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::getInstanceSlots()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getInstanceSlots()))
 
     def is_root_instance_specification(self) -> int:
         """Checks whether the instance specification is a root instance specification.
@@ -174,7 +173,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::isRootInstanceSpecification()
         """
-        raise NotImplementedError
+        return int(self.call_com(lambda: self._com.isRootInstanceSpecification()))
 
     def populate_slots(self) -> None:
         """Populates the slots of this instance specification.
@@ -185,7 +184,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::populateSlots()
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.populateSlots())
 
     def set_classifier(self, classifier: "RPClassifier") -> None:
         """Sets the classifier of this instance specification.
@@ -199,7 +198,7 @@ class RPInstanceSpecification(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceSpecification::setClassifier(com.telelogic.rhapsody.core.IRPClassifier classifier)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setClassifier(classifier._com))
 
 
 class RPValueSpecification(RPModelElement):
@@ -235,7 +234,7 @@ class RPInstanceValue(RPValueSpecification):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceValue::getValue()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getValue()))
 
     def set_value(self, value: "RPModelElement") -> None:
         """Sets the value to store.
@@ -246,7 +245,7 @@ class RPInstanceValue(RPValueSpecification):
         Reference:
             com.telelogic.rhapsody.core.IRPInstanceValue::setValue(com.telelogic.rhapsody.core.IRPModelElement value)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setValue(value._com))
 
 
 class RPLiteralSpecification(RPValueSpecification):
@@ -268,7 +267,7 @@ class RPLiteralSpecification(RPValueSpecification):
         Reference:
             com.telelogic.rhapsody.core.IRPLiteralSpecification::getValue()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getValue", "value"))
 
     def set_value(self, value: str) -> None:
         """Sets the value to store.
@@ -279,4 +278,11 @@ class RPLiteralSpecification(RPValueSpecification):
         Reference:
             com.telelogic.rhapsody.core.IRPLiteralSpecification::setValue(java.lang.String value)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setValue", "value", value)
+
+
+AbstractRPModelElement.register_wrapper("InstanceSlot", RPInstanceSlot)
+AbstractRPModelElement.register_wrapper("InstanceSpecification", RPInstanceSpecification)
+AbstractRPModelElement.register_wrapper("ValueSpecification", RPValueSpecification)
+AbstractRPModelElement.register_wrapper("InstanceValue", RPInstanceValue)
+AbstractRPModelElement.register_wrapper("LiteralSpecification", RPLiteralSpecification)
