@@ -384,7 +384,7 @@ git commit -m "test: add RPCollection integration tests"
 - Consumes: `test_project` fixture from conftest
 - Consumes: `rhapsody_app` fixture from conftest
 
-- [ ] **Step 1: Write failing tests for class hierarchy and operations**
+- [x] **Step 1: Write tests for class hierarchy, operations, and deletion**
 
 ```python
 # tests/integration/models/elements/test_classifiers.py
@@ -461,14 +461,14 @@ class TestRPClassIntegration:
                 invalid_parent.add_class("InvalidClass")
 ```
 
-- [ ] **Step 2: Run tests to verify hierarchy validation**
+- [x] **Step 2: Run tests to verify hierarchy validation**
 
 ```bash
 pytest tests/integration/models/elements/test_classifiers.py::TestRPClassIntegration -v
 ```
-Expected: Tests validate parent-child relationships and exception handling
+Expected: Tests validate class creation, navigation, operations, and deletion
 
-- [ ] **Step 3: Commit classifier hierarchy tests**
+- [x] **Step 3: Commit classifier hierarchy tests**
 
 ```bash
 git add tests/integration/models/elements/test_classifiers.py
