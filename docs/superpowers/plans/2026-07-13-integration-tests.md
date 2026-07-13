@@ -724,6 +724,66 @@ Expected: All tests pass, `demos/test_project/` is cleaned up after successful r
 
 ---
 
+### Task 11: Fix CLI Integration Test Isolation
+
+**Files:**
+- Modify: `tests/integration/cli/test_package_cli_integration.py`
+
+**Interfaces:**
+- Consumes: `test_project` fixture from conftest
+- Produces: CLI tests that run against the isolated `demos/test_project/` project
+
+**Root Cause:**
+The 4 old CLI integration tests (in `tests/integration/cli/test_package_cli_integration.py`) never requested the `test_project` fixture. When pytest collects tests in lexical directory order (`cli/` before `models/`), the CLI tests run first. Since no fixture created a project, `RhapsodyContextAction._get_active_project()` → `app.active_project()` raised `RhapsodyRuntimeException: No active project is open in Rhapsody`.
+
+The earlier relaxation of `_require_rhapsody` (removing the implicit "must have an open project" check) removed the safety net but didn't fix the underlying isolation problem.
+
+**Fix:**
+- Add a class-level `@pytest.fixture(autouse=True)` (`_use_test_project`) that requests the `test_project` fixture and caches it as `self.project`. This is **scoped to the test class** (not global), making the dependency explicit without affecting any other test.
+- Add model-based assertions via `self.project` (e.g., `self.project.get_packages()`) to verify CLI commands actually created/deleted the expected model elements — going beyond just "the command didn't throw."
+- Replace the timestamp-based uniqueness scheme (`int(time.time() * 1000) % 1000000`) with `uuid.uuid4().hex[:8]` to eliminate any theoretical collision risk between parallel test sessions.
+- Add `@pytest.mark.integration` to the class for consistency with the registered marker.
+- Update docstring to document the fixture dependency.
+
+- [x] **Step 1: Update CLI test file with fixture and model assertions**
+
+Apply the following changes to `tests/integration/cli/test_package_cli_integration.py`:
+1. Replace docstring to describe `test_project` fixture dependency
+2. `import time` → `import uuid`; add `import pytest`
+3. Add `@pytest.mark.integration` to the class
+4. Add `_use_test_project` autouse fixture that requests `test_project` → `self.project`
+5. Replace `_generate_unique_name` with `uuid.uuid4().hex[:8]`-based version
+6. Add model assertions to each test method using `self.project`:
+   - Root create: assert `pkg_name` in `self.project.get_packages()`
+   - Root duplicate: assert exactly 1 package named `pkg_name` after duplicate rejection
+   - Nested create: assert child in `parent.get_nested_packages()`
+   - Nested duplicate: assert exactly 1 child with that name after duplicate rejection
+
+- [x] **Step 2: Run integration tests to verify fix**
+
+```bash
+pytest tests/integration/ -v
+```
+
+Expected: All 11 integration tests pass (4 CLI + 7 containment), regardless of collection order.
+
+- [x] **Step 3: Run unit tests to verify no regressions**
+
+```bash
+pytest tests/unit/ -q
+```
+
+Expected: All 936 unit tests pass.
+
+- [x] **Step 4: Commit the fix**
+
+```bash
+git add tests/integration/cli/test_package_cli_integration.py docs/superpowers/plans/2026-07-13-integration-tests.md
+git commit -m "test: wire CLI integration tests to test_project fixture with model assertions"
+```
+
+---
+
 ## Integration Test Coverage Matrix
 
 ### Core Model Classes

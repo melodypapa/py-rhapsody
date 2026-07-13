@@ -8,7 +8,6 @@ from pathlib import Path
 import pytest
 
 from rhapsody_cli import RhapsodyApplication
-from rhapsody_cli.exceptions import RhapsodyConnectionError, RhapsodyRuntimeException
 from rhapsody_cli.models.elements.containment import RPProject
 
 # Add unit directory to Python path so imports from unit tests work
