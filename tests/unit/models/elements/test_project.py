@@ -169,3 +169,161 @@ def test_project_set_dirty_delegates_to_com() -> None:
     project.set_dirty(1)
 
     fake.setDirty.assert_called_once_with(1)
+
+
+# --- New tests for RPProject ---
+def test_project_add_component_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    comp = make_fake_element("Component", getName="Comp1")
+    fake.addComponent.return_value = comp
+    project = RPProject(fake)
+
+    result = project.add_component("Comp1")
+
+    fake.addComponent.assert_called_once_with("Comp1")
+    assert result.get_name() == "Comp1"
+
+
+def test_project_delete_component_delegates_to_com() -> None:
+    from rhapsody_cli.models.core import RPUnit
+
+    fake = make_fake_element("Project")
+    project = RPProject(fake)
+    comp_fake = make_fake_element("Component", getName="ToDelete")
+
+    project.delete_component(RPUnit(comp_fake))
+
+    fake.deleteComponent.assert_called_once_with(comp_fake)
+
+
+def test_project_add_node_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    node = make_fake_element("Node", getName="Node1")
+    fake.addNode.return_value = node
+    project = RPProject(fake)
+
+    result = project.add_node("Node1")
+
+    fake.addNode.assert_called_once_with("Node1")
+    assert result.get_name() == "Node1"
+
+
+def test_project_get_nodes_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Project")
+    node = make_fake_element("Node", getName="Node1")
+    fake.getNodes.return_value = make_fake_collection([node])
+    project = RPProject(fake)
+
+    result = project.get_nodes()
+
+    assert isinstance(result, RPCollection)
+
+
+def test_project_find_node_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    node = make_fake_element("Node", getName="Node1")
+    fake.findNode.return_value = node
+    project = RPProject(fake)
+
+    result = project.find_node("Node1")
+
+    fake.findNode.assert_called_once_with("Node1")
+    assert result.get_name() == "Node1"
+
+
+def test_project_add_configuration_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    config = make_fake_element("Configuration", getName="Default")
+    fake.addConfiguration.return_value = config
+    project = RPProject(fake)
+
+    result = project.add_configuration("Default")
+
+    fake.addConfiguration.assert_called_once_with("Default")
+    assert result.get_name() == "Default"
+
+
+def test_project_get_configurations_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Project")
+    config = make_fake_element("Configuration", getName="Default")
+    fake.getConfigurations.return_value = make_fake_collection([config])
+    project = RPProject(fake)
+
+    result = project.get_configurations()
+
+    assert isinstance(result, RPCollection)
+
+
+def test_project_find_configuration_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    config = make_fake_element("Configuration", getName="Default")
+    fake.findConfiguration.return_value = config
+    project = RPProject(fake)
+
+    result = project.find_configuration("Default")
+
+    fake.findConfiguration.assert_called_once_with("Default")
+    assert result.get_name() == "Default"
+
+
+def test_project_add_collaboration_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    collab = make_fake_element("Collaboration", getName="Collab1")
+    fake.addCollaboration.return_value = collab
+    project = RPProject(fake)
+
+    result = project.add_collaboration("Collab1")
+
+    fake.addCollaboration.assert_called_once_with("Collab1")
+    assert result.get_name() == "Collab1"
+
+
+def test_project_get_collaborations_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Project")
+    collab = make_fake_element("Collaboration", getName="Collab1")
+    fake.getCollaborations.return_value = make_fake_collection([collab])
+    project = RPProject(fake)
+
+    result = project.get_collaborations()
+
+    assert isinstance(result, RPCollection)
+
+
+def test_project_get_all_stereotypes_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Project")
+    st = make_fake_element("Stereotype", getName="MyStereotype")
+    fake.getAllStereotypes.return_value = make_fake_collection([st])
+    project = RPProject(fake)
+
+    result = project.get_all_stereotypes()
+
+    assert isinstance(result, RPCollection)
+
+
+def test_project_save_as_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    project = RPProject(fake)
+
+    project.save_as("C:/path/to/project.rpy")
+
+    fake.saveAs.assert_called_once_with("C:/path/to/project.rpy")
+
+
+def test_project_find_element_by_binary_id_delegates_to_com() -> None:
+    fake = make_fake_element("Project")
+    found = make_fake_element("Class", getName="MyClass")
+    fake.findElementByBinaryID.return_value = found
+    project = RPProject(fake)
+
+    result = project.find_element_by_binary_id("abc123")
+
+    fake.findElementByBinaryID.assert_called_once_with("abc123")
+    assert result.get_name() == "MyClass"
