@@ -3,8 +3,8 @@
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.activity.model_activity import (
     RPFlow,
-    RPFlowItem,
     RPFlowchart,
+    RPFlowItem,
     RPObjectNode,
     RPSwimlane,
 )

@@ -44,7 +44,6 @@ class TestRPTemplateInstantiationParameter:
         fake.getArgValue.assert_called_once_with()
 
     def test_get_type_wraps_result(self) -> None:
-        from rhapsody_cli.models.elements.classifiers import RPClassifier
         fake = make_fake_element("TemplateInstantiationParameter")
         clf = make_fake_element("Class", getName="C1")
         fake.getType.return_value = clf
