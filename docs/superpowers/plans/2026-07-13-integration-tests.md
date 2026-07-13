@@ -724,9 +724,374 @@ Expected: All tests pass, `demos/test_project/` is cleaned up after successful r
 
 ---
 
+## Integration Test Coverage Matrix
+
+### Core Model Classes
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPModelElement** | `tests/integration/models/test_core.py` | get_name, set_name, get_meta_class, get_guid, get_owner, get_project, delete_from_project | 🟡 In Progress | High | None |
+| **RPCollection** | `tests/integration/models/test_core.py` | iteration, get_nested_elements (with/without filter), count, indexing | 🟡 In Progress | High | RPModelElement |
+| **RPUnit** | `tests/integration/models/test_core.py` | save, get_filename, get_canonical_filename | 🔴 Not Started | Medium | RPModelElement |
+| **RPRelations** | `tests/integration/models/test_core.py` | get_relations, add_relation, find_relation | 🔴 Not Started | Medium | RPModelElement |
+| **RPGraphics** | `tests/integration/models/test_core.py` | get_graphical_properties, set_graphical_properties | 🔴 Not Started | Low | RPModelElement |
+
+### Containment Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPProject** | `tests/integration/models/elements/test_containment.py` | create_project, get_elements, add_package, save, close | 🟡 In Progress | Critical | None |
+| **RPPackage** | `tests/integration/models/elements/test_containment.py` | add_package, get_nested_elements, get_higher_object, get_owner | 🟡 In Progress | Critical | RPProject |
+| **RPModule** | `tests/integration/models/elements/test_containment.py` | add_module, get_elements, save | 🔴 Not Started | Medium | RPPackage |
+| **RPComponent** | `tests/integration/models/elements/test_containment.py` | add_component, get_elements, get_realizing_classes | 🔴 Not Started | Medium | RPPackage |
+| **RPComponentInstance** | `tests/integration/models/elements/test_containment.py` | add_component_instance, get_component, get_master | 🔴 Not Started | Low | RPComponent |
+| **RPConfiguration** | `tests/integration/models/elements/test_containment.py` | get_elements, get_current_element, set_current_element | 🔴 Not Started | Low | RPProject |
+| **RPCollaboration** | `tests/integration/models/elements/test_containment.py` | add_collaboration, get_roles, get_interactions | 🔴 Not Started | Low | RPPackage |
+| **RPNode** | `tests/integration/models/elements/test_containment.py` | add_node, get_elements | 🔴 Not Started | Low | RPPackage |
+| **RPProfile** | `tests/integration/models/elements/test_containment.py` | add_profile, get_profile_elements | 🔴 Not Started | Low | RPProject |
+
+### Classifier Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPClassifier** | `tests/integration/models/elements/test_classifiers.py` | get_attributes, get_operations, add_attribute, get_containing_package | 🔴 Not Started | High | RPPackage |
+| **RPClass** | `tests/integration/models/elements/test_classifiers.py` | add_class, add_superclass, get_superclasses, get_is_abstract, set_is_abstract, delete_class | 🟡 In Progress | Critical | RPPackage, RPClassifier |
+| **RPOperation** | `tests/integration/models/elements/test_classifiers.py` | add_operation, get_parameters, get_owner, get_result, delete_operation | 🔴 Not Started | High | RPClass |
+| **RPActor** | `tests/integration/models/elements/test_classifiers.py` | add_actor, get_communications | 🔴 Not Started | Medium | RPPackage |
+| **RPUseCase** | `tests/integration/models/elements/test_classifiers.py` | add_usecase, get_actors, get_extensions | 🔴 Not Started | Medium | RPPackage |
+| **RPInterfaceItem** | `tests/integration/models/elements/test_classifiers.py` | add_interface_item, get_operations | 🔴 Not Started | Medium | RPClassifier |
+| **RPAssociationClass** | `tests/integration/models/elements/test_classifiers.py` | add_association_class, get_association_ends | 🔴 Not Started | Low | RPClass |
+| **RPStereotype** | `tests/integration/models/elements/test_classifiers.py` | add_stereotype, get_stereotyped_elements | 🔴 Not Started | Low | RPModelElement |
+| **RPStatechart** | `tests/integration/models/elements/test_classifiers.py` | add_statechart, get_states, get_transitions | 🔴 Not Started | Low | RPClass |
+
+### Relation Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPRelation** | `tests/integration/models/elements/test_relations.py` | get_owner, get_other_end, get_name | 🔴 Not Started | High | RPModelElement |
+| **RPAssociationRole** | `tests/integration/models/elements/test_relations.py` | add_association_role, get_role_name, get_multiplicity | 🔴 Not Started | High | RPClass |
+| **RPDependency** | `tests/integration/models/elements/test_relations.py` | add_dependency, get_client, get_supplier | 🔴 Not Started | Medium | RPModelElement |
+| **RPGeneralization** | `tests/integration/models/elements/test_relations.py` | add_generalization, get_super, get_sub | 🔴 Not Started | Medium | RPClassifier |
+| **RPHyperlink** | `tests/integration/models/elements/test_relations.py` | add_hyperlink, get_url, get_anchor | 🔴 Not Started | Low | RPModelElement |
+| **RPPort** | `tests/integration/models/elements/test_relations.py` | add_port, get_interfaces, get_aggregated | 🔴 Not Started | Medium | RPClass |
+| **RPInstance** | `tests/integration/models/elements/test_relations.py` | add_instance, get_classifiers, get_slots | 🔴 Not Started | Low | RPClassifier |
+
+### Activity Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPAction** | `tests/integration/models/elements/test_activity.py` | add_action, get_execution_language, get_body | 🔴 Not Started | Medium | RPClass |
+| **RPActivity** | `tests/integration/models/elements/test_activity.py` | add_activity, get_actions, get_preconditions | 🔴 Not Started | Low | RPClassifier |
+
+### Diagram Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_diagram, get_elements, get_name, save | 🔴 Not Started | Low | RPPackage |
+| **RPUMLDiagram** | `tests/integration/models/elements/test_diagrams.py` | get_type, get_owned_elements | 🔴 Not Started | Low | RPDiagram |
+| **RPActivityDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_activity_diagram, get_activities | 🔴 Not Started | Low | RPClass |
+| **RPSequenceDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_sequence_diagram, get_lifelines | 🔴 Not Started | Low | RPClassifier |
+| **RPCollaborationDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_collaboration_diagram, get_links | 🔴 Not Started | Low | RPCollaboration |
+
+### Requirement Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPRequirement** | `tests/integration/models/elements/test_requirements.py` | add_requirement, get_id, get_text, get_traces_to | 🔴 Not Started | Medium | RPPackage |
+| **RPTrace** | `tests/integration/models/elements/test_requirements.py` | add_trace, get_traced_from, get_traced_to | 🔴 Not Started | Low | RPRequirement |
+
+### Variable and Value Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPAttribute** | `tests/integration/models/elements/test_variables.py` | add_attribute, get_type, get_default_value, delete_attribute | 🔴 Not Started | High | RPClass |
+| **RPParameter** | `tests/integration/models/elements/test_variables.py` | add_parameter, get_type, get_default_value | 🔴 Not Started | High | RPOperation |
+| **RPVariable** | `tests/integration/models/elements/test_variables.py` | add_variable, get_type, get_scope | 🔴 Not Started | Medium | RPClassifier |
+| **RPTypedValue** | `tests/integration/models/elements/test_values.py` | get_type, get_value, set_value | 🔴 Not Started | Low | RPVariable |
+
+### Graphics and Interaction Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPGraphics** | `tests/integration/models/elements/test_graphics.py` | get_position, set_position, get_size, set_size | 🔴 Not Started | Low | RPDiagram |
+| **RPLink** | `tests/integration/models/elements/test_graphics.py` | add_link, get_from, get_to | 🔴 Not Started | Low | RPDiagram |
+| **RPEventReception** | `tests/integration/models/elements/test_interactions.py` | add_event_reception, get_event, get_operation | 🔴 Not Started | Low | RPClass |
+| **RPInteraction** | `tests/integration/models/elements/test_interactions.py` | add_interaction, get_fragments, get_lifelines | 🔴 Not Started | Low | RPClassifier |
+
+### Template and StateMachine Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPTemplate** | `tests/integration/models/elements/test_templates.py` | add_template, get_template_parameters, bind_parameters | 🔴 Not Started | Low | RPClassifier |
+| **RPStateMachine** | `tests/integration/models/elements/test_statemachine.py` | add_state_machine, get_states, get_transitions, get_initial_state | 🔴 Not Started | Low | RPClass |
+
+### Support Classes
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPCodeGen** | `tests/integration/models/support/test_codegen.py` | generate_code, get_codegen_properties | 🔴 Not Started | Low | RPProject |
+| **RPFiles** | `tests/integration/models/support/test_files.py` | get_files, import_file, export_file | 🔴 Not Started | Low | RPProject |
+| **RPIde** | `tests/integration/models/support/test_ide.py` | get_ide_properties, set_ide_properties | 🔴 Not Started | Low | RhapsodyApplication |
+
+**Legend:**
+- 🟢 **Complete** - All methods tested and passing
+- 🟡 **In Progress** - Some methods tested, work ongoing
+- 🔴 **Not Started** - No integration tests written yet
+- **Priority** - Critical > High > Medium > Low
+- **Dependencies** - Other model classes that must be tested first
+
+---
+
+## Method-Level Testing Checklist by Class
+
+### RPModelElement (Base Class - Critical)
+- [ ] **Core Identity** (Tested in Task 5)
+  - [x] get_name() - Returns element name
+  - [x] set_name() - Updates element name
+  - [x] get_meta_class() - Returns element type
+  - [x] get_guid() - Returns unique identifier
+  - [ ] get_display_name() - Returns display name with stereotypes
+  - [ ] get_full_name() - Returns fully qualified name
+- [ ] **Hierarchy Navigation** (Partial in Task 7-8)
+  - [x] get_owner() - Returns parent element
+  - [ ] get_project() - Returns containing project
+  - [ ] get_higher_object() - Returns next higher in containment
+  - [ ] get_containing_package() - Returns containing package
+- [ ] **Element Management**
+  - [ ] delete_from_project() - Removes element from model
+  - [ ] is_deleted() - Checks if element was deleted
+  - [ ] can_delete() - Validates deletion is allowed
+- [ ] **Properties and Metadata**
+  - [ ] get_property() - Retrieves named property value
+  - [ ] set_property() - Sets named property value
+  - [ ] get_properties() - Gets all properties as dictionary
+  - [ ] has_property() - Checks if property exists
+- [ ] **Relations and Links**
+  - [ ] add_link_to_element() - Creates graphical link
+  - [ ] get_links() - Gets all links from element
+  - [ ] find_element() - Finds nested element by name
+
+### RPClass (Critical)
+- [ ] **Creation and Deletion** (Partial in Task 7)
+  - [x] package.add_class() - Creates class in package
+  - [ ] add_class() - Creates nested class
+  - [ ] delete_class() - Removes class from model
+  - [ ] can_delete() - Checks if class can be deleted
+- [ ] **Inheritance Management**
+  - [ ] add_superclass() - Adds parent class
+  - [ ] delete_superclass() - Removes parent class
+  - [ ] get_superclasses() - Gets all parent classes
+  - [ ] get_subclasses() - Gets all child classes
+  - [ ] get_all_superclasses() - Gets complete inheritance tree
+- [ ] **Class Properties**
+  - [ ] get_is_abstract() - Checks if class is abstract
+  - [ ] set_is_abstract() - Sets abstract property
+  - [ ] get_is_final() - Checks if class is final
+  - [ ] set_is_final() - Sets final property
+  - [ ] get_is_active() - Checks if class is active
+  - [ ] set_is_active() - Sets active property
+  - [ ] get_is_composite() - Checks if class is composite
+- [ ] **Type Management**
+  - [ ] add_type() - Adds type relationship
+  - [ ] delete_type() - Removes type relationship
+  - [ ] get_types() - Gets all types
+- [ ] **Operations**
+  - [ ] add_operation() - Creates operation in class
+  - [ ] get_operations() - Gets all operations
+  - [ ] find_operation() - Finds operation by name
+  - [ ] add_constructor() - Creates constructor
+  - [ ] add_destructor() - Creates destructor
+- [ ] **Attributes**
+  - [ ] get_attributes() - Gets all attributes
+  - [ ] find_attribute() - Finds attribute by name
+
+### RPPackage (Critical)
+- [ ] **Creation and Containment** (Partial in Task 8)
+  - [x] project.add_package() - Creates package in project
+  - [x] package.add_package() - Creates nested package
+  - [ ] delete_package() - Removes package from model
+- [ ] **Element Management**
+  - [x] get_nested_elements() - Gets child elements
+  - [ ] get_nested_elements_by_type() - Gets filtered children
+  - [ ] find_element() - Finds element by name
+  - [ ] find_nested_element() - Searches recursively
+- [ ] **Hierarchy Navigation** (Partial in Task 8)
+  - [x] get_owner() - Returns parent package/project
+  - [ ] get_higher_object() - Returns next higher level
+  - [ ] get_project() - Returns containing project
+- [ ] **Package Properties**
+  - [ ] get_is_default() - Checks if default package
+  - [ ] get_is_library() - Checks if library package
+  - [ ] get_is_controlled() - Checks if under version control
+
+### RPProject (Critical)
+- [ ] **Project Management** (Partial in Task 8)
+  - [x] create_project() - Creates new project file
+  - [ ] open_project() - Opens existing project
+  - [ ] save_project() - Saves project changes
+  - [ ] close_project() - Closes project
+  - [ ] delete_project() - Deletes project file
+- [ ] **Element Access**
+  - [x] get_nested_elements() - Gets top-level elements
+  - [ ] get_all_elements() - Gets all elements recursively
+  - [ ] find_element() - Finds element by GUID or name
+- [ ] **Project Properties**
+  - [ ] get_author() - Gets project author
+  - [ ] set_author() - Sets project author
+  - [ ] get_description() - Gets project description
+  - [ ] set_description() - Sets project description
+  - [ ] get_default_language() - Gets default code generation language
+
+### RPCollection (High Priority)
+- [ ] **Iteration and Access** (Partial in Task 6)
+  - [x] iteration support - Iterates over elements
+  - [x] get_count() - Returns element count
+  - [ ] get_item(index) - Gets element at 0-based index
+  - [ ] contains(element) - Checks if element in collection
+- [ ] **Filtering**
+  - [x] get_nested_elements() - Gets all elements
+  - [x] get_nested_elements(metaClass) - Gets filtered elements
+  - [ ] find_first(metaClass) - Gets first matching element
+  - [ ] find_all(metaClass) - Gets all matching elements
+
+### RPOperation (High Priority)
+- [ ] **Creation and Management**
+  - [ ] add_operation() - Creates operation in class
+  - [ ] delete_operation() - Removes operation
+  - [ ] get_result() - Gets return parameter
+  - [ ] set_result() - Sets return parameter
+- [ ] **Parameters**
+  - [ ] add_parameter() - Creates parameter
+  - [ ] get_parameters() - Gets all parameters
+  - [ ] delete_parameter() - Removes parameter
+- [ ] **Operation Properties**
+  - [ ] get_is_static() - Checks if static
+  - [ ] set_is_static() - Sets static property
+  - [ ] get_is_virtual() - Checks if virtual
+  - [ ] set_is_virtual() - Sets virtual property
+  - [ ] get_visibility() - Gets visibility scope
+  - [ ] set_visibility() - Sets visibility scope
+
+### RPAttribute (High Priority)
+- [ ] **Creation and Management**
+  - [ ] add_attribute() - Creates attribute in class
+  - [ ] delete_attribute() - Removes attribute
+  - [ ] get_type() - Gets attribute type
+  - [ ] set_type() - Sets attribute type
+- [ ] **Attribute Properties**
+  - [ ] get_default_value() - Gets default value
+  - [ ] set_default_value() - Sets default value
+  - [ ] get_visibility() - Gets visibility scope
+  - [ ] set_visibility() - Sets visibility scope
+  - [ ] get_is_static() - Checks if static
+  - [ ] set_is_static() - Sets static property
+  - [ ] get_is_const() - Checks if constant
+  - [ ] set_is_const() - Sets constant property
+
+### RPAssociationRole (High Priority)
+- [ ] **Association Management**
+  - [ ] add_association_role() - Creates association end
+  - [ ] get_other_role() - Gets opposite association end
+  - [ ] get_association() - Gets parent association
+- [ ] **Role Properties**
+  - [ ] get_role_name() - Gets role name
+  - [ ] set_role_name() - Sets role name
+  - [ ] get_multiplicity() - Gets multiplicity
+  - [ ] set_multiplicity() - Sets multiplicity
+  - [ ] get_navigability() - Gets navigability
+  - [ ] set_navigability() - Sets navigability
+  - [ ] get_aggregation() - Gets aggregation type
+  - [ ] set_aggregation() - Sets aggregation type
+
+### RPDependency (Medium Priority)
+- [ ] **Dependency Management**
+  - [ ] add_dependency() - Creates dependency
+  - [ ] add_dependency_to() - Creates dependency to target
+  - [ ] add_dependency_between() - Creates bidirectional dependency
+  - [ ] delete_dependency() - Removes dependency
+- [ ] **Dependency Properties**
+  - [ ] get_client() - Gets depending element
+  - [ ] get_supplier() - Gets depended-on element
+  - [ ] get_name() - Gets dependency name
+  - [ ] set_name() - Sets dependency name
+
+### RPGeneralization (Medium Priority)
+- [ ] **Generalization Management**
+  - [ ] add_generalization() - Creates generalization
+  - [ ] delete_generalization() - Removes generalization
+- [ ] **Generalization Properties**
+  - [ ] get_super() - Gets parent classifier
+  - [ ] get_sub() - Gets child classifier
+  - [ ] get_name() - Gets generalization name
+
+### RPPackage (Medium Priority)
+- [ ] **Package Creation** (Partial in Task 8)
+  - [x] add_package() - Creates package
+  - [ ] delete_package() - Removes package
+- [ ] **Package Contents**
+  - [x] get_nested_elements() - Gets child elements
+  - [ ] get_elements() - Gets direct children
+  - [ ] find_element() - Finds element by name
+- [ ] **Package Properties**
+  - [ ] get_is_default() - Checks if default package
+  - [ ] get_is_library() - Checks if library package
+
+### RPDiagram (Low Priority)
+- [ ] **Diagram Creation**
+  - [ ] add_diagram() - Creates diagram
+  - [ ] delete_diagram() - Removes diagram
+- [ ] **Diagram Contents**
+  - [ ] get_elements() - Gets diagram elements
+  - [ ] add_element() - Adds element to diagram
+  - [ ] delete_element() - Removes element from diagram
+- [ ] **Diagram Properties**
+  - [ ] get_name() - Gets diagram name
+  - [ ] set_name() - Sets diagram name
+  - [ ] get_type() - Gets diagram type
+  - [ ] save() - Saves diagram layout
+
+---
+
+## Integration Test Execution Status
+
+### Test Suite Status
+- **Total Model Classes:** 50+ classes
+- **Integration Test Files Created:** 3/25 planned
+- **Test Coverage by Priority:**
+  - Critical: 3/6 classes (50%) 🟡
+  - High: 0/8 classes (0%) 🔴
+  - Medium: 0/12 classes (0%) 🔴
+  - Low: 0/24+ classes (0%) 🔴
+
+### Hierarchical Relationship Coverage
+- [x] **Package → Class** (Task 7) - Class creation in package
+- [x] **Class → Operation** (Task 7) - Operation creation in class
+- [x] **Package → Package** (Task 8) - Nested package creation
+- [x] **Project → Package** (Task 8) - Top-level package creation
+- [ ] **Class → Attribute** - Attribute creation in class
+- [ ] **Class → Superclass** - Inheritance relationships
+- [ ] **Class → Interface** - Interface realization
+- [ ] **Association → Role** - Association ends
+- [ ] **Package → Diagram** - Diagram creation
+- [ ] **Invalid hierarchy exception handling** (Partial in Task 7)
+
+### Exception Handling Test Coverage
+- [x] **Invalid parent-child relationships** (Partial in Task 7)
+- [ ] **Deletion of referenced elements**
+- [ ] **Duplicate element names**
+- [ ] **Invalid type assignments**
+- [ ] **Circular dependencies**
+- [ ] **Invalid multiplicity values**
+- [ ] **COM error translation**
+
+---
+
 ## Completion Checklist
 
-- [ ] All tasks completed successfully
+- [ ] All Critical priority classes have integration tests (6/6)
+- [ ] All High priority classes have integration tests (0/8)
+- [ ] 50%+ of Medium priority classes have integration tests (0/12)
+- [ ] Core infrastructure tasks (Tasks 1-4) completed
 - [ ] Integration tests run on Windows with Rhapsody
 - [ ] Integration tests skip gracefully without Rhapsody
 - [ ] Unit and integration test coverage are separate
@@ -734,12 +1099,18 @@ Expected: All tests pass, `demos/test_project/` is cleaned up after successful r
 - [ ] Test project cleanup works correctly
 - [ ] Parent-child relationships validated (classes in packages, operations in classes)
 - [ ] Exception handling tested for invalid hierarchies
+- [ ] All RPModelElement base methods tested (8/20 methods)
+- [ ] All RPClass critical methods tested (5/25 methods)
+- [ ] All RPPackage critical methods tested (4/15 methods)
+- [ ] All RPProject critical methods tested (3/15 methods)
 
 ## Success Criteria
 
-- Integration tests can be run manually on Windows with Rhapsody installed
-- Tests validate every wrapper method against real COM API
-- Hierarchical relationships (parent-child) are properly tested
-- Invalid relationships throw appropriate exceptions
-- Coverage reports show separate metrics for unit vs integration tests
-- Test data cleanup works reliably in both success and failure cases
+- **Coverage:** Integration tests can be run manually on Windows with Rhapsody installed
+- **Validation:** Tests validate every wrapper method against real COM API
+- **Hierarchy:** Hierarchical relationships (parent-child) are properly tested
+- **Exceptions:** Invalid relationships throw appropriate exceptions
+- **Separation:** Coverage reports show separate metrics for unit vs integration tests
+- **Cleanup:** Test data cleanup works reliably in both success and failure cases
+- **Progress:** At least 50% of Critical and High priority classes have integration tests
+- **Completeness:** All base RPModelElement methods have integration tests
