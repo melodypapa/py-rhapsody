@@ -136,3 +136,6 @@ class RPInterfaceItem(RPClassifier):
             com.telelogic.rhapsody.core.IRPInterfaceItem::matchOnSignature(com.telelogic.rhapsody.core.IRPInterfaceItem Item)
         """
         return bool(AbstractRPModelElement.call_com(lambda: self._com.matchOnSignature(item._com)))
+
+
+AbstractRPModelElement.register_wrapper("InterfaceItem", RPInterfaceItem)

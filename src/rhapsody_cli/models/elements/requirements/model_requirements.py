@@ -173,4 +173,5 @@ class RPRequirement(RPAnnotation):
         AbstractRPModelElement._set_method_or_property(self._com, "setRequirementID", "requirementID", requirement_id)
 
 
+AbstractRPModelElement.register_wrapper("Annotation", RPAnnotation)
 AbstractRPModelElement.register_wrapper("Requirement", RPRequirement)

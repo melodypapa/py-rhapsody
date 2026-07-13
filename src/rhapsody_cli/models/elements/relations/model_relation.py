@@ -472,3 +472,6 @@ class RPRelation(RPUnit):
             com.telelogic.rhapsody.core.IRPRelation::setRelationType(java.lang.String relationType)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setRelationType", "relationType", relation_type)
+
+
+AbstractRPModelElement.register_wrapper("Relation", RPRelation)

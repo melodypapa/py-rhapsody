@@ -2,13 +2,12 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import RPModelElement
+from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 from rhapsody_cli.models.elements.classifiers.model_statechart import RPStatechart
 from rhapsody_cli.models.elements.statemachine.model_statemachine import RPState
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.core import RPCollection
     from rhapsody_cli.models.elements.activity.model_actions import (
         RPAcceptEventAction,
         RPAcceptTimeEvent,
@@ -58,7 +57,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::addConveyed(com.telelogic.rhapsody.core.IRPModelElement pElement)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addConveyed(p_element._com))
 
     def get_conveyed(self) -> "RPCollection":
         """Returns the conveyed elements of the flow.
@@ -72,7 +71,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getConveyed()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getConveyed()))
 
     def get_direction(self) -> str:
         """Returns the direction of the flow.
@@ -86,7 +85,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getDirection()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getDirection", "direction"))
 
     def get_end1(self) -> "RPModelElement":
         """Returns the first end of the flow.
@@ -100,7 +99,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd1()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd1()))
 
     def get_end1_port(self) -> "RPPort":
         """Returns the port at the first end of the flow.
@@ -114,7 +113,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd1Port()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd1Port()))
 
     def get_end1_sys_ml_port(self) -> "RPSysMLPort":
         """Returns the SysML port at the first end of the flow.
@@ -128,7 +127,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd1SysMLPort()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd1SysMLPort()))
 
     def get_end2(self) -> "RPModelElement":
         """Returns the second end of the flow.
@@ -142,7 +141,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd2()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd2()))
 
     def get_end2_port(self) -> "RPPort":
         """Returns the port at the second end of the flow.
@@ -156,7 +155,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd2Port()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd2Port()))
 
     def get_end2_sys_ml_port(self) -> "RPSysMLPort":
         """Returns the SysML port at the second end of the flow.
@@ -170,7 +169,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::getEnd2SysMLPort()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd2SysMLPort()))
 
     def remove_conveyed(self, p_element: "RPModelElement") -> None:
         """Removes a conveyed element from the flow.
@@ -184,7 +183,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::removeConveyed(com.telelogic.rhapsody.core.IRPModelElement pElement)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeConveyed(p_element._com))
 
     def set_direction(self, direction: str) -> None:
         """Specifies the direction to use for the flow.
@@ -199,7 +198,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setDirection(java.lang.String direction)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setDirection", "direction", direction)
 
     def set_end1(self, end1: "RPModelElement") -> None:
         """Sets the first end of the flow.
@@ -213,7 +212,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd1(com.telelogic.rhapsody.core.IRPModelElement end1)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setEnd1", "end1", end1._com)
 
     def set_end1_via_port(self, p_instance: "RPInstance", p_port: "RPPort") -> None:
         """Sets the first end of the flow via a port.
@@ -228,7 +227,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd1ViaPort(com.telelogic.rhapsody.core.IRPInstance pInstance, com.telelogic.rhapsody.core.IRPPort pPort)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setEnd1ViaPort(p_instance._com, p_port._com))
 
     def set_end1_via_sys_ml_port(self, p_instance: "RPInstance", p_sys_m_l_port: "RPSysMLPort") -> None:
         """Sets the first end of the flow via a SysML port.
@@ -243,7 +242,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd1ViaSysMLPort(com.telelogic.rhapsody.core.IRPInstance pInstance, com.telelogic.rhapsody.core.IRPSysMLPort pSysMLPort)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setEnd1ViaSysMLPort(p_instance._com, p_sys_m_l_port._com))
 
     def set_end2(self, end2: "RPModelElement") -> None:
         """Sets the second end of the flow.
@@ -257,7 +256,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd2(com.telelogic.rhapsody.core.IRPModelElement end2)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setEnd2", "end2", end2._com)
 
     def set_end2_via_port(self, p_instance: "RPInstance", p_port: "RPPort") -> None:
         """Sets the second end of the flow via a port.
@@ -272,7 +271,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd2ViaPort(com.telelogic.rhapsody.core.IRPInstance pInstance, com.telelogic.rhapsody.core.IRPPort pPort)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setEnd2ViaPort(p_instance._com, p_port._com))
 
     def set_end2_via_sys_ml_port(self, p_instance: "RPInstance", p_sys_m_l_port: "RPSysMLPort") -> None:
         """Sets the second end of the flow via a SysML port.
@@ -287,7 +286,7 @@ class RPFlow(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPFlow::setEnd2ViaSysMLPort(com.telelogic.rhapsody.core.IRPInstance pInstance, com.telelogic.rhapsody.core.IRPSysMLPort pSysMLPort)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setEnd2ViaSysMLPort(p_instance._com, p_sys_m_l_port._com))
 
 
 class RPFlowItem(RPClassifier):
@@ -311,7 +310,7 @@ class RPFlowItem(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowItem::addRepresented(com.telelogic.rhapsody.core.IRPModelElement pElement)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addRepresented(p_element._com))
 
     def get_represented(self) -> "RPCollection":
         """Returns a collection of all the information elements that are represented by the item flow.
@@ -322,7 +321,7 @@ class RPFlowItem(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowItem::getRepresented()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getRepresented()))
 
     def remove_represented(self, p_element: "RPModelElement") -> None:
         """Removes the specified element from the collection of information elements that are represented by the item flow.
@@ -333,7 +332,7 @@ class RPFlowItem(RPClassifier):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowItem::removeRepresented(com.telelogic.rhapsody.core.IRPModelElement pElement)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeRepresented(p_element._com))
 
 
 class RPFlowchart(RPStatechart):
@@ -381,7 +380,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addAcceptEventAction(java.lang.String name, com.telelogic.rhapsody.core.IRPState parent)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addAcceptEventAction(name, parent._com)))
 
     def add_accept_time_event(self, name: str, parent: "RPState") -> "RPAcceptTimeEvent":
         """Adds a new Accept Time Event element to the activity.
@@ -401,7 +400,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addAcceptTimeEvent(java.lang.String name, com.telelogic.rhapsody.core.IRPState parent)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addAcceptTimeEvent(name, parent._com)))
 
     def add_activity_parameter(self, name: str) -> "RPPin":
         """Adds an activity parameter to the frame of the activity.
@@ -415,7 +414,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addActivityParameter(java.lang.String name)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addActivityParameter(name)))
 
     def add_call_behavior(self, referenced: "RPModelElement") -> "RPState":
         """Adds a new Call Behavior element to the activity.
@@ -430,7 +429,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addCallBehavior(com.telelogic.rhapsody.core.IRPModelElement referenced)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addCallBehavior(referenced._com)))
 
     def add_call_operation(self, name: str, parent: "RPState") -> "RPCallOperation":
         """Adds a new Call Operation element to the activity.
@@ -449,7 +448,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addCallOperation(java.lang.String name, com.telelogic.rhapsody.core.IRPState parent)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addCallOperation(name, parent._com)))
 
     def add_object_node(self, name: str, parent: "RPState") -> "RPObjectNode":
         """Adds a new Object Node element to the activity.
@@ -468,7 +467,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addObjectNode(java.lang.String name, com.telelogic.rhapsody.core.IRPState parent)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addObjectNode(name, parent._com)))
 
     def add_reference_activity(self, referenced: "RPModelElement") -> "RPState":
         """Adds a new Call Behavior element to the activity. Performs same action as the addCallBehavior method.
@@ -483,7 +482,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addReferenceActivity(com.telelogic.rhapsody.core.IRPModelElement referenced)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addReferenceActivity(referenced._com)))
 
     def add_swimlane(self, name: str) -> "RPSwimlane":
         """Adds a new swimlane to the activity.
@@ -497,7 +496,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::addSwimlane(java.lang.String name)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addSwimlane(name)))
 
     def get_flowchart_diagram(self) -> "RPActivityDiagram":
         """Returns the IRPActivityDiagram object associated with the activity.
@@ -508,7 +507,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::getFlowchartDiagram()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getFlowchartDiagram()))
 
     def get_is_analysis_only(self) -> int:
         """Checks whether the activity is defined as analysis-only, meaning that it is used only for modeling purposes and code is not generated for the activity.
@@ -519,7 +518,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::getIsAnalysisOnly()
         """
-        raise NotImplementedError
+        return int(self._get_method_or_property(self._com, "getIsAnalysisOnly", "isAnalysisOnly"))
 
     def get_its_owner(self) -> "RPOperation":
         """Returns the operation that owns the activity. Deprecated: use IRPModelElement.getOwner instead.
@@ -530,7 +529,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::getItsOwner()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getItsOwner()))
 
     def get_swimlanes(self) -> "RPCollection":
         """Returns a collection of all the swimlanes in the activity.
@@ -541,7 +540,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::getSwimlanes()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getSwimlanes()))
 
     def set_is_analysis_only(self, is_analysis_only: int) -> None:
         """Specifies whether the activity should be defined as analysis-only.
@@ -554,7 +553,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::setIsAnalysisOnly(int isAnalysisOnly)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setIsAnalysisOnly", "isAnalysisOnly", is_analysis_only)
 
     def set_its_owner(self, its_owner: "RPOperation") -> None:
         """Sets the owner of the activity. Deprecated: use IRPModelElement.setOwner instead.
@@ -565,7 +564,7 @@ class RPFlowchart(RPStatechart):
         Reference:
             com.telelogic.rhapsody.core.IRPFlowchart::setItsOwner(com.telelogic.rhapsody.core.IRPOperation itsOwner)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.setItsOwner(its_owner._com))
 
 
 class RPObjectNode(RPState):
@@ -595,7 +594,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::addInState(com.telelogic.rhapsody.core.IRPModelElement val)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.addInState(val._com))
 
     def get_in_state(self) -> str:
         """Returns the "In State" of the object node. Deprecated: use getInStateList() instead.
@@ -606,7 +605,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::getInState()
         """
-        raise NotImplementedError
+        return str(self._get_method_or_property(self._com, "getInState", "inState"))
 
     def get_in_state_list(self) -> "RPCollection":
         """Returns a collection of the "In State" states for the object node.
@@ -617,7 +616,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::getInStateList()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getInStateList()))
 
     def get_represents(self) -> "RPModelElement":
         """Returns the class/type that this object node represents.
@@ -628,7 +627,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::getRepresents()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getRepresents()))
 
     def remove_in_state(self, val: "RPModelElement") -> None:
         """Removes the specified state from the list of "In State" states for the object node.
@@ -639,7 +638,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::removeInState(com.telelogic.rhapsody.core.IRPModelElement val)
         """
-        raise NotImplementedError
+        self.call_com(lambda: self._com.removeInState(val._com))
 
     def set_in_state(self, in_state: str) -> None:
         """Sets the "In State" of the object node. Deprecated: use addInState instead.
@@ -650,7 +649,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::setInState(java.lang.String inState)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setInState", "inState", in_state)
 
     def set_represents(self, represents: "RPModelElement") -> None:
         """Specifies the class/type that this object node should represent.
@@ -661,7 +660,7 @@ class RPObjectNode(RPState):
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::setRepresents(com.telelogic.rhapsody.core.IRPModelElement represents)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setRepresents", "represents", represents._com)
 
 
 class RPSwimlane(RPModelElement):
@@ -688,7 +687,7 @@ class RPSwimlane(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::addSwimlane(java.lang.String name)
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.addSwimlane(name)))
 
     def get_contents(self) -> "RPCollection":
         """Returns a collection of the elements contained in the swimlane.
@@ -702,7 +701,7 @@ class RPSwimlane(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::getContents()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getContents()))
 
     def get_represents(self) -> "RPModelElement":
         """Returns the model element that the swimlane represents.
@@ -713,7 +712,7 @@ class RPSwimlane(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::getRepresents()
         """
-        raise NotImplementedError
+        return AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getRepresents()))
 
     def get_swimlanes(self) -> "RPCollection":
         """Returns a collection of the swimlanes that are nested under this swimlane.
@@ -727,7 +726,7 @@ class RPSwimlane(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::getSwimlanes()
         """
-        raise NotImplementedError
+        return RPCollection(self.call_com(lambda: self._com.getSwimlanes()))
 
     def set_represents(self, represents: "RPModelElement") -> None:
         """Specifies the model element that the swimlane is to represent.
@@ -741,4 +740,12 @@ class RPSwimlane(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::setRepresents(com.telelogic.rhapsody.core.IRPModelElement represents)
         """
-        raise NotImplementedError
+        self._set_method_or_property(self._com, "setRepresents", "represents", represents._com)
+
+
+# Register wrappers for meta classes
+AbstractRPModelElement.register_wrapper("Flow", RPFlow)
+AbstractRPModelElement.register_wrapper("FlowItem", RPFlowItem)
+AbstractRPModelElement.register_wrapper("Flowchart", RPFlowchart)
+AbstractRPModelElement.register_wrapper("ObjectNode", RPObjectNode)
+AbstractRPModelElement.register_wrapper("Swimlane", RPSwimlane)
