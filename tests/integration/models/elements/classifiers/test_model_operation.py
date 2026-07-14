@@ -2,7 +2,6 @@ import uuid
 
 import pytest
 
-from rhapsody_cli.models.elements.classifiers import RPClass, RPOperation
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 
 
@@ -21,8 +20,7 @@ class TestRPOperationIntegration:
         return pkg
 
     @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsStatic' COM method; "
-        "RPOperation.set_is_static raises AttributeError. TODO: persist via metatype property system.",
+        reason="Rhapsody2.Application.1 does not expose the 'setIsStatic' COM method; " "RPOperation.set_is_static raises AttributeError. TODO: persist via metatype property system.",
         strict=False,
     )
     def test_static_roundtrip(self, test_project: RPProject) -> None:
@@ -42,8 +40,7 @@ class TestRPOperationIntegration:
             test_class.delete_from_project()
 
     @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsVirtual' COM method; "
-        "RPOperation.set_is_virtual raises AttributeError. TODO: persist via metatype property system.",
+        reason="Rhapsody2.Application.1 does not expose the 'setIsVirtual' COM method; " "RPOperation.set_is_virtual raises AttributeError. TODO: persist via metatype property system.",
         strict=False,
     )
     def test_virtual_roundtrip(self, test_project: RPProject) -> None:
@@ -63,8 +60,7 @@ class TestRPOperationIntegration:
             test_class.delete_from_project()
 
     @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsAbstract' COM method; "
-        "RPOperation.set_is_abstract raises AttributeError. TODO: persist via metatype property system.",
+        reason="Rhapsody2.Application.1 does not expose the 'setIsAbstract' COM method; " "RPOperation.set_is_abstract raises AttributeError. TODO: persist via metatype property system.",
         strict=False,
     )
     def test_abstract_roundtrip(self, test_project: RPProject) -> None:

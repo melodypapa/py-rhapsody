@@ -2,7 +2,6 @@ import uuid
 
 import pytest
 
-from rhapsody_cli.models.elements.classifiers import RPClass
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 from rhapsody_cli.models.elements.variables import RPAttribute
 

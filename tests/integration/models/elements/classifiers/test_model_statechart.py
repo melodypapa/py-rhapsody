@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from rhapsody_cli.models.elements.classifiers import RPClass, RPStatechart
+from rhapsody_cli.models.elements.classifiers import RPStatechart
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 
 
