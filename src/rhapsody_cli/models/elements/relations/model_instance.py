@@ -13,19 +13,19 @@ class RPInstance(RPRelation):
     """Wraps ``IRPInstance``: represents an instance in the model."""
 
     # IRPInstance method parity checklist:
-    # [x] add_relation_to_the_whole        [x] impl  [x] docstring  [x] test
-    # [x] get_all_nested_elements         [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] get_attribute_value            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] get_in_links                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] get_instantiated_by            [x] impl  [x] docstring  [x] test
-    # [x] get_list_of_initializer_arguments [x] impl [x] docstring  [x] test
-    # [x] get_out_links                  [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] set_attribute_value            [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] set_explicit                  [x] impl  [x] docstring  [x] test
-    # [x] set_implicit                  [x] impl  [x] docstring  [x] test
-    # [x] set_initializer_argument_value  [x] impl  [x] docstring  [x] test
-    # [x] set_instantiated_by            [x] impl  [x] docstring  [x] test
-    # [x] update_contained_diagrams_on_server [x] impl [x] docstring [x] test
+    # [x] add_relation_to_the_whole        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_all_nested_elements         [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] get_attribute_value            [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] get_in_links                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] get_instantiated_by            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_list_of_initializer_arguments [x] impl [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_out_links                  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] set_attribute_value            [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] set_explicit                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_implicit                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_initializer_argument_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_instantiated_by            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] update_contained_diagrams_on_server [x] impl [x] docstring [x] unit test  [ ] integration test
     # No deprecated methods in IRPInstance.
 
     def get_all_nested_elements(self) -> RPCollection:

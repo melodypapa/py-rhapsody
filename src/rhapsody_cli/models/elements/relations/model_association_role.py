@@ -13,9 +13,9 @@ class RPAssociationRole(RPInstance):
     """Wraps ``IRPAssociationRole``: an association role that extends ``IRPInstance``."""
 
     # IRPAssociationRole method parity checklist:
-    # [x] getClassifierRoles  [x] impl  [x] docstring  [ ] test
-    # [x] getFormalRelations  [x] impl  [x] docstring  [ ] test
-    # [x] getRoleType  [x] impl  [x] docstring  [ ] test
+    # [x] getClassifierRoles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getFormalRelations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getRoleType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPInstance / IRPRelation / IRPUnit / IRPModelElement methods (covered by RPInstance / RPRelation / RPUnit / RPModelElement checklists)
     # No deprecated IRPAssociationRole methods.
 

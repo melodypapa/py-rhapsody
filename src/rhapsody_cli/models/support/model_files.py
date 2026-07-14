@@ -13,10 +13,10 @@ class RPASCIIFile(RPModelElement):
     """Wraps ``IRPASCIIFile``."""
 
     # IRPASCIIFile method parity checklist:
-    # [x] close                        [x] impl  [x] docstring  [x] test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] test
-    # [x] open                         [x] impl  [x] docstring  [x] test
-    # [x] write                        [x] impl  [x] docstring  [x] test
+    # [x] close                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] open                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] write                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPASCIIFile methods.
 
     def close(self) -> None:
@@ -67,9 +67,9 @@ class RPControlledFile(RPUnit):
     """
 
     # IRPControlledFile method parity checklist:
-    # [x] get_full_path_file_name          [x] impl  [x] docstring  [x] test
-    # [x] open                         [x] impl  [x] docstring  [x] test
-    # [x] set_target                    [x] impl  [x] docstring  [x] test
+    # [x] get_full_path_file_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] open                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPControlledFile methods.
@@ -112,21 +112,21 @@ class RPFile(RPUnit):
     """Wraps ``IRPFile``: represents a file or folder to be generated during code generation."""
 
     # IRPFile method parity checklist:
-    # [x] add_element                   [x] impl  [x] docstring  [x] test
-    # [x] add_model_element              [x] impl  [x] docstring  [x] test
-    # [x] add_package_to_scope            [x] impl  [x] docstring  [x] test
-    # [x] add_text_element               [x] impl  [x] docstring  [x] test
-    # [x] add_to_scope                   [x] impl  [x] docstring  [x] test
-    # [x] get_elements                  [x] impl  [x] docstring  [x] test
-    # [x] get_file_fragments             [x] impl  [x] docstring  [x] test
-    # [x] get_file_type                  [x] impl  [x] docstring  [x] test
-    # [x] get_files                     [x] impl  [x] docstring  [x] test
-    # [x] get_imp_name                   [x] impl  [x] docstring  [x] test
-    # [x] get_path                      [x] impl  [x] docstring  [x] test
-    # [x] get_spec_name                  [x] impl  [x] docstring  [x] test
-    # [x] is_empty                      [x] impl  [x] docstring  [x] test
-    # [x] set_file_type                  [x] impl  [x] docstring  [x] test
-    # [x] set_path                      [x] impl  [x] docstring  [x] test
+    # [x] add_element                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_model_element              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_package_to_scope            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_text_element               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_to_scope                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_elements                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_file_fragments             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_file_type                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_files                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_imp_name                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_path                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_spec_name                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_empty                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_file_type                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_path                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # No deprecated IRPFile methods.
@@ -359,11 +359,11 @@ class RPFileFragment(RPModelElement):
     """Wraps ``IRPFileFragment``."""
 
     # IRPFileFragment method parity checklist:
-    # [x] get_fragment_element           [x] impl  [x] docstring  [x] test
-    # [x] get_fragment_text              [x] impl  [x] docstring  [x] test
-    # [x] get_fragment_type              [x] impl  [x] docstring  [x] test
-    # [x] move_fragment_in_owner          [x] impl  [x] docstring  [x] test
-    # [x] set_fragment_text              [x] impl  [x] docstring  [x] test
+    # [x] get_fragment_element           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_fragment_text              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_fragment_type              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] move_fragment_in_owner          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_fragment_text              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPFileFragment methods.
 

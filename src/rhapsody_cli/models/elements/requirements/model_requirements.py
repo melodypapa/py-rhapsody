@@ -17,16 +17,16 @@ class RPAnnotation(RPUnit):
     """
 
     # IRPAnnotation method parity checklist:
-    # [x] add_anchor  [x] impl  [x] docstring  [x] test
-    # [x] get_anchored_by_me  [x] impl  [x] docstring  [x] test
-    # [x] get_body  [x] impl  [x] docstring  [x] test
-    # [x] get_specification  [x] impl  [x] docstring  [x] test
-    # [x] get_specification_rtf  [x] impl  [x] docstring  [x] test
-    # [x] is_specification_rtf  [x] impl  [x] docstring  [x] test
-    # [x] remove_anchor  [x] impl  [x] docstring  [x] test
-    # [x] set_body  [x] impl  [x] docstring  [x] test
-    # [x] set_specification  [x] impl  [x] docstring  [x] test
-    # [x] set_specification_rtf  [x] impl  [x] docstring  [x] test
+    # [x] add_anchor  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_anchored_by_me  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_body  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_specification  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_specification_rtf  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_specification_rtf  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_anchor  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_body  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_specification  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_specification_rtf  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPAnnotation methods.
 
@@ -145,8 +145,8 @@ class RPRequirement(RPAnnotation):
     """Wraps ``IRPRequirement``: represents a requirement in the model."""
 
     # IRPRequirement method parity checklist:
-    # [x] get_requirement_id  [x] impl  [x] docstring  [x] test
-    # [x] set_requirement_id  [x] impl  [x] docstring  [x] test
+    # [x] get_requirement_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_requirement_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPAnnotation / IRPUnit / IRPModelElement methods (covered by RPAnnotation / RPUnit / RPModelElement checklists)
     # No deprecated IRPRequirement methods.
 

@@ -17,8 +17,8 @@ class RPAcceptEventAction(RPState):
     """Wraps ``IRPAcceptEventAction``: represents Accept Event Action elements in a statechart or activity diagram."""
 
     # IRPAcceptEventAction method parity checklist:
-    # [x] getEvent                     [x] impl  [x] docstring  [ ] test
-    # [x] setEvent                     [x] impl  [x] docstring  [ ] test
+    # [x] getEvent                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setEvent                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPState methods (covered by RPState checklist)
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
@@ -51,8 +51,8 @@ class RPAcceptTimeEvent(RPState):
     """Wraps ``IRPAcceptTimeEvent``: represents Accept Time Event elements in activity diagrams and statecharts."""
 
     # IRPAcceptTimeEvent method parity checklist:
-    # [x] getDurationTime              [x] impl  [x] docstring  [ ] test
-    # [x] setDurationTime              [x] impl  [x] docstring  [ ] test
+    # [x] getDurationTime              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setDurationTime              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPState methods (covered by RPState checklist)
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
@@ -85,8 +85,8 @@ class RPAction(RPModelElement):
     """Wraps ``IRPAction``: represents the action defined for a transition in a statechart."""
 
     # IRPAction method parity checklist:
-    # [x] getBody                      [x] impl  [x] docstring  [ ] test
-    # [x] setBody                      [x] impl  [x] docstring  [ ] test
+    # [x] getBody                      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setBody                      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPAction methods.
 
@@ -128,10 +128,10 @@ class RPCallOperation(RPState):
     """Wraps ``IRPCallOperation``: represents call operation elements in activity diagrams."""
 
     # IRPCallOperation method parity checklist:
-    # [x] getOperation                 [x] impl  [x] docstring  [ ] test
-    # [x] getTarget                    [x] impl  [x] docstring  [ ] test
-    # [x] setOperation                 [x] impl  [x] docstring  [ ] test
-    # [x] setTarget                    [x] impl  [x] docstring  [ ] test
+    # [x] getOperation                 [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getTarget                    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setOperation                 [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setTarget                    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPState methods (covered by RPState checklist)
     # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
@@ -190,10 +190,10 @@ class RPContextSpecification(RPValueSpecification):
     """
 
     # IRPContextSpecification method parity checklist:
-    # [x] getMultiplicities            [x] impl  [x] docstring  [ ] test
-    # [x] getValue                     [x] impl  [x] docstring  [ ] test
-    # [x] setMultiplicities            [x] impl  [x] docstring  [ ] test
-    # [x] setValue                     [x] impl  [x] docstring  [ ] test
+    # [x] getMultiplicities            [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getValue                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setMultiplicities            [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setValue                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPContextSpecification methods.
@@ -250,14 +250,14 @@ class RPSendAction(RPAction):
     """Wraps ``IRPSendAction``: represents Send Action elements in an activity or statechart."""
 
     # IRPSendAction method parity checklist:
-    # [x] addArgumentValue             [x] impl  [x] docstring  [ ] test
-    # [x] getArgVals                   [x] impl  [x] docstring  [ ] test
-    # [x] getEvent                     [x] impl  [x] docstring  [ ] test
-    # [x] getInvokedOperation          [x] impl  [x] docstring  [ ] test
-    # [x] getTarget                    [x] impl  [x] docstring  [ ] test
-    # [x] setEvent                     [x] impl  [x] docstring  [ ] test
-    # [x] setInvokedOperation          [x] impl  [x] docstring  [ ] test
-    # [x] setTarget                    [x] impl  [x] docstring  [ ] test
+    # [x] addArgumentValue             [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getArgVals                   [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getEvent                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getInvokedOperation          [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getTarget                    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setEvent                     [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setInvokedOperation          [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setTarget                    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPAction methods (covered by RPAction checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPSendAction methods.

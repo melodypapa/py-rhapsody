@@ -17,7 +17,7 @@ class RPCollaborationDiagram(RPDiagram):
     """Wraps ``IRPCollaborationDiagram``: represents collaboration diagrams in a Rhapsody model."""
 
     # IRPCollaborationDiagram method parity checklist:
-    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] test
+    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -88,8 +88,8 @@ class RPSequenceDiagram(RPDiagram):
     """Wraps ``IRPSequenceDiagram``: represents sequence diagrams in a Rhapsody model."""
 
     # IRPSequenceDiagram method parity checklist:
-    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] test
-    # [x] getRelatedUseCases           [x] impl  [x] docstring  [ ] test
+    # [x] getLogicalCollaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getRelatedUseCases           [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -127,9 +127,9 @@ class RPStatechartDiagram(RPDiagram):
     """Wraps ``IRPStatechartDiagram``: represents statecharts in a Rhapsody model."""
 
     # IRPStatechartDiagram method parity checklist:
-    # [x] addAndLine                   [x] impl  [x] docstring  [ ] test
-    # [x] createGraphics               [x] impl  [x] docstring  [ ] test
-    # [x] getStatechart                [x] impl  [x] docstring  [ ] test
+    # [x] addAndLine                   [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] createGraphics               [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getStatechart                [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
@@ -214,8 +214,8 @@ class RPTimingDiagram(RPSequenceDiagram):
     """Wraps ``IRPTimingDiagram``."""
 
     # IRPTimingDiagram method parity checklist:
-    # [x] getIsElaborated              [x] impl  [x] docstring  [ ] test
-    # [x] setIsElaborated              [x] impl  [x] docstring  [ ] test
+    # [x] getIsElaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setIsElaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPSequenceDiagram methods (covered by RPSequenceDiagram checklist)
@@ -255,8 +255,8 @@ class RPActivityDiagram(RPStatechartDiagram):
     """Wraps ``IRPActivityDiagram``: represents activity diagrams in Rhapsody models."""
 
     # IRPActivityDiagram method parity checklist:
-    # [x] decomposeSwimlane            [x] impl  [x] docstring  [ ] test
-    # [x] getFlowchart                 [x] impl  [x] docstring  [ ] test
+    # [x] decomposeSwimlane            [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getFlowchart                 [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPStatechartDiagram methods (covered by RPStatechartDiagram checklist)

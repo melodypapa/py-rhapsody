@@ -13,20 +13,20 @@ class RPPort(RPInstance):
     """Wraps ``IRPPort``: represents a port on a classifier in the model."""
 
     # IRPPort method parity checklist:
-    # [x] add_provided_interface      [x] impl  [x] docstring  [x] test
-    # [x] add_required_interface      [x] impl  [x] docstring  [x] test
-    # [x] get_is_behavioral           [x] impl  [x] docstring  [x] test
-    # [x] get_is_reversed             [x] impl  [x] docstring  [x] test
-    # [x] get_port_contract           [x] impl  [x] docstring  [x] test
-    # [x] get_provided_interfaces     [x] impl  [x] docstring  [x] test
-    # [x] get_required_interfaces     [x] impl  [x] docstring  [x] test
-    # [x] remove_provided_interface   [x] impl  [x] docstring  [x] test
-    # [x] remove_required_interface   [x] impl  [x] docstring  [x] test
-    # [x] set_is_behavioral           [x] impl  [x] docstring  [x] test
-    # [x] set_is_reversed             [x] impl  [x] docstring  [x] test
-    # [x] set_port_contract           [x] impl  [x] docstring  [x] test
-    # [x] get_contract (deprecated, use getPortContract) [x] impl [x] docstring [x] test
-    # [x] set_contract (deprecated, use setPortContract) [x] impl [x] docstring [x] test
+    # [x] add_provided_interface      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_required_interface      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_behavioral           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_reversed             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_port_contract           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_provided_interfaces     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_required_interfaces     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_provided_interface   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_required_interface   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_behavioral           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_reversed             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_port_contract           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_contract (deprecated, use getPortContract) [x] impl [x] docstring [x] unit test  [ ] integration test
+    # [x] set_contract (deprecated, use setPortContract) [x] impl [x] docstring [x] unit test  [ ] integration test
 
     def get_is_behavioral(self) -> int:
         """Checks whether the port is a behavioral port.

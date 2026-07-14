@@ -12,11 +12,11 @@ class RPInstanceSlot(RPModelElement):
     """Wraps ``IRPInstanceSlot``."""
 
     # IRPInstanceSlot method parity checklist:
-    # [ ] addElementValue              [ ] impl  [ ] docstring  [ ] test
-    # [ ] addStringValue               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getSlotProperty              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getValues                    [ ] impl  [ ] docstring  [ ] test
-    # [ ] setSlotProperty              [ ] impl  [ ] docstring  [ ] test
+    # [ ] addElementValue              [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] addStringValue               [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getSlotProperty              [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getValues                    [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setSlotProperty              [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPInstanceSlot methods.
 
@@ -101,12 +101,12 @@ class RPInstanceSpecification(RPModelElement):
     """Wraps ``IRPInstanceSpecification``."""
 
     # IRPInstanceSpecification method parity checklist:
-    # [ ] addInstanceSlot              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getClassifier                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getInstanceSlots             [ ] impl  [ ] docstring  [ ] test
-    # [ ] isRootInstanceSpecification  [ ] impl  [ ] docstring  [ ] test
-    # [ ] populateSlots                [ ] impl  [ ] docstring  [ ] test
-    # [ ] setClassifier                [ ] impl  [ ] docstring  [ ] test
+    # [ ] addInstanceSlot              [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getClassifier                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getInstanceSlots             [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isRootInstanceSpecification  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] populateSlots                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setClassifier                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPInstanceSpecification methods.
 
@@ -219,8 +219,8 @@ class RPInstanceValue(RPValueSpecification):
     """Wraps ``IRPInstanceValue``: used in contexts where a single model element must be stored."""
 
     # IRPInstanceValue method parity checklist:
-    # [ ] getValue                     [ ] impl  [ ] docstring  [ ] test
-    # [ ] setValue                     [ ] impl  [ ] docstring  [ ] test
+    # [ ] getValue                     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setValue                     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPInstanceValue methods.
@@ -252,8 +252,8 @@ class RPLiteralSpecification(RPValueSpecification):
     """Wraps ``IRPLiteralSpecification``: used in contexts where a single value must be stored."""
 
     # IRPLiteralSpecification method parity checklist:
-    # [ ] getValue                     [ ] impl  [ ] docstring  [ ] test
-    # [ ] setValue                     [ ] impl  [ ] docstring  [ ] test
+    # [ ] getValue                     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setValue                     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
     # No deprecated IRPLiteralSpecification methods.

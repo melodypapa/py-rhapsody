@@ -18,58 +18,58 @@ class RPClassifier(RPUnit):
     """Wraps ``IRPClassifier``: the base class for all classifiable elements."""
 
     # IRPClassifier method parity checklist:
-    # [x] add_activity_diagram              [x] impl  [x] docstring  [x] test
-    # [x] add_attribute                    [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] add_flow_items                    [x] impl  [x] docstring  [x] test
-    # [x] add_flows                        [x] impl  [x] docstring  [x] test
-    # [x] add_generalization               [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] add_operation                    [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] add_relation                     [x] impl  [x] docstring  [x] test
-    # [x] add_relation_to                   [x] impl  [x] docstring  [x] test
-    # [x] add_statechart                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] add_unidirectional_relation       [x] impl  [x] docstring  [x] test
-    # [x] add_unidirectional_relation_to     [x] impl  [x] docstring  [x] test
-    # [x] delete_attribute                 [x] impl  [x] docstring  [x] test
-    # [x] delete_flow_items                 [x] impl  [x] docstring  [x] test
-    # [x] delete_flows                     [x] impl  [x] docstring  [x] test
-    # [x] delete_generalization            [x] impl  [x] docstring  [x] test
-    # [x] delete_operation                 [x] impl  [x] docstring  [x] test
-    # [x] delete_relation                  [x] impl  [x] docstring  [x] test
-    # [x] find_attribute                   [x] impl  [x] docstring  [x] test
-    # [x] find_base_classifier              [x] impl  [x] docstring  [x] test
-    # [x] find_derived_classifier           [x] impl  [x] docstring  [x] test
-    # [x] find_generalization              [x] impl  [x] docstring  [x] test
-    # [x] find_interface_item               [x] impl  [x] docstring  [x] test
-    # [x] find_nested_classifier            [x] impl  [x] docstring  [x] test
-    # [x] find_nested_classifier_recursive   [x] impl  [x] docstring  [x] test
-    # [x] find_relation                    [x] impl  [x] docstring  [x] test
-    # [x] find_trigger                     [x] impl  [x] docstring  [x] test
-    # [x] get_activity_diagram              [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
-    # [x] get_attributes                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] get_attributes_including_bases     [x] impl  [x] docstring  [x] test
-    # [x] get_base_classifiers              [x] impl  [x] docstring  [x] test
-    # [x] get_behavioral_diagrams           [x] impl  [x] docstring  [x] test
-    # [x] get_derived_classifiers           [x] impl  [x] docstring  [x] test
-    # [x] get_flow_items                    [x] impl  [x] docstring  [x] test
-    # [x] get_flows                        [x] impl  [x] docstring  [x] test
-    # [x] get_generalizations              [x] impl  [x] docstring  [x] test
-    # [x] get_interface_items               [x] impl  [x] docstring  [x] test
-    # [x] get_interface_items_including_bases [x] impl  [x] docstring  [x] test
-    # [x] get_links                        [x] impl  [x] docstring  [x] test
-    # [x] get_nested_classifiers            [x] impl  [x] docstring  [x] test
-    # [x] get_operations                   [x] impl  [x] docstring  [x] test   (already implemented)
-    # [x] get_ports                        [x] impl  [x] docstring  [x] test
-    # [x] get_relations                    [x] impl  [x] docstring  [x] test
-    # [x] get_relations_including_bases      [x] impl  [x] docstring  [x] test
-    # [x] get_sequence_diagrams             [x] impl  [x] docstring  [x] test
-    # [x] get_source_artifacts              [x] impl  [x] docstring  [x] test
-    # [x] get_statechart                   [x] impl  [x] docstring  [x] test   (doc recommends getBehavioralDiagrams)
+    # [x] add_activity_diagram              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_attribute                    [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] add_flow_items                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_flows                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_generalization               [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] add_operation                    [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] add_relation                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_relation_to                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_statechart                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] add_unidirectional_relation       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_unidirectional_relation_to     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_attribute                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_flow_items                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_flows                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_generalization            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_operation                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_relation                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_attribute                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_base_classifier              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_derived_classifier           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_generalization              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_interface_item               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_nested_classifier            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_nested_classifier_recursive   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_relation                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_trigger                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_activity_diagram              [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends getBehavioralDiagrams)
+    # [x] get_attributes                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] get_attributes_including_bases     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_base_classifiers              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_behavioral_diagrams           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_derived_classifiers           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_flow_items                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_flows                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_generalizations              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_items               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_items_including_bases [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_links                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_nested_classifiers            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_operations                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (already implemented)
+    # [x] get_ports                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_relations                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_relations_including_bases      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_sequence_diagrams             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_source_artifacts              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_statechart                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends getBehavioralDiagrams)
     # [inherited] IRPUnit / IRPModelElement methods (getName, setName, getOwner, getGUID,
     #              addDependency, addStereotype, getStereotypes, getNestedElements, save, load, etc.)
     # No deprecated IRPClassifier methods in deprecated-list.html.
     # [x] add_port (convenience method, not part of IRPClassifier's Java API -
     #     ports are created generically via addNewAggr("Port", name); this
-    #     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] test
+    #     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] unit test  [ ] integration test
 
     def add_attribute(self, name: str) -> "RPAttribute":
         """Adds a new attribute to the classifier.

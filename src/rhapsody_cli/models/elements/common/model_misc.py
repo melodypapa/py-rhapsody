@@ -7,8 +7,8 @@ class RPEnumerationLiteral(RPModelElement):
     """Wraps ``IRPEnumerationLiteral``: a literal value in an enumeration."""
 
     # IRPEnumerationLiteral method parity checklist:
-    # [x] getValue  [x] impl  [x] docstring  [x] test
-    # [x] setValue  [x] impl  [x] docstring  [x] test
+    # [x] getValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
     # No deprecated IRPEnumerationLiteral methods.
 
@@ -55,7 +55,7 @@ class RPConstraint(RPModelElement):
     """Wraps ``IRPConstraint``: a constraint element."""
 
     # IRPConstraint method parity checklist:
-    # [x] getConstraintsByMe  [x] impl  [x] docstring  [x] test
+    # [x] getConstraintsByMe  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
     # No deprecated IRPConstraint methods.
 

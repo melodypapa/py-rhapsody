@@ -25,16 +25,16 @@ class RPVariable(RPUnit):
     """
 
     # IRPVariable method parity checklist:
-    # [x] add_element_default_value  [x] impl  [x] docstring  [x] test
-    # [x] add_string_default_value  [x] impl  [x] docstring  [x] test
-    # [x] get_declaration  [x] impl  [x] docstring  [x] test
-    # [x] get_default_value  [x] impl  [x] docstring  [x] test
-    # [x] get_type  [x] impl  [x] docstring  [x] test
-    # [x] get_value_specifications  [x] impl  [x] docstring  [x] test
-    # [x] set_declaration  [x] impl  [x] docstring  [x] test
-    # [x] set_default_value  [x] impl  [x] docstring  [x] test
-    # [x] set_type  [x] impl  [x] docstring  [x] test
-    # [x] set_type_declaration  [x] impl  [x] docstring  [x] test
+    # [x] add_element_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_string_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_value_specifications  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_type_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPVariable methods.
 
@@ -165,18 +165,18 @@ class RPAttribute(RPVariable):
     """Wraps ``IRPAttribute``: represents an attribute in a classifier."""
 
     # IRPAttribute method parity checklist:
-    # [x] getIsConstant  [x] impl  [x] docstring  [x] test
-    # [x] getIsOrdered  [x] impl  [x] docstring  [x] test
-    # [x] getIsReference  [x] impl  [x] docstring  [x] test
-    # [x] get_is_static  [x] impl  [x] docstring  [x] test
-    # [x] get_multiplicity  [x] impl  [x] docstring  [x] test
-    # [x] get_visibility  [x] impl  [x] docstring  [x] test
-    # [x] setIsConstant  [x] impl  [x] docstring  [x] test
-    # [x] setIsOrdered  [x] impl  [x] docstring  [x] test
-    # [x] setIsReference  [x] impl  [x] docstring  [x] test
-    # [x] set_is_static  [x] impl  [x] docstring  [x] test
-    # [x] set_multiplicity  [x] impl  [x] docstring  [x] test
-    # [x] set_visibility  [x] impl  [x] docstring  [x] test
+    # [x] getIsConstant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getIsOrdered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getIsReference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_static  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_visibility  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setIsConstant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setIsOrdered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setIsReference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_static  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_visibility  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
     # No deprecated IRPAttribute methods.
 
@@ -320,15 +320,15 @@ class RPTag(RPVariable):
     """Wraps ``IRPTag``: a tag that extends ``IRPVariable``."""
 
     # IRPTag method parity checklist:
-    # [x] getBase  [x] impl  [x] docstring  [x] test
-    # [x] getFromProfile  [x] impl  [x] docstring  [x] test
-    # [x] getMultiplicity  [x] impl  [x] docstring  [x] test
-    # [x] getTagMetaClass  [x] impl  [x] docstring  [x] test
-    # [x] getValue  [x] impl  [x] docstring  [x] test
-    # [x] setMultiplicity  [x] impl  [x] docstring  [x] test
-    # [x] set_tag_context_value  [x] impl  [x] docstring  [x] test   (inherited from RPModelElement)
-    # [x] setTagMetaClass  [x] impl  [x] docstring  [x] test
-    # [x] setValue  [x] impl  [x] docstring  [x] test
+    # [x] getBase  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getFromProfile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getMultiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getTagMetaClass  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setMultiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_tag_context_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from RPModelElement)
+    # [x] setTagMetaClass  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
     # No deprecated IRPTag methods.
 
@@ -428,8 +428,8 @@ class RPArgument(RPVariable):
     """Wraps ``IRPArgument``: an argument/parameter of an operation."""
 
     # IRPArgument method parity checklist:
-    # [x] get_argument_direction  [x] impl  [x] docstring  [x] test
-    # [x] set_argument_direction  [x] impl  [x] docstring  [x] test
+    # [x] get_argument_direction  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_argument_direction  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
     # No deprecated IRPArgument methods.
 

@@ -13,16 +13,16 @@ class RPGeneralization(RPModelElement):
     """Wraps ``IRPGeneralization``: a generalization (inheritance) relationship."""
 
     # IRPGeneralization method parity checklist:
-    # [x] getBaseClass  [x] impl  [x] docstring  [ ] test
-    # [x] getDerivedClass  [x] impl  [x] docstring  [ ] test
-    # [x] getExtensionPoint  [x] impl  [x] docstring  [ ] test
-    # [x] getIsVirtual  [x] impl  [x] docstring  [ ] test
-    # [x] getVisibility  [x] impl  [x] docstring  [ ] test
-    # [x] setBaseClass  [x] impl  [x] docstring  [ ] test
-    # [x] setDerivedClass  [x] impl  [x] docstring  [ ] test
-    # [x] setExtensionPoint  [x] impl  [x] docstring  [ ] test
-    # [x] setIsVirtual  [x] impl  [x] docstring  [ ] test
-    # [x] setVisibility  [x] impl  [x] docstring  [ ] test
+    # [x] getBaseClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getDerivedClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getIsVirtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setBaseClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setDerivedClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setIsVirtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
     # No deprecated IRPGeneralization methods.
 

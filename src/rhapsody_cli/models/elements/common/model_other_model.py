@@ -18,14 +18,14 @@ class RPClassifierRole(RPModelElement):
     """Wraps ``IRPClassifierRole``: represents lifelines in sequence diagrams and "objects" (lifelines) in communication diagrams."""
 
     # IRPClassifierRole method parity checklist:
-    # [ ] getFormalClassifier          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getFormalInstance            [ ] impl  [ ] docstring  [ ] test
-    # [ ] getReferencedSequenceDiagram [ ] impl  [ ] docstring  [ ] test
-    # [ ] getReferencingClassifierRolesRecursively [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRoleType                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFormalClassifier          [ ] impl  [ ] docstring  [ ] test
-    # [ ] setFormalInstance            [ ] impl  [ ] docstring  [ ] test
-    # [ ] setReferencedSequenceDiagram [ ] impl  [ ] docstring  [ ] test
+    # [ ] getFormalClassifier          [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getFormalInstance            [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getReferencedSequenceDiagram [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getReferencingClassifierRolesRecursively [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getRoleType                  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setFormalClassifier          [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setFormalInstance            [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setReferencedSequenceDiagram [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPClassifierRole methods.
 
@@ -152,13 +152,13 @@ class RPSysMLPort(RPInstance):
     """Wraps ``IRPSysMLPort``: represents flowport elements in Rhapsody models."""
 
     # IRPSysMLPort method parity checklist:
-    # [ ] addLink                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsReversed                [ ] impl  [ ] docstring  [ ] test
-    # [ ] getPortDirection             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getType                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsReversed                [ ] impl  [ ] docstring  [ ] test
-    # [ ] setPortDirection             [ ] impl  [ ] docstring  [ ] test
-    # [ ] setType                      [ ] impl  [ ] docstring  [ ] test
+    # [ ] addLink                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsReversed                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getPortDirection             [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getType                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setIsReversed                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setPortDirection             [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setType                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPInstance methods (covered by RPInstance checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPRelation methods (covered by RPRelation checklist)
@@ -284,41 +284,41 @@ class RPType(RPClassifier):
     """Wraps ``IRPType``."""
 
     # IRPType method parity checklist:
-    # [ ] addEnumerationLiteral        [ ] impl  [ ] docstring  [ ] test
-    # [ ] deleteEnumerationLiteral     [ ] impl  [ ] docstring  [ ] test
-    # [ ] getDeclaration               [ ] impl  [ ] docstring  [ ] test
-    # [ ] getEnumerationLiterals       [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsPredefined              [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsTypedef                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsTypedefConstant         [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsTypedefOrdered          [ ] impl  [ ] docstring  [ ] test
-    # [ ] getIsTypedefReference        [ ] impl  [ ] docstring  [ ] test
-    # [ ] getKind                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] getTypedefBaseType           [ ] impl  [ ] docstring  [ ] test
-    # [ ] getTypedefMultiplicity       [ ] impl  [ ] docstring  [ ] test
-    # [ ] isArray                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] isEnum                       [ ] impl  [ ] docstring  [ ] test
-    # [ ] isEqualTo                    [ ] impl  [ ] docstring  [ ] test
-    # [ ] isImplicit                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] isKindEnumeration            [ ] impl  [ ] docstring  [ ] test
-    # [ ] isKindLanguage               [ ] impl  [ ] docstring  [ ] test
-    # [ ] isKindStruct                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] isKindTypedef                [ ] impl  [ ] docstring  [ ] test
-    # [ ] isKindUnion                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] isPointer                    [ ] impl  [ ] docstring  [ ] test
-    # [ ] isPointerToPointer           [ ] impl  [ ] docstring  [ ] test
-    # [ ] isReference                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] isReferenceToPointer         [ ] impl  [ ] docstring  [ ] test
-    # [ ] isStruct                     [ ] impl  [ ] docstring  [ ] test
-    # [ ] isTemplate                   [ ] impl  [ ] docstring  [ ] test
-    # [ ] isUnion                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setDeclaration               [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsTypedefConstant         [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsTypedefOrdered          [ ] impl  [ ] docstring  [ ] test
-    # [ ] setIsTypedefReference        [ ] impl  [ ] docstring  [ ] test
-    # [ ] setKind                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setTypedefBaseType           [ ] impl  [ ] docstring  [ ] test
-    # [ ] setTypedefMultiplicity       [ ] impl  [ ] docstring  [ ] test
+    # [ ] addEnumerationLiteral        [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] deleteEnumerationLiteral     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getDeclaration               [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getEnumerationLiterals       [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsPredefined              [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsTypedef                 [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsTypedefConstant         [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsTypedefOrdered          [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getIsTypedefReference        [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getKind                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getTypedefBaseType           [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getTypedefMultiplicity       [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isArray                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isEnum                       [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isEqualTo                    [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isImplicit                   [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isKindEnumeration            [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isKindLanguage               [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isKindStruct                 [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isKindTypedef                [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isKindUnion                  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isPointer                    [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isPointerToPointer           [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isReference                  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isReferenceToPointer         [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isStruct                     [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isTemplate                   [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] isUnion                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setDeclaration               [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setIsTypedefConstant         [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setIsTypedefOrdered          [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setIsTypedefReference        [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setKind                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setTypedefBaseType           [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setTypedefMultiplicity       [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)

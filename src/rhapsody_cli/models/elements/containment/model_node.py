@@ -12,12 +12,12 @@ class RPNode(RPUnit):
     """Wraps ``IRPNode``: a node that extends ``IRPUnit``."""
 
     # IRPNode method parity checklist:
-    # [x] addComponentInstance  [x] impl  [x] docstring  [x] test
-    # [x] deleteComponentInstance  [x] impl  [x] docstring  [x] test
-    # [x] findComponentInstance  [x] impl  [x] docstring  [x] test
-    # [x] getCPUtype  [x] impl  [x] docstring  [x] test
-    # [x] getComponentInstances  [x] impl  [x] docstring  [x] test
-    # [x] setCPUtype  [x] impl  [x] docstring  [x] test
+    # [x] addComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] deleteComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] findComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getCPUtype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getComponentInstances  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setCPUtype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPNode methods.
 

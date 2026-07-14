@@ -18,9 +18,9 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
     """Wraps ``IRPBaseExternalCodeGeneratorTool``."""
 
     # IRPBaseExternalCodeGeneratorTool method parity checklist:
-    # [x] advanceCodeGenProgressBar    [x] impl  [x] docstring  [ ] test
-    # [x] shouldAbortCodeGeneration    [x] impl  [x] docstring  [ ] test
-    # [x] writeCodeGenMessage          [x] impl  [x] docstring  [ ] test
+    # [x] advanceCodeGenProgressBar    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] shouldAbortCodeGeneration    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] writeCodeGenMessage          [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # No deprecated IRPBaseExternalCodeGeneratorTool methods.
 
     def advance_code_gen_progress_bar(self) -> None:
@@ -67,8 +67,8 @@ class RPCodeGenerator(RPModelElement):
     """Wraps ``IRPCodeGenerator``."""
 
     # IRPCodeGenerator method parity checklist:
-    # [x] get_code_annotations           [x] impl  [x] docstring  [x] test
-    # [x] get_generated_file_names        [x] impl  [x] docstring  [x] test
+    # [x] get_code_annotations           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_generated_file_names        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPCodeGenerator methods.
 
@@ -112,13 +112,13 @@ class RPDiagSynthAPI(RPModelElement):
     """Wraps ``IRPDiagSynthAPI``."""
 
     # IRPDiagSynthAPI method parity checklist:
-    # [x] add_instance                  [x] impl  [x] docstring  [x] test
-    # [x] add_synth_sd_to_model2           [x] impl  [x] docstring  [x] test
-    # [x] create_sd2                    [x] impl  [x] docstring  [x] test
-    # [x] receive_message               [x] impl  [x] docstring  [x] test
-    # [x] remove_synth_sd_to_model2        [x] impl  [x] docstring  [x] test
-    # [x] s_d_add_condition_mark           [x] impl  [x] docstring  [x] test
-    # [x] send_message                  [x] impl  [x] docstring  [x] test
+    # [x] add_instance                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_synth_sd_to_model2           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] create_sd2                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] receive_message               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_synth_sd_to_model2        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] s_d_add_condition_mark           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] send_message                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPDiagSynthAPI methods.
 
@@ -260,9 +260,9 @@ class RPExternalCheckRegistry(RPModelElement):
     """Wraps ``IRPExternalCheckRegistry``."""
 
     # IRPExternalCheckRegistry method parity checklist:
-    # [x] append_failed_elements_comments [x] impl  [x] docstring  [x] test
+    # [x] append_failed_elements_comments [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] set_failed_elements_comments    [x] impl  [x] docstring  [x] test
+    # [x] set_failed_elements_comments    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPExternalCheckRegistry methods.
 
     def append_failed_elements_comments(self, str_val: str) -> None:
@@ -314,11 +314,11 @@ class RPRhapsodyServer(RPModelElement):
     """Wraps ``IRPRhapsodyServer``."""
 
     # IRPRhapsodyServer method parity checklist:
-    # [x] get_application               [x] impl  [x] docstring  [x] test
-    # [x] get_hidden_application         [x] impl  [x] docstring  [x] test
+    # [x] get_application               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_hidden_application         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] get_uninitialized_application  [x] impl  [x] docstring  [x] test
-    # [x] initialize_application        [x] impl  [x] docstring  [x] test
+    # [x] get_uninitialized_application  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] initialize_application        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPRhapsodyServer methods.
 
     def get_application(self) -> "RhapsodyApplication":
@@ -383,7 +383,7 @@ class RPRoundTrip(RPModelElement):
 
     # IRPRoundTrip method parity checklist:
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] roundtrip_file                [x] impl  [x] docstring  [x] test
+    # [x] roundtrip_file                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPRoundTrip methods.
 
     def roundtrip_file(self, filename: str, re_generate_file: int) -> "RPCollection":
@@ -409,10 +409,10 @@ class RPSearchManager(RPModelElement):
     """Wraps ``IRPSearchManager``: used to carry out a search in a Rhapsody model."""
 
     # IRPSearchManager method parity checklist:
-    # [x] create_search_query            [x] impl  [x] docstring  [x] test
-    # [x] search                       [x] impl  [x] docstring  [x] test
-    # [x] search_and_show_results         [x] impl  [x] docstring  [x] test
-    # [x] search_async                  [x] impl  [x] docstring  [x] test
+    # [x] create_search_query            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] search                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] search_and_show_results         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] search_async                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
     # No deprecated IRPSearchManager methods.
 
@@ -482,75 +482,75 @@ class RPSearchQuery(RPModelElement):
     """Wraps ``IRPSearchQuery``: represents the search criteria objects that are used by IRPSearchManager to carry out searches."""
 
     # IRPSearchQuery method parity checklist:
-    # [x] add_diagram_to_views_list        [x] impl  [x] docstring  [x] test
-    # [x] add_filter_element_type         [x] impl  [x] docstring  [x] test
-    # [x] add_filter_search_in_field       [x] impl  [x] docstring  [x] test
-    # [x] add_filter_stereotype          [x] impl  [x] docstring  [x] test
-    # [x] add_filter_sub_query            [x] impl  [x] docstring  [x] test
-    # [x] add_matrix_to_views_list         [x] impl  [x] docstring  [x] test
-    # [x] add_search_scope               [x] impl  [x] docstring  [x] test
-    # [x] add_table_to_views_list          [x] impl  [x] docstring  [x] test
-    # [x] get_filter_element_types        [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_include_referenced_elements_in_search_results [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_name_of_referenced_elements [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_number_of_references [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_quantity_operator [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_relation_kind [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_stereotype_of_referenced_elements [x] impl  [x] docstring  [x] test
-    # [x] get_filter_reference_type_of_referenced_elements [x] impl  [x] docstring  [x] test
-    # [x] get_filter_search_in_fields      [x] impl  [x] docstring  [x] test
-    # [x] get_filter_stereotypes         [x] impl  [x] docstring  [x] test
-    # [x] get_filter_sub_queries          [x] impl  [x] docstring  [x] test
-    # [x] get_filter_sub_query_use_with_not_operator [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_find_as           [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_match_case        [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_match_whole_word   [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_name             [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_value            [x] impl  [x] docstring  [x] test
-    # [x] get_search_scope_elements       [x] impl  [x] docstring  [x] test
-    # [x] get_view                      [x] impl  [x] docstring  [x] test
-    # [x] get_view_count                 [x] impl  [x] docstring  [x] test
-    # [x] load_from_query                [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_element_types     [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_references       [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_search_in_fields   [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_stereotypes      [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_sub_queries       [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_sub_query         [x] impl  [x] docstring  [x] test
-    # [x] remove_filter_tag              [x] impl  [x] docstring  [x] test
-    # [x] remove_search_scope_element     [x] impl  [x] docstring  [x] test
-    # [x] remove_view                   [x] impl  [x] docstring  [x] test
-    # [x] reset_search_scope             [x] impl  [x] docstring  [x] test
-    # [x] save_as_query                  [x] impl  [x] docstring  [x] test
-    # [x] set_filter_reference           [x] impl  [x] docstring  [x] test
-    # [x] set_filter_tag                 [x] impl  [x] docstring  [x] test
-    # [x] get_filter_sub_queries_operator  [x] impl  [x] docstring  [x] test
-    # [x] get_filter_tag_local_only        [x] impl  [x] docstring  [x] test
-    # [x] get_filter_units_only           [x] impl  [x] docstring  [x] test
-    # [x] get_filter_unresolved_kind      [x] impl  [x] docstring  [x] test
-    # [x] get_include_descendants        [x] impl  [x] docstring  [x] test
+    # [x] add_diagram_to_views_list        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_filter_element_type         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_filter_search_in_field       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_filter_stereotype          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_filter_sub_query            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_matrix_to_views_list         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_search_scope               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_table_to_views_list          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_element_types        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_include_referenced_elements_in_search_results [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_name_of_referenced_elements [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_number_of_references [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_quantity_operator [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_relation_kind [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_stereotype_of_referenced_elements [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_reference_type_of_referenced_elements [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_search_in_fields      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_stereotypes         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_sub_queries          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_sub_query_use_with_not_operator [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_find_as           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_match_case        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_match_whole_word   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_name             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_value            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_search_scope_elements       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_view                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_view_count                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] load_from_query                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_element_types     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_references       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_search_in_fields   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_stereotypes      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_sub_queries       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_sub_query         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_filter_tag              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_search_scope_element     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_view                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] reset_search_scope             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] save_as_query                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_reference           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_tag                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_sub_queries_operator  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_tag_local_only        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_units_only           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_filter_unresolved_kind      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_include_descendants        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] get_match_case                 [x] impl  [x] docstring  [x] test
-    # [x] get_match_specified_criteria    [x] impl  [x] docstring  [x] test
-    # [x] get_match_whole_word            [x] impl  [x] docstring  [x] test
-    # [x] get_search_find_as_option        [x] impl  [x] docstring  [x] test
-    # [x] get_search_scope_object         [x] impl  [x] docstring  [x] test
-    # [x] get_search_text                [x] impl  [x] docstring  [x] test
-    # [x] get_view_include_model_elements  [x] impl  [x] docstring  [x] test
-    # [x] get_views_to_search             [x] impl  [x] docstring  [x] test
-    # [x] set_filter_sub_queries_operator  [x] impl  [x] docstring  [x] test
-    # [x] set_filter_tag_local_only        [x] impl  [x] docstring  [x] test
-    # [x] set_filter_units_only           [x] impl  [x] docstring  [x] test
-    # [x] set_filter_unresolved_kind      [x] impl  [x] docstring  [x] test
-    # [x] set_include_descendants        [x] impl  [x] docstring  [x] test
-    # [x] set_match_case                 [x] impl  [x] docstring  [x] test
-    # [x] set_match_specified_criteria    [x] impl  [x] docstring  [x] test
-    # [x] set_match_whole_word            [x] impl  [x] docstring  [x] test
-    # [x] set_search_find_as_option        [x] impl  [x] docstring  [x] test
-    # [x] set_search_scope_object         [x] impl  [x] docstring  [x] test
-    # [x] set_search_text                [x] impl  [x] docstring  [x] test
-    # [x] set_view_include_model_elements  [x] impl  [x] docstring  [x] test
-    # [x] set_views_to_search             [x] impl  [x] docstring  [x] test
+    # [x] get_match_case                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_match_specified_criteria    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_match_whole_word            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_search_find_as_option        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_search_scope_object         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_search_text                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_view_include_model_elements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_views_to_search             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_sub_queries_operator  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_tag_local_only        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_units_only           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_filter_unresolved_kind      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_include_descendants        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_match_case                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_match_specified_criteria    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_match_whole_word            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_search_find_as_option        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_search_scope_object         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_search_text                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_view_include_model_elements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_views_to_search             [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [deprecated] addSearchScope  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeElements  - skipped (deprecated in Rhapsody Java API)
     # [deprecated] getSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
@@ -1644,10 +1644,10 @@ class RPSearchResult(RPModelElement):
 
     # IRPSearchResult method parity checklist:
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] get_matched_field              [x] impl  [x] docstring  [x] test
-    # [x] get_matched_fields             [x] impl  [x] docstring  [x] test
-    # [x] get_matched_object             [x] impl  [x] docstring  [x] test
-    # [x] get_name                      [x] impl  [x] docstring  [x] test
+    # [x] get_matched_field              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_matched_fields             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_matched_object             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_name                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPSearchResult methods.
 
     def get_matched_field(self) -> str:
@@ -1712,7 +1712,7 @@ class RPCodeGenSimplifiersRegistry(RPBaseExternalCodeGeneratorTool):
 
     # IRPCodeGenSimplifiersRegistry method parity checklist:
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] notify_simplification_done     [x] impl  [x] docstring  [x] test
+    # [x] notify_simplification_done     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPCodeGenSimplifiersRegistry methods.
 
@@ -1733,7 +1733,7 @@ class RPExternalCodeGeneratorInvoker(RPBaseExternalCodeGeneratorTool):
 
     # IRPExternalCodeGeneratorInvoker method parity checklist:
     # [x] get_interface_name             [x] impl (inherited from RPModelElement)
-    # [x] notify_generation_done         [x] impl  [x] docstring  [x] test
+    # [x] notify_generation_done         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
     # No deprecated IRPExternalCodeGeneratorInvoker methods.
 

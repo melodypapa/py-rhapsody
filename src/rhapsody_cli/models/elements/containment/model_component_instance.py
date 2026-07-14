@@ -14,9 +14,9 @@ class RPComponentInstance(RPInstance):
     """Wraps ``IRPComponentInstance``: a component instance that extends ``IRPInstance``."""
 
     # IRPComponentInstance method parity checklist:
-    # [x] getComponentType  [x] impl  [x] docstring  [x] test
-    # [x] getNode  [x] impl  [x] docstring  [x] test
-    # [x] setComponentType  [x] impl  [x] docstring  [x] test
+    # [x] getComponentType  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getNode  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setComponentType  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPInstance / IRPRelation / IRPUnit / IRPModelElement methods (covered by RPInstance / RPRelation / RPUnit / RPModelElement checklists)
     # No deprecated IRPComponentInstance methods.
 

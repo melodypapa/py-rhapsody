@@ -16,14 +16,14 @@ class RPInterfaceItem(RPClassifier):
     """
 
     # IRPInterfaceItem method parity checklist:
-    # [x] add_argument  [x] impl  [x] docstring  [x] test
-    # [x] add_argument_before_position  [x] impl  [x] docstring  [x] test
-    # [x] get_arguments  [x] impl  [x] docstring  [x] test
-    # [x] get_signature  [x] impl  [x] docstring  [x] test
-    # [x] get_signature_no_arg_names  [x] impl  [x] docstring  [x] test
-    # [x] get_signature_no_arg_types  [x] impl  [x] docstring  [x] test
-    # [x] match_on_signature  [x] impl  [x] docstring  [x] test
-    # [x] set_arguments  [x] impl  [x] docstring  [ ] test
+    # [x] add_argument  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_argument_before_position  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_arguments  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_signature  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_signature_no_arg_names  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_signature_no_arg_types  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] match_on_signature  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_arguments  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPInterfaceItem methods.
 

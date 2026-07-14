@@ -13,7 +13,7 @@ class RPTemplateInstantiation(RPModelElement):
     """Wraps ``IRPTemplateInstantiation``."""
 
     # IRPTemplateInstantiation method parity checklist:
-    # [ ] getTemplateInstantiationParameters [ ] impl  [ ] docstring  [ ] test
+    # [ ] getTemplateInstantiationParameters [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPTemplateInstantiation methods.
 
@@ -36,10 +36,10 @@ class RPTemplateInstantiationParameter(RPModelElement):
     """Wraps ``IRPTemplateInstantiationParameter``."""
 
     # IRPTemplateInstantiationParameter method parity checklist:
-    # [ ] getArgValue                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] getType                      [ ] impl  [ ] docstring  [ ] test
-    # [ ] setArgValue                  [ ] impl  [ ] docstring  [ ] test
-    # [ ] setType                      [ ] impl  [ ] docstring  [ ] test
+    # [ ] getArgValue                  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getType                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setArgValue                  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setType                      [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # No deprecated IRPTemplateInstantiationParameter methods.
 
@@ -104,11 +104,11 @@ class RPTemplateParameter(RPVariable):
     """Wraps ``IRPTemplateParameter``: represents parameters of a template in Rhapsody models."""
 
     # IRPTemplateParameter method parity checklist:
-    # [ ] getParameterKind             [ ] impl  [ ] docstring  [ ] test
-    # [ ] getRepresentative            [ ] impl  [ ] docstring  [ ] test
-    # [ ] setClassType                 [ ] impl  [ ] docstring  [ ] test
-    # [ ] setParameterKind             [ ] impl  [ ] docstring  [ ] test
-    # [ ] setRepresentative            [ ] impl  [ ] docstring  [ ] test
+    # [ ] getParameterKind             [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] getRepresentative            [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setClassType                 [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setParameterKind             [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [ ] setRepresentative            [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
     # [inherited] IRPUnit methods (covered by RPUnit checklist)
     # [inherited] IRPVariable methods (covered by RPVariable checklist)

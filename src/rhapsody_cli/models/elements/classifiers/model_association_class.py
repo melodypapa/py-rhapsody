@@ -13,10 +13,10 @@ class RPAssociationClass(RPClass):
     """Wraps ``IRPAssociationClass``: an association class that extends ``IRPClass``."""
 
     # IRPAssociationClass method parity checklist:
-    # [x] getEnd1  [x] impl  [x] docstring  [ ] test
-    # [x] getEnd2  [x] impl  [x] docstring  [ ] test
-    # [x] getIsClass  [x] impl  [x] docstring  [ ] test
-    # [x] setIsClass  [x] impl  [x] docstring  [ ] test
+    # [x] getEnd1  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getEnd2  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getIsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setIsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPClass / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClass / RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPAssociationClass methods.
 

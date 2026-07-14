@@ -14,38 +14,38 @@ class RPStatechart(RPClass):
     """Wraps ``IRPStatechart``: represents a statechart behavior."""
 
     # IRPStatechart method parity checklist:
-    # [x] addFreeShapeByType  [x] impl  [x] docstring  [ ] test
-    # [x] addImage  [x] impl  [x] docstring  [ ] test
-    # [x] addNewEdgeByType  [x] impl  [x] docstring  [ ] test
-    # [x] addNewEdgeForElement  [x] impl  [x] docstring  [ ] test
-    # [x] add_new_node_by_type  [x] impl  [x] docstring  [x] test
-    # [x] addNewNodeForElement  [x] impl  [x] docstring  [ ] test
-    # [x] addTextBox  [x] impl  [x] docstring  [ ] test
-    # [x] openDiagramView  [x] impl  [x] docstring  [ ] test
-    # [x] addNewAcceptEventAction  [x] impl  [x] docstring  [ ] test
-    # [x] addNewAcceptTimeEvent  [x] impl  [x] docstring  [ ] test
-    # [x] close_diagram  [x] impl  [x] docstring  [x] test
-    # [x] create_graphics  [x] impl  [x] docstring  [x] test
-    # [x] delete_state  [x] impl  [x] docstring  [x] test
-    # [x] find_trigger  [x] impl  [x] docstring  [x] test   (inherited from RPClassifier)
-    # [x] getAllTriggers  [x] impl  [x] docstring  [ ] test
-    # [x] getElementsInDiagram  [x] impl  [x] docstring  [ ] test
-    # [x] getGraphicalElements  [x] impl  [x] docstring  [ ] test
-    # [x] getInheritsFrom  [x] impl  [x] docstring  [ ] test
-    # [x] getIsMainBehavior  [x] impl  [x] docstring  [ ] test
-    # [x] getIsOverridden  [x] impl  [x] docstring  [ ] test
-    # [x] getItsClass  [x] impl  [x] docstring  [ ] test
-    # [x] getPicture  [x] impl  [x] docstring  [ ] test
-    # [x] getPictureAs  [x] impl  [x] docstring  [ ] test
-    # [x] getPictureAsDividedMetafiles  [x] impl  [x] docstring  [ ] test
-    # [x] getPicturesWithImageMap  [x] impl  [x] docstring  [ ] test
-    # [x] getRootState  [x] impl  [x] docstring  [ ] test
-    # [x] getStatechartDiagram  [x] impl  [x] docstring  [ ] test
-    # [x] overrideInheritance  [x] impl  [x] docstring  [ ] test
-    # [x] populateDiagram  [x] impl  [x] docstring  [ ] test
-    # [x] setAsMainBehavior  [x] impl  [x] docstring  [ ] test
-    # [x] setShowDiagramFrame  [x] impl  [x] docstring  [ ] test
-    # [x] unoverrideInheritance  [x] impl  [x] docstring  [ ] test
+    # [x] addFreeShapeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addImage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addNewEdgeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addNewEdgeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] add_new_node_by_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] addNewNodeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addTextBox  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] openDiagramView  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addNewAcceptEventAction  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] addNewAcceptTimeEvent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] close_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] create_graphics  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_state  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_trigger  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from RPClassifier)
+    # [x] getAllTriggers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getElementsInDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getGraphicalElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getInheritsFrom  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getIsMainBehavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getIsOverridden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getItsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getPicture  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getPictureAs  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getPictureAsDividedMetafiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getPicturesWithImageMap  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getRootState  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] getStatechartDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] overrideInheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] populateDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setAsMainBehavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] setShowDiagramFrame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] unoverrideInheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [inherited] IRPClass / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClass / RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPStatechart methods.
 
