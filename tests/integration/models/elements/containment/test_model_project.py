@@ -47,6 +47,16 @@ class TestRPProjectIntegration:
         pkgs = test_project.get_packages()
         assert pkgs is not None
 
+    def test_create_component_in_project(self, test_project: RPProject) -> None:
+        comp_name = self._unique("MyComponent")
+        comp = test_project.add_component(comp_name)
+        try:
+            assert comp is not None
+            assert comp.get_name() == comp_name
+            assert comp.get_meta_class() == "Component"
+        finally:
+            comp.delete_from_project()
+
 
 @pytest.mark.integration
 class TestRPPackageIntegration:
@@ -96,3 +106,15 @@ class TestRPPackageIntegration:
         classes = pkg.get_classes()
         class_names = [c.get_name() for c in classes]
         assert class_name in class_names
+
+    def test_create_module_in_package(self, test_project: RPProject) -> None:
+        pkg_name = self._unique("ModPkg")
+        mod_name = self._unique("MyModule")
+        pkg = self._create_package(test_project, pkg_name)
+        try:
+            mod = pkg.add_module(mod_name)
+            assert mod is not None
+            assert mod.get_name() == mod_name
+            assert mod.get_meta_class() == "Module"
+        finally:
+            mod.delete_from_project()
