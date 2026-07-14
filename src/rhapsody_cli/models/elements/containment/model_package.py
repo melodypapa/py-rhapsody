@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from rhapsody_cli.models.elements.classifiers.model_class import RPClass
     from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
     from rhapsody_cli.models.elements.classifiers.model_usecase import RPUseCase
+    from rhapsody_cli.models.elements.common.model_other_model import RPSysMLPort
     from rhapsody_cli.models.elements.diagrams import (
         RPActivityDiagram,
         RPCollaborationDiagram,
@@ -21,6 +22,8 @@ if TYPE_CHECKING:
         RPTimingDiagram,
         RPUseCaseDiagram,
     )
+    from rhapsody_cli.models.elements.graphics.model_graphics import RPLink
+    from rhapsody_cli.models.elements.relations.model_instance import RPInstance
     from rhapsody_cli.models.elements.relations.model_relation import RPRelation
 
 
@@ -40,10 +43,10 @@ class RPPackage(RPUnit):
     # [x] add_global_function  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] addGlobalObject  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] addGlobalVariable  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addImplicitObject  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] addImplicitObject  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] addInstanceSpecification  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] addLink  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addLinkBetweenSYSMLPorts  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] addLinkBetweenSYSMLPorts  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] addModule  [x] impl  [x] docstring  [ ] unit test  [x] integration test
     # [x] add_nested_package  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [ ] addNode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
@@ -87,14 +90,14 @@ class RPPackage(RPUnit):
     # [ ] findUsage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] findUseCase  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_actors  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] getAllNestedElements  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getAllNestedElements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getBehavioralDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_classes  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [ ] getCollaborationDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getComponentDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getDeploymentDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] getEvents  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getEventsBaseId  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getEventsBaseId  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] getFlowItems  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] getFlows  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getGlobalFunctions  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
@@ -103,31 +106,31 @@ class RPPackage(RPUnit):
     # [ ] getInstanceSpecifications  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getLinks  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getModules  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getNamespace  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getNamespace  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getNestedClassifiers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getNestedComponents  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] getNodes  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getObjectModelDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] getPackages  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [ ] getPanelDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRemoteRequirementsPopulateMode  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRootInstanceSpecifications  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getSavedInSeperateDirectory  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getRemoteRequirementsPopulateMode  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getRootInstanceSpecifications  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getSavedInSeperateDirectory  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] getSequenceDiagrams  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getSourceArtifacts  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getTimingDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getTypes  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getUseCaseDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_use_cases  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getUserDefinedStereotypes  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] loginToRemoteArtifactServer  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] populateRemoteRequirements  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] reCalculateEventsBaseId  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setRemoteRequirementsPopulateMode  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setSavedInSeperateDirectory  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedMatricesOnServer  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedTablesOnServer  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getUserDefinedStereotypes  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] loginToRemoteArtifactServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] populateRemoteRequirements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] reCalculateEventsBaseId  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setRemoteRequirementsPopulateMode  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setSavedInSeperateDirectory  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] updateContainedMatricesOnServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] updateContainedTablesOnServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPPackage methods.
 
@@ -1301,6 +1304,192 @@ class RPPackage(RPUnit):
             com.telelogic.rhapsody.core.IRPPackage::findUsage(com.telelogic.rhapsody.core.IRPModelElement element)
         """
         return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.findUsage(element._com)))
+
+    # --- Remote Requirements Methods (Task 3) ---
+    def get_remote_requirements_populate_mode(self) -> int:
+        """Returns the remote requirements populate mode for this package.
+
+        Returns:
+            The populate mode as an integer.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getRemoteRequirementsPopulateMode()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getRemoteRequirementsPopulateMode", "remoteRequirementsPopulateMode"))
+
+    def get_root_instance_specifications(self) -> "RPCollection":
+        """Returns all root instance specifications in this package.
+
+        Returns:
+            An ``RPCollection`` of instance specification elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getRootInstanceSpecifications()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRootInstanceSpecifications", "rootInstanceSpecifications"))
+
+    def login_to_remote_artifact_server(self, server_url: str, username: str, password: str) -> None:
+        """Logs in to the remote artifact server.
+
+        Args:
+            server_url: The URL of the remote artifact server.
+            username: The username for authentication.
+            password: The password for authentication.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::loginToRemoteArtifactServer(
+                java.lang.String serverUrl, java.lang.String username, java.lang.String password)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.loginToRemoteArtifactServer(server_url, username, password))
+
+    def populate_remote_requirements(self) -> None:
+        """Populates remote requirements for this package.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::populateRemoteRequirements()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.populateRemoteRequirements())
+
+    def recalculate_events_base_id(self) -> None:
+        """Recalculates the events base ID for this package.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::reCalculateEventsBaseId()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.reCalculateEventsBaseId())
+
+    def set_remote_requirements_populate_mode(self, mode: int) -> None:
+        """Sets the remote requirements populate mode for this package.
+
+        Args:
+            mode: The populate mode to set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::setRemoteRequirementsPopulateMode(int mode)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setRemoteRequirementsPopulateMode", "remoteRequirementsPopulateMode", mode)
+
+    def update_contained_diagrams_on_server(self) -> None:
+        """Updates the contained diagrams on the server.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::updateContainedDiagramsOnServer()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.updateContainedDiagramsOnServer())
+
+    # --- SysML Methods (Task 4) ---
+    def add_implicit_object(self, name: str) -> "RPInstance":
+        """Adds a new implicit object to the package.
+
+        Args:
+            name: The name of the new implicit object.
+
+        Returns:
+            The wrapped ``IRPInstance`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addImplicitObject(java.lang.String name)
+        """
+        return cast("RPInstance", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addImplicitObject(name))))
+
+    def add_link_between_sysml_ports(self, port1: "RPSysMLPort", port2: "RPSysMLPort") -> "RPLink":
+        """Adds a link between two SysML ports.
+
+        Args:
+            port1: The first SysML port.
+            port2: The second SysML port.
+
+        Returns:
+            The wrapped ``IRPLink`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::addLinkBetweenSYSMLPorts(
+                com.telelogic.rhapsody.core.IRPSysMLPort port1, com.telelogic.rhapsody.core.IRPSysMLPort port2)
+        """
+        return cast("RPLink", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addLinkBetweenSYSMLPorts(port1._com, port2._com))))
+
+    # --- Misc Methods (Task 5) ---
+    def get_all_nested_elements(self) -> "RPCollection":
+        """Returns all nested elements in this package.
+
+        Returns:
+            An ``RPCollection`` of nested elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getAllNestedElements()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getAllNestedElements", "allNestedElements"))
+
+    def get_events_base_id(self) -> str:
+        """Returns the events base ID for this package.
+
+        Returns:
+            The events base ID as a string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getEventsBaseId()
+        """
+        return AbstractRPModelElement._get_method_or_property(self._com, "getEventsBaseId", "eventsBaseId")
+
+    def get_namespace(self) -> str:
+        """Returns the namespace for this package.
+
+        Returns:
+            The namespace as a string.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getNamespace()
+        """
+        return AbstractRPModelElement._get_method_or_property(self._com, "getNamespace", "namespace")
+
+    def get_saved_in_separate_directory(self) -> int:
+        """Returns whether the package is saved in a separate directory.
+
+        Returns:
+            ``1`` if saved in separate directory, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getSavedInSeperateDirectory()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getSavedInSeperateDirectory", "savedInSeperateDirectory"))
+
+    def get_user_defined_stereotypes(self) -> "RPCollection":
+        """Returns all user-defined stereotypes in this package.
+
+        Returns:
+            An ``RPCollection`` of stereotype elements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::getUserDefinedStereotypes()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getUserDefinedStereotypes", "userDefinedStereotypes"))
+
+    def set_saved_in_separate_directory(self, value: int) -> None:
+        """Sets whether the package is saved in a separate directory.
+
+        Args:
+            value: ``1`` to save in separate directory, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::setSavedInSeperateDirectory(int value)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setSavedInSeperateDirectory", "savedInSeperateDirectory", value)
+
+    def update_contained_matrices_on_server(self) -> None:
+        """Updates the contained matrices on the server.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::updateContainedMatricesOnServer()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.updateContainedMatricesOnServer())
+
+    def update_contained_tables_on_server(self) -> None:
+        """Updates the contained tables on the server.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPPackage::updateContainedTablesOnServer()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.updateContainedTablesOnServer())
 
 
 AbstractRPModelElement.register_wrapper("Package", RPPackage)
