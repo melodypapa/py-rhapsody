@@ -12,82 +12,83 @@ if TYPE_CHECKING:
     from rhapsody_cli.models.elements.containment.model_component import RPComponent
     from rhapsody_cli.models.elements.containment.model_configuration import RPConfiguration
     from rhapsody_cli.models.elements.containment.model_node import RPNode
+    from rhapsody_cli.models.support.model_ide import RPProgressBar
 
 
 class RPProject(RPPackage):
     """Wraps ``IRPProject``: represents the top-level project container."""
 
     # IRPProject method parity checklist:
-    # [ ] gatewayExportToXML  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] gatewayExportToXML2  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] generateReport  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] gatewayExportToXML  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] gatewayExportToXML2  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] generateReport  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] addComponent  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] addCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] addCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] addCustomViewOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] addCustomViewOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_package  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [ ] addProfile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addSpellCheckerResult  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] addSpellCheckerResult  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] allowAutoSave  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] allowNonUniqueNames  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] applyBrowserCustomViewsOnDiagrams  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] applyRoundtripDiffMerge  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] applyBrowserCustomViewsOnDiagrams  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] applyRoundtripDiffMerge  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] become_active_project  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] checkEventsBaseIdsSolveCollisions  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] cleanUnresolvedElements  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] checkEventsBaseIdsSolveCollisions  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] cleanUnresolvedElements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] close  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] closeCSVFile  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] closeCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] deleteComponent  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] enableRhapsodyModelManager  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] endTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] enableRhapsodyModelManager  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] endTransactionOfNoCGInterest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_component  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] findElementByBinaryID  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] findElementByFileName  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] find_element_by_guid  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] findElementsWithOSLCLink  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] findElementsWithOSLCLink  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getActiveComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getActiveConfiguration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getActiveCustomViewsOnBrowser  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getActiveCustomViewsOnDiagram  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getActiveCustomViewsOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getActiveCustomViewsOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] getAllStereotypes  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getCgSimplifiedModelPackage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] getCodeGeneratedFiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_components  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getDefaultDirectoryScheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getNewCollaboration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getNewProgressBar  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getNewProgressBar  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getNotifyPluginOnElementsChanged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] getProfiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRemoteResourcePackages  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRequirementsByID  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRoundtripShadowModel  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] getRemoteResourcePackages  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getRequirementsByID  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] getRoundtripShadowModel  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] highlightFromCode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] importPackageFromRose  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] importProjectFromRose  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] isActivelyManaged  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] importPackageFromRose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] importProjectFromRose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] isActivelyManaged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] isModifiedRecursive  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] locateInIDE  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] migrateDesignManagerLinks  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] migrateDesignManagerLinks  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [deprecated] moveToDesignManager  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
     # [deprecated] moveToDesignManagerAfterLogin  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [ ] openCSVFile  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] recalculateEventsBaseIds  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] reloadCSVFile  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] remove  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] removeCustomViewOnBrowser  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] removeCustomViewOnDiagram  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] openCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] recalculateEventsBaseIds  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] reloadCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] removeCustomViewOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] removeCustomViewOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] save  [x] impl  [x] docstring  [ ] unit test  [ ] integration test   (inherited from RPUnit)
     # [x] saveAs  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] saveAsPrevVersion  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] saveAsPrevVersion  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] setActiveComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] setActiveConfiguration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setDefaultDirectoryScheme  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setGlobalConfiguration  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setNotifyPluginOnElementsChanged  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setObjectExplicit  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setObjectImplicit  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setUseUniqueStereotypeAndRefCache  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setWaitDialogWatchdogValue  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] startTransactionOfNoCGInterest  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] setDefaultDirectoryScheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setGlobalConfiguration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setNotifyPluginOnElementsChanged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setObjectExplicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setObjectImplicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setUseUniqueStereotypeAndRefCache  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setWaitDialogWatchdogValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] startTransactionOfNoCGInterest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPPackage / IRPUnit / IRPModelElement methods (covered by RPPackage / RPUnit / RPModelElement checklists)
     # Deprecated IRPProject methods listed above.
 
@@ -636,6 +637,447 @@ class RPProject(RPPackage):
             com.telelogic.rhapsody.core.IRPProject::highlightFromCode(java.lang.String filePath, int lineNumber)
         """
         AbstractRPModelElement.call_com(lambda: self._com.highlightFromCode(file_path, line_number))
+
+    # --- Gateway/Report methods ---
+    def gateway_export_to_xml(self, file_path: str) -> None:
+        """Exports the project to an XML file using the Gateway tool.
+
+        Args:
+            file_path: The path of the XML file to create.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::gatewayExportToXML(java.lang.String filePath)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.gatewayExportToXML(file_path))
+
+    def gateway_export_to_xml2(self, file_path: str, options: str) -> None:
+        """Exports the project to an XML file using the Gateway tool with options.
+
+        Args:
+            file_path: The path of the XML file to create.
+            options: The options string to pass to the Gateway tool.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::gatewayExportToXML2(java.lang.String filePath, java.lang.String options)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.gatewayExportToXML2(file_path, options))
+
+    def generate_report(self, template_path: str, output_path: str) -> None:
+        """Generates a report from the project using the specified template.
+
+        Args:
+            template_path: The path of the report template file.
+            output_path: The path of the output report file to create.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::generateReport(java.lang.String templatePath, java.lang.String outputPath)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.generateReport(template_path, output_path))
+
+    # --- Custom Views methods ---
+    def add_custom_view_on_browser(self, view: Any) -> None:
+        """Adds a custom view to be applied on the Rhapsody browser.
+
+        Args:
+            view: The wrapped custom view to add.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::addCustomViewOnBrowser(com.telelogic.rhapsody.core.IRPCustomView view)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.addCustomViewOnBrowser(view._com))
+
+    def add_custom_view_on_diagram(self, view: Any) -> None:
+        """Adds a custom view to be applied on diagrams.
+
+        Args:
+            view: The wrapped custom view to add.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::addCustomViewOnDiagram(com.telelogic.rhapsody.core.IRPCustomView view)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.addCustomViewOnDiagram(view._com))
+
+    def apply_browser_custom_views_on_diagrams(self) -> None:
+        """Applies the browser custom views on diagrams.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::applyBrowserCustomViewsOnDiagrams()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.applyBrowserCustomViewsOnDiagrams())
+
+    def get_active_custom_views_on_browser(self) -> RPCollection:
+        """Returns the active custom views applied on the browser.
+
+        Returns:
+            An ``RPCollection`` of active browser custom views.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getActiveCustomViewsOnBrowser()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getActiveCustomViewsOnBrowser", "activeCustomViewsOnBrowser"))
+
+    def get_active_custom_views_on_diagram(self) -> RPCollection:
+        """Returns the active custom views applied on diagrams.
+
+        Returns:
+            An ``RPCollection`` of active diagram custom views.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getActiveCustomViewsOnDiagram()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getActiveCustomViewsOnDiagram", "activeCustomViewsOnDiagram"))
+
+    def remove_custom_view_on_browser(self, view: Any) -> None:
+        """Removes a custom view from the browser.
+
+        Args:
+            view: The wrapped custom view to remove.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::removeCustomViewOnBrowser(com.telelogic.rhapsody.core.IRPCustomView view)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.removeCustomViewOnBrowser(view._com))
+
+    def remove_custom_view_on_diagram(self, view: Any) -> None:
+        """Removes a custom view from diagrams.
+
+        Args:
+            view: The wrapped custom view to remove.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::removeCustomViewOnDiagram(com.telelogic.rhapsody.core.IRPCustomView view)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.removeCustomViewOnDiagram(view._com))
+
+    # --- CSV methods ---
+    def close_csv_file(self) -> None:
+        """Closes the CSV file currently open in the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::closeCSVFile()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.closeCSVFile())
+
+    def open_csv_file(self, file_path: str, mode: int) -> None:
+        """Opens a CSV file for requirements import.
+
+        Args:
+            file_path: The path of the CSV file to open.
+            mode: The mode in which to open the file.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::openCSVFile(java.lang.String filePath, int mode)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.openCSVFile(file_path, mode))
+
+    def reload_csv_file(self) -> None:
+        """Reloads the CSV file currently open in the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::reloadCSVFile()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.reloadCSVFile())
+
+    # --- Remote/Roundtrip methods ---
+    def apply_roundtrip_diff_merge(self) -> None:
+        """Applies the roundtrip diff merge for the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::applyRoundtripDiffMerge()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.applyRoundtripDiffMerge())
+
+    def enable_rhapsody_model_manager(self, enabled: int) -> None:
+        """Enables or disables Rhapsody Model Manager integration for the project.
+
+        Args:
+            enabled: ``1`` to enable, ``0`` to disable.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::enableRhapsodyModelManager(int enabled)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.enableRhapsodyModelManager(enabled))
+
+    def find_elements_with_oslc_link(self, link: str) -> RPCollection:
+        """Returns the elements that have an OSLC link matching the specified link.
+
+        Args:
+            link: The OSLC link to search for.
+
+        Returns:
+            An ``RPCollection`` of elements with the matching OSLC link.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::findElementsWithOSLCLink(java.lang.String link)
+        """
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.findElementsWithOSLCLink(link)))
+
+    def get_remote_resource_packages(self) -> RPCollection:
+        """Returns the remote resource packages of the project.
+
+        Returns:
+            An ``RPCollection`` of remote resource packages.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getRemoteResourcePackages()
+        """
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getRemoteResourcePackages", "remoteResourcePackages"))
+
+    def get_roundtrip_shadow_model(self) -> Any:
+        """Returns the roundtrip shadow model of the project.
+
+        Returns:
+            The wrapped roundtrip shadow model.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getRoundtripShadowModel()
+        """
+        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getRoundtripShadowModel", "roundtripShadowModel"))
+
+    def is_actively_managed(self) -> int:
+        """Checks whether the project is actively managed by Rhapsody Model Manager.
+
+        Returns:
+            ``1`` if the project is actively managed, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::isActivelyManaged()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "isActivelyManaged", "activelyManaged"))
+
+    def migrate_design_manager_links(self) -> None:
+        """Migrates Design Manager links for the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::migrateDesignManagerLinks()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.migrateDesignManagerLinks())
+
+    # --- Rose Import methods ---
+    def import_package_from_rose(self, file_path: str) -> "RPPackage":
+        """Imports a package from a Rational Rose model file.
+
+        Args:
+            file_path: The path of the Rose model file to import from.
+
+        Returns:
+            The wrapped ``IRPPackage`` created from the import.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::importPackageFromRose(java.lang.String filePath)
+        """
+        return cast("RPPackage", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.importPackageFromRose(file_path))))
+
+    def import_project_from_rose(self, file_path: str) -> None:
+        """Imports a project from a Rational Rose model file.
+
+        Args:
+            file_path: The path of the Rose model file to import from.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::importProjectFromRose(java.lang.String filePath)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.importProjectFromRose(file_path))
+
+    # --- Events methods ---
+    def check_events_base_ids_solve_collisions(self) -> int:
+        """Checks events base IDs and solves collisions.
+
+        Returns:
+            The number of collisions solved.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::checkEventsBaseIdsSolveCollisions()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "checkEventsBaseIdsSolveCollisions", "eventsBaseIdsSolveCollisions"))
+
+    def recalculate_events_base_ids(self) -> None:
+        """Recalculates the events base IDs for the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::recalculateEventsBaseIds()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.recalculateEventsBaseIds())
+
+    # --- Misc methods ---
+    def add_spell_checker_result(self, word: str, suggestion: str) -> None:
+        """Adds a spell checker result with a suggestion.
+
+        Args:
+            word: The misspelled word.
+            suggestion: The suggested correction.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::addSpellCheckerResult(java.lang.String word, java.lang.String suggestion)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.addSpellCheckerResult(word, suggestion))
+
+    def clean_unresolved_elements(self) -> None:
+        """Cleans unresolved elements from the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::cleanUnresolvedElements()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.cleanUnresolvedElements())
+
+    def end_transaction_of_no_cg_interest(self) -> None:
+        """Ends a transaction of no code generation interest.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::endTransactionOfNoCGInterest()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.endTransactionOfNoCGInterest())
+
+    def get_default_directory_scheme(self) -> int:
+        """Returns the default directory scheme of the project.
+
+        Returns:
+            The default directory scheme as an int.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getDefaultDirectoryScheme()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getDefaultDirectoryScheme", "defaultDirectoryScheme"))
+
+    def get_new_progress_bar(self) -> "RPProgressBar":
+        """Returns a new progress bar.
+
+        Returns:
+            The wrapped ``IRPProgressBar`` created.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getNewProgressBar()
+        """
+        return cast("RPProgressBar", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNewProgressBar", "newProgressBar")))
+
+    def get_notify_plugin_on_elements_changed(self) -> int:
+        """Checks whether plugins are notified when elements change.
+
+        Returns:
+            ``1`` if plugins are notified, ``0`` otherwise.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getNotifyPluginOnElementsChanged()
+        """
+        return int(AbstractRPModelElement._get_method_or_property(self._com, "getNotifyPluginOnElementsChanged", "notifyPluginOnElementsChanged"))
+
+    def get_requirements_by_id(self, id: str) -> RPCollection:
+        """Returns the requirements matching the specified ID.
+
+        Args:
+            id: The requirement ID to search for.
+
+        Returns:
+            An ``RPCollection`` of matching requirements.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::getRequirementsByID(java.lang.String id)
+        """
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getRequirementsByID(id)))
+
+    def remove(self) -> None:
+        """Removes the project.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::remove()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.remove())
+
+    def save_as_prev_version(self, file_path: str) -> None:
+        """Saves the project to a previous version file path.
+
+        Args:
+            file_path: The path to save the project to.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::saveAsPrevVersion(java.lang.String filePath)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.saveAsPrevVersion(file_path))
+
+    def set_default_directory_scheme(self, scheme: int) -> None:
+        """Sets the default directory scheme of the project.
+
+        Args:
+            scheme: The default directory scheme to set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setDefaultDirectoryScheme(int scheme)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setDefaultDirectoryScheme", "defaultDirectoryScheme", scheme)
+
+    def set_global_configuration(self, config: str) -> None:
+        """Sets the global configuration of the project.
+
+        Args:
+            config: The global configuration to set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setGlobalConfiguration(java.lang.String config)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setGlobalConfiguration", "globalConfiguration", config)
+
+    def set_notify_plugin_on_elements_changed(self, enabled: int) -> None:
+        """Sets whether plugins are notified when elements change.
+
+        Args:
+            enabled: ``1`` to notify plugins, ``0`` to not notify.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setNotifyPluginOnElementsChanged(int enabled)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setNotifyPluginOnElementsChanged", "notifyPluginOnElementsChanged", enabled)
+
+    def set_object_explicit(self, obj: Any) -> None:
+        """Sets the specified object as explicit.
+
+        Args:
+            obj: The wrapped model element to set as explicit.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setObjectExplicit(com.telelogic.rhapsody.core.IRPModelElement obj)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setObjectExplicit(obj._com))
+
+    def set_object_implicit(self, obj: Any) -> None:
+        """Sets the specified object as implicit.
+
+        Args:
+            obj: The wrapped model element to set as implicit.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setObjectImplicit(com.telelogic.rhapsody.core.IRPModelElement obj)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setObjectImplicit(obj._com))
+
+    def set_use_unique_stereotype_and_ref_cache(self, enabled: int) -> None:
+        """Sets whether to use a unique stereotype and reference cache.
+
+        Args:
+            enabled: ``1`` to use the unique cache, ``0`` to not use it.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setUseUniqueStereotypeAndRefCache(int enabled)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setUseUniqueStereotypeAndRefCache", "useUniqueStereotypeAndRefCache", enabled)
+
+    def set_wait_dialog_watchdog_value(self, value: int) -> None:
+        """Sets the wait dialog watchdog value.
+
+        Args:
+            value: The wait dialog watchdog value to set.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::setWaitDialogWatchdogValue(int value)
+        """
+        AbstractRPModelElement._set_method_or_property(self._com, "setWaitDialogWatchdogValue", "waitDialogWatchdogValue", value)
+
+    def start_transaction_of_no_cg_interest(self) -> None:
+        """Starts a transaction of no code generation interest.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPProject::startTransactionOfNoCGInterest()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.startTransactionOfNoCGInterest())
 
 
 AbstractRPModelElement.register_wrapper("Project", RPProject)

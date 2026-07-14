@@ -386,3 +386,269 @@ def test_package_get_nodes_returns_collection() -> None:
     result = package.get_nodes()
 
     assert isinstance(result, RPCollection)
+
+
+def test_package_add_flow_items_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    flow_item = make_fake_element("FlowItem", getName="MyFlowItem")
+    fake.addFlowItems.return_value = flow_item
+    package = RPPackage(fake)
+
+    result = package.add_flow_items("MyFlowItem")
+
+    fake.addFlowItems.assert_called_once_with("MyFlowItem")
+    assert result.get_name() == "MyFlowItem"
+
+
+def test_package_add_flows_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    flow = make_fake_element("Flow", getName="MyFlow")
+    fake.addFlows.return_value = flow
+    package = RPPackage(fake)
+
+    result = package.add_flows("MyFlow")
+
+    fake.addFlows.assert_called_once_with("MyFlow")
+    assert result.get_name() == "MyFlow"
+
+
+def test_package_delete_flow_items_delegates_to_com() -> None:
+    from rhapsody_cli.models.core import RPModelElement
+
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+    flow_item_fake = make_fake_element("FlowItem", getName="ToDelete")
+
+    package.delete_flow_items(RPModelElement(flow_item_fake))
+
+    fake.deleteFlowItems.assert_called_once_with(flow_item_fake)
+
+
+def test_package_delete_flows_delegates_to_com() -> None:
+    from rhapsody_cli.models.core import RPModelElement
+
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+    flow_fake = make_fake_element("Flow", getName="ToDelete")
+
+    package.delete_flows(RPModelElement(flow_fake))
+
+    fake.deleteFlows.assert_called_once_with(flow_fake)
+
+
+def test_package_get_flow_items_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Package")
+    flow_item = make_fake_element("FlowItem", getName="FlowItem1")
+    fake.getFlowItems.return_value = make_fake_collection([flow_item])
+    package = RPPackage(fake)
+
+    result = package.get_flow_items()
+
+    fake.getFlowItems.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+def test_package_get_flows_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Package")
+    flow = make_fake_element("Flow", getName="Flow1")
+    fake.getFlows.return_value = make_fake_collection([flow])
+    package = RPPackage(fake)
+
+    result = package.get_flows()
+
+    fake.getFlows.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+# --- Remote Requirements Methods (Task 3) Tests ---
+def test_package_get_remote_requirements_populate_mode_returns_int() -> None:
+    fake = make_fake_element("Package")
+    fake.getRemoteRequirementsPopulateMode.return_value = 1
+    package = RPPackage(fake)
+
+    result = package.get_remote_requirements_populate_mode()
+
+    fake.getRemoteRequirementsPopulateMode.assert_called_once_with()
+    assert result == 1
+
+
+def test_package_get_root_instance_specifications_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Package")
+    instance_spec = make_fake_element("InstanceSpecification", getName="IS1")
+    fake.getRootInstanceSpecifications.return_value = make_fake_collection([instance_spec])
+    package = RPPackage(fake)
+
+    result = package.get_root_instance_specifications()
+
+    fake.getRootInstanceSpecifications.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+def test_package_login_to_remote_artifact_server_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.login_to_remote_artifact_server("http://server.com", "user", "pass")
+
+    fake.loginToRemoteArtifactServer.assert_called_once_with("http://server.com", "user", "pass")
+
+
+def test_package_populate_remote_requirements_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.populate_remote_requirements()
+
+    fake.populateRemoteRequirements.assert_called_once_with()
+
+
+def test_package_recalculate_events_base_id_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.recalculate_events_base_id()
+
+    fake.reCalculateEventsBaseId.assert_called_once_with()
+
+
+def test_package_set_remote_requirements_populate_mode_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.set_remote_requirements_populate_mode(2)
+
+    fake.setRemoteRequirementsPopulateMode.assert_called_once_with(2)
+
+
+def test_package_update_contained_diagrams_on_server_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.update_contained_diagrams_on_server()
+
+    fake.updateContainedDiagramsOnServer.assert_called_once_with()
+
+
+# --- SysML Methods (Task 4) Tests ---
+def test_package_add_implicit_object_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    instance = make_fake_element("Instance", getName="ImplicitObj")
+    fake.addImplicitObject.return_value = instance
+    package = RPPackage(fake)
+
+    result = package.add_implicit_object("ImplicitObj")
+
+    fake.addImplicitObject.assert_called_once_with("ImplicitObj")
+    assert result.get_name() == "ImplicitObj"
+
+
+def test_package_add_link_between_sysml_ports_delegates_to_com() -> None:
+    from rhapsody_cli.models.core import RPModelElement
+
+    fake = make_fake_element("Package")
+    port1_fake = make_fake_element("SysMLPort", getName="Port1")
+    port2_fake = make_fake_element("SysMLPort", getName="Port2")
+    link_fake = make_fake_element("Link", getName="Link1")
+    fake.addLinkBetweenSYSMLPorts.return_value = link_fake
+    package = RPPackage(fake)
+
+    result = package.add_link_between_sysml_ports(RPModelElement(port1_fake), RPModelElement(port2_fake))
+
+    fake.addLinkBetweenSYSMLPorts.assert_called_once_with(port1_fake, port2_fake)
+    assert result.get_name() == "Link1"
+
+
+# --- Misc Methods (Task 5) Tests ---
+def test_package_get_all_nested_elements_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Package")
+    elem1 = make_fake_element("Class", getName="Class1")
+    elem2 = make_fake_element("Package", getName="NestedPkg")
+    fake.getAllNestedElements.return_value = make_fake_collection([elem1, elem2])
+    package = RPPackage(fake)
+
+    result = package.get_all_nested_elements()
+
+    fake.getAllNestedElements.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+def test_package_get_events_base_id_returns_string() -> None:
+    fake = make_fake_element("Package")
+    fake.getEventsBaseId.return_value = "EventsBase_123"
+    package = RPPackage(fake)
+
+    result = package.get_events_base_id()
+
+    fake.getEventsBaseId.assert_called_once_with()
+    assert result == "EventsBase_123"
+
+
+def test_package_get_namespace_returns_string() -> None:
+    fake = make_fake_element("Package")
+    fake.getNamespace.return_value = "com.example.mypackage"
+    package = RPPackage(fake)
+
+    result = package.get_namespace()
+
+    fake.getNamespace.assert_called_once_with()
+    assert result == "com.example.mypackage"
+
+
+def test_package_get_saved_in_separate_directory_returns_int() -> None:
+    fake = make_fake_element("Package")
+    fake.getSavedInSeperateDirectory.return_value = 1
+    package = RPPackage(fake)
+
+    result = package.get_saved_in_separate_directory()
+
+    fake.getSavedInSeperateDirectory.assert_called_once_with()
+    assert result == 1
+
+
+def test_package_get_user_defined_stereotypes_returns_collection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake = make_fake_element("Package")
+    stereotype = make_fake_element("Stereotype", getName="MyStereotype")
+    fake.getUserDefinedStereotypes.return_value = make_fake_collection([stereotype])
+    package = RPPackage(fake)
+
+    result = package.get_user_defined_stereotypes()
+
+    fake.getUserDefinedStereotypes.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+def test_package_set_saved_in_separate_directory_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.set_saved_in_separate_directory(1)
+
+    fake.setSavedInSeperateDirectory.assert_called_once_with(1)
+
+
+def test_package_update_contained_matrices_on_server_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.update_contained_matrices_on_server()
+
+    fake.updateContainedMatricesOnServer.assert_called_once_with()
+
+
+def test_package_update_contained_tables_on_server_delegates_to_com() -> None:
+    fake = make_fake_element("Package")
+    package = RPPackage(fake)
+
+    package.update_contained_tables_on_server()
+
+    fake.updateContainedTablesOnServer.assert_called_once_with()

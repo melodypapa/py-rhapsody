@@ -44,6 +44,15 @@ def test_actor_set_is_behavior_overridden_delegates_to_com() -> None:
     fake.setIsBehaviorOverriden.assert_called_once_with(0)
 
 
+def test_actor_update_contained_diagrams_on_server_delegates_to_com() -> None:
+    fake = make_fake_element("Actor")
+    actor = RPActor(fake)
+
+    actor.update_contained_diagrams_on_server()
+
+    fake.updateContainedDiagramsOnServer.assert_called_once_with()
+
+
 def test_actor_is_registered_for_meta_class_actor() -> None:
     fake = make_fake_element("Actor", getName="Driver")
 

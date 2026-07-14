@@ -6,7 +6,7 @@ from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPMod
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.containment.model_diagrams_types import RPDiagram
+    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPDiagram
 
 
 class RPUseCase(RPClassifier):

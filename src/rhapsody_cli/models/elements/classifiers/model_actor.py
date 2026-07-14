@@ -16,7 +16,7 @@ class RPActor(RPClassifier):
     # [x] add_event_reception_with_event  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_behavior_overriden  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_behavior_overriden  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] updateContainedDiagramsOnServer  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
     # No deprecated IRPActor methods.
 
@@ -71,6 +71,17 @@ class RPActor(RPClassifier):
             com.telelogic.rhapsody.core.IRPActor::setIsBehaviorOverriden(int)
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsBehaviorOverriden", "isBehaviorOverriden", 1 if is_overridden else 0)
+
+    def update_contained_diagrams_on_server(self) -> None:
+        """Updates the contained diagrams on the remote requirements server.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPActor::updateContainedDiagramsOnServer()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.updateContainedDiagramsOnServer())
 
 
 AbstractRPModelElement.register_wrapper("Actor", RPActor)

@@ -310,6 +310,85 @@ def test_collection_get_item_falls_back_to_item_property_when_method_missing() -
     fake.Item.assert_called_once_with(1)
 
 
+def test_collection_add_graphical_item_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+    item = make_fake_element("Class")
+
+    collection.add_graphical_item(RPModelElement(item))
+
+    fake.addGraphicalItem.assert_called_once_with(item)
+
+
+def test_collection_to_list_returns_python_list() -> None:
+    inner_a = make_fake_element("Class", getName="A")
+    inner_b = make_fake_element("Class", getName="B")
+    fake = make_fake_collection([inner_a, inner_b])
+    collection = RPCollection(fake)
+
+    result = collection.to_list()
+
+    assert isinstance(result, list)
+    assert len(result) == 2
+    assert result[0].get_name() == "A"
+    assert result[1].get_name() == "B"
+
+
+def test_collection_set_size_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+
+    collection.set_size(5)
+
+    fake.setSize.assert_called_once_with(5)
+
+
+def test_collection_remove_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+
+    collection.remove(1)
+
+    fake.remove.assert_called_once_with(1)
+
+
+def test_collection_set_string_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+
+    collection.set_string(1, "test")
+
+    fake.setString.assert_called_once_with(1, "test")
+
+
+def test_collection_set_model_element_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+    element = make_fake_element("Class")
+
+    collection.set_model_element(1, RPModelElement(element))
+
+    fake.setModelElement.assert_called_once_with(1, element)
+
+
+def test_collection_empty_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+
+    collection.empty()
+
+    fake.empty.assert_called_once_with()
+
+
+def test_collection_set_integer_delegates_to_com() -> None:
+    fake = make_fake_collection([])
+    collection = RPCollection(fake)
+
+    collection.set_integer(1, 42)
+
+    fake.setInteger.assert_called_once_with(1, 42)
+
+
 def test_wrap_dispatches_to_registered_wrapper() -> None:
     AbstractRPModelElement.register_wrapper("FakeMetaType", _FakeClassWrapper)
     fake = make_fake_element("FakeMetaType", getName="Thing")

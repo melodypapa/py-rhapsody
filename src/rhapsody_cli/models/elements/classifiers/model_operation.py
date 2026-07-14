@@ -7,7 +7,7 @@ from rhapsody_cli.models.elements.classifiers.model_interface_item import RPInte
 
 if TYPE_CHECKING:
     from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
-    from rhapsody_cli.models.elements.containment.model_diagrams_types import RPActivityDiagram
+    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPActivityDiagram
 
 
 class RPOperation(RPInterfaceItem):

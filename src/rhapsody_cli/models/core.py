@@ -2187,14 +2187,14 @@ class RPCollection:
     # [x] get_count  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_item  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_item  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] addGraphicalItem  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] toList  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setSize  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] remove  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setString  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setModelElement  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] empty  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
-    # [ ] setInteger  [ ] impl  [ ] docstring  [ ] unit test  [ ] integration test
+    # [x] addGraphicalItem  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] toList  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setSize  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setString  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setModelElement  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] empty  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] setInteger  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPCollection methods.
 
     def __init__(self, com_obj: Any) -> None:
@@ -2247,6 +2247,115 @@ class RPCollection:
             com.telelogic.rhapsody.core.IRPCollection::addItem(com.telelogic.rhapsody.core.IRPModelElement)
         """
         AbstractRPModelElement.call_com(lambda: self._com.addItem(element._com))
+
+    def add_graphical_item(self, item: "RPModelElement") -> None:
+        """Adds a graphical item to the collection.
+
+        Args:
+            item: The graphical model element to add.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::addGraphicalItem(com.telelogic.rhapsody.core.IRPModelElement)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.addGraphicalItem(item._com))
+
+    def to_list(self) -> list:
+        """Converts the collection to a Python list.
+
+        Returns:
+            A Python list containing all elements in the collection.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::toList()
+        """
+        return list(self)
+
+    def set_size(self, size: int) -> None:
+        """Sets the size of the collection.
+
+        Args:
+            size: The new size for the collection.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::setSize(int)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setSize(size))
+
+    def remove(self, index: int) -> None:
+        """Removes the element at the specified index.
+
+        Args:
+            index: The 1-based index of the element to remove.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::remove(int)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.remove(index))
+
+    def set_string(self, index: int, value: str) -> None:
+        """Sets a string value at the specified index.
+
+        Args:
+            index: The 1-based index where to set the value.
+            value: The string value to set.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::setString(int, java.lang.String)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setString(index, value))
+
+    def set_model_element(self, index: int, element: "RPModelElement") -> None:
+        """Sets a model element at the specified index.
+
+        Args:
+            index: The 1-based index where to set the element.
+            element: The model element to set.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::setModelElement(int, com.telelogic.rhapsody.core.IRPModelElement)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setModelElement(index, element._com))
+
+    def empty(self) -> None:
+        """Removes all elements from the collection.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::empty()
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.empty())
+
+    def set_integer(self, index: int, value: int) -> None:
+        """Sets an integer value at the specified index.
+
+        Args:
+            index: The 1-based index where to set the value.
+            value: The integer value to set.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
+
+        Reference:
+            com.telelogic.rhapsody.core.IRPCollection::setInteger(int, int)
+        """
+        AbstractRPModelElement.call_com(lambda: self._com.setInteger(index, value))
 
     def __len__(self) -> int:
         return self.get_count()
