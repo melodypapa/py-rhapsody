@@ -230,3 +230,6 @@ demos/demo_project/*.ehl
 demos/demo_project/*.save
 demos/demo_project/_scratch_*/
 
+# Integration test temporary project
+demos/test_project/
+

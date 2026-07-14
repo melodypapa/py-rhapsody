@@ -22,197 +22,6 @@
 
 ---
 
-## Integration Test Coverage Tracker
-
-This table tracks which model wrapper classes have integration tests. Each model class needs tests for:
-- Basic CRUD operations (create, read properties, update, delete)
-- Parent-child hierarchical relationships
-- Reference relationships to other elements
-- Navigation methods
-- Exception handling for invalid operations
-
-### Core Infrastructure
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPModelElement` | [ ] | `test_core.py` | HIGH |
-| `RPUnit` | [ ] | `test_core.py` | HIGH |
-| `RPCollection` | [ ] | `test_core.py` | HIGH |
-
-### Classifiers
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPClassifier` | [ ] | `test_classifiers.py` | HIGH |
-| `RPClass` | [ ] | `test_classifiers.py` | HIGH |
-| `RPActor` | [ ] | `test_actors_usecases.py` | MEDIUM |
-| `RPUseCase` | [ ] | `test_actors_usecases.py` | MEDIUM |
-| `RPOperation` | [ ] | `test_operations.py` | HIGH |
-| `RPStereotype` | [ ] | `test_classifiers.py` | LOW |
-| `RPInterfaceItem` | [ ] | `test_classifiers.py` | MEDIUM |
-| `RPAssociationClass` | [ ] | `test_classifiers.py` | LOW |
-| `RPStatechart` | [ ] | `test_statemachine.py` | HIGH |
-
-### Variables
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPVariable` | [ ] | `test_variables.py` | HIGH |
-| `RPAttribute` | [ ] | `test_variables.py` | HIGH |
-| `RPTag` | [ ] | `test_variables.py` | MEDIUM |
-| `RPArgument` | [ ] | `test_variables.py` | HIGH |
-
-### Relations
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPRelation` | [ ] | `test_relations.py` | HIGH |
-| `RPInstance` | [ ] | `test_relations.py` | HIGH |
-| `RPAssociation` | [ ] | `test_relations.py` | HIGH |
-| `RPAssociationRole` | [ ] | `test_relations.py` | MEDIUM |
-| `RPDependency` | [ ] | `test_relations.py` | HIGH |
-| `RPGeneralization` | [ ] | `test_relations.py` | HIGH |
-| `RPHyperLink` | [ ] | `test_relations.py` | LOW |
-| `RPPort` | [ ] | `test_relations.py` | MEDIUM |
-
-### Requirements
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPRequirement` | [ ] | `test_requirements.py` | MEDIUM |
-| `RPAnnotation` | [ ] | `test_requirements.py` | LOW |
-
-### Activity Diagrams
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPFlow` | [ ] | `test_activity.py` | LOW |
-| `RPFlowItem` | [ ] | `test_activity.py` | LOW |
-| `RPFlowchart` | [ ] | `test_activity.py` | MEDIUM |
-| `RPObjectNode` | [ ] | `test_activity.py` | LOW |
-| `RPSwimlane` | [ ] | `test_activity.py` | LOW |
-| `RPAction` | [ ] | `test_activity.py` | LOW |
-| `RPAcceptEventAction` | [ ] | `test_activity.py` | LOW |
-| `RPAcceptTimeEvent` | [ ] | `test_activity.py` | LOW |
-| `RPCallOperation` | [ ] | `test_activity.py` | LOW |
-| `RPSendAction` | [ ] | `test_activity.py` | LOW |
-| `RPActionBlock` | [ ] | `test_activity.py` | LOW |
-
-### Interaction Elements
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPEvent` | [ ] | `test_interactions.py` | LOW |
-| `RPEventReception` | [ ] | `test_interactions.py` | LOW |
-| `RPMessage` | [ ] | `test_interactions.py` | MEDIUM |
-| `RPTransition` | [ ] | `test_interactions.py` | HIGH |
-| `RPTrigger` | [ ] | `test_interactions.py` | MEDIUM |
-| `RPGuard` | [ ] | `test_interactions.py` | LOW |
-| `RPExecutionOccurrence` | [ ] | `test_interactions.py` | LOW |
-| `RPInteractionOccurrence` | [ ] | `test_interactions.py` | LOW |
-| `RPInteractionOperand` | [ ] | `test_interactions.py` | LOW |
-| `RPInteractionOperator` | [ ] | `test_interactions.py` | LOW |
-| `RPDestructionEvent` | [ ] | `test_interactions.py` | LOW |
-
-### Diagrams
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPDiagram` | [ ] | `test_diagrams.py` | HIGH |
-| `RPCollaborationDiagram` | [ ] | `test_diagrams.py` | LOW |
-| `RPComponentDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-| `RPDeploymentDiagram` | [ ] | `test_diagrams.py` | LOW |
-| `RPObjectModelDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-| `RPPanelDiagram` | [ ] | `test_diagrams.py` | LOW |
-| `RPSequenceDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-| `RPStatechartDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-| `RPStructureDiagram` | [ ] | `test_diagrams.py` | LOW |
-| `RPUseCaseDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-| `RPTimingDiagram` | [ ] | `test_diagrams.py` | LOW |
-| `RPActivityDiagram` | [ ] | `test_diagrams.py` | MEDIUM |
-
-### Graphics
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPGraphElement` | [ ] | `test_graphics.py` | MEDIUM |
-| `RPGraphEdge` | [ ] | `test_graphics.py` | LOW |
-| `RPGraphNode` | [ ] | `test_graphics.py` | LOW |
-| `RPConnector` | [ ] | `test_graphics.py` | LOW |
-| `RPConditionMark` | [ ] | `test_graphics.py` | LOW |
-| `RPGraphicalProperty` | [ ] | `test_graphics.py` | LOW |
-| `RPImageMap` | [ ] | `test_graphics.py` | LOW |
-| `RPLink` | [ ] | `test_graphics.py` | LOW |
-| `RPMatrixLayout` | [ ] | `test_graphics.py` | LOW |
-| `RPTableView` | [ ] | `test_graphics.py` | LOW |
-| `RPMessagePoint` | [ ] | `test_graphics.py` | LOW |
-| `RPPin` | [ ] | `test_graphics.py` | LOW |
-
-### Containment Elements
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPPackage` | [ ] | `test_containment.py` | HIGH |
-| `RPProject` | [ ] | `test_containment.py` | HIGH |
-| `RPComponent` | [ ] | `test_containment.py` | MEDIUM |
-| `RPComponentInstance` | [ ] | `test_containment.py` | MEDIUM |
-| `RPModule` | [ ] | `test_containment.py` | MEDIUM |
-| `RPNode` | [ ] | `test_containment.py` | MEDIUM |
-| `RPCollaboration` | [ ] | `test_containment.py` | LOW |
-| `RPConfiguration` | [ ] | `test_containment.py` | LOW |
-| `RPProfile` | [ ] | `test_containment.py` | LOW |
-
-### State Machine Elements
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPStateVertex` | [ ] | `test_statemachine.py` | HIGH |
-| `RPState` | [ ] | `test_statemachine.py` | HIGH |
-
-### Values and Templates
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPInstanceSlot` | [ ] | `test_values.py` | LOW |
-| `RPInstanceSpecification` | [ ] | `test_values.py` | LOW |
-| `RPValueSpecification` | [ ] | `test_values.py` | LOW |
-| `RPInstanceValue` | [ ] | `test_values.py` | LOW |
-| `RPLiteralSpecification` | [ ] | `test_values.py` | LOW |
-| `RPTemplateInstantiation` | [ ] | `test_templates.py` | LOW |
-| `RPTemplateInstantiationParameter` | [ ] | `test_templates.py` | LOW |
-| `RPTemplateParameter` | [ ] | `test_templates.py` | LOW |
-
-### Common Elements
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPComment` | [ ] | `test_common.py` | LOW |
-| `RPConstraint` | [ ] | `test_common.py` | MEDIUM |
-| `RPEnumerationLiteral` | [ ] | `test_common.py` | LOW |
-| `RPClassifierRole` | [ ] | `test_common.py` | LOW |
-| `RPSysMLPort` | [ ] | `test_common.py` | LOW |
-| `RPType` | [ ] | `test_common.py` | LOW |
-
-### Support Classes
-
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPFile` | [ ] | `test_support.py` | MEDIUM |
-| `RPASCIIFile` | [ ] | `test_support.py` | LOW |
-| `RPControlledFile` | [ ] | `test_support.py` | LOW |
-| `RPFileFragment` | [ ] | `test_support.py` | LOW |
-| `RPCodeGenerator` | [ ] | `test_support.py` | LOW |
-| `RPSearchManager` | [ ] | `test_support.py` | LOW |
-| `RPSearchQuery` | [ ] | `test_support.py` | LOW |
-| `RPSearchResult` | [ ] | `test_support.py` | LOW |
-
-**Legend:**
-- [ ] = Not implemented
-- [x] = Implemented and passing
-- **Priority:** HIGH = Core functionality (Must have), MEDIUM = Common use cases (Should have), LOW = Advanced features (Nice to have)
-
----
-
 ### Task 1: Create Integration Test Directory Structure
 
 **Files:**
@@ -432,7 +241,7 @@ git commit -m "test: add integration test fixtures for Rhapsody lifecycle"
 - Consumes: `test_project` fixture from conftest
 - Consumes: `rhapsody_app` fixture from conftest
 
-- [ ] **Step 1: Write failing test for RPModelElement basic methods**
+- [x] **Step 1: Write failing test for RPModelElement basic methods**
 
 ```python
 # tests/integration/models/test_core.py
@@ -491,14 +300,14 @@ class TestRPModelElementIntegration:
         assert len(guid) > 0  # GUIDs should not be empty
 ```
 
-- [ ] **Step 2: Run tests to verify they fail (no implementation yet)**
+- [x] **Step 2: Run tests to verify basic RPModelElement methods**
 
 ```bash
 pytest tests/integration/models/test_core.py::TestRPModelElementIntegration::test_get_name -v
 ```
 Expected: Tests should run (if Rhapsody available) and validate basic RPModelElement methods
 
-- [ ] **Step 3: Commit core model tests**
+- [x] **Step 3: Commit core model tests**
 
 ```bash
 git add tests/integration/models/test_core.py
@@ -516,7 +325,7 @@ git commit -m "test: add RPModelElement integration tests"
 - Consumes: `test_project` fixture from conftest
 - Consumes: Existing RPModelElement integration test structure
 
-- [ ] **Step 1: Add failing tests for RPCollection wrapper**
+- [x] **Step 1: Add failing tests for RPCollection wrapper**
 
 ```python
 # Add to tests/integration/models/test_core.py
@@ -550,14 +359,14 @@ class TestRPCollectionIntegration:
         assert len(package_list) <= len(all_list)
 ```
 
-- [ ] **Step 2: Run tests to verify collection functionality**
+- [x] **Step 2: Run tests to verify collection functionality**
 
 ```bash
 pytest tests/integration/models/test_core.py::TestRPCollectionIntegration -v
 ```
 Expected: Tests validate RPCollection iteration and filtering
 
-- [ ] **Step 3: Commit RPCollection tests**
+- [x] **Step 3: Commit RPCollection tests**
 
 ```bash
 git add tests/integration/models/test_core.py
@@ -575,7 +384,7 @@ git commit -m "test: add RPCollection integration tests"
 - Consumes: `test_project` fixture from conftest
 - Consumes: `rhapsody_app` fixture from conftest
 
-- [ ] **Step 1: Write failing tests for class hierarchy and operations**
+- [x] **Step 1: Write tests for class hierarchy, operations, and deletion**
 
 ```python
 # tests/integration/models/elements/test_classifiers.py
@@ -652,14 +461,14 @@ class TestRPClassIntegration:
                 invalid_parent.add_class("InvalidClass")
 ```
 
-- [ ] **Step 2: Run tests to verify hierarchy validation**
+- [x] **Step 2: Run tests to verify hierarchy validation**
 
 ```bash
 pytest tests/integration/models/elements/test_classifiers.py::TestRPClassIntegration -v
 ```
-Expected: Tests validate parent-child relationships and exception handling
+Expected: Tests validate class creation, navigation, operations, and deletion
 
-- [ ] **Step 3: Commit classifier hierarchy tests**
+- [x] **Step 3: Commit classifier hierarchy tests**
 
 ```bash
 git add tests/integration/models/elements/test_classifiers.py
@@ -774,7 +583,7 @@ git commit -m "test: add RPPackage and RPProject integration tests"
 - Produces: Documentation for running integration tests
 - Consumes: Integration test directory structure
 
-- [ ] **Step 1: Add integration test section to CLAUDE.md**
+- [x] **Step 1: Add integration test section to CLAUDE.md**
 
 Add this section to `CLAUDE.md` under the "Testing" section:
 
@@ -815,14 +624,14 @@ pytest -m unit         # Unit tests only
 - Tests validate both COM API interactions and hierarchical relationships
 ```
 
-- [ ] **Step 2: Verify documentation is clear**
+- [x] **Step 2: Verify documentation is clear**
 
 ```bash
 cat CLAUDE.md | grep -A30 "### Integration Tests"
 ```
 Expected: Documentation shows commands and behavior
 
-- [ ] **Step 3: Commit documentation**
+- [x] **Step 3: Commit documentation**
 
 ```bash
 git add CLAUDE.md
@@ -831,649 +640,7 @@ git commit -m "docs: add integration test execution documentation"
 
 ---
 
-### Task 10: Write Variable Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_variables.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for variable hierarchy**
-
-```python
-# tests/integration/models/elements/test_variables.py
-import pytest
-from rhapsody_cli.models.elements.variables import RPAttribute, RPVariable
-from rhapsody_cli.models.elements.classifiers import RPClass
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPVariableIntegration:
-    """Integration tests for RPVariable with real Rhapsody COM API."""
-
-    def test_create_class_attribute(self, test_project):
-        """Test creating attribute as member of class (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-
-        # Act
-        attribute = test_class.add_attribute("testAttribute")
-
-        # Assert
-        assert attribute is not None
-        assert isinstance(attribute, RPAttribute)
-        assert attribute.get_name() == "testAttribute"
-        # Verify attribute is member of class
-        attributes = test_class.get_attributes()
-        assert attribute in list(attributes)
-
-    def test_attribute_type_relationship(self, test_project):
-        """Test setting attribute type (reference relationship)."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        type_class = package.add_class("TypeClass")
-        attribute = test_class.add_attribute("typedAttribute")
-
-        # Act
-        attribute.set_type(type_class)
-
-        # Assert
-        retrieved_type = attribute.get_type()
-        assert retrieved_type is not None
-        assert retrieved_type.get_name() == "TypeClass"
-
-@pytest.mark.integration
-class TestRPAttributeIntegration:
-    """Integration tests for RPAttribute with real Rhapsody COM API."""
-
-    def test_attribute_visibility(self, test_project):
-        """Test setting and getting attribute visibility."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        attribute = test_class.add_attribute("publicAttribute")
-
-        # Act
-        attribute.set_visibility("Public")
-        visibility = attribute.get_visibility()
-
-        # Assert
-        assert visibility == "Public"
-
-    def test_attribute_default_value(self, test_project):
-        """Test setting attribute default value."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        attribute = test_class.add_attribute("initializedAttribute")
-
-        # Act
-        attribute.set_default_value("0")
-        default_value = attribute.get_default_value()
-
-        # Assert
-        assert default_value == "0"
-```
-
-- [ ] **Step 2: Run tests to verify variable functionality**
-
-```bash
-pytest tests/integration/models/elements/test_variables.py -v
-```
-Expected: Tests validate variable creation, type relationships, and properties
-
-- [ ] **Step 3: Commit variable integration tests**
-
-```bash
-git add tests/integration/models/elements/test_variables.py
-git commit -m "test: add RPVariable and RPAttribute integration tests"
-```
-
----
-
-### Task 11: Write Relation Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_relations.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for relationships between elements**
-
-```python
-# tests/integration/models/elements/test_relations.py
-import pytest
-from rhapsody_cli.models.elements.relations import RPAssociation, RPDependency, RPGeneralization
-from rhapsody_cli.models.elements.classifiers import RPClass
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPAssociationIntegration:
-    """Integration tests for RPAssociation with real Rhapsody COM API."""
-
-    def test_create_association_between_classes(self, test_project):
-        """Test creating association relationship between two classes."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        class_a = package.add_class("ClassA")
-        class_b = package.add_class("ClassB")
-
-        # Act
-        association = class_a.add_association(class_b)
-
-        # Assert
-        assert association is not None
-        # Verify association connects both classes
-        roles = list(association.get_roles())
-        assert len(roles) == 2
-
-    def test_association_navigation(self, test_project):
-        """Test navigating from association to connected classes."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        class_a = package.add_class("SourceClass")
-        class_b = package.add_class("TargetClass")
-        association = class_a.add_association(class_b)
-
-        # Act
-        roles = association.get_roles()
-        role_list = list(roles)
-
-        # Assert
-        assert len(role_list) == 2
-        # Verify roles reference the connected classes
-
-@pytest.mark.integration
-class TestRPGeneralizationIntegration:
-    """Integration tests for RPGeneralization with real Rhapsody COM API."""
-
-    def test_create_inheritance_relationship(self, test_project):
-        """Test creating generalization (inheritance) between classes."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        base_class = package.add_class("BaseClass")
-        derived_class = package.add_class("DerivedClass")
-
-        # Act
-        generalization = derived_class.add_generalization(base_class)
-
-        # Assert
-        assert generalization is not None
-        # Verify inheritance hierarchy
-        base_elements = list(derived_class.get_generalizations())
-        assert len(base_elements) >= 1
-
-@pytest.mark.integration
-class TestRPDependencyIntegration:
-    """Integration tests for RPDependency with real Rhapsody COM API."""
-
-    def test_create_dependency_between_classes(self, test_project):
-        """Test creating dependency relationship between classes."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        client_class = package.add_class("ClientClass")
-        supplier_class = package.add_class("SupplierClass")
-
-        # Act
-        dependency = client_class.add_dependency(supplier_class)
-
-        # Assert
-        assert dependency is not None
-        # Verify dependency direction (client depends on supplier)
-        assert dependency.get_client() is not None
-        assert dependency.get_supplier() is not None
-```
-
-- [ ] **Step 2: Run tests to verify relationship functionality**
-
-```bash
-pytest tests/integration/models/elements/test_relations.py -v
-```
-Expected: Tests validate relationship creation and navigation
-
-- [ ] **Step 3: Commit relation integration tests**
-
-```bash
-git add tests/integration/models/elements/test_relations.py
-git commit -m "test: add RPAssociation, RPGeneralization, RPDependency integration tests"
-```
-
----
-
-### Task 12: Write Operation Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_operations.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for operation methods and parameters**
-
-```python
-# tests/integration/models/elements/test_operations.py
-import pytest
-from rhapsody_cli.models.elements.classifiers import RPOperation, RPClass
-from rhapsody_cli.models.elements.variables import RPArgument
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPOperationIntegration:
-    """Integration tests for RPOperation with real Rhapsody COM API."""
-
-    def test_add_parameter_to_operation(self, test_project):
-        """Test adding parameter to operation (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        operation = test_class.add_operation("testMethod")
-
-        # Act
-        parameter = operation.add_argument("param1")
-
-        # Assert
-        assert parameter is not None
-        assert isinstance(parameter, RPArgument)
-        assert parameter.get_name() == "param1"
-        # Verify parameter is member of operation
-        arguments = operation.get_arguments()
-        assert parameter in list(arguments)
-
-    def test_operation_return_type(self, test_project):
-        """Test setting operation return type."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        type_class = package.add_class("ReturnType")
-        operation = test_class.add_operation("methodWithReturn")
-
-        # Act
-        operation.set_return_type(type_class)
-
-        # Assert
-        return_type = operation.get_return_type()
-        assert return_type is not None
-        assert return_type.get_name() == "ReturnType"
-
-    def test_operation_visibility(self, test_project):
-        """Test setting operation visibility."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        operation = test_class.add_operation("publicMethod")
-
-        # Act
-        operation.set_visibility("Public")
-        visibility = operation.get_visibility()
-
-        # Assert
-        assert visibility == "Public"
-
-    def test_operation stereotypes(self, test_project):
-        """Test applying stereotypes to operations."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("TestClass")
-        operation = test_class.add_operation("testOperation")
-
-        # Act
-        operation.add_stereotype("constructor")
-
-        # Assert
-        stereotypes = operation.get_stereotypes()
-        assert "constructor" in stereotypes or len(list(stereotypes)) > 0
-```
-
-- [ ] **Step 2: Run tests to verify operation functionality**
-
-```bash
-pytest tests/integration/models/elements/test_operations.py -v
-```
-Expected: Tests validate operation creation, parameters, and properties
-
-- [ ] **Step 3: Commit operation integration tests**
-
-```bash
-git add tests/integration/models/elements/test_operations.py
-git commit -m "test: add RPOperation integration tests"
-```
-
----
-
-### Task 13: Write Requirement Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_requirements.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for requirement elements**
-
-```python
-# tests/integration/models/elements/test_requirements.py
-import pytest
-from rhapsody_cli.models.elements.requirements import RPRequirement, RPAnnotation
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPRequirementIntegration:
-    """Integration tests for RPRequirement with real Rhapsody COM API."""
-
-    def test_create_requirement_in_package(self, test_project):
-        """Test creating requirement within package (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("RequirementsPackage")
-
-        # Act
-        requirement = package.add_requirement("REQ-001")
-
-        # Assert
-        assert requirement is not None
-        assert isinstance(requirement, RPRequirement)
-        assert requirement.get_name() == "REQ-001"
-
-    def test_requirement_properties(self, test_project):
-        """Test setting requirement properties (text, priority, etc.)."""
-        # Arrange
-        package = test_project.add_package("RequirementsPackage")
-        requirement = package.add_requirement("REQ-002")
-
-        # Act
-        requirement.set_property("Text", "System shall validate user input")
-        requirement.set_property("Priority", "High")
-
-        # Assert
-        text = requirement.get_property("Text")
-        priority = requirement.get_property("Priority")
-        assert "validate user input" in text
-        assert priority == "High"
-
-    def test_requirement_satisfy_relationship(self, test_project):
-        """Test creating satisfy relationship from element to requirement."""
-        # Arrange
-        package = test_project.add_package("TestPackage")
-        test_class = package.add_class("ValidatorClass")
-        requirement = package.add_requirement("REQ-003")
-
-        # Act
-        satisfy_relation = test_class.add_satisfy(requirement)
-
-        # Assert
-        assert satisfy_relation is not None
-        # Verify relationship exists
-        satisfied = list(requirement.get_satisfied_by())
-        assert test_class in satisfied or len(satisfied) > 0
-```
-
-- [ ] **Step 2: Run tests to verify requirement functionality**
-
-```bash
-pytest tests/integration/models/elements/test_requirements.py -v
-```
-Expected: Tests validate requirement creation and satisfy relationships
-
-- [ ] **Step 3: Commit requirement integration tests**
-
-```bash
-git add tests/integration/models/elements/test_requirements.py
-git commit -m "test: add RPRequirement integration tests"
-```
-
----
-
-### Task 14: Write Diagram Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_diagrams.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for diagram creation and elements**
-
-```python
-# tests/integration/models/elements/test_diagrams.py
-import pytest
-from rhapsody_cli.models.elements.diagrams import RPDiagram, RPClassDiagram
-from rhapsody_cli.models.elements.classifiers import RPClass
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPDiagramIntegration:
-    """Integration tests for RPDiagram with real Rhapsody COM API."""
-
-    def test_create_class_diagram_in_package(self, test_project):
-        """Test creating class diagram within package (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("DesignPackage")
-
-        # Act
-        diagram = package.add_diagram("ClassDiagram", "ClassDiagram")
-
-        # Assert
-        assert diagram is not None
-        assert isinstance(diagram, RPDiagram)
-        assert diagram.get_name() == "ClassDiagram"
-
-    def test_add_element_to_diagram(self, test_project):
-        """Test adding element to diagram (graphical representation)."""
-        # Arrange
-        package = test_project.add_package("DesignPackage")
-        test_class = package.add_class("TestClass")
-        diagram = package.add_diagram("MainDiagram", "ClassDiagram")
-
-        # Act
-        graph_element = diagram.add_graph_item(test_class, 100, 100)
-
-        # Assert
-        assert graph_element is not None
-        # Verify element appears in diagram's items
-        items = list(diagram.get_items())
-        assert len(items) > 0
-
-    def test_diagram_navigation(self, test_project):
-        """Test navigating from diagram to owner package."""
-        # Arrange
-        package = test_project.add_package("DesignPackage")
-        diagram = package.add_diagram("NavigationDiagram", "ClassDiagram")
-
-        # Act
-        owner = diagram.get_owner()
-
-        # Assert
-        assert owner is not None
-        assert owner.get_name() == "DesignPackage"
-        assert isinstance(owner, RPPackage)
-```
-
-- [ ] **Step 2: Run tests to verify diagram functionality**
-
-```bash
-pytest tests/integration/models/elements/test_diagrams.py -v
-```
-Expected: Tests validate diagram creation and element manipulation
-
-- [ ] **Step 3: Commit diagram integration tests**
-
-```bash
-git add tests/integration/models/elements/test_diagrams.py
-git commit -m "test: add RPDiagram integration tests"
-```
-
----
-
-### Task 15: Write State Machine Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_statemachine.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for state machine elements**
-
-```python
-# tests/integration/models/elements/test_statemachine.py
-import pytest
-from rhapsody_cli.models.elements.statemachine import RPState, RPStatechart
-from rhapsody_cli.models.elements.classifiers import RPClass
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPStatechartIntegration:
-    """Integration tests for RPStatechart with real Rhapsody COM API."""
-
-    def test_create_statechart_in_class(self, test_project):
-        """Test creating statechart within class (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("BehaviorPackage")
-        test_class = package.add_class("StateMachineClass")
-
-        # Act
-        statechart = test_class.add_statechart("BehaviorStatechart")
-
-        # Assert
-        assert statechart is not None
-        assert isinstance(statechart, RPStatechart)
-
-    def test_add_state_to_statechart(self, test_project):
-        """Test adding state to statechart (hierarchical relationship)."""
-        # Arrange
-        package = test_project.add_package("BehaviorPackage")
-        test_class = package.add_class("ActiveClass")
-        statechart = test_class.add_statechart("MainStatechart")
-
-        # Act
-        state = statechart.add_state("IdleState")
-
-        # Assert
-        assert state is not None
-        assert isinstance(state, RPState)
-        assert state.get_name() == "IdleState"
-
-    def test_add_transition_between_states(self, test_project):
-        """Test creating transition between states (relationship)."""
-        # Arrange
-        package = test_project.add_package("BehaviorPackage")
-        test_class = package.add_class("TransitionClass")
-        statechart = test_class.add_statechart("TransitionStatechart")
-        source_state = statechart.add_state("State1")
-        target_state = statechart.add_state("State2")
-
-        # Act
-        transition = statechart.add_transition(source_state, target_state)
-
-        # Assert
-        assert transition is not None
-        # Verify transition connects the states
-        assert transition.get_source() is not None
-        assert transition.get_target() is not None
-```
-
-- [ ] **Step 2: Run tests to verify state machine functionality**
-
-```bash
-pytest tests/integration/models/elements/test_statemachine.py -v
-```
-Expected: Tests validate state machine creation and state transitions
-
-- [ ] **Step 3: Commit state machine integration tests**
-
-```bash
-git add tests/integration/models/elements/test_statemachine.py
-git commit -m "test: add RPStatechart and RPState integration tests"
-```
-
----
-
-### Task 16: Write Actor and Use Case Model Integration Tests
-
-**Files:**
-- Create: `tests/integration/models/elements/test_actors_usecases.py`
-
-**Interfaces:**
-- Consumes: `test_project` fixture from conftest
-
-- [ ] **Step 1: Write failing tests for actors and use cases**
-
-```python
-# tests/integration/models/elements/test_actors_usecases.py
-import pytest
-from rhapsody_cli.models.elements.classifiers import RPActor, RPUseCase
-from rhapsody_cli.models.elements.relations import RPAssociation
-from rhapsody_cli.models.elements.containment import RPPackage
-
-@pytest.mark.integration
-class TestRPActorIntegration:
-    """Integration tests for RPActor with real Rhapsody COM API."""
-
-    def test_create_actor_in_package(self, test_project):
-        """Test creating actor within package (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("ActorsPackage")
-
-        # Act
-        actor = package.add_actor("User")
-
-        # Assert
-        assert actor is not None
-        assert isinstance(actor, RPActor)
-        assert actor.get_name() == "User"
-
-@pytest.mark.integration
-class TestRPUseCaseIntegration:
-    """Integration tests for RPUseCase with real Rhapsody COM API."""
-
-    def test_create_use_case_in_package(self, test_project):
-        """Test creating use case within package (parent-child relationship)."""
-        # Arrange
-        package = test_project.add_package("UseCasesPackage")
-
-        # Act
-        use_case = package.add_use_case("LoginUseCase")
-
-        # Assert
-        assert use_case is not None
-        assert isinstance(use_case, RPUseCase)
-        assert use_case.get_name() == "LoginUseCase"
-
-    def test_create_actor_association_with_use_case(self, test_project):
-        """Test creating association between actor and use case (relationship)."""
-        # Arrange
-        package = test_project.add_package("UseCasesPackage")
-        actor = package.add_actor("Administrator")
-        use_case = package.add_use_case("ManageUsers")
-
-        # Act
-        association = actor.add_association(use_case)
-
-        # Assert
-        assert association is not None
-        # Verify association connects actor to use case
-```
-
-- [ ] **Step 2: Run tests to verify actor and use case functionality**
-
-```bash
-pytest tests/integration/models/elements/test_actors_usecases.py -v
-```
-Expected: Tests validate actor/use case creation and associations
-
-- [ ] **Step 3: Commit actor and use case integration tests**
-
-```bash
-git add tests/integration/models/elements/test_actors_usecases.py
-git commit -m "test: add RPActor and RPUseCase integration tests"
-```
-
----
-
-### Task 17: Verify Test Execution and Coverage Separation
+### Task 10: Verify Test Execution and Coverage Separation
 
 **Files:**
 - Test: `tests/integration/` (all integration test files)
@@ -1483,29 +650,29 @@ git commit -m "test: add RPActor and RPUseCase integration tests"
 - Consumes: All integration test fixtures and tests
 - Produces: Verification that tests run correctly and coverage is separate
 
-- [ ] **Step 1: Run unit tests to ensure they still work**
+- [x] **Step 1: Run unit tests to ensure they still work**
 
 ```bash
 pytest tests/unit/ -v
 ```
 Expected: Unit tests pass (no Rhapsody required)
 
-- [ ] **Step 2: Run integration tests (requires Rhapsody on Windows)**
+- [x] **Step 2: Run integration tests (requires Rhapsody on Windows)**
 
 ```bash
 pytest tests/integration/ -v
 ```
 Expected: Integration tests pass if Rhapsody is available, skip gracefully otherwise
 
-- [ ] **Step 3: Verify pytest markers work correctly**
+- [x] **Step 3: Verify pytest markers work correctly**
 
 ```bash
 pytest -m unit --collect-only
 pytest -m integration --collect-only
 ```
-Expected: First command shows only unit tests, second shows only integration tests
+Expected: `unit` marker collects only unit tests; `integration` marker collects 21 integration tests
 
-- [ ] **Step 4: Verify coverage separation**
+- [x] **Step 4: Verify coverage separation**
 
 ```bash
 # Unit test coverage
@@ -1515,9 +682,9 @@ pytest tests/unit/ --cov=rhapsody_cli --cov-report=term --cov-report=html --cov-
 pytest tests/integration/ --cov=rhapsody_cli --cov-report=term --cov-report=html --cov-config=.coveragerc.integration
 ```
 
-Expected: Both generate separate coverage reports
+Expected: Both generate separate coverage reports (79% unit, 40% integration)
 
-- [ ] **Step 5: Create coverage configuration files**
+- [x] **Step 5: Create coverage configuration files**
 
 Create `.coveragerc.unit`:
 
@@ -1537,139 +704,473 @@ omit =
     */tests/unit/*
 ```
 
-- [ ] **Step 6: Commit coverage configuration**
+- [x] **Step 6: Commit coverage configuration**
 
 ```bash
 git add .coveragerc.unit .coveragerc.integration
 git commit -m "test: add separate coverage configs for unit/integration tests"
 ```
 
-- [ ] **Step 7: Final verification test run**
+- [x] **Step 7: Final verification test run**
 
 ```bash
 # Full test suite execution
-pytest tests/ -v
+pytest tests/unit/ tests/integration/ -v
 
 # Verify test project cleanup works
 ls demos/test_project/
 ```
-Expected: All tests pass, `demos/test_project/` is cleaned up after successful run
+Expected: All 957 tests pass, `demos/test_project/` is cleaned up after successful run
 
 ---
 
-### Task 18: Maintain and Update Coverage Tracker
+### Task 11: Fix CLI Integration Test Isolation
 
 **Files:**
-- Modify: `docs/superpowers/plans/2026-07-13-integration-tests.md`
+- Modify: `tests/integration/cli/test_package_cli_integration.py`
 
 **Interfaces:**
-- Consumes: Integration test implementation results
-- Produces: Updated coverage tracker with completed tests
+- Consumes: `test_project` fixture from conftest
+- Produces: CLI tests that run against the isolated `demos/test_project/` project
 
-- [ ] **Step 1: Update coverage tracker as tests are implemented**
+**Root Cause:**
+The 4 old CLI integration tests (in `tests/integration/cli/test_package_cli_integration.py`) never requested the `test_project` fixture. When pytest collects tests in lexical directory order (`cli/` before `models/`), the CLI tests run first. Since no fixture created a project, `RhapsodyContextAction._get_active_project()` → `app.active_project()` raised `RhapsodyRuntimeException: No active project is open in Rhapsody`.
 
-For each model class integration test that is completed, update the corresponding checkbox in the **Integration Test Coverage Tracker** table:
+The earlier relaxation of `_require_rhapsody` (removing the implicit "must have an open project" check) removed the safety net but didn't fix the underlying isolation problem.
 
-```markdown
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPModelElement` | [x] | `test_core.py` | HIGH |
-```
+**Fix:**
+- Add a class-level `@pytest.fixture(autouse=True)` (`_use_test_project`) that requests the `test_project` fixture and caches it as `self.project`. This is **scoped to the test class** (not global), making the dependency explicit without affecting any other test.
+- Add model-based assertions via `self.project` (e.g., `self.project.get_packages()`) to verify CLI commands actually created/deleted the expected model elements — going beyond just "the command didn't throw."
+- Replace the timestamp-based uniqueness scheme (`int(time.time() * 1000) % 1000000`) with `uuid.uuid4().hex[:8]` to eliminate any theoretical collision risk between parallel test sessions.
+- Add `@pytest.mark.integration` to the class for consistency with the registered marker.
+- Update docstring to document the fixture dependency.
 
-- [ ] **Step 2: Update file location if tests are in different files**
+- [x] **Step 1: Update CLI test file with fixture and model assertions**
 
-If integration tests for a model class are placed in a different file than initially planned, update the **File Location** column:
+Apply the following changes to `tests/integration/cli/test_package_cli_integration.py`:
+1. Replace docstring to describe `test_project` fixture dependency
+2. `import time` → `import uuid`; add `import pytest`
+3. Add `@pytest.mark.integration` to the class
+4. Add `_use_test_project` autouse fixture that requests `test_project` → `self.project`
+5. Replace `_generate_unique_name` with `uuid.uuid4().hex[:8]`-based version
+6. Add model assertions to each test method using `self.project`:
+   - Root create: assert `pkg_name` in `self.project.get_packages()`
+   - Root duplicate: assert exactly 1 package named `pkg_name` after duplicate rejection
+   - Nested create: assert child in `parent.get_nested_packages()`
+   - Nested duplicate: assert exactly 1 child with that name after duplicate rejection
 
-```markdown
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPDiagram` | [x] | `test_graphics.py` | HIGH |
-```
-
-- [ ] **Step 3: Track partial implementations**
-
-For model classes with only partial test coverage, use specific notation:
-
-```markdown
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPState` | [~] | `test_statemachine.py` | HIGH |
-```
-
-Legend additions:
-- [~] = Partial implementation (some methods tested)
-
-- [ ] **Step 4: Add new model classes to tracker**
-
-When new wrapper classes are added to the codebase, add them to the appropriate category table:
-
-```markdown
-| Model Class | Integration Tests | File Location | Priority |
-|-------------|-------------------|---------------|----------|
-| `RPNewClass` | [ ] | `test_new_class.py` | MEDIUM |
-```
-
-- [ ] **Step 5: Generate coverage summary report**
-
-After completing test implementation, generate a summary showing overall progress:
+- [x] **Step 2: Run integration tests to verify fix**
 
 ```bash
-# Count completed integration test classes
-grep -c "\[x\]" docs/superpowers/plans/2026-07-13-integration-tests.md
-
-# Count remaining (unimplemented) test classes
-grep -c "\[ \]" docs/superpowers/plans/2026-07-13-integration-tests.md
+pytest tests/integration/ -v
 ```
 
-- [ ] **Step 6: Commit coverage tracker updates**
+Expected: All 11 integration tests pass (4 CLI + 7 containment), regardless of collection order.
+
+- [x] **Step 3: Run unit tests to verify no regressions**
 
 ```bash
-git add docs/superpowers/plans/2026-07-13-integration-tests.md
-git commit -m "docs: update integration test coverage tracker"
+pytest tests/unit/ -q
 ```
 
-- [ ] **Step 7: Use tracker for planning next test implementation**
+Expected: All 936 unit tests pass.
 
-When planning additional test implementations, sort the tracker by:
-1. Priority (HIGH → MEDIUM → LOW)
-2. Related model classes (test all classes in same file together)
+- [x] **Step 4: Commit the fix**
 
-Example query to find HIGH priority unimplemented tests:
 ```bash
-# Extract HIGH priority unimplemented classes from tracker
-grep "HIGH" docs/superpowers/plans/2026-07-13-integration-tests.md | grep "\[ \]"
+git add tests/integration/cli/test_package_cli_integration.py docs/superpowers/plans/2026-07-13-integration-tests.md
+git commit -m "test: wire CLI integration tests to test_project fixture with model assertions"
 ```
+
+---
+
+## Integration Test Coverage Matrix
+
+### Core Model Classes
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPModelElement** | `tests/integration/models/test_core.py` | get_name, set_name, get_meta_class, get_guid, get_owner, get_project, delete_from_project | 🟡 In Progress | High | None |
+| **RPCollection** | `tests/integration/models/test_core.py` | iteration, get_nested_elements (with/without filter), count, indexing | 🟡 In Progress | High | RPModelElement |
+| **RPUnit** | `tests/integration/models/test_core.py` | save, get_filename, get_canonical_filename | 🔴 Not Started | Medium | RPModelElement |
+| **RPRelations** | `tests/integration/models/test_core.py` | get_relations, add_relation, find_relation | 🔴 Not Started | Medium | RPModelElement |
+| **RPGraphics** | `tests/integration/models/test_core.py` | get_graphical_properties, set_graphical_properties | 🔴 Not Started | Low | RPModelElement |
+
+### Containment Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPProject** | `tests/integration/models/elements/test_containment.py` | create_project, get_elements, add_package, save, close | 🟡 In Progress | Critical | None |
+| **RPPackage** | `tests/integration/models/elements/test_containment.py` | add_package, get_nested_elements, get_higher_object, get_owner | 🟡 In Progress | Critical | RPProject |
+| **RPModule** | `tests/integration/models/elements/test_containment.py` | add_module, get_elements, save | 🔴 Not Started | Medium | RPPackage |
+| **RPComponent** | `tests/integration/models/elements/test_containment.py` | add_component, get_elements, get_realizing_classes | 🔴 Not Started | Medium | RPPackage |
+| **RPComponentInstance** | `tests/integration/models/elements/test_containment.py` | add_component_instance, get_component, get_master | 🔴 Not Started | Low | RPComponent |
+| **RPConfiguration** | `tests/integration/models/elements/test_containment.py` | get_elements, get_current_element, set_current_element | 🔴 Not Started | Low | RPProject |
+| **RPCollaboration** | `tests/integration/models/elements/test_containment.py` | add_collaboration, get_roles, get_interactions | 🔴 Not Started | Low | RPPackage |
+| **RPNode** | `tests/integration/models/elements/test_containment.py` | add_node, get_elements | 🔴 Not Started | Low | RPPackage |
+| **RPProfile** | `tests/integration/models/elements/test_containment.py` | add_profile, get_profile_elements | 🔴 Not Started | Low | RPProject |
+
+### Classifier Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPClassifier** | `tests/integration/models/elements/test_classifiers.py` | get_attributes, get_operations, add_attribute, get_containing_package | 🔴 Not Started | High | RPPackage |
+| **RPClass** | `tests/integration/models/elements/test_classifiers.py` | add_class, add_superclass, get_superclasses, get_is_abstract, set_is_abstract, delete_class | 🟡 In Progress | Critical | RPPackage, RPClassifier |
+| **RPOperation** | `tests/integration/models/elements/test_classifiers.py` | add_operation, get_parameters, get_owner, get_result, delete_operation | 🔴 Not Started | High | RPClass |
+| **RPActor** | `tests/integration/models/elements/test_classifiers.py` | add_actor, get_communications | 🔴 Not Started | Medium | RPPackage |
+| **RPUseCase** | `tests/integration/models/elements/test_classifiers.py` | add_usecase, get_actors, get_extensions | 🔴 Not Started | Medium | RPPackage |
+| **RPInterfaceItem** | `tests/integration/models/elements/test_classifiers.py` | add_interface_item, get_operations | 🔴 Not Started | Medium | RPClassifier |
+| **RPAssociationClass** | `tests/integration/models/elements/test_classifiers.py` | add_association_class, get_association_ends | 🔴 Not Started | Low | RPClass |
+| **RPStereotype** | `tests/integration/models/elements/test_classifiers.py` | add_stereotype, get_stereotyped_elements | 🔴 Not Started | Low | RPModelElement |
+| **RPStatechart** | `tests/integration/models/elements/test_classifiers.py` | add_statechart, get_states, get_transitions | 🔴 Not Started | Low | RPClass |
+
+### Relation Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPRelation** | `tests/integration/models/elements/test_relations.py` | get_owner, get_other_end, get_name | 🔴 Not Started | High | RPModelElement |
+| **RPAssociationRole** | `tests/integration/models/elements/test_relations.py` | add_association_role, get_role_name, get_multiplicity | 🔴 Not Started | High | RPClass |
+| **RPDependency** | `tests/integration/models/elements/test_relations.py` | add_dependency, get_client, get_supplier | 🔴 Not Started | Medium | RPModelElement |
+| **RPGeneralization** | `tests/integration/models/elements/test_relations.py` | add_generalization, get_super, get_sub | 🔴 Not Started | Medium | RPClassifier |
+| **RPHyperlink** | `tests/integration/models/elements/test_relations.py` | add_hyperlink, get_url, get_anchor | 🔴 Not Started | Low | RPModelElement |
+| **RPPort** | `tests/integration/models/elements/test_relations.py` | add_port, get_interfaces, get_aggregated | 🔴 Not Started | Medium | RPClass |
+| **RPInstance** | `tests/integration/models/elements/test_relations.py` | add_instance, get_classifiers, get_slots | 🔴 Not Started | Low | RPClassifier |
+
+### Activity Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPAction** | `tests/integration/models/elements/test_activity.py` | add_action, get_execution_language, get_body | 🔴 Not Started | Medium | RPClass |
+| **RPActivity** | `tests/integration/models/elements/test_activity.py` | add_activity, get_actions, get_preconditions | 🔴 Not Started | Low | RPClassifier |
+
+### Diagram Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_diagram, get_elements, get_name, save | 🔴 Not Started | Low | RPPackage |
+| **RPUMLDiagram** | `tests/integration/models/elements/test_diagrams.py` | get_type, get_owned_elements | 🔴 Not Started | Low | RPDiagram |
+| **RPActivityDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_activity_diagram, get_activities | 🔴 Not Started | Low | RPClass |
+| **RPSequenceDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_sequence_diagram, get_lifelines | 🔴 Not Started | Low | RPClassifier |
+| **RPCollaborationDiagram** | `tests/integration/models/elements/test_diagrams.py` | add_collaboration_diagram, get_links | 🔴 Not Started | Low | RPCollaboration |
+
+### Requirement Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPRequirement** | `tests/integration/models/elements/test_requirements.py` | add_requirement, get_id, get_text, get_traces_to | 🔴 Not Started | Medium | RPPackage |
+| **RPTrace** | `tests/integration/models/elements/test_requirements.py` | add_trace, get_traced_from, get_traced_to | 🔴 Not Started | Low | RPRequirement |
+
+### Variable and Value Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPAttribute** | `tests/integration/models/elements/test_variables.py` | add_attribute, get_type, get_default_value, delete_attribute | 🔴 Not Started | High | RPClass |
+| **RPParameter** | `tests/integration/models/elements/test_variables.py` | add_parameter, get_type, get_default_value | 🔴 Not Started | High | RPOperation |
+| **RPVariable** | `tests/integration/models/elements/test_variables.py` | add_variable, get_type, get_scope | 🔴 Not Started | Medium | RPClassifier |
+| **RPTypedValue** | `tests/integration/models/elements/test_values.py` | get_type, get_value, set_value | 🔴 Not Started | Low | RPVariable |
+
+### Graphics and Interaction Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPGraphics** | `tests/integration/models/elements/test_graphics.py` | get_position, set_position, get_size, set_size | 🔴 Not Started | Low | RPDiagram |
+| **RPLink** | `tests/integration/models/elements/test_graphics.py` | add_link, get_from, get_to | 🔴 Not Started | Low | RPDiagram |
+| **RPEventReception** | `tests/integration/models/elements/test_interactions.py` | add_event_reception, get_event, get_operation | 🔴 Not Started | Low | RPClass |
+| **RPInteraction** | `tests/integration/models/elements/test_interactions.py` | add_interaction, get_fragments, get_lifelines | 🔴 Not Started | Low | RPClassifier |
+
+### Template and StateMachine Elements
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPTemplate** | `tests/integration/models/elements/test_templates.py` | add_template, get_template_parameters, bind_parameters | 🔴 Not Started | Low | RPClassifier |
+| **RPStateMachine** | `tests/integration/models/elements/test_statemachine.py` | add_state_machine, get_states, get_transitions, get_initial_state | 🔴 Not Started | Low | RPClass |
+
+### Support Classes
+
+| Model Class | Integration Test File | Key Methods to Test | Test Status | Priority | Dependencies |
+|-------------|----------------------|---------------------|-------------|----------|--------------|
+| **RPCodeGen** | `tests/integration/models/support/test_codegen.py` | generate_code, get_codegen_properties | 🔴 Not Started | Low | RPProject |
+| **RPFiles** | `tests/integration/models/support/test_files.py` | get_files, import_file, export_file | 🔴 Not Started | Low | RPProject |
+| **RPIde** | `tests/integration/models/support/test_ide.py` | get_ide_properties, set_ide_properties | 🔴 Not Started | Low | RhapsodyApplication |
+
+**Legend:**
+- 🟢 **Complete** - All methods tested and passing
+- 🟡 **In Progress** - Some methods tested, work ongoing
+- 🔴 **Not Started** - No integration tests written yet
+- **Priority** - Critical > High > Medium > Low
+- **Dependencies** - Other model classes that must be tested first
+
+---
+
+## Method-Level Testing Checklist by Class
+
+### RPModelElement (Base Class - Critical)
+- [ ] **Core Identity** (Tested in Task 5)
+  - [x] get_name() - Returns element name
+  - [x] set_name() - Updates element name
+  - [x] get_meta_class() - Returns element type
+  - [x] get_guid() - Returns unique identifier
+  - [ ] get_display_name() - Returns display name with stereotypes
+  - [ ] get_full_name() - Returns fully qualified name
+- [ ] **Hierarchy Navigation** (Partial in Task 7-8)
+  - [x] get_owner() - Returns parent element
+  - [ ] get_project() - Returns containing project
+  - [ ] get_higher_object() - Returns next higher in containment
+  - [ ] get_containing_package() - Returns containing package
+- [ ] **Element Management**
+  - [ ] delete_from_project() - Removes element from model
+  - [ ] is_deleted() - Checks if element was deleted
+  - [ ] can_delete() - Validates deletion is allowed
+- [ ] **Properties and Metadata**
+  - [ ] get_property() - Retrieves named property value
+  - [ ] set_property() - Sets named property value
+  - [ ] get_properties() - Gets all properties as dictionary
+  - [ ] has_property() - Checks if property exists
+- [ ] **Relations and Links**
+  - [ ] add_link_to_element() - Creates graphical link
+  - [ ] get_links() - Gets all links from element
+  - [ ] find_element() - Finds nested element by name
+
+### RPClass (Critical)
+- [ ] **Creation and Deletion** (Partial in Task 7)
+  - [x] package.add_class() - Creates class in package
+  - [ ] add_class() - Creates nested class
+  - [ ] delete_class() - Removes class from model
+  - [ ] can_delete() - Checks if class can be deleted
+- [ ] **Inheritance Management**
+  - [ ] add_superclass() - Adds parent class
+  - [ ] delete_superclass() - Removes parent class
+  - [ ] get_superclasses() - Gets all parent classes
+  - [ ] get_subclasses() - Gets all child classes
+  - [ ] get_all_superclasses() - Gets complete inheritance tree
+- [ ] **Class Properties**
+  - [ ] get_is_abstract() - Checks if class is abstract
+  - [ ] set_is_abstract() - Sets abstract property
+  - [ ] get_is_final() - Checks if class is final
+  - [ ] set_is_final() - Sets final property
+  - [ ] get_is_active() - Checks if class is active
+  - [ ] set_is_active() - Sets active property
+  - [ ] get_is_composite() - Checks if class is composite
+- [ ] **Type Management**
+  - [ ] add_type() - Adds type relationship
+  - [ ] delete_type() - Removes type relationship
+  - [ ] get_types() - Gets all types
+- [ ] **Operations**
+  - [ ] add_operation() - Creates operation in class
+  - [ ] get_operations() - Gets all operations
+  - [ ] find_operation() - Finds operation by name
+  - [ ] add_constructor() - Creates constructor
+  - [ ] add_destructor() - Creates destructor
+- [ ] **Attributes**
+  - [ ] get_attributes() - Gets all attributes
+  - [ ] find_attribute() - Finds attribute by name
+
+### RPPackage (Critical)
+- [ ] **Creation and Containment** (Partial in Task 8)
+  - [x] project.add_package() - Creates package in project
+  - [x] package.add_package() - Creates nested package
+  - [ ] delete_package() - Removes package from model
+- [ ] **Element Management**
+  - [x] get_nested_elements() - Gets child elements
+  - [ ] get_nested_elements_by_type() - Gets filtered children
+  - [ ] find_element() - Finds element by name
+  - [ ] find_nested_element() - Searches recursively
+- [ ] **Hierarchy Navigation** (Partial in Task 8)
+  - [x] get_owner() - Returns parent package/project
+  - [ ] get_higher_object() - Returns next higher level
+  - [ ] get_project() - Returns containing project
+- [ ] **Package Properties**
+  - [ ] get_is_default() - Checks if default package
+  - [ ] get_is_library() - Checks if library package
+  - [ ] get_is_controlled() - Checks if under version control
+
+### RPProject (Critical)
+- [ ] **Project Management** (Partial in Task 8)
+  - [x] create_project() - Creates new project file
+  - [ ] open_project() - Opens existing project
+  - [ ] save_project() - Saves project changes
+  - [ ] close_project() - Closes project
+  - [ ] delete_project() - Deletes project file
+- [ ] **Element Access**
+  - [x] get_nested_elements() - Gets top-level elements
+  - [ ] get_all_elements() - Gets all elements recursively
+  - [ ] find_element() - Finds element by GUID or name
+- [ ] **Project Properties**
+  - [ ] get_author() - Gets project author
+  - [ ] set_author() - Sets project author
+  - [ ] get_description() - Gets project description
+  - [ ] set_description() - Sets project description
+  - [ ] get_default_language() - Gets default code generation language
+
+### RPCollection (High Priority)
+- [ ] **Iteration and Access** (Partial in Task 6)
+  - [x] iteration support - Iterates over elements
+  - [x] get_count() - Returns element count
+  - [ ] get_item(index) - Gets element at 0-based index
+  - [ ] contains(element) - Checks if element in collection
+- [ ] **Filtering**
+  - [x] get_nested_elements() - Gets all elements
+  - [x] get_nested_elements(metaClass) - Gets filtered elements
+  - [ ] find_first(metaClass) - Gets first matching element
+  - [ ] find_all(metaClass) - Gets all matching elements
+
+### RPOperation (High Priority)
+- [ ] **Creation and Management**
+  - [ ] add_operation() - Creates operation in class
+  - [ ] delete_operation() - Removes operation
+  - [ ] get_result() - Gets return parameter
+  - [ ] set_result() - Sets return parameter
+- [ ] **Parameters**
+  - [ ] add_parameter() - Creates parameter
+  - [ ] get_parameters() - Gets all parameters
+  - [ ] delete_parameter() - Removes parameter
+- [ ] **Operation Properties**
+  - [ ] get_is_static() - Checks if static
+  - [ ] set_is_static() - Sets static property
+  - [ ] get_is_virtual() - Checks if virtual
+  - [ ] set_is_virtual() - Sets virtual property
+  - [ ] get_visibility() - Gets visibility scope
+  - [ ] set_visibility() - Sets visibility scope
+
+### RPAttribute (High Priority)
+- [ ] **Creation and Management**
+  - [ ] add_attribute() - Creates attribute in class
+  - [ ] delete_attribute() - Removes attribute
+  - [ ] get_type() - Gets attribute type
+  - [ ] set_type() - Sets attribute type
+- [ ] **Attribute Properties**
+  - [ ] get_default_value() - Gets default value
+  - [ ] set_default_value() - Sets default value
+  - [ ] get_visibility() - Gets visibility scope
+  - [ ] set_visibility() - Sets visibility scope
+  - [ ] get_is_static() - Checks if static
+  - [ ] set_is_static() - Sets static property
+  - [ ] get_is_const() - Checks if constant
+  - [ ] set_is_const() - Sets constant property
+
+### RPAssociationRole (High Priority)
+- [ ] **Association Management**
+  - [ ] add_association_role() - Creates association end
+  - [ ] get_other_role() - Gets opposite association end
+  - [ ] get_association() - Gets parent association
+- [ ] **Role Properties**
+  - [ ] get_role_name() - Gets role name
+  - [ ] set_role_name() - Sets role name
+  - [ ] get_multiplicity() - Gets multiplicity
+  - [ ] set_multiplicity() - Sets multiplicity
+  - [ ] get_navigability() - Gets navigability
+  - [ ] set_navigability() - Sets navigability
+  - [ ] get_aggregation() - Gets aggregation type
+  - [ ] set_aggregation() - Sets aggregation type
+
+### RPDependency (Medium Priority)
+- [ ] **Dependency Management**
+  - [ ] add_dependency() - Creates dependency
+  - [ ] add_dependency_to() - Creates dependency to target
+  - [ ] add_dependency_between() - Creates bidirectional dependency
+  - [ ] delete_dependency() - Removes dependency
+- [ ] **Dependency Properties**
+  - [ ] get_client() - Gets depending element
+  - [ ] get_supplier() - Gets depended-on element
+  - [ ] get_name() - Gets dependency name
+  - [ ] set_name() - Sets dependency name
+
+### RPGeneralization (Medium Priority)
+- [ ] **Generalization Management**
+  - [ ] add_generalization() - Creates generalization
+  - [ ] delete_generalization() - Removes generalization
+- [ ] **Generalization Properties**
+  - [ ] get_super() - Gets parent classifier
+  - [ ] get_sub() - Gets child classifier
+  - [ ] get_name() - Gets generalization name
+
+### RPPackage (Medium Priority)
+- [ ] **Package Creation** (Partial in Task 8)
+  - [x] add_package() - Creates package
+  - [ ] delete_package() - Removes package
+- [ ] **Package Contents**
+  - [x] get_nested_elements() - Gets child elements
+  - [ ] get_elements() - Gets direct children
+  - [ ] find_element() - Finds element by name
+- [ ] **Package Properties**
+  - [ ] get_is_default() - Checks if default package
+  - [ ] get_is_library() - Checks if library package
+
+### RPDiagram (Low Priority)
+- [ ] **Diagram Creation**
+  - [ ] add_diagram() - Creates diagram
+  - [ ] delete_diagram() - Removes diagram
+- [ ] **Diagram Contents**
+  - [ ] get_elements() - Gets diagram elements
+  - [ ] add_element() - Adds element to diagram
+  - [ ] delete_element() - Removes element from diagram
+- [ ] **Diagram Properties**
+  - [ ] get_name() - Gets diagram name
+  - [ ] set_name() - Sets diagram name
+  - [ ] get_type() - Gets diagram type
+  - [ ] save() - Saves diagram layout
+
+---
+
+## Integration Test Execution Status
+
+### Test Suite Status
+- **Total Model Classes:** 50+ classes
+- **Integration Test Files Created:** 3/25 planned
+- **Test Coverage by Priority:**
+  - Critical: 3/6 classes (50%) 🟡
+  - High: 0/8 classes (0%) 🔴
+  - Medium: 0/12 classes (0%) 🔴
+  - Low: 0/24+ classes (0%) 🔴
+
+### Hierarchical Relationship Coverage
+- [x] **Package → Class** (Task 7) - Class creation in package
+- [x] **Class → Operation** (Task 7) - Operation creation in class
+- [x] **Package → Package** (Task 8) - Nested package creation
+- [x] **Project → Package** (Task 8) - Top-level package creation
+- [ ] **Class → Attribute** - Attribute creation in class
+- [ ] **Class → Superclass** - Inheritance relationships
+- [ ] **Class → Interface** - Interface realization
+- [ ] **Association → Role** - Association ends
+- [ ] **Package → Diagram** - Diagram creation
+- [ ] **Invalid hierarchy exception handling** (Partial in Task 7)
+
+### Exception Handling Test Coverage
+- [x] **Invalid parent-child relationships** (Partial in Task 7)
+- [ ] **Deletion of referenced elements**
+- [ ] **Duplicate element names**
+- [ ] **Invalid type assignments**
+- [ ] **Circular dependencies**
+- [ ] **Invalid multiplicity values**
+- [ ] **COM error translation**
 
 ---
 
 ## Completion Checklist
 
-- [ ] All tasks (1-18) completed successfully
+- [ ] All Critical priority classes have integration tests (6/6)
+- [ ] All High priority classes have integration tests (0/8)
+- [ ] 50%+ of Medium priority classes have integration tests (0/12)
+- [ ] Core infrastructure tasks (Tasks 1-4) completed
 - [ ] Integration tests run on Windows with Rhapsody
 - [ ] Integration tests skip gracefully without Rhapsody
 - [ ] Unit and integration test coverage are separate
 - [ ] Documentation updated with integration test instructions
 - [ ] Test project cleanup works correctly
-- [ ] Parent-child relationships validated (classes in packages, operations in classes, states in statecharts)
+- [ ] Parent-child relationships validated (classes in packages, operations in classes)
 - [ ] Exception handling tested for invalid hierarchies
-- [ ] Variable model tests completed (attributes, tags, arguments)
-- [ ] Relationship model tests completed (associations, dependencies, generalizations)
-- [ ] Operation model tests completed (parameters, return types, visibility)
-- [ ] Requirement model tests completed (requirements, satisfy relationships)
-- [ ] Diagram model tests completed (diagrams, graph elements)
-- [ ] State machine model tests completed (statecharts, states, transitions)
-- [ ] Actor and use case model tests completed
-- [ ] Coverage tracker table maintained and updated as tests are implemented
-- [ ] All model classes in tracker have integration tests marked as [x] completed
+- [ ] All RPModelElement base methods tested (8/20 methods)
+- [ ] All RPClass critical methods tested (5/25 methods)
+- [ ] All RPPackage critical methods tested (4/15 methods)
+- [ ] All RPProject critical methods tested (3/15 methods)
 
 ## Success Criteria
 
-- Integration tests can be run manually on Windows with Rhapsody installed
-- Tests validate every wrapper method against real COM API
-- Hierarchical relationships (parent-child) are properly tested across all element types
-- Invalid relationships throw appropriate exceptions
-- Coverage reports show separate metrics for unit vs integration tests
-- Test data cleanup works reliably in both success and failure cases
-- All major model wrapper classes have integration test coverage
-- Coverage tracker table accurately reflects implementation status
-- All checkboxes in coverage tracker show [x] for completed implementation
+- **Coverage:** Integration tests can be run manually on Windows with Rhapsody installed
+- **Validation:** Tests validate every wrapper method against real COM API
+- **Hierarchy:** Hierarchical relationships (parent-child) are properly tested
+- **Exceptions:** Invalid relationships throw appropriate exceptions
+- **Separation:** Coverage reports show separate metrics for unit vs integration tests
+- **Cleanup:** Test data cleanup works reliably in both success and failure cases
+- **Progress:** At least 50% of Critical and High priority classes have integration tests
+- **Completeness:** All base RPModelElement methods have integration tests

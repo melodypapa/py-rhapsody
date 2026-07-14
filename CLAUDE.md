@@ -41,6 +41,41 @@ pytest --co                             # List all tests without running
 
 Tests run entirely against mocked COM objects (fakes live under `tests/unit/models/fakes.py`). No Rhapsody installation or license is required to run the unit test suite.
 
+### Integration Tests
+
+Integration tests validate model wrapper methods against a real Rhapsody application. These tests require:
+- Windows platform
+- Rhapsody installed and licensed
+- pywin32 available
+
+**Running integration tests:**
+
+```bash
+# Run only integration tests
+pytest tests/integration/
+
+# Run integration tests with coverage
+pytest tests/integration/ --cov=rhapsody_cli --cov-report=html
+
+# Run only unit tests (no Rhapsody required)
+pytest tests/unit/
+
+# Run by marker
+pytest -m integration  # Integration tests only
+pytest -m unit         # Unit tests only
+```
+
+**Integration test behavior:**
+- Tests create a temporary project at `demos/test_project/TestProject.rpy`
+- Project is cleaned up before each test run
+- Artifacts are preserved on failure for debugging
+- Set `RHAPSODY_KEEP_ARTIFACTS=1` or use `--keep-test-artifacts` to preserve artifacts
+
+**Test structure:**
+- `tests/integration/conftest.py` — Session-scoped fixtures for Rhapsody lifecycle
+- `tests/integration/models/` — Mirrors unit test structure
+- Tests validate both COM API interactions and hierarchical relationships
+
 ### Linting, Formatting, Type Checking
 
 ```bash

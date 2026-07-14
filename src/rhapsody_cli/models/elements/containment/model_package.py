@@ -192,7 +192,7 @@ class RPPackage(RPUnit):
         Returns:
             An ``RPCollection`` of ``IRPPackage`` objects.
         """
-        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getNestedPackages", "nestedPackages"))
+        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getPackages", "packages"))
 
     def get_classes(self) -> "RPCollection":
         """Returns all classes contained in this package.

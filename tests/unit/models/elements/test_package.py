@@ -75,12 +75,12 @@ def test_package_get_nested_packages_returns_collection() -> None:
     fake = make_fake_element("Package")
     nested1 = make_fake_element("Package", getName="Nested1")
     nested2 = make_fake_element("Package", getName="Nested2")
-    fake.getNestedPackages.return_value = make_fake_collection([nested1, nested2])
+    fake.getPackages.return_value = make_fake_collection([nested1, nested2])
     package = RPPackage(fake)
 
     result = package.get_nested_packages()
 
-    fake.getNestedPackages.assert_called_once_with()
+    fake.getPackages.assert_called_once_with()
     assert isinstance(result, RPCollection)
     assert len(result) == 2
     assert result[0].get_name() == "Nested1"
