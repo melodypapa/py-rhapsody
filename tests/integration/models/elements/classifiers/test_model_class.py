@@ -68,3 +68,72 @@ class TestRPClassIntegration:
         classes = pkg.get_classes()
         class_names = [c.get_name() for c in classes]
         assert class_name not in class_names
+
+    def test_class_inheritance(self, test_project: RPProject) -> None:
+        pkg_name = self._unique("InhPkg")
+        parent_name = self._unique("ParentCls")
+        child_name = self._unique("ChildCls")
+        pkg = self._create_package(test_project, pkg_name)
+        parent = pkg.add_class(parent_name)
+        child = pkg.add_class(child_name)
+        try:
+            child.add_superclass(parent)
+            generalizations = list(child.get_generalizations())
+            assert any(gen.get_base_class() == parent for gen in generalizations)
+            child.delete_superclass(parent)
+            generalizations_after = list(child.get_generalizations())
+            assert not any(gen.get_base_class() == parent for gen in generalizations_after)
+        finally:
+            child.delete_from_project()
+            parent.delete_from_project()
+
+    def test_constructor_destructor(self, test_project: RPProject) -> None:
+        pkg_name = self._unique("CtorPkg")
+        class_name = self._unique("CtorCls")
+        pkg = self._create_package(test_project, pkg_name)
+        test_class = pkg.add_class(class_name)
+        try:
+            ctor = test_class.add_constructor("void()")
+            assert ctor is not None
+            assert isinstance(ctor, RPOperation)
+            dtor = test_class.add_destructor()
+            assert dtor is not None
+            assert isinstance(dtor, RPOperation)
+            operations = list(test_class.get_operations())
+            assert ctor in operations
+            assert dtor in operations
+        finally:
+            test_class.delete_from_project()
+
+    @pytest.mark.xfail(
+        reason="Rhapsody2.Application.1 exposes 'isAbstract' as a read-only COM property; "
+        "set_is_abstract silently no-ops. TODO: fix RPClass.set_is_abstract to persist via "
+        "the metatype property system in a future Rhapsody build.",
+        strict=False,
+    )
+    def test_abstract_roundtrip(self, test_project: RPProject) -> None:
+        pkg_name = self._unique("AbsPkg")
+        class_name = self._unique("AbsCls")
+        pkg = self._create_package(test_project, pkg_name)
+        test_class = pkg.add_class(class_name)
+        try:
+            assert test_class.get_is_abstract() is False
+            test_class.set_is_abstract(1)
+            assert test_class.get_is_abstract() is True
+            test_class.set_is_abstract(0)
+            assert test_class.get_is_abstract() is False
+        finally:
+            test_class.delete_from_project()
+
+    def test_type_management(self, test_project: RPProject) -> None:
+        pkg_name = self._unique("TypePkg")
+        class_name = self._unique("TypeCls")
+        pkg = self._create_package(test_project, pkg_name)
+        test_class = pkg.add_class(class_name)
+        try:
+            added_type = test_class.add_type(self._unique("MyType"))
+            assert added_type is not None
+            assert added_type.get_meta_class() == "Type"
+            added_type.delete_from_project()
+        finally:
+            test_class.delete_from_project()

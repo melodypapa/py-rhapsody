@@ -401,6 +401,9 @@ class RPClass(RPClassifier):
 
         Reference:
             com.telelogic.rhapsody.core.IRPClass::setIsAbstract(int isAbstract)
+
+        # TODO: Under Rhapsody2.Application.1 the ``isAbstract`` COM property is read-only,
+        # so this setter silently no-ops. Persist via the metatype property system instead.
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setIsAbstract", "isAbstract", is_abstract)
 
