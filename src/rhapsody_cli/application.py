@@ -360,9 +360,7 @@ class RhapsodyApplication:
         """
         from rhapsody_cli.models.support import RPCodeGenSimplifiersRegistry
 
-        return RPCodeGenSimplifiersRegistry(
-            com_utils.call_com(lambda: self._com.getCodeGenSimplifiersRegistry())
-        )
+        return RPCodeGenSimplifiersRegistry(com_utils.call_com(lambda: self._com.getCodeGenSimplifiersRegistry()))
 
     def get_diag_synth_api(self, client_name: str) -> "RPDiagSynthAPI":
         """Return the diagram synthesis API for the given client.
@@ -397,9 +395,7 @@ class RhapsodyApplication:
         """
         from rhapsody_cli.models.support import RPExternalCheckRegistry
 
-        return RPExternalCheckRegistry(
-            com_utils.call_com(lambda: self._com.getExternalCheckerRegistry())
-        )
+        return RPExternalCheckRegistry(com_utils.call_com(lambda: self._com.getExternalCheckerRegistry()))
 
     def get_external_ide_registry(self, client_id: str) -> "RPExternalIDERegistry":
         """Return the external IDE registry for the given client.
@@ -418,9 +414,7 @@ class RhapsodyApplication:
         """
         from rhapsody_cli.models.support import RPExternalIDERegistry
 
-        return RPExternalIDERegistry(
-            com_utils.call_com(lambda: self._com.getExternalIDERegistry(client_id))
-        )
+        return RPExternalIDERegistry(com_utils.call_com(lambda: self._com.getExternalIDERegistry(client_id)))
 
     def get_external_roundtrip_invoker(self) -> "RPExternalRoundtripInvoker":
         """Return the external roundtrip invoker.
@@ -436,9 +430,7 @@ class RhapsodyApplication:
         """
         from rhapsody_cli.models.support import RPExternalRoundtripInvoker
 
-        return RPExternalRoundtripInvoker(
-            com_utils.call_com(lambda: self._com.getExternalRoundtripInvoker())
-        )
+        return RPExternalRoundtripInvoker(com_utils.call_com(lambda: self._com.getExternalRoundtripInvoker()))
 
     def get_ow_pane_mgr(self, client_id: str) -> "RPowPaneMgr":
         """Return the output window pane manager for the given client.

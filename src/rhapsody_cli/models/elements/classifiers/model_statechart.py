@@ -378,11 +378,7 @@ class RPStatechart(RPClass):
             com.telelogic.rhapsody.core.IRPStatechart::getPicturesWithImageMap(
                 java.lang.String firstFileName, com.telelogic.rhapsody.core.IRPCollection diagrammap)
         """
-        return RPCollection(
-            AbstractRPModelElement.call_com(
-                lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)
-            )
-        )
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)))
 
     def get_root_state(self) -> RPModelElement:
         """Returns the root state of the statechart.

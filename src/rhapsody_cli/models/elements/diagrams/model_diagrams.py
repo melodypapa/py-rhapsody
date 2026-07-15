@@ -420,11 +420,7 @@ class RPDiagram(RPUnit):
             com.telelogic.rhapsody.core.IRPDiagram::getPicturesWithImageMap(
                 java.lang.String firstFileName, com.telelogic.rhapsody.core.IRPCollection diagrammap)
         """
-        return RPCollection(
-            AbstractRPModelElement.call_com(
-                lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)
-            )
-        )
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)))
 
     def is_open(self) -> int:
         """Checks if the diagram is open.

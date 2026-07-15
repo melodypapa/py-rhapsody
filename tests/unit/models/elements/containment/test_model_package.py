@@ -168,7 +168,6 @@ def test_package_add_exception_returns_registered_wrapper() -> None:
     assert isinstance(result, RPException)
 
 
-
 # --- New diagram tests ---
 def test_package_add_activity_diagram_delegates_to_com() -> None:
     fake = make_fake_element("Package")
