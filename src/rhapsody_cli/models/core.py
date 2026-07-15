@@ -120,12 +120,12 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_controlled_files              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_dependencies                 [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_description                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_description_html              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_description_plain_text         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_description_rtf               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_display_name                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_description                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_description_html              [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_description_plain_text         [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_description_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_display_name                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_error_message                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_full_path_name                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_full_path_name_in               [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -174,8 +174,8 @@ class RPModelElement(AbstractRPModelElement):
     # [x] has_panel_widget                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] high_light_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] is_a_template                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] is_description_rtf                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] is_display_name_rtf                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_description_rtf                [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] is_display_name_rtf                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_modified                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] is_remote                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] locate_in_browser                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -184,12 +184,12 @@ class RPModelElement(AbstractRPModelElement):
     # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_description                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_description_and_hyperlinks     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_description_html              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_description_rtf               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_display_name                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_description                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_description_and_hyperlinks     [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_description_html              [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_description_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_display_name                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_guid                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_show_display_name            [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_main_diagram                  [x] impl  [x] docstring  [x] unit test  [ ] integration test

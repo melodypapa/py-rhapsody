@@ -7,6 +7,7 @@ import uuid
 
 import pytest
 
+from rhapsody_cli import RhapsodyApplication
 from rhapsody_cli.models.core import RPCollection, RPModelElement
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 
@@ -361,5 +362,131 @@ class TestRPModelElementStereotypesTagsIntegration:
             assert isinstance(multiplicities, RPCollection)
             result = cls.set_tag_context_value(tag, elements, multiplicities)
             assert result is not None
+        finally:
+            pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementDescriptionDisplayNameIntegration:
+    """Integration tests for RPModelElement description and display-name methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_set_and_get_description_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("DescPkg"))
+        try:
+            cls = pkg.add_class(self._unique("DescCls"))
+            cls.set_description("A test description")
+            description = cls.get_description()
+            assert description == "A test description"
+            assert isinstance(description, str)
+
+            plain_text = cls.get_description_plain_text()
+            assert isinstance(plain_text, str)
+            assert "A test description" in plain_text
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_description_rtf_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RtfDescPkg"))
+        try:
+            cls = pkg.add_class(self._unique("RtfDescCls"))
+            rtf_string = r"{\rtf1 Hello}"
+            cls.set_description_rtf(rtf_string)
+
+            is_rtf = cls.is_description_rtf()
+            assert is_rtf
+            assert isinstance(is_rtf, (bool, int))
+
+            retrieved_rtf = cls.get_description_rtf()
+            assert isinstance(retrieved_rtf, str)
+            assert retrieved_rtf == rtf_string
+
+            description = cls.get_description()
+            assert isinstance(description, str)
+            assert "Hello" in description
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="Rhapsody documents setDescriptionHTML as unimplemented")
+    def test_set_and_get_description_html(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("HtmlDescPkg"))
+        try:
+            cls = pkg.add_class(self._unique("HtmlDescCls"))
+            html = "<html><body>Hello</body></html>"
+            cls.set_description_html(html)
+
+            retrieved_html = cls.get_description_html()
+            assert isinstance(retrieved_html, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_description_html_on_empty(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("HtmlEmptyPkg"))
+        try:
+            result = pkg.get_description_html()
+            assert isinstance(result, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_description_and_hyperlinks(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("HyperlinkPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("Target1"))
+            cls2 = pkg.add_class(self._unique("Target2"))
+
+            new_collection = rhapsody_app.create_new_collection()
+            assert isinstance(new_collection, RPCollection)
+            new_collection.add_item(cls1)
+            new_collection.add_item(cls2)
+
+            rtf_text = r"{\rtf1 Description with hyperlinks}"
+            cls1.set_description_and_hyperlinks(rtf_text, new_collection)
+
+            description = cls1.get_description()
+            assert isinstance(description, str)
+            assert "Description with hyperlinks" in description
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_display_name_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("DispNamePkg"))
+        try:
+            cls = pkg.add_class(self._unique("DispNameCls"))
+            display_name = "My Custom Label"
+            cls.set_display_name(display_name)
+
+            retrieved = cls.get_display_name()
+            assert retrieved == display_name
+            assert isinstance(retrieved, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_display_name_rtf_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("DispNameRtfPkg"))
+        try:
+            cls = pkg.add_class(self._unique("DispNameRtfCls"))
+            rtf_string = r"{\rtf1 Bold Label}"
+            cls.set_display_name_rtf(rtf_string)
+
+            is_rtf = cls.is_display_name_rtf()
+            assert is_rtf
+            assert isinstance(is_rtf, (bool, int))
+
+            retrieved_rtf = cls.get_display_name_rtf()
+            assert isinstance(retrieved_rtf, str)
+            assert retrieved_rtf == rtf_string
+
+            display_name = cls.get_display_name()
+            assert isinstance(display_name, str)
         finally:
             pkg.delete_from_project()
