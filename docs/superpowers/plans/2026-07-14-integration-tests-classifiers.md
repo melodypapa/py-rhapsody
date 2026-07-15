@@ -20,7 +20,7 @@
 - Quality gate after each task: `ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytest tests/unit` (live integration run: `pytest tests/integration -m integration`, requires attached Rhapsody)
 - New test files import concrete classes via subpackage `__init__.py` re-exports, e.g. `from rhapsody_cli.models.elements.classifiers import RPClassifier`
 - Follow the exact style of `tests/integration/models/elements/classifiers/test_model_class.py`
-- `RPEnumeration`, `RPException`, `RPInterface`, `RPSignal` have no own methods (pure inheritance from `RPModelElement`) — no dedicated task exists for them beyond the existing creation-smoke tests already in place; they are noted here as out of scope for this plan.
+- `RPEnumeration`, `RPInterface`, `RPSignal` and their creation paths (`RPPackage.add_enumeration`/`add_interface`/`add_signal`) were removed entirely — no `IRPEnumeration`/`IRPInterface`/`IRPSignal` COM interface or `addEnumeration`/`addInterface`/`addSignal` COM method exists anywhere in the Rhapsody Java API (see `docs/superpowers/plans/2026-07-15-remove-fictional-package-methods.md`). Real UML Enumeration/Interface/Signal creation uses `RPPackage.add_type`+`set_kind("Enumeration")`, `add_class`+`add_stereotype("Interface", "Class")`, and `add_event` respectively. `RPException` has no own methods (pure inheritance from `RPModelElement`) and remains out of scope for this plan.
 
 ---
 

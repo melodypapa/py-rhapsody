@@ -369,3 +369,128 @@ def test_check_model_delegates_to_com() -> None:
     app.check_model()
 
     fake_app.checkModel.assert_called_once_with()
+
+
+def test_create_new_collection_returns_rpcollection() -> None:
+    from rhapsody_cli.models.core import RPCollection
+
+    fake_app = make_fake_element("Application")
+    fake_app.createNewCollection.return_value = make_fake_collection([])
+    app = RhapsodyApplication(fake_app)
+
+    result = app.create_new_collection()
+
+    fake_app.createNewCollection.assert_called_once_with()
+    assert isinstance(result, RPCollection)
+
+
+def test_get_search_manager_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPSearchManager
+
+    fake_app = make_fake_element("Application")
+    fake_search = make_fake_element("SearchManager")
+    fake_app.getSearchManager.return_value = fake_search
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_search_manager()
+
+    fake_app.getSearchManager.assert_called_once_with()
+    assert isinstance(result, RPSearchManager)
+
+
+def test_get_selection_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPSelection
+
+    fake_app = make_fake_element("Application")
+    fake_selection = make_fake_element("Selection")
+    fake_app.getSelection.return_value = fake_selection
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_selection()
+
+    fake_app.getSelection.assert_called_once_with()
+    assert isinstance(result, RPSelection)
+
+
+def test_get_code_gen_simplifiers_registry_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPCodeGenSimplifiersRegistry
+
+    fake_app = make_fake_element("Application")
+    fake_registry = make_fake_element("CodeGenSimplifiersRegistry")
+    fake_app.getCodeGenSimplifiersRegistry.return_value = fake_registry
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_code_gen_simplifiers_registry()
+
+    fake_app.getCodeGenSimplifiersRegistry.assert_called_once_with()
+    assert isinstance(result, RPCodeGenSimplifiersRegistry)
+
+
+def test_get_diag_synth_api_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPDiagSynthAPI
+
+    fake_app = make_fake_element("Application")
+    fake_api = make_fake_element("DiagSynthAPI")
+    fake_app.getDiagSynthAPI.return_value = fake_api
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_diag_synth_api("MyClient")
+
+    fake_app.getDiagSynthAPI.assert_called_once_with("MyClient")
+    assert isinstance(result, RPDiagSynthAPI)
+
+
+def test_get_external_checker_registry_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPExternalCheckRegistry
+
+    fake_app = make_fake_element("Application")
+    fake_registry = make_fake_element("ExternalCheckRegistry")
+    fake_app.getExternalCheckerRegistry.return_value = fake_registry
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_external_checker_registry()
+
+    fake_app.getExternalCheckerRegistry.assert_called_once_with()
+    assert isinstance(result, RPExternalCheckRegistry)
+
+
+def test_get_external_ide_registry_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPExternalIDERegistry
+
+    fake_app = make_fake_element("Application")
+    fake_registry = make_fake_element("ExternalIDERegistry")
+    fake_app.getExternalIDERegistry.return_value = fake_registry
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_external_ide_registry("MyClient")
+
+    fake_app.getExternalIDERegistry.assert_called_once_with("MyClient")
+    assert isinstance(result, RPExternalIDERegistry)
+
+
+def test_get_external_roundtrip_invoker_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPExternalRoundtripInvoker
+
+    fake_app = make_fake_element("Application")
+    fake_invoker = make_fake_element("ExternalRoundtripInvoker")
+    fake_app.getExternalRoundtripInvoker.return_value = fake_invoker
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_external_roundtrip_invoker()
+
+    fake_app.getExternalRoundtripInvoker.assert_called_once_with()
+    assert isinstance(result, RPExternalRoundtripInvoker)
+
+
+def test_get_ow_pane_mgr_returns_wrapped_element() -> None:
+    from rhapsody_cli.models.support import RPowPaneMgr
+
+    fake_app = make_fake_element("Application")
+    fake_pane = make_fake_element("OWPaneMgr")
+    fake_app.getOWPaneMgr.return_value = fake_pane
+    app = RhapsodyApplication(fake_app)
+
+    result = app.get_ow_pane_mgr("MyClient")
+
+    fake_app.getOWPaneMgr.assert_called_once_with("MyClient")
+    assert isinstance(result, RPowPaneMgr)

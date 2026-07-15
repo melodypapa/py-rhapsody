@@ -105,23 +105,22 @@ class TestRPClassIntegration:
         finally:
             test_class.delete_from_project()
 
-    @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 exposes 'isAbstract' as a read-only COM property; "
-        "set_is_abstract silently no-ops. TODO: fix RPClass.set_is_abstract to persist via "
-        "the metatype property system in a future Rhapsody build.",
-        strict=False,
-    )
-    def test_abstract_roundtrip(self, test_project: RPProject) -> None:
+    def test_set_is_abstract_raises_not_implemented(self, test_project: RPProject) -> None:
+        """RPClass.set_is_abstract is marked unimplemented: Rhapsody2.Application.1's automation
+        server accepts a write to the 'isAbstract' COM property without error (confirmed via
+        typelib inspection that both PROPERTYGET and PROPERTYPUT are declared for isAbstract
+        under the same DISPID -- it is not read-only at the interface level), but the write does
+        not persist (confirmed via immediate read-back, post-saveAll(), and a fresh re-fetch of
+        the element). This is a genuine limitation of this Rhapsody build's IRPClass::isAbstract
+        implementation, so the wrapper raises rather than silently no-opping."""
         pkg_name = self._unique("AbsPkg")
         class_name = self._unique("AbsCls")
         pkg = self._create_package(test_project, pkg_name)
         test_class = pkg.add_class(class_name)
         try:
             assert test_class.get_is_abstract() is False
-            test_class.set_is_abstract(1)
-            assert test_class.get_is_abstract() is True
-            test_class.set_is_abstract(0)
-            assert test_class.get_is_abstract() is False
+            with pytest.raises(NotImplementedError):
+                test_class.set_is_abstract(1)
         finally:
             test_class.delete_from_project()
 

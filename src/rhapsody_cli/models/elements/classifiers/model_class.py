@@ -40,7 +40,7 @@ class RPClass(RPClassifier):
     # [x] get_is_composite           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_final               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_reactive            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_is_abstract            [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_is_abstract (unimplemented -- raises NotImplementedError, see docstring)  [ ] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_active              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_behavior_overriden   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_final               [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -399,13 +399,22 @@ class RPClass(RPClassifier):
         Args:
             is_abstract: ``1`` to make the class abstract, ``0`` to make it non-abstract.
 
+        Raises:
+            NotImplementedError: Always. Under Rhapsody2.Application.1 (build 9.0.2) a write to
+                the ``isAbstract`` COM property is accepted without error (the typelib declares
+                both PROPERTYGET and PROPERTYPUT for isAbstract under the same DISPID -- it is
+                not read-only at the interface level), but the write does not persist --
+                confirmed via immediate read-back, post-``saveAll()``, and a fresh re-fetch of
+                the element. No workaround (e.g. the generic ``setPropertyValue`` metatype
+                property system) is currently known; "Abstract" is not a defined key in
+                ``Share/Properties/factory.prp``. Marked unimplemented rather than silently
+                no-opping so callers cannot mistake this for a successful write. Revisit if a
+                future Rhapsody build fixes this.
+
         Reference:
             com.telelogic.rhapsody.core.IRPClass::setIsAbstract(int isAbstract)
-
-        # TODO: Under Rhapsody2.Application.1 the ``isAbstract`` COM property is read-only,
-        # so this setter silently no-ops. Persist via the metatype property system instead.
         """
-        AbstractRPModelElement._set_method_or_property(self._com, "setIsAbstract", "isAbstract", is_abstract)
+        raise NotImplementedError("RPClass.set_is_abstract is unimplemented: Rhapsody2.Application.1 accepts the write but never persists it. See docstring for details.")
 
     def set_is_active(self, is_active: int) -> None:
         """Specifies that the class should be defined as "active".

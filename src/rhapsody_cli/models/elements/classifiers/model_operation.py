@@ -37,11 +37,11 @@ class RPOperation(RPInterfaceItem):
     # [ ] setBody  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] setFlowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] setInitializer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] set_is_abstract  [x] impl  [x] docstring  [ ] unit test  [x] integration test
+    # [x] set_is_abstract  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [ ] setIsConst  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] setIsFinal  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] set_is_static  [x] impl  [x] docstring  [ ] unit test  [x] integration test
-    # [ ] set_is_virtual  [x] impl  [x] docstring  [ ] unit test  [x] integration test
+    # [x] set_is_static  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_is_virtual  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_return_type_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_returns  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] setVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
@@ -79,11 +79,8 @@ class RPOperation(RPInterfaceItem):
 
         Reference:
             com.telelogic.rhapsody.core.IRPOperation::setIsAbstract(boolean isAbstract)
-
-        # TODO: Under Rhapsody2.Application.1 the ``setIsAbstract`` COM method is not exposed,
-        # so this raises AttributeError. Persist abstract state via the metatype property system.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsAbstract(is_abstract))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsAbstract", "isAbstract", is_abstract)
 
     def get_is_static(self) -> bool:
         """Checks whether this operation is static.
@@ -104,11 +101,8 @@ class RPOperation(RPInterfaceItem):
 
         Reference:
             com.telelogic.rhapsody.core.IRPOperation::setIsStatic(boolean isStatic)
-
-        # TODO: Under Rhapsody2.Application.1 the ``setIsStatic`` COM method is not exposed,
-        # so this raises AttributeError. Persist static state via the metatype property system.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsStatic(is_static))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsStatic", "isStatic", is_static)
 
     def get_is_virtual(self) -> bool:
         """Checks whether this operation is virtual (for C++ or C# classes).
@@ -129,11 +123,8 @@ class RPOperation(RPInterfaceItem):
 
         Reference:
             com.telelogic.rhapsody.core.IRPOperation::setIsVirtual(boolean isVirtual)
-
-        # TODO: Under Rhapsody2.Application.1 the ``setIsVirtual`` COM method is not exposed,
-        # so this raises AttributeError. Persist virtual state via the metatype property system.
         """
-        AbstractRPModelElement.call_com(lambda: self._com.setIsVirtual(is_virtual))
+        AbstractRPModelElement._set_method_or_property(self._com, "setIsVirtual", "isVirtual", is_virtual)
 
     def get_returns(self) -> "RPClassifier":
         """Returns the type specification for the operation's return value.

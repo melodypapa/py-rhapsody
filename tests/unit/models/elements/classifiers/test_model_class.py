@@ -1,5 +1,7 @@
 """Tests for rhapsody_cli.elements.class_.RPClass."""
 
+import pytest
+
 from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers import RPClass, RPClassifier
 from tests.unit.models.fakes import make_fake_element
@@ -272,13 +274,16 @@ def test_class_get_is_reactive_delegates_to_com() -> None:
     assert klass.get_is_reactive() == 1
 
 
-def test_class_set_is_abstract_delegates_to_com() -> None:
+def test_class_set_is_abstract_raises_not_implemented() -> None:
+    """RPClass.set_is_abstract is marked unimplemented: Rhapsody2.Application.1 accepts the
+    write without error but never persists it, so it raises rather than silently no-opping."""
     fake = make_fake_element("Class")
     klass = RPClass(fake)
 
-    klass.set_is_abstract(1)
+    with pytest.raises(NotImplementedError):
+        klass.set_is_abstract(1)
 
-    fake.setIsAbstract.assert_called_once_with(1)
+    fake.setIsAbstract.assert_not_called()
 
 
 def test_class_set_is_active_delegates_to_com() -> None:

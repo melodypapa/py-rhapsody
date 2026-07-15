@@ -358,16 +358,27 @@ class RPStatechart(RPClass):
         """
         return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPictureAsDividedMetafiles()))
 
-    def get_pictures_with_image_map(self) -> RPCollection:
-        """Returns pictures with image map information.
+    def get_pictures_with_image_map(self, first_file_name: str, diagram_map: "RPCollection") -> "RPCollection":
+        """Saves the statechart as EMF file(s) and populates the given collection with image-map info.
+
+        Same semantics as ``IRPDiagram.getPicturesWithImageMap`` -- saves the statechart
+        diagram as EMF file(s) and populates ``diagram_map`` with ``IRPImageMap`` objects.
+
+        Args:
+            first_file_name: The base name for the created EMF file(s).
+            diagram_map: An empty ``RPCollection`` that will be populated with ``IRPImageMap`` objects.
 
         Returns:
-            An ``RPCollection`` of pictures with image map.
+            An ``RPCollection`` containing the names of the files that were created.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
 
         Reference:
-            com.telelogic.rhapsody.core.IRPStatechart::getPicturesWithImageMap()
+            com.telelogic.rhapsody.core.IRPStatechart::getPicturesWithImageMap(
+                java.lang.String firstFileName, com.telelogic.rhapsody.core.IRPCollection diagrammap)
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap()))
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)))
 
     def get_root_state(self) -> RPModelElement:
         """Returns the root state of the statechart.

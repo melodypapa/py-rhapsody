@@ -19,10 +19,6 @@ class TestRPOperationIntegration:
         assert pkg is not None and isinstance(pkg, RPPackage)
         return pkg
 
-    @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsStatic' COM method; " "RPOperation.set_is_static raises AttributeError. TODO: persist via metatype property system.",
-        strict=False,
-    )
     def test_static_roundtrip(self, test_project: RPProject) -> None:
         pkg_name = self._unique("StatPkg")
         class_name = self._unique("StatCls")
@@ -39,10 +35,6 @@ class TestRPOperationIntegration:
         finally:
             test_class.delete_from_project()
 
-    @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsVirtual' COM method; " "RPOperation.set_is_virtual raises AttributeError. TODO: persist via metatype property system.",
-        strict=False,
-    )
     def test_virtual_roundtrip(self, test_project: RPProject) -> None:
         pkg_name = self._unique("VirtPkg")
         class_name = self._unique("VirtCls")
@@ -59,10 +51,6 @@ class TestRPOperationIntegration:
         finally:
             test_class.delete_from_project()
 
-    @pytest.mark.xfail(
-        reason="Rhapsody2.Application.1 does not expose the 'setIsAbstract' COM method; " "RPOperation.set_is_abstract raises AttributeError. TODO: persist via metatype property system.",
-        strict=False,
-    )
     def test_abstract_roundtrip(self, test_project: RPProject) -> None:
         pkg_name = self._unique("AbsOpPkg")
         class_name = self._unique("AbsOpCls")

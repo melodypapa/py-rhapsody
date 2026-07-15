@@ -6,14 +6,11 @@ from rhapsody_cli.models.elements.classifiers.model_association_class import (  
 )
 from rhapsody_cli.models.elements.classifiers.model_class import RPClass  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier  # noqa: F401
-from rhapsody_cli.models.elements.classifiers.model_enumeration import RPEnumeration  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_exception import RPException  # noqa: F401
-from rhapsody_cli.models.elements.classifiers.model_interface import RPInterface  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_interface_item import (  # noqa: F401
     RPInterfaceItem,
 )
 from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation  # noqa: F401
-from rhapsody_cli.models.elements.classifiers.model_signal import RPSignal  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_statechart import RPStatechart  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_stereotype import RPStereotype  # noqa: F401
 from rhapsody_cli.models.elements.classifiers.model_usecase import RPUseCase  # noqa: F401
@@ -23,12 +20,9 @@ __all__ = [
     "RPAssociationClass",
     "RPClass",
     "RPClassifier",
-    "RPEnumeration",
     "RPException",
-    "RPInterface",
     "RPInterfaceItem",
     "RPOperation",
-    "RPSignal",
     "RPStatechart",
     "RPStereotype",
     "RPUseCase",

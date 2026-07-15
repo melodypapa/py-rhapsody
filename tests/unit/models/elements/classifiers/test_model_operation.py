@@ -1,5 +1,7 @@
 """Tests for rhapsody_cli.elements.operation.RPOperation."""
 
+from unittest.mock import MagicMock
+
 from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers import RPInterfaceItem, RPOperation
 from tests.unit.models.fakes import make_fake_element
@@ -39,6 +41,60 @@ def test_operation_get_is_virtual_delegates_to_com() -> None:
     operation = RPOperation(fake)
 
     assert operation.get_is_virtual() is True
+
+
+def test_operation_set_is_abstract_delegates_to_com() -> None:
+    fake = make_fake_element("Operation")
+    operation = RPOperation(fake)
+
+    operation.set_is_abstract(1)
+
+    fake.setIsAbstract.assert_called_once_with(1)
+
+
+def test_operation_set_is_abstract_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["isAbstract"])
+    operation = RPOperation(fake)
+
+    operation.set_is_abstract(1)
+
+    assert fake.isAbstract == 1
+
+
+def test_operation_set_is_static_delegates_to_com() -> None:
+    fake = make_fake_element("Operation")
+    operation = RPOperation(fake)
+
+    operation.set_is_static(1)
+
+    fake.setIsStatic.assert_called_once_with(1)
+
+
+def test_operation_set_is_static_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["isStatic"])
+    operation = RPOperation(fake)
+
+    operation.set_is_static(1)
+
+    assert fake.isStatic == 1
+
+
+def test_operation_set_is_virtual_delegates_to_com() -> None:
+    fake = make_fake_element("Operation")
+    operation = RPOperation(fake)
+
+    operation.set_is_virtual(1)
+
+    fake.setIsVirtual.assert_called_once_with(1)
+
+
+def test_operation_set_is_virtual_falls_back_to_property_when_method_missing() -> None:
+    fake = MagicMock(spec=["isVirtual"])
+    operation = RPOperation(fake)
+
+    operation.set_is_virtual(1)
+
+    assert fake.isVirtual == 1
 
 
 def test_operation_get_returns_wraps_result() -> None:

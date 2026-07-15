@@ -19,7 +19,7 @@
   - `RPPanelDiagram` — pure `pass`, no own methods
   - `RPSequenceDiagram` — own methods: `get_logical_collaboration`, `get_related_use_cases` (2 checklist rows)
   - `RPStatechartDiagram` — own methods: `add_and_line`, `create_graphics`, `get_statechart` (3 checklist rows)
-  - `RPStructureDiagram` — pure `pass`, no own methods. **No `add_structure_diagram` factory exists anywhere in the codebase** (not on `RPPackage`, not on `RPClass`/`RPClassifier`). Structure diagrams are not independently creatable via the currently wrapped COM surface — this is a real gap outside the diagrams subpackage's scope (would require adding a factory method to `RPClassifier`/`RPClass`, a classifiers-subpackage change). Documented as a known limitation; the creation test for this one subtype is `xfail`ed with a clear reason rather than skipped silently.
+  - `RPStructureDiagram` — pure `pass`, no own methods. **Try the generic factory:** `pkg.add_new_aggr("StructureDiagram", name)` or `cls.add_new_aggr("StructureDiagram", name)` — if Rhapsody accepts this meta-type, the creation test passes. If it rejects it, keep the xfail with the documented reason. `IRPUnit.getStructureDiagrams()` exists as a getter, confirming the meta-type is valid for retrieval.
   - `RPUseCaseDiagram` — pure `pass`, no own methods
   - `RPTimingDiagram` (extends `RPSequenceDiagram`) — own methods: `get_is_elaborated`, `set_is_elaborated` (2 checklist rows)
   - `RPActivityDiagram` (extends `RPStatechartDiagram`) — own methods: `decompose_swimlane`, `get_flowchart` (2 checklist rows)
@@ -513,7 +513,7 @@ git commit -m "test: add integration tests for RPDiagram frame, ports, relations
 - Create: `tests/integration/models/elements/diagrams/test_model_diagram_types.py`
 - Modify: `src/rhapsody_cli/models/elements/diagrams/model_diagram_types.py` (flip checklist boxes only)
 
-**Methods covered (creation/isinstance for 10 subtypes):** `RPCollaborationDiagram`, `RPComponentDiagram`, `RPDeploymentDiagram`, `RPPanelDiagram`, `RPSequenceDiagram`, `RPStatechartDiagram`, `RPStructureDiagram` (xfail — no factory), `RPUseCaseDiagram`, `RPTimingDiagram`, `RPActivityDiagram`
+**Methods covered (creation/isinstance for 10 subtypes):** `RPCollaborationDiagram`, `RPComponentDiagram`, `RPDeploymentDiagram`, `RPPanelDiagram`, `RPSequenceDiagram`, `RPStatechartDiagram`, `RPStructureDiagram` (try `add_new_aggr("StructureDiagram", name")` — keep xfail only if Rhapsody rejects the meta-type), `RPUseCaseDiagram`, `RPTimingDiagram`, `RPActivityDiagram`
 
 **Subclass-own methods covered:** `get_logical_collaboration` (`RPCollaborationDiagram`), `get_logical_collaboration`/`get_related_use_cases` (`RPSequenceDiagram`), `add_and_line`/`create_graphics`/`get_statechart` (`RPStatechartDiagram`), `get_is_elaborated`/`set_is_elaborated` (`RPTimingDiagram`), `decompose_swimlane`/`get_flowchart` (`RPActivityDiagram`)
 
@@ -641,16 +641,13 @@ For remaining subtypes, follow the same pattern:
         finally:
             diagram.delete_from_project()
 
-    @pytest.mark.xfail(reason="No add_structure_diagram factory exists on RPPackage/RPClassifier; structure diagrams are not independently creatable via the currently wrapped COM surface", strict=False)
     def test_create_structure_diagram(self, test_project: RPProject) -> None:
         from rhapsody_cli.models.elements.classifiers import RPClass
 
         pkg = self._create_package(test_project, self._unique("DiagPkg"))
         cls = pkg.add_class(self._unique("StructClass"))
         try:
-            structure_diagrams = list(cls.get_structure_diagrams())
-            assert len(structure_diagrams) >= 1
-            diagram = structure_diagrams[0]
+            diagram = cls.add_new_aggr("StructureDiagram", self._unique("StructDgm"))
             assert isinstance(diagram, RPStructureDiagram)
         finally:
             cls.delete_from_project()

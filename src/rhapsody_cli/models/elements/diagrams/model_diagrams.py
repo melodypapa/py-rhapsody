@@ -395,16 +395,32 @@ class RPDiagram(RPUnit):
         """
         return cast("RPGraphElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getPictureEx(x, y, width, height))))
 
-    def get_pictures_with_image_map(self) -> RPCollection:
-        """Returns the pictures with image map.
+    def get_pictures_with_image_map(self, first_file_name: str, diagram_map: "RPCollection") -> "RPCollection":
+        """Saves the diagram as EMF file(s) and populates the given collection with image-map info.
+
+        Saves the diagram as an EMF format file, breaking the diagram into a number of
+        files if necessary (based on the ``General:Graphics:ExportedDiagramScale`` property).
+        The ``diagram_map`` collection is populated with ``IRPImageMap`` objects containing
+        the information needed to construct an HTML image map.
+
+        Args:
+            first_file_name: The base name for the created EMF file(s). If multiple files
+                are created, names follow the convention ``firstFileNameZ_X_Y``.
+            diagram_map: An empty ``RPCollection`` (obtainable via
+                ``RhapsodyApplication.create_new_collection()``) that will be populated
+                with ``IRPImageMap`` objects.
 
         Returns:
-            An ``RPCollection`` of graph elements.
+            An ``RPCollection`` containing the names of the files that were created.
+
+        Raises:
+            RhapsodyRuntimeException: If the operation fails.
 
         Reference:
-            com.telelogic.rhapsody.core.IRPDiagram::getPicturesWithImageMap()
+            com.telelogic.rhapsody.core.IRPDiagram::getPicturesWithImageMap(
+                java.lang.String firstFileName, com.telelogic.rhapsody.core.IRPCollection diagrammap)
         """
-        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap()))
+        return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)))
 
     def is_open(self) -> int:
         """Checks if the diagram is open.

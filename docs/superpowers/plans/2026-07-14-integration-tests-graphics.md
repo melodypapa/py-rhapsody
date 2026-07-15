@@ -31,7 +31,7 @@
 
 ### Flagged: `RPImageMap` creation path
 
-No `add`/`create` method for `IRPImageMap` exists anywhere in the codebase or in `RPDiagram`/`RPPackage`. The only discovered read path is `RPDiagram.get_pictures_with_image_map()` / `RPStatechart.get_pictures_with_image_map()`, which returns a (likely empty, unless an image with a defined clickable image map region was manually inserted into the diagram beforehand) `RPCollection`. Task 5 below documents a best-effort approach: attempt `diagram.add_image(...)` followed by `get_pictures_with_image_map()`, and falls back to `pytest.mark.xfail(strict=False)` with a documented reason if Rhapsody does not expose a way to attach an image map without manual GUI interaction. **All 7 `RPImageMap` methods are still written and executed** — this is a feasibility flag, not an omission.
+`RPImageMap` (7 methods) — **Creation path now available:** `RhapsodyApplication.create_new_collection() -> RPCollection` creates an empty collection, then `diagram.get_pictures_with_image_map(file_name, collection)` populates it with `IRPImageMap` objects. The wrapper bug (0-arg signature) has been fixed in Tasks 1-2 of the xfail-improvements plan. Task for RPImageMap should: (1) create a diagram with at least one graph element, (2) call `app.create_new_collection()`, (3) call `diagram.get_pictures_with_image_map("test.emf", collection)`, (4) iterate `collection` to get `RPImageMap` objects, (5) exercise all 7 getter methods. Use real assertions, not xfail.
 
 ---
 
@@ -405,7 +405,7 @@ git commit -m "test: add integration tests for RPGraphicalProperty"
 
 **Methods covered:** `getInterfaceName`, `getIsGUID`, `getName`, `getPictureFileName`, `getPoints`, `getShape`, `getTarget` (7)
 
-**Note:** No public COM API for *creating* an image map with a defined clickable region was found in this codebase or in typical Rhapsody automation (image maps are normally authored interactively in the IDE by drawing hotspots on an inserted picture). The best-effort approach below inserts an image via `RPDiagram.add_image()` and inspects `get_pictures_with_image_map()`; if it returns an empty collection (no image map metadata attached), the test is marked `xfail(strict=False)` documenting the limitation rather than being skipped or omitted.
+**Note:** A creation path is now available via the xfail-improvements plan: `RhapsodyApplication.create_new_collection()` produces an empty `RPCollection`, and `RPDiagram.get_pictures_with_image_map(file_name, collection)` (now correctly taking `(firstFileName, diagrammap)`) populates that collection with `IRPImageMap` objects. The test below should use real assertions, not `xfail`.
 
 - [ ] **Step 1: Write the failing/new integration tests**
 
@@ -427,15 +427,7 @@ class TestRPImageMapIntegration:
     def _unique(prefix: str = "Test") -> str:
         return f"{prefix}_{uuid.uuid4().hex[:8]}"
 
-    @pytest.mark.xfail(
-        reason="No public COM API creates an IRPImageMap with clickable-region metadata; "
-        "image maps are normally authored interactively in the Rhapsody IDE. "
-        "RPDiagram.add_image() + get_pictures_with_image_map() is the closest available "
-        "path and may legitimately return an empty collection. TODO: revisit if Rhapsody "
-        "exposes a programmatic image-map authoring API in a future version.",
-        strict=False,
-    )
-    def test_image_map_attributes_via_diagram_picture(self, test_project: RPProject, tmp_path: Path) -> None:
+    def test_image_map_attributes_via_diagram_picture(self, rhapsody_app, test_project: RPProject, tmp_path: Path) -> None:
         pkg = test_project.add_package(self._unique("IMPkg"))
         try:
             diagram = pkg.add_statechart_diagram(self._unique("SD"))
@@ -448,7 +440,9 @@ class TestRPImageMapIntegration:
                 )
             )
             diagram.add_image(str(image_path), 10, 10, 50, 50)
-            maps = list(diagram.get_pictures_with_image_map())
+            collection = rhapsody_app.create_new_collection()
+            diagram.get_pictures_with_image_map("test_image.emf", collection)
+            maps = list(collection)
             assert maps, "Expected at least one IRPImageMap after inserting an image"
             image_map = maps[0]
             assert isinstance(image_map, RPImageMap)
@@ -467,11 +461,11 @@ class TestRPImageMapIntegration:
 
 Run: `pytest tests/integration/models/elements/graphics/test_model_image_map.py -m integration -v`
 
-Confirm whether the test passes (image map metadata is attached automatically) or xfails (no metadata attached). Either outcome is an acceptable, documented result for this task.
+Confirm that the test passes against live Rhapsody: the diagram must contain at least one graph element (e.g. the inserted image) so that `get_pictures_with_image_map` populates the collection with `IRPImageMap` objects.
 
 - [ ] **Step 3: Flip checklist boxes**
 
-Flip all 7 `RPImageMap` rows regardless of pass/xfail outcome (the methods are exercised; the xfail marker documents the environmental limitation, not missing test coverage).
+Flip all 7 `RPImageMap` rows once the task's test passes against live Rhapsody.
 
 - [ ] **Step 4: Run quality gate**
 

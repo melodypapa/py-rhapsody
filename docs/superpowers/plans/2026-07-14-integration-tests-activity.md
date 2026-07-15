@@ -61,10 +61,10 @@
 
 ### Documented exceptions (methods that cannot be reached through the existing public API)
 
-- `RPFlow.set_end1_via_port`, `set_end2_via_port`, `set_end1_via_sys_ml_port`, `set_end2_via_sys_ml_port` (4 methods) — these require a live `IRPInstance` object (`com.telelogic.rhapsody.core.IRPFlow::setEnd1ViaPort(IRPInstance, IRPPort)`, etc.). A repo-wide search confirms there is **no public factory method anywhere in `src/rhapsody_cli/models/`** that creates a bare `RPInstance` — every `RPInstance`-typed return value in the codebase is a *getter* (`RPGraphEdge.get_from`/`get_to`, `RPClassifierRole.get_formal_instance`), never a creator. Building one would require driving the Rhapsody UI (e.g., dragging a part instance onto an object diagram) rather than calling a documented COM API, which is outside the scope of the CLI wrapper and this test plan. These four setters are covered in Task 8 with `@pytest.mark.xfail(reason=..., strict=False)` tests that attempt a best-effort call using an `RPClass` in place of the instance (documenting the expected `RhapsodyRuntimeException`) rather than being silently dropped from the checklist.
-- `RPContextSpecification.get_multiplicities`, `get_value`, `set_multiplicities`, `set_value` (4 methods) — `IRPContextSpecification` objects are created internally by Rhapsody for certain SysML parametric-diagram context bindings; there is no `add_context_specification`/`create_context_specification` factory exposed on any wrapper in this codebase (confirmed via repo-wide search — `RPContextSpecification` only appears as a class definition and in `__init__.py` re-exports, never as a return type of an `add_*`/`create_*` method). These four methods are covered in Task 7 with `@pytest.mark.xfail(reason=..., strict=False)` tests that document the missing creation path and exercise the getters/setters against a mock-free but non-persisted instance obtained via `AbstractRPModelElement.wrap`/direct COM creation is not attempted (no COM class ID is documented for standalone creation) — the task explicitly flags this as a gap rather than fabricating a fake integration test.
+- `RPFlow.set_end1_via_port`, `set_end2_via_port`, `set_end1_via_sys_ml_port`, `set_end2_via_sys_ml_port` (4 methods) — these require a live `IRPInstance` object. **Creation path discovered:** `RPPackage.add_implicit_object(name) -> RPInstance` (model_package.py:1381). Combined with `RPClassifier.add_port(name) -> RPPort` (for via_port) or `add_new_aggr("SysMLPort", name)` (for via_sys_ml_port), these methods can now be tested. Task 8 tests should use real assertions, not xfail.
+- `RPContextSpecification.get_multiplicities`, `get_value`, `set_multiplicities`, `set_value` (4 methods) — no dedicated `add_context_specification` factory exists. **Try the generic factory:** `element.add_new_aggr("ContextSpecification", name)` — if Rhapsody accepts this meta-type, lift the xfail. If it rejects it (ContextSpecification is typically created internally for SysML parametric diagrams), keep as xfail with the documented reason. Task 7 should attempt this live first.
 
-**Total flagged as unreachable: 8 of 68 methods** (4 in `RPFlow`, 4 in `RPContextSpecification`). All 8 are still written as `xfail`-marked tests per task, not omitted.
+**Creation paths now discovered for the previously-flagged 8 methods** (4 in `RPFlow`, 4 in `RPContextSpecification`) — see the two bullets above. These are no longer unreachable; attempt them live and lift the `xfail` where the path works.
 
 ---
 
@@ -638,13 +638,13 @@ git commit -m "test: add integration tests for RPSwimlane"
 
 ---
 
-### Task 8: `RPFlow` and `RPFlowItem` (including documented `xfail` exceptions)
+### Task 8: `RPFlow` and `RPFlowItem` (via_port creation path resolved; via_sys_ml_port pending SysML profile)
 
 **Files:**
 - Modify: `tests/integration/models/elements/activity/test_model_activity.py`
 - Modify: `src/rhapsody_cli/models/elements/activity/model_activity.py` (flip checklist boxes only)
 
-**Methods covered:** `add_conveyed`, `get_conveyed`, `get_direction`, `get_end1`, `get_end1_port`, `get_end1_sys_ml_port`, `get_end2`, `get_end2_port`, `get_end2_sys_ml_port`, `remove_conveyed`, `set_direction`, `set_end1`, `set_end2` (plain-path methods); `set_end1_via_port`, `set_end1_via_sys_ml_port`, `set_end2_via_port`, `set_end2_via_sys_ml_port` (**documented exception** — no `RPInstance` factory exists in the codebase; covered via `xfail`); `add_represented`, `get_represented`, `remove_represented` (`RPFlowItem`)
+**Methods covered:** `add_conveyed`, `get_conveyed`, `get_direction`, `get_end1`, `get_end1_port`, `get_end1_sys_ml_port`, `get_end2`, `get_end2_port`, `get_end2_sys_ml_port`, `remove_conveyed`, `set_direction`, `set_end1`, `set_end2` (plain-path methods); `set_end1_via_port`, `set_end2_via_port` (creation path resolved via `RPPackage.add_implicit_object` — real assertions, no xfail); `set_end1_via_sys_ml_port`, `set_end2_via_sys_ml_port` (same creation path, but guarded with `xfail` pending confirmation that `add_new_aggr("SysMLPort", ...)` works without a SysML profile — see `2026-07-14-integration-tests-common.md`); `add_represented`, `get_represented`, `remove_represented` (`RPFlowItem`)
 
 - [ ] **Step 1: Write the failing/new integration tests**
 
@@ -678,8 +678,9 @@ class TestRPFlowIntegration:
             conveyed_after = list(flow.get_conveyed())
             assert conveyed_class not in conveyed_after
 
-            # Ports were never assigned via the *_via_port setters (see the
-            # xfail'd test below), so the port getters should return falsy /
+            # This flow's ends were assigned via plain set_end1/set_end2 above,
+            # not via the *_via_port/*_via_sys_ml_port setters (see the
+            # dedicated tests below), so the port getters should return falsy /
             # unset values rather than raising.
             assert not flow.get_end1_port()
             assert not flow.get_end2_port()
@@ -690,29 +691,48 @@ class TestRPFlowIntegration:
             other_class.delete_from_project()
             conveyed_class.delete_from_project()
 
-    @pytest.mark.xfail(
-        reason="IRPFlow::setEnd1ViaPort/setEnd2ViaPort/setEnd1ViaSysMLPort/setEnd2ViaSysMLPort "
-        "require a live IRPInstance object. No public factory method exists anywhere in "
-        "rhapsody_cli.models to create a bare RPInstance (every RPInstance-typed return in "
-        "the codebase is a getter, never a creator) — building one requires driving the "
-        "Rhapsody UI (e.g. dragging a part instance onto an object diagram), which is outside "
-        "the CLI wrapper's scope. TODO: revisit if/when an RPInstance factory is added.",
-        strict=False,
-    )
-    def test_flow_via_port_setters_require_instance(self, flowchart_factory) -> None:
+    def test_flow_via_port_roundtrip(self, flowchart_factory) -> None:
         test_class, _flowchart, _root_state = flowchart_factory()
+        pkg = test_class.get_owner()
+        part_instance = pkg.add_implicit_object(_unique("PartInstance"))
         try:
             flow = test_class.add_flows(_unique("PortFlow"))
-            port = test_class.add_port(_unique("Port"))
-            # test_class is not an RPInstance; this call is expected to fail
-            # with RhapsodyRuntimeException, documenting the gap rather than
-            # silently skipping the method.
-            flow.set_end1_via_port(test_class, port)
-            flow.set_end2_via_port(test_class, port)
-            flow.set_end1_via_sys_ml_port(test_class, port)
-            flow.set_end2_via_sys_ml_port(test_class, port)
+            port1 = test_class.add_port(_unique("Port1"))
+            port2 = test_class.add_port(_unique("Port2"))
+
+            flow.set_end1_via_port(part_instance, port1)
+            assert flow.get_end1_port() == port1
+
+            flow.set_end2_via_port(part_instance, port2)
+            assert flow.get_end2_port() == port2
         finally:
             test_class.delete_from_project()
+            part_instance.delete_from_project()
+
+    @pytest.mark.xfail(
+        reason="addNewAggr('SysMLPort', name) may require a SysML/flowport profile to be "
+        "loaded on the project (see docs/superpowers/plans/2026-07-14-integration-tests-common.md, "
+        "which documents the same precondition for RPSysMLPort creation elsewhere). Verify against "
+        "the live test_project fixture and lift this marker once confirmed available.",
+        strict=False,
+    )
+    def test_flow_via_sys_ml_port_roundtrip(self, flowchart_factory) -> None:
+        test_class, _flowchart, _root_state = flowchart_factory()
+        pkg = test_class.get_owner()
+        part_instance = pkg.add_implicit_object(_unique("PartInstance"))
+        try:
+            flow = test_class.add_flows(_unique("SysMLPortFlow"))
+            sys_ml_port1 = test_class.add_new_aggr("SysMLPort", _unique("SysMLPort1"))
+            sys_ml_port2 = test_class.add_new_aggr("SysMLPort", _unique("SysMLPort2"))
+
+            flow.set_end1_via_sys_ml_port(part_instance, sys_ml_port1)
+            assert flow.get_end1_sys_ml_port() == sys_ml_port1
+
+            flow.set_end2_via_sys_ml_port(part_instance, sys_ml_port2)
+            assert flow.get_end2_sys_ml_port() == sys_ml_port2
+        finally:
+            test_class.delete_from_project()
+            part_instance.delete_from_project()
 
 
 @pytest.mark.integration
@@ -744,7 +764,7 @@ Run: `pytest tests/integration/models/elements/activity/test_model_activity.py -
 
 - [ ] **Step 3: Flip checklist boxes**
 
-In `src/rhapsody_cli/models/elements/activity/model_activity.py`, flip all 17 `RPFlow` rows (`addConveyed`, `getConveyed`, `getDirection`, `getEnd1`, `getEnd1Port`, `getEnd1SysMLPort`, `getEnd2`, `getEnd2Port`, `getEnd2SysMLPort`, `removeConveyed`, `setDirection`, `setEnd1`, `setEnd1ViaPort`, `setEnd1ViaSysMLPort`, `setEnd2`, `setEnd2ViaPort`, `setEnd2ViaSysMLPort`) and all 3 `RPFlowItem` rows (`addRepresented`, `getRepresented`, `removeRepresented`) to `[x] integration test`. The four `*ViaPort`/`*ViaSysMLPort` rows are flipped alongside a source comment noting the `xfail` (see Step 1) since a test exists and was run, even though it's expected to fail against live COM.
+In `src/rhapsody_cli/models/elements/activity/model_activity.py`, flip all 17 `RPFlow` rows (`addConveyed`, `getConveyed`, `getDirection`, `getEnd1`, `getEnd1Port`, `getEnd1SysMLPort`, `getEnd2`, `getEnd2Port`, `getEnd2SysMLPort`, `removeConveyed`, `setDirection`, `setEnd1`, `setEnd1ViaPort`, `setEnd1ViaSysMLPort`, `setEnd2`, `setEnd2ViaPort`, `setEnd2ViaSysMLPort`) and all 3 `RPFlowItem` rows (`addRepresented`, `getRepresented`, `removeRepresented`) to `[x] integration test`. `setEnd1ViaPort`/`setEnd2ViaPort` are exercised with real assertions (Step 1). `setEnd1ViaSysMLPort`/`setEnd2ViaSysMLPort` are exercised too but their test may carry an `xfail` marker if the live project lacks a SysML profile — flip the box regardless since the test exists and was run, noting the marker in the commit message if present.
 
 - [ ] **Step 4: Run quality gate**
 
@@ -759,13 +779,13 @@ git commit -m "test: add integration tests for RPFlow and RPFlowItem"
 
 ---
 
-### Task 9: `RPContextSpecification` (documented `xfail` exception) and `RPActionBlock` smoke check
+### Task 9: `RPContextSpecification` (try `add_new_aggr` creation path) and `RPActionBlock` smoke check
 
 **Files:**
 - Modify: `tests/integration/models/elements/activity/test_model_actions.py`
 - Modify: `src/rhapsody_cli/models/elements/activity/model_actions.py` (flip checklist boxes only)
 
-**Methods covered:** `get_multiplicities`, `get_value`, `set_multiplicities`, `set_value` (**documented exception** — no public creation path for `RPContextSpecification`; covered via `xfail`); no `RPActionBlock`-specific methods exist, so this task also adds a lightweight creation smoke test for `RPActionBlock` (via `RPCollaboration.add_action_block`) to prove the meta-class wrapping resolves correctly, even though no dedicated checklist rows exist for it.
+**Methods covered:** `get_multiplicities`, `get_value`, `set_multiplicities`, `set_value` — no dedicated `add_context_specification` factory exists, but the generic `add_new_aggr("ContextSpecification", name)` factory has not actually been tried against live Rhapsody. Attempt it first (Step 1); only fall back to `xfail` if the live call genuinely raises `RhapsodyRuntimeException`. No `RPActionBlock`-specific methods exist, so this task also adds a lightweight creation smoke test for `RPActionBlock` (via `RPCollaboration.add_action_block`) to prove the meta-class wrapping resolves correctly, even though no dedicated checklist rows exist for it.
 
 - [ ] **Step 1: Write the failing/new integration tests**
 
@@ -774,26 +794,35 @@ git commit -m "test: add integration tests for RPFlow and RPFlowItem"
 class TestRPContextSpecificationIntegration:
     """Integration tests for RPContextSpecification with real Rhapsody COM API."""
 
-    @pytest.mark.xfail(
-        reason="IRPContextSpecification objects are created internally by Rhapsody for "
-        "SysML parametric-diagram context bindings. No add_context_specification/"
-        "create_context_specification factory is exposed by any wrapper in "
-        "rhapsody_cli.models (confirmed via repo-wide search — RPContextSpecification only "
-        "appears as a class definition and __init__.py re-export, never as an add_*/create_* "
-        "return type), and there is no documented standalone COM creation path. "
-        "TODO: revisit if/when a creation path is identified (e.g. via a parametric-diagram "
-        "binding-connector API).",
-        strict=False,
-    )
-    def test_context_specification_creation_is_not_available(self, test_project: RPProject) -> None:
-        # Documents the investigated gap: no public API path produces a bare
-        # RPContextSpecification instance to exercise get/set_multiplicities and
-        # get/set_value against. This test intentionally fails (xfail) rather
-        # than being silently omitted from the checklist.
-        raise NotImplementedError(
-            "No creation path for RPContextSpecification found in rhapsody_cli.models; "
-            "see docs/superpowers/plans/2026-07-14-integration-tests-activity.md Task 9."
-        )
+    def test_multiplicities_and_value_roundtrip(self, rhapsody_app, test_project: RPProject) -> None:
+        from rhapsody_cli.models.core import RPCollection
+        from rhapsody_cli.models.elements.activity import RPContextSpecification
+
+        # No dedicated add_context_specification factory exists; try the generic
+        # addNewAggr("ContextSpecification", name) factory discovered in the
+        # xfail-improvements plan. If live Rhapsody rejects this meta-type
+        # (ContextSpecification is typically created internally for SysML
+        # parametric-diagram context bindings), mark this test
+        # @pytest.mark.xfail(reason="...", strict=False) instead of deleting it.
+        pkg = test_project.add_package(_unique("CtxPkg"))
+        try:
+            context_spec = pkg.add_new_aggr("ContextSpecification", _unique("CtxSpec"))
+            assert isinstance(context_spec, RPContextSpecification)
+
+            # get_multiplicities/get_value return an RPCollection; assert the
+            # calls succeed on a freshly-created, unbound context specification.
+            assert isinstance(context_spec.get_multiplicities(), RPCollection)
+            assert isinstance(context_spec.get_value(), RPCollection)
+
+            # set_multiplicities/set_value take an RPCollection of path
+            # elements/indices; an empty collection (obtained via the
+            # create_new_collection() factory from the xfail-improvements plan)
+            # exercises the setter round-trip without requiring a fully-wired
+            # parametric diagram.
+            context_spec.set_multiplicities(rhapsody_app.create_new_collection())
+            context_spec.set_value(rhapsody_app.create_new_collection())
+        finally:
+            pkg.delete_from_project()
 
 
 @pytest.mark.integration
@@ -818,7 +847,7 @@ Run: `pytest tests/integration/models/elements/activity/test_model_actions.py -m
 
 - [ ] **Step 3: Flip checklist boxes**
 
-In `src/rhapsody_cli/models/elements/activity/model_actions.py`, flip `getMultiplicities`, `getValue`, `setMultiplicities`, `setValue` (under `RPContextSpecification`) rows to `[x] integration test`, alongside a source comment noting the documented `xfail` (see Step 1).
+In `src/rhapsody_cli/models/elements/activity/model_actions.py`, flip `getMultiplicities`, `getValue`, `setMultiplicities`, `setValue` (under `RPContextSpecification`) rows to `[x] integration test`. If the live `add_new_aggr("ContextSpecification", ...)` call was rejected and the test required an `xfail` marker, still flip the box (the test exists and was run) but note the `xfail` reason in the commit message.
 
 - [ ] **Step 4: Run quality gate**
 
@@ -854,7 +883,7 @@ Expected output: `0` for both files.
 
 Run: `pytest tests/integration/models/elements/activity/ -m integration -v`
 
-All tests from Tasks 1–9 must pass or be explicitly `xfail`-marked with a documented reason. Exactly two `xfail`-marked areas are expected per this plan: the `RPFlow` `*ViaPort`/`*ViaSysMLPort` setters (Task 8) and `RPContextSpecification` (Task 9) — both due to the absence of an `RPInstance`/standalone-creation factory in the codebase, not test-writing shortcuts.
+All tests from Tasks 1–9 must pass or be explicitly `xfail`-marked with a documented reason. `RPFlow.set_end*_via_port`/`set_end*_via_sys_ml_port` (Task 8) and `RPContextSpecification` (Task 9) previously expected `xfail` due to missing creation paths; both now have a discovered creation path (`RPPackage.add_implicit_object` → `RPInstance` for `RPFlow`, `add_new_aggr("ContextSpecification", name)` for `RPContextSpecification`). Attempt these live first and lift the `xfail` if Rhapsody accepts the creation path; only keep `xfail` if the live attempt genuinely fails, with a documented reason.
 
 - [ ] **Step 3: Run the full quality gate one final time**
 
