@@ -597,3 +597,135 @@ class TestRPModelElementPropertiesIntegration:
             assert isinstance(value, str)
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementNavigationIntegration:
+    """Integration tests for RPModelElement navigation/search methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_find_nested_element(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("NavPkg"))
+        try:
+            class_name = self._unique("NavCls")
+            pkg.add_class(class_name)
+            found = pkg.find_nested_element(class_name, "Class")
+            assert found is not None
+            assert isinstance(found, RPModelElement)
+            assert found.get_name() == class_name
+
+            not_found = pkg.find_nested_element(self._unique("Missing"), "Class")
+            assert not_found.get_name() == ""
+        finally:
+            pkg.delete_from_project()
+
+    def test_find_nested_element_recursive(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RecPkg"))
+        try:
+            subpkg = pkg.add_package(self._unique("SubPkg"))
+            class_name = self._unique("DeepCls")
+            subpkg.add_class(class_name)
+            not_found = pkg.find_nested_element(class_name, "Class")
+            assert not_found.get_name() == ""
+            found = pkg.find_nested_element_recursive(class_name, "Class")
+            assert found is not None
+            assert isinstance(found, RPModelElement)
+            assert found.get_name() == class_name
+        finally:
+            pkg.delete_from_project()
+
+    def test_find_elements_by_full_name(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("FullNamePkg"))
+        try:
+            class_name = self._unique("FullNameCls")
+            pkg.add_class(class_name)
+            full_path = f"{pkg.get_name()}::{class_name}"
+            found = test_project.find_elements_by_full_name(full_path, "Class")
+            assert found is not None
+            assert isinstance(found, RPModelElement)
+            assert found.get_name() == class_name
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_nested_elements_recursive(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RecNestPkg"))
+        try:
+            pkg.add_class(self._unique("Child1"))
+            pkg.add_class(self._unique("Child2"))
+            elements = pkg.get_nested_elements_recursive()
+            assert isinstance(elements, RPCollection)
+            assert isinstance(elements.get_count(), int)
+            assert len(list(elements)) >= 3
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_full_path_name(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("PathPkg"))
+        try:
+            class_name = self._unique("PathCls")
+            cls = pkg.add_class(class_name)
+            full_path = cls.get_full_path_name()
+            assert isinstance(full_path, str)
+            assert pkg.get_name() in full_path
+            assert class_name in full_path
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_full_path_name_in(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("PathInPkg"))
+        try:
+            class_name = self._unique("PathInCls")
+            cls = pkg.add_class(class_name)
+            path_in = cls.get_full_path_name_in()
+            assert isinstance(path_in, str)
+            assert class_name in path_in
+            assert pkg.get_name() in path_in
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_project(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ProjPkg"))
+        try:
+            class_name = self._unique("ProjCls")
+            cls = pkg.add_class(class_name)
+            project = cls.get_project()
+            assert project is not None
+            assert isinstance(project, RPProject)
+            assert project.get_name() == test_project.get_name()
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_owner(self, test_project: RPProject) -> None:
+        pkg1 = self._create_package(test_project, self._unique("OwnerPkg1"))
+        pkg2 = self._create_package(test_project, self._unique("OwnerPkg2"))
+        try:
+            cls = pkg1.add_class(self._unique("OwnerCls"))
+            cls.set_owner(pkg2)
+            owner = cls.get_owner()
+            assert owner is not None
+            assert isinstance(owner, RPModelElement)
+            assert owner.get_name() == pkg2.get_name()
+        finally:
+            pkg2.delete_from_project()
+            pkg1.delete_from_project()
+
+    def test_has_nested_elements(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("HasNestPkg"))
+        try:
+            empty_pkg = pkg.add_package(self._unique("EmptyPkg"))
+            assert empty_pkg.has_nested_elements() == 0
+            assert isinstance(empty_pkg.has_nested_elements(), int)
+            empty_pkg.add_class(self._unique("SomeCls"))
+            assert empty_pkg.has_nested_elements() == 1
+        finally:
+            pkg.delete_from_project()
