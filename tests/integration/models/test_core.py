@@ -1200,3 +1200,145 @@ class TestRPModelElementMetadataIntegration:
             assert cls.get_is_show_display_name() == 1
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementDiagnosticsUiIntegration:
+    """Integration tests for RPModelElement diagnostics/annotations/UI-action methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_error_message_empty_after_success(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ErrPkg"))
+        try:
+            cls = pkg.add_class(self._unique("ErrCls"))
+            cls.get_name()
+            message = cls.error_message()
+            assert message == ""
+            assert isinstance(message, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_error_message_empty_after_success(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("GetErrPkg"))
+        try:
+            cls = pkg.add_class(self._unique("GetErrCls"))
+            cls.get_name()
+            message = cls.get_error_message()
+            assert message == ""
+            assert isinstance(message, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_annotations_empty_for_plain_class(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("AnnPkg"))
+        try:
+            cls = pkg.add_class(self._unique("AnnCls"))
+            annotations = cls.get_annotations()
+            assert isinstance(annotations, RPCollection)
+            assert isinstance(annotations.get_count(), int)
+            assert annotations.get_count() == 0
+            assert len(list(annotations)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_controlled_files_empty(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("CtrlPkg"))
+        try:
+            cls = pkg.add_class(self._unique("CtrlCls"))
+            files = cls.get_controlled_files()
+            assert isinstance(files, RPCollection)
+            assert isinstance(files.get_count(), int)
+            assert files.get_count() == 0
+            assert len(list(files)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_save_unit(self, test_project: RPProject) -> None:
+        from rhapsody_cli.models.core import RPUnit
+
+        pkg = self._create_package(test_project, self._unique("SaveUnitPkg"))
+        try:
+            cls = pkg.add_class(self._unique("SaveUnitCls"))
+            unit = cls.get_save_unit()
+            assert isinstance(unit, RPUnit)
+            unit_name = unit.get_name()
+            assert isinstance(unit_name, str)
+            assert pkg.get_name() in unit_name
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_main_diagram_and_set_main_diagram_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("DiagPkg"))
+        try:
+            cls = pkg.add_class(self._unique("DiagCls"))
+            diagram_name = self._unique("MyClassDiagram")
+            diagram = cls.add_new_aggr("ClassDiagram", diagram_name)
+            assert diagram is not None
+            diagram_guid = diagram.get_guid()
+            assert isinstance(diagram_guid, str)
+            assert len(diagram_guid) > 0
+
+            cls.set_main_diagram(diagram)
+            retrieved = cls.get_main_diagram()
+            assert retrieved is not None
+            assert retrieved.get_guid() == diagram_guid
+        finally:
+            pkg.delete_from_project()
+
+    def test_has_panel_widget_returns_zero(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("PanelPkg"))
+        try:
+            cls = pkg.add_class(self._unique("PanelCls"))
+            result = cls.has_panel_widget()
+            assert isinstance(result, int)
+            assert result == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_high_light_element_does_not_raise(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("HLPkg"))
+        try:
+            cls = pkg.add_class(self._unique("HLCls"))
+            cls.high_light_element()
+        finally:
+            pkg.delete_from_project()
+
+    def test_locate_in_browser_returns_int(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("LocPkg"))
+        try:
+            cls = pkg.add_class(self._unique("LocCls"))
+            result = cls.locate_in_browser()
+            assert isinstance(result, int)
+        finally:
+            pkg.delete_from_project()
+
+    def test_open_features_dialog_does_not_raise(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("FeatPkg"))
+        try:
+            cls = pkg.add_class(self._unique("FeatCls"))
+            cls.open_features_dialog(0)
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(reason="requires RPRelation/port helpers from relations subpackage", strict=False)
+    def test_add_link_to_element(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("LinkPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("LinkSrc"))
+            cls2 = pkg.add_class(self._unique("LinkTgt"))
+            from typing import cast
+
+            none_elem: RPModelElement = cast(RPModelElement, None)
+            cls1.add_link_to_element(cls2, none_elem, none_elem, none_elem)
+        finally:
+            pkg.delete_from_project()

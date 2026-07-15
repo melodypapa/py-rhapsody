@@ -93,7 +93,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] add_dependency                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_dependency_between            [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_dependency_to                 [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] add_link_to_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_link_to_element                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_new_aggr                      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -107,17 +107,17 @@ class RPModelElement(AbstractRPModelElement):
     # [x] delete_dependency                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] delete_from_project               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] delete_oslc_link                  [x] impl  [x] docstring  [x] unit test  [x] integration test  (NotImplementedError)
-    # [x] error_message                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] error_message                    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] find_elements_by_full_name          [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] find_nested_element               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] find_nested_element_recursive      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_all_tags                      [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_annotations                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_annotations                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_association_classes           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_binary_id                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_constraints                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_constraints_by_him             [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_controlled_files              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_controlled_files              [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_decoration_style              [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_dependencies                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_description                  [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -126,7 +126,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_description_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_display_name                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_error_message                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_error_message                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_full_path_name                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_full_path_name_in               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_guid                         [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
@@ -138,7 +138,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_is_show_display_name            [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_is_unresolved                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_local_tags                    [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_main_diagram                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_main_diagram                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_meta_class                    [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] get_name                         [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] get_nested_elements               [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -163,7 +163,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_remote_uri                    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_requirement_traceability_handle [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_rmm_url                       [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_save_unit                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_save_unit                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_stereotypes                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_tag                          [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_template_parameters           [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -171,15 +171,15 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_tool_tip_html                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_user_defined_meta_class         [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] has_nested_elements               [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] has_panel_widget                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] high_light_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] has_panel_widget                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] high_light_element                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_a_template                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_description_rtf                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_display_name_rtf                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_modified                      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] is_remote                        [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] locate_in_browser                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] open_features_dialog              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] locate_in_browser                 [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] open_features_dialog              [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] remove_property                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -192,7 +192,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] set_display_name_rtf               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_guid                         [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_show_display_name            [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] set_main_diagram                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_main_diagram                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_name                         [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] set_of_template                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_owner                        [x] impl  [x] docstring  [x] unit test  [x] integration test
