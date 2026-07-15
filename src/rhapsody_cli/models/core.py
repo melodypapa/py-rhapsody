@@ -1783,31 +1783,31 @@ class RPUnit(RPModelElement):
     # IRPUnit method parity checklist:
     # [x] copy_to_another_project                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_add_to_model_mode                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_cm_header                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_cm_state                          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_cm_header                         [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_cm_state                          [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_current_directory                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_filename                         [x] impl  [x] docstring  [x] unit test  [x] integration test  (pre-existing)
-    # [x] get_include_in_next_load                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_is_stub                           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_include_in_next_load                [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_is_stub                           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_language                         [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_last_modified_time                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_nested_save_units                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_nested_save_units_count             [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_structure_diagrams                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_unit_path                         [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] is_read_only                          [x] impl  [x] docstring  [x] unit test  [ ] integration test  (pre-existing)
+    # [x] is_read_only                          [x] impl  [x] docstring  [x] unit test  [x] integration test  (pre-existing)
     # [x] is_reference_unit                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] is_separate_save_unit                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_separate_save_unit                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] load                                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] move_to_another_project_leave_a_reference [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] reference_to_another_project           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] save                                [x] impl  [x] docstring  [x] unit test  [x] integration test  (pre-existing)
-    # [x] set_cm_header                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_cm_header                         [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_filename                         [x] impl  [x] docstring  [x] unit test  [x] integration test  (pre-existing)
-    # [x] set_include_in_next_load                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_include_in_next_load                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_language                         [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] set_read_only                         [x] impl  [x] docstring  [x] unit test  [ ] integration test  (pre-existing)
-    # [x] set_separate_save_unit                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_read_only                         [x] impl  [x] docstring  [x] unit test  [x] integration test  (pre-existing)
+    # [x] set_separate_save_unit                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_unit_path                         [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] unload                              [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [inherited] getNestedElements - provided by RPModelElement

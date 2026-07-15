@@ -1456,3 +1456,98 @@ class TestRPUnitPersistenceIntegration:
             assert len(modified_time) > 0
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPUnitCmStateIntegration:
+    """Integration tests for RPUnit configuration-management/read-only/stub methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        assert isinstance(pkg, RPUnit)
+        return pkg
+
+    def test_set_and_get_read_only_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ReadOnlyPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            pkg.set_read_only(True)
+            assert pkg.is_read_only() is True
+            pkg.set_read_only(False)
+            assert pkg.is_read_only() is False
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_cm_header_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("CmHeaderPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            header = self._unique("CMHeader")
+            pkg.set_cm_header(header)
+            retrieved = pkg.get_cm_header()
+            assert isinstance(retrieved, str)
+            assert retrieved == header
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_cm_state_returns_int(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("CmStatePkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            state = pkg.get_cm_state()
+            assert isinstance(state, int)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_is_stub_after_unload(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("StubPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            assert pkg.get_is_stub() == 0
+            pkg.unload()
+            assert pkg.get_is_stub() == 1
+            pkg.load(1)
+            assert pkg.get_is_stub() == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_separate_save_unit_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SeparatePkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            original = pkg.is_separate_save_unit()
+            assert isinstance(original, int)
+            pkg.set_separate_save_unit(1)
+            assert pkg.is_separate_save_unit() == 1
+            pkg.set_separate_save_unit(0)
+            assert pkg.is_separate_save_unit() == 0
+            pkg.set_separate_save_unit(original)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_include_in_next_load_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("NextLoadPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            original = pkg.get_include_in_next_load()
+            assert isinstance(original, int)
+            pkg.set_include_in_next_load(1)
+            assert pkg.get_include_in_next_load() == 1
+            pkg.set_include_in_next_load(0)
+            assert pkg.get_include_in_next_load() == 0
+            pkg.set_include_in_next_load(original)
+        finally:
+            pkg.delete_from_project()
