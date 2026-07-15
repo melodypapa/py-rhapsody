@@ -947,3 +947,94 @@ class TestRPModelElementRedefinesConstraintsIntegration:
             assert isinstance(constraints.get_count(), int)
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementOslcRemoteIntegration:
+    """Integration tests for RPModelElement OSLC, remote and requirement traceability methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_create_oslc_link_raises_not_implemented(self, test_project: RPProject) -> None:
+        with pytest.raises(NotImplementedError):
+            test_project.create_oslc_link("someType", "http://example.com")
+
+    def test_delete_oslc_link_raises_not_implemented(self, test_project: RPProject) -> None:
+        with pytest.raises(NotImplementedError):
+            test_project.delete_oslc_link("someType", "http://example.com")
+
+    def test_get_oslc_links_raises_not_implemented(self, test_project: RPProject) -> None:
+        with pytest.raises(NotImplementedError):
+            test_project.get_oslc_links()
+
+    def test_get_hyper_links_returns_empty_collection(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("HyperLinkPkg"))
+        try:
+            cls = pkg.add_class(self._unique("HyperLinkCls"))
+            hyper_links = cls.get_hyper_links()
+            assert isinstance(hyper_links, RPCollection)
+            assert isinstance(hyper_links.get_count(), int)
+            assert hyper_links.get_count() == 0
+            assert len(list(hyper_links)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_remote_uri_returns_empty_string(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RemoteUriPkg"))
+        try:
+            cls = pkg.add_class(self._unique("RemoteUriCls"))
+            uri = cls.get_remote_uri()
+            assert isinstance(uri, str)
+            assert uri == ""
+        finally:
+            pkg.delete_from_project()
+
+    def test_is_remote_returns_zero(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("IsRemotePkg"))
+        try:
+            cls = pkg.add_class(self._unique("IsRemoteCls"))
+            result = cls.is_remote()
+            assert isinstance(result, int)
+            assert result == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_rmm_url_returns_empty_string(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RmmUrlPkg"))
+        try:
+            cls = pkg.add_class(self._unique("RmmUrlCls"))
+            url = cls.get_rmm_url()
+            assert isinstance(url, str)
+            assert url == ""
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_requirement_traceability_handle_default(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ReqTracePkg"))
+        try:
+            cls = pkg.add_class(self._unique("ReqTraceCls"))
+            handle = cls.get_requirement_traceability_handle()
+            assert isinstance(handle, int)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_and_get_requirement_traceability_handle_roundtrip(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ReqTraceRoundPkg"))
+        try:
+            cls = pkg.add_class(self._unique("ReqTraceRoundCls"))
+            handle_value = 12345
+            cls.set_requirement_traceability_handle(handle_value)
+            retrieved = cls.get_requirement_traceability_handle()
+            assert isinstance(retrieved, int)
+            assert retrieved == handle_value
+        finally:
+            pkg.delete_from_project()
