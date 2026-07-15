@@ -121,6 +121,178 @@ class TestRPCollectionAddItemIntegration:
 
 
 @pytest.mark.integration
+class TestRPCollectionMutationMethodsIntegration:
+    """Integration tests for RPCollection mutation methods with live Rhapsody COM API.
+
+    These tests use ``rhapsody_app.create_new_collection()`` to obtain a genuinely
+    mutable collection. Read-only snapshots such as ``getNestedElements()`` are
+    intentionally avoided because mutations on them are silently ignored.
+    """
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_add_graphical_item_appends_and_count_increases(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("GfxItemPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("GfxItemCls1"))
+            cls2 = pkg.add_class(self._unique("GfxItemCls2"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+
+            before = collection.get_count()
+            assert isinstance(before, int)
+            assert before == 0
+
+            collection.add_graphical_item(cls1)
+            collection.add_graphical_item(cls2)
+            after = collection.get_count()
+            assert isinstance(after, int)
+            assert after == before + 2
+
+            items = [item.get_name() for item in collection]
+            assert cls1.get_name() in items
+            assert cls2.get_name() in items
+        finally:
+            pkg.delete_from_project()
+
+    def test_to_list_returns_python_list_of_items(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("ToListPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("ToListCls1"))
+            cls2 = pkg.add_class(self._unique("ToListCls2"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.add_item(cls1)
+            collection.add_item(cls2)
+
+            result = collection.to_list()
+            assert isinstance(result, list)
+            assert len(result) == collection.get_count()
+            assert cls1.get_name() in [item.get_name() for item in result]
+            assert cls2.get_name() in [item.get_name() for item in result]
+            assert all(isinstance(item, RPModelElement) for item in result)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_size_changes_count(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("SetSizePkg"))
+        try:
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            assert collection.get_count() == 0
+
+            collection.set_size(3)
+            count = collection.get_count()
+            assert isinstance(count, int)
+            assert count == 3
+        finally:
+            pkg.delete_from_project()
+
+    def test_remove_decreases_count(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("RemovePkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("RemoveCls1"))
+            cls2 = pkg.add_class(self._unique("RemoveCls2"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.add_item(cls1)
+            collection.add_item(cls2)
+            before = collection.get_count()
+            assert before == 2
+
+            collection.remove(1)
+            after = collection.get_count()
+            assert isinstance(after, int)
+            assert after == before - 1
+
+            remaining = [item.get_name() for item in collection]
+            assert cls1.get_name() not in remaining
+            assert cls2.get_name() in remaining
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_model_element_replaces_item_at_index(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("SetModelElemPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("SetModelElemCls1"))
+            cls2 = pkg.add_class(self._unique("SetModelElemCls2"))
+            cls3 = pkg.add_class(self._unique("SetModelElemCls3"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.add_item(cls1)
+            collection.add_item(cls2)
+            assert collection.get_count() == 2
+
+            collection.set_model_element(1, cls3)
+            replaced = collection.get_item(1)
+            assert isinstance(replaced, RPModelElement)
+            assert replaced.get_name() == cls3.get_name()
+        finally:
+            pkg.delete_from_project()
+
+    def test_empty_clears_collection(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("EmptyPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("EmptyCls1"))
+            cls2 = pkg.add_class(self._unique("EmptyCls2"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.add_item(cls1)
+            collection.add_item(cls2)
+            assert collection.get_count() == 2
+
+            collection.empty()
+            count = collection.get_count()
+            assert isinstance(count, int)
+            assert count == 0
+            assert len(list(collection)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="read-back of variant typed slots is not reliable on all collections")
+    def test_set_string_stores_value(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("SetStrPkg"))
+        try:
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.set_size(1)
+            collection.set_string(1, "marker")
+
+            item = collection.get_item(1)
+            assert "marker" in str(item)
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="read-back of variant typed slots is not reliable on all collections")
+    def test_set_integer_stores_value(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("SetIntPkg"))
+        try:
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+            collection.set_size(1)
+            collection.set_integer(1, 42)
+
+            item = collection.get_item(1)
+            assert "42" in str(item)
+        finally:
+            pkg.delete_from_project()
+
+
+@pytest.mark.integration
 class TestRPModelElementDependenciesIntegration:
     """Integration tests for RPModelElement dependency/association methods."""
 
