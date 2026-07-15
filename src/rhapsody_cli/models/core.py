@@ -2073,13 +2073,16 @@ class RPUnit(RPModelElement):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.referenceToAnotherProject(parent_in_target._com)))
 
-    def save(self) -> None:
+    def save(self, with_subs: int = 0) -> None:
         """Saves the unit.
+
+        Args:
+            with_subs: 1 to save the unit and its subunits, 0 to save only the unit itself (default: 0)
 
         Reference:
             com.telelogic.rhapsody.core.IRPUnit::save(int)
         """
-        AbstractRPModelElement.call_com(lambda: self._com.save())
+        AbstractRPModelElement.call_com(lambda: self._com.save(with_subs))
 
     def set_cm_header(self, cm_header: str) -> None:
         """Sets the Configuration Management tool header for the unit.
