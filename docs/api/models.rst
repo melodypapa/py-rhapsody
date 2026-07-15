@@ -52,6 +52,70 @@ Diagram Elements
    :undoc-members:
    :show-inheritance:
 
+Activity Elements
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.activity
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Statechart Elements
+~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.statemachine
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Interaction Elements
+~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.interactions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Graphics Elements
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.graphics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Common Elements
+~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.common
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Value Elements
+~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.values
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Template Elements
+~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.templates
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Support Package
+~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.support
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Relation Elements
 ~~~~~~~~~~~~~~~~~
 
