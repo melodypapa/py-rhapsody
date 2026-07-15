@@ -95,7 +95,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] add_dependency_to                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_link_to_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_new_aggr                      [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_remote_dependency_to           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_specific_stereotype           [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -148,15 +148,15 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_of_template                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_oslc_links                    [x] impl  [x] docstring  [x] unit test  [ ] integration test  (NotImplementedError)
     # [x] get_overlay_icon_file_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_overridden_properties         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_overridden_properties_by_pattern [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_overridden_properties         [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_overridden_properties_by_pattern [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_owned_dependencies            [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_owner                        [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_project                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_property_value                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_property_value_conditional     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_property_value_conditional_explicit [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_property_value_explicit        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_property_value                [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_property_value_conditional     [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_property_value_conditional_explicit [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_property_value_explicit        [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_references                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_remote_dependencies           [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -180,7 +180,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] is_remote                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] locate_in_browser                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] open_features_dialog              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] remove_property                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_property                  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -196,7 +196,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] set_name                         [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] set_of_template                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_owner                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_property_value                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_property_value                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_requirement_traceability_handle [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_tag_context_value              [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_tag_element_value              [x] impl  [x] docstring  [x] unit test  [x] integration test

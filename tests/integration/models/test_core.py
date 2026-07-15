@@ -490,3 +490,110 @@ class TestRPModelElementDescriptionDisplayNameIntegration:
             assert isinstance(display_name, str)
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementPropertiesIntegration:
+    """Integration tests for RPModelElement property methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_add_property_and_get_property_value(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("AddPropPkg"))
+        try:
+            prop_key = "Custom::" + self._unique("MyProp")
+            prop_value = self._unique("propVal")
+            pkg.add_property(prop_key, "String", prop_value)
+            retrieved = pkg.get_property_value(prop_key)
+            assert retrieved == prop_value
+            assert isinstance(retrieved, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_set_property_value_and_read_back(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SetPropPkg"))
+        try:
+            pkg.set_property_value("General::Graphics::ShowLabels", "False")
+            value = pkg.get_property_value("General::Graphics::ShowLabels")
+            assert isinstance(value, str)
+            assert value == "False"
+        finally:
+            pkg.delete_from_project()
+
+    def test_add_then_remove_property(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RemPropPkg"))
+        try:
+            prop_key = "Custom::" + self._unique("RemoveMe")
+            pkg.add_property(prop_key, "String", "to_be_removed")
+            before = pkg.get_property_value(prop_key)
+            assert before == "to_be_removed"
+
+            pkg.remove_property(prop_key)
+            after = pkg.get_property_value(prop_key)
+            assert isinstance(after, str)
+            assert after == ""
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_property_value_explicit(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("PropExpPkg"))
+        try:
+            pkg.set_property_value("General::Graphics::ShowLabels", "False")
+            explicit = pkg.get_property_value_explicit("General::Graphics::ShowLabels")
+            assert isinstance(explicit, str)
+            assert explicit == "False"
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_overridden_properties(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("OvPropPkg"))
+        try:
+            pkg.set_property_value("General::Graphics::ShowLabels", "True")
+            overridden = pkg.get_overridden_properties(0)
+            assert isinstance(overridden, RPCollection)
+            assert isinstance(overridden.get_count(), int)
+            assert overridden.get_count() > 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_overridden_properties_by_pattern(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("OvPropPatPkg"))
+        try:
+            pkg.set_property_value("General::Graphics::ShowLabels", "True")
+            matched = pkg.get_overridden_properties_by_pattern("General*", 0, 0)
+            assert isinstance(matched, RPCollection)
+            assert isinstance(matched.get_count(), int)
+            assert len(list(matched)) >= 1
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_property_value_conditional(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("CondPkg"))
+        try:
+            formal = rhapsody_app.create_new_collection()
+            actual = rhapsody_app.create_new_collection()
+            pkg.set_property_value("General::Graphics::ShowLabels", "True")
+            value = pkg.get_property_value_conditional("General::Graphics::ShowLabels", formal, actual)
+            assert isinstance(value, str)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_property_value_conditional_explicit(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("CondExpPkg"))
+        try:
+            formal = rhapsody_app.create_new_collection()
+            actual = rhapsody_app.create_new_collection()
+            pkg.set_property_value("General::Graphics::ShowLabels", "True")
+            value = pkg.get_property_value_conditional_explicit("General::Graphics::ShowLabels", formal, actual)
+            assert isinstance(value, str)
+        finally:
+            pkg.delete_from_project()
