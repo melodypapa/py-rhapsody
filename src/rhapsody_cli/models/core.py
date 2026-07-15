@@ -89,22 +89,22 @@ class RPModelElement(AbstractRPModelElement):
     """
 
     # IRPModelElement method parity checklist:
-    # [x] add_association                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] add_dependency                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] add_dependency_between            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] add_dependency_to                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_association                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] add_dependency                   [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] add_dependency_between            [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] add_dependency_to                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_link_to_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_new_aggr                      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] add_remote_dependency_to           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_remote_dependency_to           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_specific_stereotype           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_stereotype                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] become_template_instantiation_of   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] change_to                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] clone                           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] create_oslc_link                  [x] impl  [x] docstring  [x] unit test  [ ] integration test  (NotImplementedError)
-    # [x] delete_dependency                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_dependency                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] delete_from_project               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] delete_oslc_link                  [x] impl  [x] docstring  [x] unit test  [ ] integration test  (NotImplementedError)
     # [x] error_message                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -113,13 +113,13 @@ class RPModelElement(AbstractRPModelElement):
     # [x] find_nested_element_recursive      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_all_tags                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_annotations                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_association_classes           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_association_classes           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_binary_id                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_constraints                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_constraints_by_him             [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_controlled_files              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_dependencies                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_dependencies                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_description                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_description_html              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_description_plain_text         [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -150,7 +150,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_overlay_icon_file_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_overridden_properties         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_overridden_properties_by_pattern [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_owned_dependencies            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_owned_dependencies            [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_owner                        [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_project                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_property_value                [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -158,8 +158,8 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_property_value_conditional_explicit [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_property_value_explicit        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_references                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_remote_dependencies           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_references                   [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_remote_dependencies           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_remote_uri                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_requirement_traceability_handle [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_rmm_url                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
