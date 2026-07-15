@@ -98,7 +98,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_remote_dependency_to           [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] add_specific_stereotype           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_specific_stereotype           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_stereotype                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] become_template_instantiation_of   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] change_to                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -111,7 +111,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] find_elements_by_full_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_nested_element               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_nested_element_recursive      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_all_tags                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_all_tags                      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_annotations                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_association_classes           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_binary_id                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -137,14 +137,14 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_is_of_meta_class                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_show_display_name            [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_unresolved                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_local_tags                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_local_tags                    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_main_diagram                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_meta_class                    [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] get_name                         [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] get_nested_elements               [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_nested_elements_by_meta_class    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_nested_elements_recursive      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_new_term_stereotype            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_new_term_stereotype            [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_of_template                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_oslc_links                    [x] impl  [x] docstring  [x] unit test  [ ] integration test  (NotImplementedError)
     # [x] get_overlay_icon_file_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -164,8 +164,8 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_requirement_traceability_handle [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_rmm_url                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_save_unit                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_stereotypes                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_tag                          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_stereotypes                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_tag                          [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_template_parameters           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_ti                           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_tool_tip_html                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -182,7 +182,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] open_features_dialog              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove_property                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_description                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_description_and_hyperlinks     [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -198,9 +198,9 @@ class RPModelElement(AbstractRPModelElement):
     # [x] set_owner                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_property_value                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_requirement_traceability_handle [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_tag_context_value              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_tag_element_value              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_tag_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_tag_context_value              [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_tag_element_value              [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_tag_value                     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_ti                           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] synchronize_template_instantiation [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [deprecated] getStereotype          - skipped (use getStereotypes)

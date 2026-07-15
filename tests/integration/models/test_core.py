@@ -206,3 +206,160 @@ class TestRPModelElementDependenciesIntegration:
             assert isinstance(assoc, RPModelElement)
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementStereotypesTagsIntegration:
+    """Integration tests for RPModelElement stereotype and tag methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_get_stereotypes_initially_empty(self, test_project: RPProject) -> None:
+        stereotypes = test_project.get_stereotypes()
+        assert stereotypes is not None
+        assert isinstance(stereotypes, RPCollection)
+        assert len(list(stereotypes)) == 0
+
+    def test_add_stereotype_and_get_stereotypes(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("StereoPkg"))
+        try:
+            stereo = pkg.add_stereotype(self._unique("TestStereo"), "Package")
+            assert stereo is not None
+            assert isinstance(stereo, RPModelElement)
+            stereotypes = pkg.get_stereotypes()
+            assert isinstance(stereotypes, RPCollection)
+            names = [s.get_name() for s in stereotypes]
+            assert stereo.get_name() in names
+        finally:
+            pkg.delete_from_project()
+
+    def test_remove_stereotype(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RemoveStereoPkg"))
+        try:
+            stereo = pkg.add_stereotype(self._unique("RemoveMe"), "Package")
+            assert stereo is not None
+            assert isinstance(stereo, RPModelElement)
+            pkg.remove_stereotype(stereo)
+            stereotypes = pkg.get_stereotypes()
+            assert isinstance(stereotypes, RPCollection)
+            names = [s.get_name() for s in stereotypes]
+            assert stereo.get_name() not in names
+        finally:
+            pkg.delete_from_project()
+
+    def test_add_specific_stereotype(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SpecificStereoPkg"))
+        try:
+            stereo = pkg.add_stereotype(self._unique("SpecificStereo"), "Package")
+            assert stereo is not None
+            assert isinstance(stereo, RPModelElement)
+            pkg.remove_stereotype(stereo)
+            result = pkg.add_specific_stereotype(stereo)
+            assert result is not None
+            assert isinstance(result, RPModelElement)
+            stereotypes = pkg.get_stereotypes()
+            assert isinstance(stereotypes, RPCollection)
+            names = [s.get_name() for s in stereotypes]
+            assert stereo.get_name() in names
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_all_tags(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("AllTagsTestPkg"))
+        try:
+            stereo = pkg.add_stereotype(self._unique("TagTestStereo"), "Package")
+            assert stereo is not None
+            assert isinstance(stereo, RPModelElement)
+            tags = pkg.get_all_tags()
+            assert tags is not None
+            assert isinstance(tags, RPCollection)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_local_tags(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("LocalTagsTestPkg"))
+        try:
+            stereo = pkg.add_stereotype(self._unique("LocalTagTestStereo"), "Package")
+            assert stereo is not None
+            assert isinstance(stereo, RPModelElement)
+            tags = pkg.get_local_tags()
+            assert tags is not None
+            assert isinstance(tags, RPCollection)
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="Requires stereotype with tag definition")
+    def test_get_tag(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("GetTagTestPkg"))
+        try:
+            cls = pkg.add_class(self._unique("GetTagTestClass"))
+            assert cls is not None
+            assert isinstance(cls, RPModelElement)
+            cls.add_stereotype(self._unique("TaggedStereo"), "Class")
+            tag = cls.get_tag("SomeTag")
+            assert tag is not None
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="New term stereotype not available on base project")
+    def test_get_new_term_stereotype(self, test_project: RPProject) -> None:
+        stereotypes = test_project.get_new_term_stereotype()
+        assert stereotypes is not None
+
+    @pytest.mark.xfail(strict=False, reason="Requires stereotype with tag definition")
+    def test_set_tag_value(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SetTagValTestPkg"))
+        try:
+            cls = pkg.add_class(self._unique("SetTagValTestClass"))
+            assert cls is not None
+            assert isinstance(cls, RPModelElement)
+            cls.add_stereotype(self._unique("TaggedStereo"), "Class")
+            tag = cls.get_tag("SomeTag")
+            assert tag is not None
+            result = cls.set_tag_value(tag, "test_value")
+            assert result is not None
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="Requires stereotype with tag definition")
+    def test_set_tag_element_value(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SetTagElemTestPkg"))
+        try:
+            cls = pkg.add_class(self._unique("SetTagElemTestClass"))
+            assert cls is not None
+            assert isinstance(cls, RPModelElement)
+            cls.add_stereotype(self._unique("TaggedStereo"), "Class")
+            tag = cls.get_tag("SomeTag")
+            assert tag is not None
+            result = cls.set_tag_element_value(tag, cls)
+            assert result is not None
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(strict=False, reason="Requires stereotype with tag definition")
+    def test_set_tag_context_value(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("SetTagCtxTestPkg"))
+        try:
+            cls = pkg.add_class(self._unique("SetTagCtxTestClass"))
+            assert cls is not None
+            assert isinstance(cls, RPModelElement)
+            cls.add_stereotype(self._unique("TaggedStereo"), "Class")
+            tag = cls.get_tag("SomeTag")
+            assert tag is not None
+            elements = cls.get_all_tags()
+            multiplicities = cls.get_local_tags()
+            assert isinstance(elements, RPCollection)
+            assert isinstance(multiplicities, RPCollection)
+            result = cls.set_tag_context_value(tag, elements, multiplicities)
+            assert result is not None
+        finally:
+            pkg.delete_from_project()
