@@ -46,7 +46,7 @@ Key Features
 * **Error Handling**: Comprehensive error handling with meaningful error messages
 * **Type Annotations**: Full type hints for IDE support and static analysis
 * **CLI Tools**: Command-line interface for common tasks
-* **Test-Driven**: Comprehensive test suite with 161+ tests
+* **Test-Driven**: Comprehensive test suite with 1519 tests
 
 Architecture
 ------------
