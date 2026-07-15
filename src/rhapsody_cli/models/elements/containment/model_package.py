@@ -273,34 +273,6 @@ class RPPackage(RPUnit):
         """
         return cast("RPUseCase", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addUseCase(name))))
 
-    def add_interface(self, name: str) -> Any:
-        """Adds a new interface to the package.
-
-        Args:
-            name: The name of the new interface.
-
-        Returns:
-            The wrapped interface element created.
-        """
-        # TODO: Under Rhapsody2.Application.1 the 'addInterface' COM method is not exposed on a
-        # package and addNewAggr('Interface') does not create an Interface; this raises. Use the
-        # correct metaclass/owner when Rhapsody exposes Interface creation.
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addInterface(name)))
-
-    def add_signal(self, name: str) -> Any:
-        """Adds a new signal to the package.
-
-        Args:
-            name: The name of the new signal.
-
-        Returns:
-            The wrapped signal element created.
-        """
-        # TODO: Under Rhapsody2.Application.1 neither the 'addSignal' COM method nor
-        # addNewAggr('Signal') is supported on a package; this raises. Use the correct
-        # metaclass/owner when Rhapsody exposes Signal creation.
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addSignal(name)))
-
     def add_exception(self, name: str) -> Any:
         """Adds a new exception to the package.
 
@@ -311,28 +283,6 @@ class RPPackage(RPUnit):
             The wrapped exception element created.
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addException(name)))
-
-    def add_enumeration(self, name: str) -> Any:
-        """Adds a new enumeration to the package.
-
-        Args:
-            name: The name of the new enumeration.
-
-        Returns:
-            The wrapped enumeration element created.
-        """
-        # TODO: Under Rhapsody2.Application.1 neither the 'addEnumeration' COM method nor
-        # addNewAggr('Enumeration') is supported on a package; this raises. Use the correct
-        # metaclass/owner when Rhapsody exposes Enumeration creation.
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEnumeration(name)))
-
-    def get_enumerations(self) -> "RPCollection":
-        """Returns all enumerations contained in this package.
-
-        Returns:
-            An ``RPCollection`` of enumeration elements.
-        """
-        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getEnumerations", "enumerations"))
 
     # --- Diagram adders (Pattern E) ---
     def add_activity_diagram(self, name: str) -> "RPActivityDiagram":
