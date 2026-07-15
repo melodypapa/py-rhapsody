@@ -60,6 +60,14 @@ Activity Elements
    :undoc-members:
    :show-inheritance:
 
+Statechart Elements
+~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: rhapsody_cli.models.elements.statemachine
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Relation Elements
 ~~~~~~~~~~~~~~~~~
 
