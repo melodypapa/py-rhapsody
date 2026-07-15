@@ -872,3 +872,78 @@ class TestRPModelElementCloningTemplatesIntegration:
             # No return value: just verify no exception
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPModelElementRedefinesConstraintsIntegration:
+    """Integration tests for RPModelElement redefine and constraint methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_add_redefines_and_get_redefines(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RedefPkg"))
+        try:
+            base_cls = pkg.add_class(self._unique("BaseCls"))
+            base_op = base_cls.add_operation("baseOp")
+            child_cls = pkg.add_class(self._unique("ChildCls"))
+            new_op = child_cls.add_operation("baseOp")
+            new_op.add_redefines(base_op)
+
+            redefines = new_op.get_redefines()
+            assert isinstance(redefines, RPCollection)
+            assert isinstance(redefines.get_count(), int)
+            assert redefines.get_count() >= 1
+        finally:
+            pkg.delete_from_project()
+
+    def test_remove_redefines(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RemRedefPkg"))
+        try:
+            base_cls = pkg.add_class(self._unique("RemBaseCls"))
+            base_op = base_cls.add_operation("baseOp")
+            child_cls = pkg.add_class(self._unique("RemChildCls"))
+            new_op = child_cls.add_operation("baseOp")
+            new_op.add_redefines(base_op)
+
+            redefines_before = new_op.get_redefines()
+            assert isinstance(redefines_before, RPCollection)
+            assert redefines_before.get_count() >= 1
+
+            new_op.remove_redefines(base_op)
+
+            redefines_after = new_op.get_redefines()
+            assert isinstance(redefines_after, RPCollection)
+            assert redefines_after.get_count() == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_constraints(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ConstrPkg"))
+        try:
+            cls = pkg.add_class(self._unique("ConstrCls"))
+            constraints = cls.get_constraints()
+            assert constraints is not None
+            assert isinstance(constraints, RPCollection)
+            assert isinstance(constraints.get_count(), int)
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_constraints_by_him(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("ConstrHimPkg"))
+        try:
+            cls = pkg.add_class(self._unique("ConstrHimCls"))
+            constraints = cls.get_constraints_by_him()
+            assert constraints is not None
+            assert isinstance(constraints, RPCollection)
+            assert isinstance(constraints.get_count(), int)
+        finally:
+            pkg.delete_from_project()

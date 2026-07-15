@@ -96,7 +96,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] add_link_to_element                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_new_aggr                      [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_property                     [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_redefines                    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_remote_dependency_to           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_specific_stereotype           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] add_stereotype                   [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -115,8 +115,8 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_annotations                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_association_classes           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_binary_id                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_constraints                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_constraints_by_him             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_constraints                  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] get_constraints_by_him             [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_controlled_files              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_dependencies                 [x] impl  [x] docstring  [x] unit test  [x] integration test
@@ -157,7 +157,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] get_property_value_conditional     [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_property_value_conditional_explicit [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_property_value_explicit        [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_redefines                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_redefines                    [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_references                   [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_remote_dependencies           [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_remote_uri                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -181,7 +181,7 @@ class RPModelElement(AbstractRPModelElement):
     # [x] locate_in_browser                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] open_features_dialog              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove_property                  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_redefines                 [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] remove_stereotype                [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_decoration_style              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_description                  [x] impl  [x] docstring  [x] unit test  [x] integration test
