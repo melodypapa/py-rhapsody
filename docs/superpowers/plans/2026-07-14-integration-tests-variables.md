@@ -89,7 +89,7 @@ def test_attribute_type_via_existing_classifier(self, test_project: RPProject) -
 ```
 
 For remaining methods, follow the same pattern:
-- `test_attribute_declaration_direct_set` — call `attr.set_declaration("int")` directly (not via `set_type_declaration`) and assert `attr.get_declaration() == "int"`. Mark `xfail` only if this direct path also no-ops in the live environment; otherwise this is expected to pass and confirms `get_declaration`/`set_declaration` independently of the known `set_type_declaration` quirk.
+- `test_attribute_declaration_direct_set` — **implemented** in `tests/integration/models/elements/variables/test_model_attribute.py` (see `docs/superpowers/plans/2026-07-15-fix-operation-setter-and-attribute-declaration-tests.md`). Confirmed the direct `set_declaration`/`get_declaration` path works independently of the known `set_type_declaration` type-reuse behavior.
 - `test_attribute_set_type_declaration_reuses_existing_type` — mark `@pytest.mark.xfail` with the same reason string already used in `test_attribute_type_roundtrip` (do not duplicate the existing xfail test; only add this if there is a distinct scenario, e.g. verifying `set_type_declaration` reuses a matching existing type by name — otherwise skip and rely on the existing xfail test to represent this row).
 
 - [ ] **Step 2: Run the new tests against live Rhapsody**

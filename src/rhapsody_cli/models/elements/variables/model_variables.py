@@ -27,14 +27,14 @@ class RPVariable(RPUnit):
     # IRPVariable method parity checklist:
     # [x] add_element_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_string_default_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_default_value  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] get_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_type  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_value_specifications  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_default_value  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_type_declaration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_type_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
     # No deprecated IRPVariable methods.
 
