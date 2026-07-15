@@ -97,27 +97,27 @@ Connect to Rhapsody and open a project:
    app = RhapsodyApplication()
    app.connect()  # Try to attach to existing instance, then launch if needed
 
-   project = app.openProject("C:\\path\\to\\project.rpy")
+   project = app.open_project("C:\\path\\to\\project.rpy")
 
 Access model elements:
 
 .. code-block:: python
 
    # Get all packages
-   packages = project.getPackages()
+   packages = project.get_packages()
 
    # Find a specific package
-   package = project.findNestedPackageByName("MyPackage")
+   package = project.find_nested_package_by_name("MyPackage")
 
    # Get all classes in a package
-   classes = package.getClasses()
+   classes = package.get_classes()
 
    # Create a new class
-   new_class = package.createClassElement("NewClass")
+   new_class = package.add_class("NewClass")
 
    # Add attributes and operations
-   attribute = new_class.createAttribute("myAttribute")
-   operation = new_class.createOperation("myOperation")
+   attribute = new_class.add_attribute("myAttribute")
+   operation = new_class.add_operation("myOperation")
 
 Close the project:
 
