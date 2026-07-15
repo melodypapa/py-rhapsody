@@ -19,7 +19,24 @@ Unlike the other 14 support/elements subpackages, **every single class in `src/r
 5. **None of the 17 classes in `models/support/` are registered via `AbstractRPModelElement.register_wrapper(...)`** (grep for `register_wrapper` in `models/support/*.py` returned zero matches). Even if a COM object of one of these types were returned by some other, already-implemented method via the generic `AbstractRPModelElement.wrap()` dispatch, it would not be dispatched to the correct wrapper class today — reinforcing that these classes are presently unreachable stubs, exactly as their module docstrings ("auto-generated stubs") state.
 6. Several classes (`RPBaseExternalCodeGeneratorTool` and its subclasses `RPCodeGenSimplifiersRegistry`/`RPExternalCodeGeneratorInvoker`, `RPExternalCheckRegistry`, `RPExternalIDERegistry`, `RPInternalOEMPlugin`, `RPowListListener`, `RPowTextListener`) are **plugin/callback interfaces** implemented by external tools and invoked *by* Rhapsody (not obtained *from* Rhapsody via a getter). These require an entirely different test strategy (e.g. registering a Python-side COM server as a Rhapsody plugin) that is out of scope for a getter-based integration test and is not addressed by this plan.
 
-**Conclusion: all 169 methods across the 3 files are documented as BLOCKED in this plan.** No fabricated/fake creation paths are used. Every blocked task below states the specific real (or realistically inferable) factory method that would need to be added, in a future separate change, to make the class instantiable for testing.
+**Original conclusion (superseded):** at plan-authoring time, all 169 methods across the 3 files were documented as BLOCKED — no factory method on `RhapsodyApplication` returned any support-package type. **This is no longer fully true:** the xfail-improvements plan added 8 getter methods to `RhapsodyApplication` that return support-package wrappers. See "Newly Unblocked Classes" below. The remaining classes are still blocked.
+
+## Newly Unblocked Classes (from xfail-improvements plan)
+
+The following 8 classes now have factory methods on `RhapsodyApplication` and can be integration-tested:
+
+| Class | Factory method | Methods unblocked |
+|-------|---------------|-------------------|
+| `RPSearchManager` | `app.get_search_manager()` | 4 |
+| `RPSelection` | `app.get_selection()` | 8 |
+| `RPCodeGenSimplifiersRegistry` | `app.get_code_gen_simplifiers_registry()` | 1 |
+| `RPDiagSynthAPI` | `app.get_diag_synth_api(client_name)` | 7 |
+| `RPExternalCheckRegistry` | `app.get_external_checker_registry()` | 2 |
+| `RPExternalIDERegistry` | `app.get_external_ide_registry(client_id)` | 3 |
+| `RPExternalRoundtripInvoker` | `app.get_external_roundtrip_invoker()` | 0 (only inherited `get_interface_name`) |
+| `RPowPaneMgr` | `app.get_ow_pane_mgr(client_id)` | 4 |
+
+The remaining classes (`RPCodeGenerator`, `RPRhapsodyServer`, `RPFile`, `RPControlledFile`, `RPASCIIFile`, `RPProgressBar`, `RPAXViewCtrl`, `RPInternalOEMPlugin`, `RPJavaPlugins`, `RPPlugInWindow`, `RPBaseExternalCodeGeneratorTool`/`RPExternalCodeGeneratorInvoker`, `RPowListListener`, `RPowTextListener`, `RPRoundTrip`, `RPIntegrator`, etc.) are still blocked — no factory method returns them.
 
 ## Global Constraints
 
