@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from rhapsody_cli import RhapsodyApplication
-from rhapsody_cli.models.core import RPCollection, RPModelElement, RPUnit
+from rhapsody_cli.models.core import AddToModelMode, RPCollection, RPModelElement, RPUnit
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 from tests.integration.conftest import TEST_PROJECT_DIR
 
@@ -1551,3 +1551,145 @@ class TestRPUnitCmStateIntegration:
             pkg.set_include_in_next_load(original)
         finally:
             pkg.delete_from_project()
+
+
+@pytest.mark.integration
+class TestRPUnitCrossProjectIntegration:
+    """Integration tests for RPUnit cross-project and nesting methods."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        assert isinstance(pkg, RPUnit)
+        return pkg
+
+    def test_get_nested_save_units_empty_on_plain_package(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("NestPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            units = pkg.get_nested_save_units()
+            assert isinstance(units, RPCollection)
+            assert isinstance(units.get_count(), int)
+            assert len(list(units)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_nested_save_units_count_matches_collection(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("NestPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            sub_pkg = pkg.add_package(self._unique("SubPkg"))
+            sub_pkg.set_separate_save_unit(1)
+            sub_pkg.save()
+
+            count = pkg.get_nested_save_units_count()
+            units = pkg.get_nested_save_units()
+            assert isinstance(count, int)
+            assert count == len(list(units))
+            assert count >= 1
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_structure_diagrams_empty_on_class(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("StructPkg"))
+        try:
+            cls = pkg.add_class(self._unique("StructCls"))
+            assert isinstance(cls, RPUnit)
+            diagrams = cls.get_structure_diagrams()
+            assert isinstance(diagrams, RPCollection)
+            assert isinstance(diagrams.get_count(), int)
+            assert len(list(diagrams)) == 0
+        finally:
+            pkg.delete_from_project()
+
+    def test_get_add_to_model_mode_returns_int(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("AddModePkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            mode = pkg.get_add_to_model_mode()
+            assert isinstance(mode, int)
+            assert mode in (member.value for member in AddToModelMode)
+        finally:
+            pkg.delete_from_project()
+
+    def test_is_reference_unit_false_for_local_unit(self, test_project: RPProject) -> None:
+        pkg = self._create_package(test_project, self._unique("RefPkg"))
+        try:
+            assert isinstance(pkg, RPUnit)
+            pkg.save()
+            assert pkg.is_reference_unit() == 0
+        finally:
+            pkg.delete_from_project()
+
+    @pytest.mark.xfail(reason="requires a second live project as copy target", strict=False)
+    def test_copy_to_another_project(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        import shutil
+        import tempfile
+
+        src_pkg = self._create_package(test_project, self._unique("CopySrcPkg"))
+        tmp_dir = tempfile.mkdtemp(prefix="rhapsody_copy_")
+        try:
+            src_pkg.save()
+            target_project = rhapsody_app.create_new_project(tmp_dir, self._unique("CopyTarget"))
+            try:
+                copied = src_pkg.copy_to_another_project(target_project)
+                assert copied is not None
+                assert isinstance(copied, RPModelElement)
+                assert copied.get_name() == src_pkg.get_name()
+                assert copied.is_reference_unit() == 0
+            finally:
+                target_project.close()
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+            src_pkg.delete_from_project()
+
+    @pytest.mark.xfail(reason="requires a second live project as move target", strict=False)
+    def test_move_to_another_project_leave_a_reference(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        import shutil
+        import tempfile
+
+        src_pkg = self._create_package(test_project, self._unique("MoveSrcPkg"))
+        tmp_dir = tempfile.mkdtemp(prefix="rhapsody_move_")
+        try:
+            src_pkg.save()
+            target_project = rhapsody_app.create_new_project(tmp_dir, self._unique("MoveTarget"))
+            try:
+                moved = src_pkg.move_to_another_project_leave_a_reference(target_project)
+                assert moved is not None
+                assert isinstance(moved, RPModelElement)
+                assert moved.get_name() == src_pkg.get_name()
+            finally:
+                target_project.close()
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+            src_pkg.delete_from_project()
+
+    @pytest.mark.xfail(reason="requires a second live project as reference target", strict=False)
+    def test_reference_to_another_project(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        import shutil
+        import tempfile
+
+        src_pkg = self._create_package(test_project, self._unique("RefSrcPkg"))
+        tmp_dir = tempfile.mkdtemp(prefix="rhapsody_ref_")
+        try:
+            src_pkg.save()
+            target_project = rhapsody_app.create_new_project(tmp_dir, self._unique("RefTarget"))
+            try:
+                ref = src_pkg.reference_to_another_project(target_project)
+                assert ref is not None
+                assert isinstance(ref, RPModelElement)
+                assert isinstance(ref, RPUnit)
+                assert ref.is_reference_unit() == 1
+            finally:
+                target_project.close()
+        finally:
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+            src_pkg.delete_from_project()
