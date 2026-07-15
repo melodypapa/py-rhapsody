@@ -2186,7 +2186,7 @@ class RPCollection:
     # IRPCollection method parity checklist:
     # [x] get_count  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_item  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] add_item  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_item  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] addGraphicalItem  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] toList  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] setSize  [x] impl  [x] docstring  [x] unit test  [ ] integration test

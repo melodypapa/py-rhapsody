@@ -63,6 +63,64 @@ class TestRPCollectionIntegration:
 
 
 @pytest.mark.integration
+class TestRPCollectionAddItemIntegration:
+    """Integration tests for RPCollection.add_item with live Rhapsody COM API."""
+
+    @staticmethod
+    def _unique(prefix: str = "Test") -> str:
+        return f"{prefix}_{uuid.uuid4().hex[:8]}"
+
+    @staticmethod
+    def _create_package(project: RPProject, name: str) -> RPPackage:
+        pkg = project.add_package(name)
+        assert pkg is not None
+        assert isinstance(pkg, RPPackage)
+        return pkg
+
+    def test_add_item_appends_and_count_increases(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("AddItemPkg"))
+        try:
+            cls1 = pkg.add_class(self._unique("AddItemCls1"))
+            cls2 = pkg.add_class(self._unique("AddItemCls2"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+
+            before = collection.get_count()
+            assert isinstance(before, int)
+            assert before == 0
+
+            collection.add_item(cls1)
+            collection.add_item(cls2)
+            after = collection.get_count()
+            assert isinstance(after, int)
+            assert after == before + 2
+
+            items = [item.get_name() for item in collection]
+            assert cls1.get_name() in items
+            assert cls2.get_name() in items
+        finally:
+            pkg.delete_from_project()
+
+    def test_add_item_idempotent_on_same_element(self, test_project: RPProject, rhapsody_app: RhapsodyApplication) -> None:
+        pkg = self._create_package(test_project, self._unique("AddItemIdemPkg"))
+        try:
+            cls = pkg.add_class(self._unique("AddItemIdemCls"))
+
+            collection = rhapsody_app.create_new_collection()
+            assert isinstance(collection, RPCollection)
+
+            collection.add_item(cls)
+            collection.add_item(cls)
+            assert collection.get_count() == 2
+
+            names = [item.get_name() for item in collection]
+            assert names.count(cls.get_name()) == 2
+        finally:
+            pkg.delete_from_project()
+
+
+@pytest.mark.integration
 class TestRPModelElementDependenciesIntegration:
     """Integration tests for RPModelElement dependency/association methods."""
 
