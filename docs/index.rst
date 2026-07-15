@@ -318,32 +318,25 @@ Project Structure
 Supported Element Types
 -----------------------
 
-**Basic Elements**
+The package currently wraps **50+ element types** including:
 
-* Project (RPProject)
-* Package (RPPackage)
-* Class (RPClass)
-* Actor (RPActor)
-* UseCase (RPUseCase)
-* Instance (RPInstance)
+**Containment Elements**: Project, Package, Profile, Module, Configuration, Node, Component, ComponentInstance, Collaboration
 
-**Structural Elements**
+**Classifier Elements**: Class, Actor, UseCase, Interface, InterfaceItem, Stereotype, Statechart, Operation, AssociationClass, Signal, Exception, Enumeration
 
-* Attribute (RPAttribute)
-* Operation (RPOperation)
-* Parameter (RPParameter)
-* Classifier (RPClassifier)
+**Relation Elements**: Relation, Instance, Dependency, Generalization, Hyperlink, AssociationRole
 
-**Behavioral Elements**
+**Activity Elements**: Flowchart, Flow, FlowItem, DecisionNode, MergeNode, ForkNode, JoinNode
 
-* Diagram (RPDiagram)
-* Statechart (RPStatechart)
-* Activity (RPActivity)
-* Sequence (RPSequence)
+**Statechart Elements**: State, Transition, Trigger
 
-**Type System**
+**Interaction Elements**: Message, ClassifierRole, DiagramObject
 
-* Requirement (RPRequirement)
+**Leaf Elements**: Attribute, Tag, Requirement, Variable, Annotation, Constraint, EnumerationLiteral, Diagram, Comment
+
+**Support Elements**: CodeGenerator, SearchManager, Selection, ProgressBar, File, ControlledFile
+
+Plus **hundreds of generic methods** from `RPModelElement` available on all element types.
 
 Platform Requirements
 ---------------------
