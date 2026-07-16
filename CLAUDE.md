@@ -25,7 +25,7 @@ pip install -e .              # Core package only (pywin32 on Windows)
 ### Testing
 
 ```bash
-pytest                                  # All tests
+pytest                                  # All tests (unit + integration + system)
 pytest tests/unit/                      # Unit tests only (mocked COM, no Rhapsody needed)
 pytest tests/integration/               # Integration tests (requires live Rhapsody instance)
 pytest tests/system/                    # End-to-end subprocess tests
@@ -39,7 +39,7 @@ pytest --co                             # List all tests without running
 - `tests/integration/` — Requires live, licensed Rhapsody instance (auto-skips if unavailable)
 - `tests/system/` — End-to-end subprocess tests
 
-Tests run entirely against mocked COM objects (fakes live under `tests/unit/models/fakes.py`). No Rhapsody installation or license is required to run the unit test suite.
+**Note:** Integration and system tests require Windows with Rhapsody installed and licensed. They are automatically skipped if Rhapsody is unavailable. Unit tests use fake COM objects from `tests/unit/models/fakes.py` — no Rhapsody installation or license required.
 
 ### Integration Tests
 
@@ -79,17 +79,19 @@ pytest -m unit         # Unit tests only
 ### Linting, Formatting, Type Checking
 
 ```bash
-ruff check src/ tests/       # Lint (E, F, I, UP, B rule sets)
+ruff check src/ tests/       # Lint (E, F, I, UP, B, N rule sets)
 ruff check src/ tests/ --fix # Auto-fix
 black --check src/ tests/    # Format check (line-length 200, py38 target)
 black src/ tests/            # Auto-format
 mypy src/ tests/             # Type checking (strict mode, python 3.9)
 ```
 
-Full quality gate:
+**Configuration:** `pyproject.toml` configures ruff (E, F, I, UP, B, N rules), black (200 char line length, py38 target), and mypy (strict mode, Python 3.9).
+
+Full quality gate (unit tests only, what CI runs):
 
 ```bash
-ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytest
+ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytest tests/unit
 ```
 
 ### Running the CLI
@@ -127,10 +129,15 @@ Concrete element wrappers live in `models/elements/` and register themselves at 
 
 ### Layer 2 — Application Entry Point (`src/rhapsody_cli/application.py`)
 
-`RhapsodyApplication` wraps `IRPApplication` (the top-level Rhapsody automation object). Three connection modes:
+`RhapsodyApplication` wraps `IRPApplication` (the top-level Rhapsody automation object).
+
+**Public API:** Use `RhapsodyApplication.connect()` — this is the primary entry point:
+- `connect()` — try attach to running instance, fall back to launching new one
+- `connect(attach_only=True)` — only attach, fail if no running instance
+
+**Internal methods** (used by `connect()`):
 - `attach()` (`application.py:28`) — connect to a running instance via `GetActiveObject`
 - `launch()` (`application.py:38`) — start a new instance via `Dispatch`
-- `connect(prefer_attach=True)` (`application.py:48`) — try attach, fall back to launch
 
 Prog ID: `Rhapsody2.Application.1` (`application.py:18`). `pywin32` imports are guarded so the module can be imported on non-Windows platforms (e.g. for Sphinx on Read the Docs); the COM calls themselves fail at runtime there.
 
@@ -211,11 +218,33 @@ All constants use `SCREAMING_SNAKE_CASE` (module-level and class-level). See `do
 - Wrap all COM calls in `call_com(lambda: ...)` so `pywintypes.com_error` becomes `RhapsodyRuntimeException`.
 - `RhapsodyConnectionError` — connection failures (no running instance, pywin32 missing).
 - `RhapsodyRuntimeException` — COM API failures.
+- `CliExecutionError` — CLI fatal errors raised by actions; caught by `cli.main()` for clean exit.
 - CLI actions use the helpers on `RhapsodyContextAction` (`_handle_connection_error`, `_handle_execution_error`) for consistent logging + stderr output.
 
 ### Element Deletion
 
 When deleting elements, always call the wrapped `element.deleteFromProject()` method. Never call `element._com.delete()` directly — the raw COM object does not expose a `delete()` method.
+
+### Logger Pattern & No print()/sys.exit() Rule
+
+**Logger inheritance:** All action classes inherit `logger` from `AbstractAction`. Do not redeclare loggers in subclasses — use `self.logger` directly. This provides consistent logging configuration across all actions.
+
+**No print()/sys.exit() rule:** CLI actions must not use `print()` for status/error messages or call `sys.exit()` directly. Use the logger and raise `CliExecutionError` instead:
+
+```python
+class MyAction(RhapsodyContextAction):
+    def execute(self, args: argparse.Namespace) -> None:
+        if not args.name:
+            self.logger.error("Missing required --name argument")
+            raise CliExecutionError("Missing required --name argument")
+
+        # Status/success messages via logger
+        self.logger.info("Created element '%s'", args.name)
+```
+
+**Why:** `print()` bypasses log level filtering and verbosity flags; scattered `sys.exit()` calls make control flow hard to test. The only sanctioned `print()` usage is for actual result/data output (tables/JSON) that users pipe/redirect (mark these with `NOTE:` comments).
+
+**Exception:** `cli.main()` is the only place that calls `sys.exit()` — it catches `CliExecutionError` and exits with `e.exit_code`.
 
 ## Git Workflow
 

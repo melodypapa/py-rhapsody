@@ -18,9 +18,9 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
     """Wraps ``IRPBaseExternalCodeGeneratorTool``."""
 
     # IRPBaseExternalCodeGeneratorTool method parity checklist:
-    # [x] advanceCodeGenProgressBar    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] shouldAbortCodeGeneration    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] writeCodeGenMessage          [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] advance_code_gen_progress_bar    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] should_abort_code_generation    [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] write_code_gen_message          [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # No deprecated IRPBaseExternalCodeGeneratorTool methods.
 
     def advance_code_gen_progress_bar(self) -> None:
@@ -69,7 +69,7 @@ class RPCodeGenerator(RPModelElement):
     # IRPCodeGenerator method parity checklist:
     # [x] get_code_annotations           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_generated_file_names        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # No deprecated IRPCodeGenerator methods.
 
     def get_code_annotations(self, element: "RPModelElement", b_spec_file: int) -> "RPCollection":
@@ -119,7 +119,7 @@ class RPDiagSynthAPI(RPModelElement):
     # [x] remove_synth_sd_to_model2        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] s_d_add_condition_mark           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] send_message                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # No deprecated IRPDiagSynthAPI methods.
 
     def add_instance(self, added_to_s_d: int, instance_nav_exp: str) -> int:
@@ -261,7 +261,7 @@ class RPExternalCheckRegistry(RPModelElement):
 
     # IRPExternalCheckRegistry method parity checklist:
     # [x] append_failed_elements_comments [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] set_failed_elements_comments    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPExternalCheckRegistry methods.
 
@@ -298,7 +298,7 @@ class RPExternalRoundtripInvoker(RPModelElement):
     """Wraps ``IRPExternalRoundtripInvoker``."""
 
     # IRPExternalRoundtripInvoker method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # No deprecated IRPExternalRoundtripInvoker methods.
 
 
@@ -306,7 +306,7 @@ class RPIntegrator(RPModelElement):
     """Wraps ``IRPIntegrator``."""
 
     # IRPIntegrator method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # No deprecated IRPIntegrator methods.
 
 
@@ -316,7 +316,7 @@ class RPRhapsodyServer(RPModelElement):
     # IRPRhapsodyServer method parity checklist:
     # [x] get_application               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_hidden_application         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] get_uninitialized_application  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] initialize_application        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPRhapsodyServer methods.
@@ -382,7 +382,7 @@ class RPRoundTrip(RPModelElement):
     """Wraps ``IRPRoundTrip``."""
 
     # IRPRoundTrip method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] roundtrip_file                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPRoundTrip methods.
 
@@ -413,7 +413,7 @@ class RPSearchManager(RPModelElement):
     # [x] search                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] search_and_show_results         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] search_async                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # No deprecated IRPSearchManager methods.
 
     def create_search_query(self) -> "RPSearchQuery":
@@ -529,7 +529,7 @@ class RPSearchQuery(RPModelElement):
     # [x] get_filter_units_only           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_filter_unresolved_kind      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_include_descendants        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] get_match_case                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_match_specified_criteria    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_match_whole_word            [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -551,10 +551,10 @@ class RPSearchQuery(RPModelElement):
     # [x] set_search_text                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_view_include_model_elements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_views_to_search             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [deprecated] addSearchScope  - skipped (deprecated in Rhapsody Java API)
-    # [deprecated] getSearchScopeElements  - skipped (deprecated in Rhapsody Java API)
-    # [deprecated] getSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
-    # [deprecated] setSearchScopeObject  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] add_search_scope  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] get_search_scope_elements  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] get_search_scope_object  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] set_search_scope_object  - skipped (deprecated in Rhapsody Java API)
     # No non-deprecated IRPSearchQuery methods.
 
     def add_diagram_to_views_list(self, view: "RPDiagram") -> int:
@@ -1643,7 +1643,7 @@ class RPSearchResult(RPModelElement):
     """Wraps ``IRPSearchResult``."""
 
     # IRPSearchResult method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] get_matched_field              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_matched_fields             [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_matched_object             [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -1711,9 +1711,9 @@ class RPCodeGenSimplifiersRegistry(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPCodeGenSimplifiersRegistry``."""
 
     # IRPCodeGenSimplifiersRegistry method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] notify_simplification_done     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
+    # [inherited] irp_base_external_code_generator_tool methods (covered by rp_base_external_code_generator_tool checklist)
     # No deprecated IRPCodeGenSimplifiersRegistry methods.
 
     def notify_simplification_done(self) -> None:
@@ -1732,9 +1732,9 @@ class RPExternalCodeGeneratorInvoker(RPBaseExternalCodeGeneratorTool):
     """Wraps ``IRPExternalCodeGeneratorInvoker``."""
 
     # IRPExternalCodeGeneratorInvoker method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)
     # [x] notify_generation_done         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPBaseExternalCodeGeneratorTool methods (covered by RPBaseExternalCodeGeneratorTool checklist)
+    # [inherited] irp_base_external_code_generator_tool methods (covered by rp_base_external_code_generator_tool checklist)
     # No deprecated IRPExternalCodeGeneratorInvoker methods.
 
     def notify_generation_done(self) -> None:

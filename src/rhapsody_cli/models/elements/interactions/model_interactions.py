@@ -25,14 +25,14 @@ class RPEvent(RPInterfaceItem):
     """Wraps ``IRPEvent``: represents events in Rhapsody models."""
 
     # IRPEvent method parity checklist:
-    # [ ] getBaseEvent                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getSuperEvent                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setBaseEvent                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setSuperEvent                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
-    # [inherited] IRPInterfaceItem methods (covered by RPInterfaceItem checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] get_base_event                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_super_event                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_base_event                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_super_event                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_classifier methods (covered by rp_classifier checklist)
+    # [inherited] irp_interface_item methods (covered by rp_interface_item checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPEvent methods.
 
     def get_base_event(self) -> "RPEvent":
@@ -52,12 +52,12 @@ class RPEventReception(RPInterfaceItem):
     """Wraps ``IRPEventReception``."""
 
     # IRPEventReception method parity checklist:
-    # [ ] getEvent                     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setEvent                     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
-    # [inherited] IRPInterfaceItem methods (covered by RPInterfaceItem checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] get_event                     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_event                     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_classifier methods (covered by rp_classifier checklist)
+    # [inherited] irp_interface_item methods (covered by rp_interface_item checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPEventReception methods.
 
     def get_event(self) -> "RPEvent":
@@ -71,8 +71,8 @@ class RPExecutionOccurrence(RPModelElement):
     """Wraps ``IRPExecutionOccurrence``."""
 
     # IRPExecutionOccurrence method parity checklist:
-    # [ ] getMessage                   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_message                   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPExecutionOccurrence methods.
 
     def get_message(self) -> "RPMessage":
@@ -83,9 +83,9 @@ class RPGuard(RPModelElement):
     """Wraps ``IRPGuard``."""
 
     # IRPGuard method parity checklist:
-    # [ ] getBody                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setBody                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_body                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_body                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPGuard methods.
 
     def get_body(self) -> str:
@@ -99,10 +99,10 @@ class RPInteractionOccurrence(RPModelElement):
     """Wraps ``IRPInteractionOccurrence``."""
 
     # IRPInteractionOccurrence method parity checklist:
-    # [ ] getMessagePoints             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getReferenceSequenceDiagram  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setReferenceSequenceDiagram  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_message_points             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_reference_sequence_diagram  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_reference_sequence_diagram  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPInteractionOccurrence methods.
 
     def get_message_points(self) -> "RPCollection":
@@ -119,11 +119,11 @@ class RPInteractionOperand(RPCollaboration):
     """Wraps ``IRPInteractionOperand``: represents interaction operands in Rhapsody models."""
 
     # IRPInteractionOperand method parity checklist:
-    # [ ] getContainedMessages         [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getInteractionConstraint     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setInteractionConstraint     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPCollaboration methods (covered by RPCollaboration checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_contained_messages         [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_interaction_constraint     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_interaction_constraint     [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_collaboration methods (covered by rp_collaboration checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPInteractionOperand methods.
 
     def get_contained_messages(self) -> "RPCollection":
@@ -140,10 +140,10 @@ class RPInteractionOperator(RPModelElement):
     """Wraps ``IRPInteractionOperator``."""
 
     # IRPInteractionOperator method parity checklist:
-    # [ ] getInteractionOperands       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getInteractionType           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setInteractionType           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_interaction_operands       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_interaction_type           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_interaction_type           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPInteractionOperator methods.
 
     def get_interaction_operands(self) -> "RPCollection":
@@ -160,43 +160,43 @@ class RPMessage(RPModelElement):
     """Wraps ``IRPMessage``."""
 
     # IRPMessage method parity checklist:
-    # [ ] addSourceExecutionOccurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] addTargetExecutionOccurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getActualParameterList       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getCommunicationConnection   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getCondition                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getDurationConstraint        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getDurationObservation       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getFlowPort                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getFormalInterfaceItem       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getFormalType                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getInvariant                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getMessageType               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getPort                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getReturnValue               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getSequenceNumber            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getSignature                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getSource                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getSourceExecutionOccurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getTarget                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getTargetExecutionOccurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getTimeConstraint            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getTimeObservation           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getTimerValue                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] add_source_execution_occurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] add_target_execution_occurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_actual_parameter_list       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_communication_connection   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_condition                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_duration_constraint        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_duration_observation       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_flow_port                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_formal_interface_item       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_formal_type                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_invariant                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_message_type               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_port                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_return_value               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_sequence_number            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_signature                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_source                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_source_execution_occurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_target                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_target_execution_occurrence [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_time_constraint            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_time_observation           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_timer_value                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
     # [ ] reroute                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setActualParameterList       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setDurationConstraint        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setDurationObservation       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setFlowPort                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setFormalInterfaceItem       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setFormalType                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setInvariant                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setPort                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setReturnValue               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setTimeConstraint            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setTimeObservation           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setTimerValue                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] set_actual_parameter_list       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_duration_constraint        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_duration_observation       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_flow_port                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_formal_interface_item       [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_formal_type                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_invariant                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_port                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_return_value               [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_time_constraint            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_time_observation           [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_timer_value                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPMessage methods.
 
     def add_source_execution_occurrence(self) -> "RPExecutionOccurrence":
@@ -312,30 +312,30 @@ class RPTransition(RPModelElement):
     """Wraps ``IRPTransition``: represents transitions in a statechart."""
 
     # IRPTransition method parity checklist:
-    # [ ] getInheritsFrom              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getIsOverridden              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsAction                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsGuard                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsLabel                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsSource                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsStatechart             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsTarget                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsTrigger                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getOfState                   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] isDefaultTransition          [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] isStaticReaction             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] itsCompoundSource            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] overrideInheritance          [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] resetLabelInheritance        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsAction                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsGuard                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsLabel                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsSource                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsStatechart             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsTarget                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setItsTrigger                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] unoverrideInheritance        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_inherits_from              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_is_overridden              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_action                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_guard                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_label                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_source                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_statechart             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_target                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_trigger                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_of_state                   [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] is_default_transition          [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] is_static_reaction             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] its_compound_source            [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] override_inheritance          [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] reset_label_inheritance        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_action                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_guard                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_label                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_source                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_statechart             [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_target                 [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_its_trigger                [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] unoverride_inheritance        [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPTransition methods.
 
     def get_inherits_from(self) -> "RPTransition":
@@ -412,12 +412,12 @@ class RPTrigger(RPModelElement):
     """Wraps ``IRPTrigger``: represents the trigger of a transition in a statechart."""
 
     # IRPTrigger method parity checklist:
-    # [ ] getBody                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] getItsOperation              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] isOperation                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] isTimeout                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [ ] setBody                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [ ] get_body                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] get_its_operation              [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] is_operation                  [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] is_timeout                    [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [ ] set_body                      [x] impl  [ ] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPTrigger methods.
 
     def get_body(self) -> str:
@@ -440,8 +440,8 @@ class RPDestructionEvent(RPMessage):
     """Wraps ``IRPDestructionEvent``: represents destruction events in sequence diagrams."""
 
     # IRPDestructionEvent method parity checklist:
-    # [inherited] IRPMessage methods (covered by RPMessage checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [inherited] irp_message methods (covered by rp_message checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPDestructionEvent methods.
 
     pass

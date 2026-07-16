@@ -153,7 +153,7 @@ def test_unit_save_delegates_to_com() -> None:
 
     unit.save()
 
-    fake.save.assert_called_once_with()
+    fake.save.assert_called_once_with(0)
 
 
 def test_unit_get_filename_delegates_to_com() -> None:

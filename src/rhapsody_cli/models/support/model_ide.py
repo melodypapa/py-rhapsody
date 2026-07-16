@@ -14,7 +14,7 @@ class RPAXViewCtrl(RPModelElement):
     # IRPAXViewCtrl method parity checklist:
     # [x] do_command                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] execute_command               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPAXViewCtrl methods.
 
     def do_command(self, command_i_d: int) -> None:
@@ -58,7 +58,7 @@ class RPExternalIDERegistry(RPModelElement):
     # [x] progress_task_asynch_callback   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] progress_task_asynch_eliminate  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] send_ide_text_message           [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPExternalIDERegistry methods.
 
     def progress_task_asynch_callback(self, n_group_number: int, n_task_number: int) -> None:
@@ -334,7 +334,7 @@ class RPJavaPlugins(RPModelElement):
     """Wraps ``IRPJavaPlugins``."""
 
     # IRPJavaPlugins method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPJavaPlugins methods.
 
 
@@ -350,7 +350,7 @@ class RPPlugInWindow(RPModelElement):
     # [x] set_pos_string                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_title                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] show_window                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPPlugInWindow methods.
 
     def destroy_window(self) -> None:
@@ -467,7 +467,7 @@ class RPProgressBar(RPModelElement):
     """Wraps ``IRPProgressBar``."""
 
     # IRPProgressBar method parity checklist:
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # [x] reset                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] tick                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPProgressBar methods.
@@ -509,7 +509,7 @@ class RPSelection(RPModelElement):
     # [x] copy_selected                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] cut_selected                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] delete_selected               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # [x] paste_selected                [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPSelection methods.
 
@@ -632,7 +632,7 @@ class RPowListListener(RPModelElement):
     # IRPowListListener method parity checklist:
     # [x] dbl_click_notify               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_obj_id                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPowListListener methods.
 
     def dbl_click_notify(self, n_row: int, n_col: int, s_content: str) -> None:
@@ -672,7 +672,7 @@ class RPowPaneMgr(RPModelElement):
     # IRPowPaneMgr method parity checklist:
     # [x] add_tab_notify                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] close_tab_notify               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_ow_list_listener            [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_ow_text_listener            [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPowPaneMgr methods.
@@ -749,7 +749,7 @@ class RPowTextListener(RPModelElement):
     # IRPowTextListener method parity checklist:
     # [x] dbl_click_notify               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_obj_id                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPowTextListener methods.
 
     def dbl_click_notify(self, n_line: int, sz_line: str) -> None:

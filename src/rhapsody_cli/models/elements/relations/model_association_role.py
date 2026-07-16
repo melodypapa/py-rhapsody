@@ -13,10 +13,10 @@ class RPAssociationRole(RPInstance):
     """Wraps ``IRPAssociationRole``: an association role that extends ``IRPInstance``."""
 
     # IRPAssociationRole method parity checklist:
-    # [ ] getClassifierRoles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getFormalRelations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRoleType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPInstance / IRPRelation / IRPUnit / IRPModelElement methods (covered by RPInstance / RPRelation / RPUnit / RPModelElement checklists)
+    # [ ] get_classifier_roles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_formal_relations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_role_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_instance / irp_relation / irp_unit / irp_model_element methods (covered by rp_instance / rp_relation / rp_unit / rp_model_element checklists)
     # No deprecated IRPAssociationRole methods.
 
     def get_classifier_roles(self) -> RPCollection:

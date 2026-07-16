@@ -17,40 +17,40 @@ class RPDiagram(RPUnit):
     """Wraps ``IRPDiagram``: represents a diagram in the model."""
 
     # IRPDiagram method parity checklist:
-    # [ ] addFreeShapeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addImage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewEdgeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewEdgeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewNodeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewNodeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_free_shape_by_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_image  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_edge_by_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_edge_for_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_node_by_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_node_for_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] add_text_box  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] createDiagramView  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] create_diagram_view  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_custom_views  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getDiagramViewOf  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getDiagramViews  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] isDiagramView  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] openDiagramView  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] rearrangePorts  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setCustomViews  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateViewOnServer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_diagram_view_of  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_diagram_views  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] is_diagram_view  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] open_diagram_view  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] rearrange_ports  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_custom_views  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] update_view_on_server  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] close_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] completeRelations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] complete_relations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_corresponding_graphic_elements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getElementsInDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getGraphicalElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getLastVisualizationModifiedTime  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPicture  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPictureAs  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPictureAsDividedMetafiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPictureEx  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPicturesWithImageMap  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] isOpen  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] isShowDiagramFrame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] openDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] populateDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] removeGraphElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setShowDiagramFrame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [ ] get_elements_in_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_graphical_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_last_visualization_modified_time  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture_as  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture_as_divided_metafiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture_ex  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_pictures_with_image_map  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] is_open  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] is_show_diagram_frame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] open_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] populate_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] remove_graph_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_show_diagram_frame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPDiagram methods.
 
     def close_diagram(self) -> None:

@@ -44,7 +44,7 @@ class RPClassifier(RPUnit):
     # [x] find_nested_classifier_recursive   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_relation                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_trigger                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_activity_diagram              [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends getBehavioralDiagrams)
+    # [x] get_activity_diagram              [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends get_behavioral_diagrams)
     # [x] get_attributes                   [x] impl  [x] docstring  [x] unit test  [x] integration test   (already implemented)
     # [x] get_attributes_including_bases     [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_base_classifiers              [x] impl  [x] docstring  [x] unit test  [ ] integration test
@@ -63,11 +63,11 @@ class RPClassifier(RPUnit):
     # [x] get_relations_including_bases      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_sequence_diagrams             [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_source_artifacts              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_statechart                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends getBehavioralDiagrams)
-    # [inherited] IRPUnit / IRPModelElement methods (getName, setName, getOwner, getGUID,
+    # [x] get_statechart                   [x] impl  [x] docstring  [x] unit test  [ ] integration test   (doc recommends get_behavioral_diagrams)
+    # [inherited] irp_unit / irp_model_element methods (get_name, set_name, get_owner, get_guid,
     #              addDependency, addStereotype, getStereotypes, getNestedElements, save, load, etc.)
     # No deprecated IRPClassifier methods in deprecated-list.html.
-    # [x] add_port (convenience method, not part of IRPClassifier's Java API -
+    # [x] add_port (convenience method, not part of irp_classifier's Java API -
     #     ports are created generically via addNewAggr("Port", name); this
     #     wraps that call for ergonomics)  [x] impl  [x] docstring  [x] unit test  [ ] integration test
 

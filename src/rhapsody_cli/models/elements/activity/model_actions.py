@@ -17,11 +17,11 @@ class RPAcceptEventAction(RPState):
     """Wraps ``IRPAcceptEventAction``: represents Accept Event Action elements in a statechart or activity diagram."""
 
     # IRPAcceptEventAction method parity checklist:
-    # [x] getEvent                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEvent                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPState methods (covered by RPState checklist)
-    # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
+    # [x] get_event                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_event                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_state methods (covered by rp_state checklist)
+    # [inherited] irp_state_vertex methods (covered by rp_state_vertex checklist)
     # No deprecated IRPAcceptEventAction methods.
 
     def get_event(self) -> "RPEvent":
@@ -51,11 +51,11 @@ class RPAcceptTimeEvent(RPState):
     """Wraps ``IRPAcceptTimeEvent``: represents Accept Time Event elements in activity diagrams and statecharts."""
 
     # IRPAcceptTimeEvent method parity checklist:
-    # [x] getDurationTime              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setDurationTime              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPState methods (covered by RPState checklist)
-    # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
+    # [x] get_duration_time              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_duration_time              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_state methods (covered by rp_state checklist)
+    # [inherited] irp_state_vertex methods (covered by rp_state_vertex checklist)
     # No deprecated IRPAcceptTimeEvent methods.
 
     def get_duration_time(self) -> str:
@@ -85,9 +85,9 @@ class RPAction(RPModelElement):
     """Wraps ``IRPAction``: represents the action defined for a transition in a statechart."""
 
     # IRPAction method parity checklist:
-    # [x] getBody                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setBody                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] get_body                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_body                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPAction methods.
 
     def get_body(self) -> str:
@@ -117,8 +117,8 @@ class RPActionBlock(RPMessage):
     """Wraps ``IRPActionBlock``: represents action blocks in sequence diagrams."""
 
     # IRPActionBlock method parity checklist:
-    # [inherited] IRPMessage methods (covered by RPMessage checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [inherited] irp_message methods (covered by rp_message checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPActionBlock methods.
 
     pass
@@ -128,13 +128,13 @@ class RPCallOperation(RPState):
     """Wraps ``IRPCallOperation``: represents call operation elements in activity diagrams."""
 
     # IRPCallOperation method parity checklist:
-    # [x] getOperation                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getTarget                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setOperation                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setTarget                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPState methods (covered by RPState checklist)
-    # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
+    # [x] get_operation                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_operation                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_state methods (covered by rp_state checklist)
+    # [inherited] irp_state_vertex methods (covered by rp_state_vertex checklist)
     # No deprecated IRPCallOperation methods.
 
     def get_operation(self) -> "RPInterfaceItem":
@@ -190,12 +190,12 @@ class RPContextSpecification(RPValueSpecification):
     """
 
     # IRPContextSpecification method parity checklist:
-    # [x] getMultiplicities            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setMultiplicities            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
+    # [x] get_multiplicities            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_multiplicities            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_value_specification methods (covered by rp_value_specification checklist)
     # No deprecated IRPContextSpecification methods.
 
     def get_multiplicities(self) -> "RPCollection":
@@ -250,16 +250,16 @@ class RPSendAction(RPAction):
     """Wraps ``IRPSendAction``: represents Send Action elements in an activity or statechart."""
 
     # IRPSendAction method parity checklist:
-    # [x] addArgumentValue             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getArgVals                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEvent                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getInvokedOperation          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getTarget                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEvent                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setInvokedOperation          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setTarget                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPAction methods (covered by RPAction checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] add_argument_value             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_arg_vals                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_event                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_invoked_operation          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_event                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_invoked_operation          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_action methods (covered by rp_action checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPSendAction methods.
 
     def add_argument_value(self, value: str, position: int) -> None:

@@ -15,38 +15,38 @@ class RPOperation(RPInterfaceItem):
 
     # IRPOperation method parity checklist:
     # [x] create_auto_flow_chart  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] deleteArgument  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] deleteFlowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] delete_argument  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] delete_flowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_body  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] getFlowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getImplementationSignature  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getInitializer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_flowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_implementation_signature  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_initializer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_is_abstract  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] getIsCgDerived  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsConst  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsCtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsDtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsFinal  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsInline  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_cg_derived  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_const  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_ctor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_dtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_final  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_inline  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_is_static  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] getIsTrigger  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_trigger  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_is_virtual  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_return_type_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] get_returns  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setBody  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setFlowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setInitializer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_visibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_body  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_flowchart  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_initializer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] set_is_abstract  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] setIsConst  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsFinal  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_const  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_final  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] set_is_static  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_virtual  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_return_type_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_returns  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] setVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPInterfaceItem / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPInterfaceItem / RPClassifier / RPUnit / RPModelElement checklists)
+    # [ ] set_visibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] update_contained_diagrams_on_server  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_interface_item / irp_classifier / irp_unit / irp_model_element methods (covered by rp_interface_item / rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPOperation methods.
 
     def get_body(self) -> str:

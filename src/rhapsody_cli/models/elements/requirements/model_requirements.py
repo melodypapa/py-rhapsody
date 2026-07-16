@@ -27,7 +27,7 @@ class RPAnnotation(RPUnit):
     # [x] set_body  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_specification  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_specification_rtf  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPAnnotation methods.
 
     def add_anchor(self, target: RPModelElement) -> None:
@@ -147,7 +147,7 @@ class RPRequirement(RPAnnotation):
     # IRPRequirement method parity checklist:
     # [x] get_requirement_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_requirement_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPAnnotation / IRPUnit / IRPModelElement methods (covered by RPAnnotation / RPUnit / RPModelElement checklists)
+    # [inherited] irp_annotation / irp_unit / irp_model_element methods (covered by rp_annotation / rp_unit / rp_model_element checklists)
     # No deprecated IRPRequirement methods.
 
     def get_requirement_id(self) -> str:

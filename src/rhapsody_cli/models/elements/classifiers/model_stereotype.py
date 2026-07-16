@@ -13,13 +13,13 @@ class RPStereotype(RPClassifier):
     """Wraps ``IRPStereotype``: a stereotype that extends ``IRPClassifier``."""
 
     # IRPStereotype method parity checklist:
-    # [ ] addMetaClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIcon  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsNewTerm  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getOfMetaClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] removeMetaClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsNewTerm  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # [ ] add_meta_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_icon  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_new_term  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_of_meta_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] remove_meta_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_new_term  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_classifier / irp_unit / irp_model_element methods (covered by rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPStereotype methods.
 
     def add_meta_class(self, meta_class: str) -> None:

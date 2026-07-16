@@ -14,7 +14,7 @@ class RPASCIIFile(RPModelElement):
 
     # IRPASCIIFile method parity checklist:
     # [x] close                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] get_interface_name             [x] impl (inherited from RPModelElement)  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_interface_name             [x] impl (inherited from rp_model_element)  [x] docstring  [x] unit test  [ ] integration test
     # [x] open                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] write                        [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # No deprecated IRPASCIIFile methods.
@@ -70,8 +70,8 @@ class RPControlledFile(RPUnit):
     # [x] get_full_path_file_name          [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] open                         [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_target                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPControlledFile methods.
 
     def get_full_path_file_name(self) -> str:
@@ -127,8 +127,8 @@ class RPFile(RPUnit):
     # [x] is_empty                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_file_type                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_path                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPFile methods.
 
     def add_element(self, element: "RPClassifier", file_fragment_type: str) -> None:
@@ -364,7 +364,7 @@ class RPFileFragment(RPModelElement):
     # [x] get_fragment_type              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] move_fragment_in_owner          [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_fragment_text              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPFileFragment methods.
 
     def get_fragment_element(self) -> "RPModelElement":

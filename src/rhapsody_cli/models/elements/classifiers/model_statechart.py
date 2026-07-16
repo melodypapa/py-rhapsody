@@ -14,39 +14,39 @@ class RPStatechart(RPClass):
     """Wraps ``IRPStatechart``: represents a statechart behavior."""
 
     # IRPStatechart method parity checklist:
-    # [ ] addFreeShapeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addImage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewEdgeByType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewEdgeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_free_shape_by_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_image  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_edge_by_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_edge_for_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] add_new_node_by_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] addNewNodeForElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addTextBox  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] openDiagramView  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewAcceptEventAction  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNewAcceptTimeEvent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_node_for_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_text_box  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] open_diagram_view  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_accept_event_action  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_new_accept_time_event  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] close_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] create_graphics  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] delete_state  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] find_trigger  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from RPClassifier)
-    # [ ] getAllTriggers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getElementsInDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getGraphicalElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getInheritsFrom  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsMainBehavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsOverridden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getItsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPicture  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPictureAs  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPictureAsDividedMetafiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPicturesWithImageMap  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRootState  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getStatechartDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] overrideInheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] populateDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setAsMainBehavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setShowDiagramFrame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] unoverrideInheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPClass / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClass / RPClassifier / RPUnit / RPModelElement checklists)
+    # [x] find_trigger  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from rp_classifier)
+    # [ ] get_all_triggers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_elements_in_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_graphical_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_inherits_from  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_main_behavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_overridden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_its_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture_as  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_picture_as_divided_metafiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_pictures_with_image_map  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_root_state  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_statechart_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] override_inheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] populate_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_as_main_behavior  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_show_diagram_frame  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] unoverride_inheritance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_class / irp_classifier / irp_unit / irp_model_element methods (covered by rp_class / rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPStatechart methods.
 
     def add_new_node_by_type(self, meta_type: str, x_position: int, y_position: int, width: int, height: int) -> "RPGraphNode":

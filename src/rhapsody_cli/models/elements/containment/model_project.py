@@ -19,77 +19,77 @@ class RPProject(RPPackage):
     """Wraps ``IRPProject``: represents the top-level project container."""
 
     # IRPProject method parity checklist:
-    # [x] gatewayExportToXML  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] gatewayExportToXML2  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] generateReport  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addComponent  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] addCustomViewOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addCustomViewOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] gateway_export_to_xml  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] gateway_export_to_xml2  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] generate_report  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_component  [x] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] add_custom_view_on_browser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_custom_view_on_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] add_package  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [ ] addProfile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] addSpellCheckerResult  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] allowAutoSave  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] allowNonUniqueNames  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] applyBrowserCustomViewsOnDiagrams  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] applyRoundtripDiffMerge  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] add_profile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] add_spell_checker_result  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] allow_auto_save  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] allow_non_unique_names  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] apply_browser_custom_views_on_diagrams  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] apply_roundtrip_diff_merge  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] become_active_project  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] checkEventsBaseIdsSolveCollisions  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] cleanUnresolvedElements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] check_events_base_ids_solve_collisions  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] clean_unresolved_elements  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] close  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] closeCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] deleteComponent  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] enableRhapsodyModelManager  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] endTransactionOfNoCGInterest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] close_csv_file  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_component  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] enable_rhapsody_model_manager  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] end_transaction_of_no_cg_interest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] find_component  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] findElementByBinaryID  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] findElementByFileName  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] find_element_by_binary_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] find_element_by_file_name  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] find_element_by_guid  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] findElementsWithOSLCLink  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getActiveComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getActiveConfiguration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getActiveCustomViewsOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getActiveCustomViewsOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getAllStereotypes  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getCgSimplifiedModelPackage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getCodeGeneratedFiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] find_elements_with_oslc_link  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_active_component  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_active_configuration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_active_custom_views_on_browser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_active_custom_views_on_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_all_stereotypes  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_cg_simplified_model_package  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_code_generated_files  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_components  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getDefaultDirectoryScheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getNewCollaboration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getNewProgressBar  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getNotifyPluginOnElementsChanged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getProfiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getRemoteResourcePackages  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRequirementsByID  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRoundtripShadowModel  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] highlightFromCode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] importPackageFromRose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] importProjectFromRose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isActivelyManaged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] isModifiedRecursive  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] locateInIDE  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] migrateDesignManagerLinks  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [deprecated] moveToDesignManager  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [deprecated] moveToDesignManagerAfterLogin  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [x] openCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] recalculateEventsBaseIds  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] reloadCSVFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_default_directory_scheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_new_collaboration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_new_progress_bar  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_notify_plugin_on_elements_changed  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_profiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_remote_resource_packages  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_requirements_by_id  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_roundtrip_shadow_model  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] highlight_from_code  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] import_package_from_rose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] import_project_from_rose  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_actively_managed  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] is_modified_recursive  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] locate_in_ide  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] migrate_design_manager_links  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [deprecated] move_to_design_manager  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [deprecated] move_to_design_manager_after_login  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [x] open_csv_file  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] recalculate_events_base_ids  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] reload_csv_file  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] remove  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] removeCustomViewOnBrowser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] removeCustomViewOnDiagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] save  [x] impl  [x] docstring  [ ] unit test  [ ] integration test   (inherited from RPUnit)
-    # [x] saveAs  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] saveAsPrevVersion  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] setActiveComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setActiveConfiguration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] setDefaultDirectoryScheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setGlobalConfiguration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setNotifyPluginOnElementsChanged  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setObjectExplicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setObjectImplicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setUseUniqueStereotypeAndRefCache  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setWaitDialogWatchdogValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] startTransactionOfNoCGInterest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPPackage / IRPUnit / IRPModelElement methods (covered by RPPackage / RPUnit / RPModelElement checklists)
+    # [x] remove_custom_view_on_browser  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_custom_view_on_diagram  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] save  [x] impl  [x] docstring  [ ] unit test  [ ] integration test   (inherited from rp_unit)
+    # [x] save_as  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] save_as_prev_version  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] set_active_component  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_active_configuration  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] set_default_directory_scheme  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_global_configuration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_notify_plugin_on_elements_changed  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_object_explicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_object_implicit  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_use_unique_stereotype_and_ref_cache  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_wait_dialog_watchdog_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] start_transaction_of_no_cg_interest  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_package / irp_unit / irp_model_element methods (covered by rp_package / rp_unit / rp_model_element checklists)
     # Deprecated IRPProject methods listed above.
 
     def add_package(self, name: str) -> "RPPackage":

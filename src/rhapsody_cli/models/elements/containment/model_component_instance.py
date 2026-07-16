@@ -14,10 +14,10 @@ class RPComponentInstance(RPInstance):
     """Wraps ``IRPComponentInstance``: a component instance that extends ``IRPInstance``."""
 
     # IRPComponentInstance method parity checklist:
-    # [x] getComponentType  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getNode  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setComponentType  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPInstance / IRPRelation / IRPUnit / IRPModelElement methods (covered by RPInstance / RPRelation / RPUnit / RPModelElement checklists)
+    # [x] get_component_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_node  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_component_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_instance / irp_relation / irp_unit / irp_model_element methods (covered by rp_instance / rp_relation / rp_unit / rp_model_element checklists)
     # No deprecated IRPComponentInstance methods.
 
     def get_component_type(self) -> "RPComponent":

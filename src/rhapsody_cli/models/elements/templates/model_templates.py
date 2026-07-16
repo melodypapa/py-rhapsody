@@ -13,8 +13,8 @@ class RPTemplateInstantiation(RPModelElement):
     """Wraps ``IRPTemplateInstantiation``."""
 
     # IRPTemplateInstantiation method parity checklist:
-    # [x] getTemplateInstantiationParameters [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] get_template_instantiation_parameters [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPTemplateInstantiation methods.
 
     def get_template_instantiation_parameters(self) -> "RPCollection":
@@ -36,11 +36,11 @@ class RPTemplateInstantiationParameter(RPModelElement):
     """Wraps ``IRPTemplateInstantiationParameter``."""
 
     # IRPTemplateInstantiationParameter method parity checklist:
-    # [x] getArgValue                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getType                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setArgValue                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setType                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] get_arg_value                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_type                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_arg_value                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_type                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPTemplateInstantiationParameter methods.
 
     def get_arg_value(self) -> str:
@@ -104,14 +104,14 @@ class RPTemplateParameter(RPVariable):
     """Wraps ``IRPTemplateParameter``: represents parameters of a template in Rhapsody models."""
 
     # IRPTemplateParameter method parity checklist:
-    # [x] getParameterKind             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRepresentative            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setClassType                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setParameterKind             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setRepresentative            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
-    # [inherited] IRPVariable methods (covered by RPVariable checklist)
+    # [x] get_parameter_kind             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_representative            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_class_type                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_parameter_kind             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_representative            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
+    # [inherited] irp_variable methods (covered by rp_variable checklist)
     # No deprecated IRPTemplateParameter methods.
 
     def get_parameter_kind(self) -> str:

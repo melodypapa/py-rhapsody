@@ -17,10 +17,10 @@ class RPCollaborationDiagram(RPDiagram):
     """Wraps ``IRPCollaborationDiagram``: represents collaboration diagrams in a Rhapsody model."""
 
     # IRPCollaborationDiagram method parity checklist:
-    # [ ] getLogicalCollaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] get_logical_collaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPCollaborationDiagram methods.
 
     def get_logical_collaboration(self) -> "RPCollaboration":
@@ -40,9 +40,9 @@ class RPComponentDiagram(RPDiagram):
     """Wraps ``IRPComponentDiagram``: represents component diagrams in Rhapsody models."""
 
     # IRPComponentDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPComponentDiagram methods.
 
     pass
@@ -52,9 +52,9 @@ class RPDeploymentDiagram(RPDiagram):
     """Wraps ``IRPDeploymentDiagram``: represents deployment diagrams in Rhapsody models."""
 
     # IRPDeploymentDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPDeploymentDiagram methods.
 
     pass
@@ -64,9 +64,9 @@ class RPObjectModelDiagram(RPDiagram):
     """Wraps ``IRPObjectModelDiagram``: represents object model diagrams in Rhapsody models."""
 
     # IRPObjectModelDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPObjectModelDiagram methods.
 
     pass
@@ -76,9 +76,9 @@ class RPPanelDiagram(RPDiagram):
     """Wraps ``IRPPanelDiagram``: represents panel diagrams in Rhapsody models."""
 
     # IRPPanelDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPPanelDiagram methods.
 
     pass
@@ -88,11 +88,11 @@ class RPSequenceDiagram(RPDiagram):
     """Wraps ``IRPSequenceDiagram``: represents sequence diagrams in a Rhapsody model."""
 
     # IRPSequenceDiagram method parity checklist:
-    # [ ] getLogicalCollaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getRelatedUseCases           [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] get_logical_collaboration      [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_related_use_cases           [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPSequenceDiagram methods.
 
     def get_logical_collaboration(self) -> "RPCollaboration":
@@ -127,12 +127,12 @@ class RPStatechartDiagram(RPDiagram):
     """Wraps ``IRPStatechartDiagram``: represents statecharts in a Rhapsody model."""
 
     # IRPStatechartDiagram method parity checklist:
-    # [ ] addAndLine                   [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] createGraphics               [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getStatechart                [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] add_and_line                   [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] create_graphics               [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_statechart                [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPStatechartDiagram methods.
 
     def add_and_line(self, source_state: "RPGraphNode", x_start_position: int, y_start_position: int, x_end_position: int, y_end_position: int) -> "RPCollection":
@@ -190,9 +190,9 @@ class RPStructureDiagram(RPDiagram):
     """Wraps ``IRPStructureDiagram``: represents structure diagrams in a Rhapsody model."""
 
     # IRPStructureDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPStructureDiagram methods.
 
     pass
@@ -202,9 +202,9 @@ class RPUseCaseDiagram(RPDiagram):
     """Wraps ``IRPUseCaseDiagram``: represents use case diagrams in a Rhapsody model."""
 
     # IRPUseCaseDiagram method parity checklist:
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPUseCaseDiagram methods.
 
     pass
@@ -214,12 +214,12 @@ class RPTimingDiagram(RPSequenceDiagram):
     """Wraps ``IRPTimingDiagram``."""
 
     # IRPTimingDiagram method parity checklist:
-    # [ ] getIsElaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsElaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPSequenceDiagram methods (covered by RPSequenceDiagram checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] get_is_elaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_elaborated              [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_sequence_diagram methods (covered by rp_sequence_diagram checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPTimingDiagram methods.
 
     def get_is_elaborated(self) -> int:
@@ -255,12 +255,12 @@ class RPActivityDiagram(RPStatechartDiagram):
     """Wraps ``IRPActivityDiagram``: represents activity diagrams in Rhapsody models."""
 
     # IRPActivityDiagram method parity checklist:
-    # [ ] decomposeSwimlane            [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getFlowchart                 [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDiagram methods (covered by RPDiagram checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPStatechartDiagram methods (covered by RPStatechartDiagram checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [ ] decompose_swimlane            [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_flowchart                 [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_diagram methods (covered by rp_diagram checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_statechart_diagram methods (covered by rp_statechart_diagram checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPActivityDiagram methods.
 
     def decompose_swimlane(self, graph_swimlane: "RPGraphElement") -> "RPCollection":

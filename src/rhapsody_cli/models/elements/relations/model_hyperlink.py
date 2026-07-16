@@ -13,15 +13,15 @@ class RPHyperLink(RPDependency):
     """Wraps ``IRPHyperLink``: a hyperlink that extends ``IRPDependency``."""
 
     # IRPHyperLink method parity checklist:
-    # [deprecated] getTextToDisplay  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [deprecated] getTextToDisplayType  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [deprecated] getDisplayOption  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
-    # [ ] getTarget  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getURL  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setDisplayOption  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setTarget  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setURL  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPDependency / IRPModelElement methods (covered by RPDependency / RPModelElement checklists)
+    # [deprecated] get_text_to_display  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [deprecated] get_text_to_display_type  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [deprecated] get_display_option  - skipped (deprecated in Rhapsody Java API; see deprecated-list.html)
+    # [ ] get_target  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_url  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_display_option  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_target  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_url  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_dependency / irp_model_element methods (covered by rp_dependency / rp_model_element checklists)
     # Deprecated IRPHyperLink methods listed above.
 
     def get_target(self) -> RPModelElement:

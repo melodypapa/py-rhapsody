@@ -8,7 +8,7 @@ class RPProfile(RPPackage):
     """Wraps ``IRPProfile``: a profile that extends ``IRPPackage``."""
 
     # IRPProfile method parity checklist:
-    # [inherited] IRPPackage / IRPUnit / IRPModelElement methods (covered by RPPackage / RPUnit / RPModelElement checklists)
+    # [inherited] irp_package / irp_unit / irp_model_element methods (covered by rp_package / rp_unit / rp_model_element checklists)
     # No deprecated IRPProfile methods.
 
     pass

@@ -24,7 +24,7 @@ class RPInterfaceItem(RPClassifier):
     # [x] get_signature_no_arg_types  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] match_on_signature  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [ ] set_arguments  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # [inherited] irp_classifier / irp_unit / irp_model_element methods (covered by rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPInterfaceItem methods.
 
     def add_argument(self, new_val: str) -> "RPArgument":

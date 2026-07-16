@@ -12,14 +12,14 @@ class RPDependency(RPModelElement):
     """Wraps ``IRPDependency``: a dependency relationship."""
 
     # IRPDependency method parity checklist:
-    # [ ] getDependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getDependsOn  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] isNeedToMigrate  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setDependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setDependsOn  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setLinkType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setOwnerWithoutChangingDependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
+    # [ ] get_dependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_depends_on  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] is_need_to_migrate  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_dependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_depends_on  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_link_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_owner_without_changing_dependent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPDependency methods.
 
     def get_dependent(self) -> RPModelElement:

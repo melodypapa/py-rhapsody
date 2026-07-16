@@ -12,50 +12,50 @@ class RPComponent(RPUnit):
     """Wraps ``IRPComponent``: a component that extends ``IRPUnit``."""
 
     # IRPComponent method parity checklist:
-    # [x] addConfiguration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addFile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] addFolder  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addNestedComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addScopeElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addScopeElementWithoutAggregates  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addToScope  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] allElementsInScope  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] deleteConfiguration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] deleteFile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] findConfiguration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getAdditionalSources  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getBuildType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getConfigByDependency  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getConfigurations  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getFile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getFileName  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getFiles  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIncludePath  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getLibraries  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getModelElementFileName  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getNestedComponents  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPackageFile  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPanelDiagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getPath  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getPossibleVariants  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getScopeBySelectedElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getScopeElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getScopeElementsByCategory  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getStandardHeaders  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getVariant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getVariationPoints  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] isDirectoryPerModelComponent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] removeScopeElement  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setAdditionalSources  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setBuildType  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIncludePath  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setLibraries  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] setPath  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] setScopeBySelectedElements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setStandardHeaders  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setVariant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [x] add_configuration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_file  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] add_folder  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_nested_component  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_scope_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_scope_element_without_aggregates  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_to_scope  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] all_elements_in_scope  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] delete_configuration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] delete_file  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] find_configuration  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_additional_sources  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_build_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_config_by_dependency  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_configurations  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_file  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_file_name  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_files  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_include_path  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_libraries  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_model_element_file_name  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_nested_components  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_package_file  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_panel_diagrams  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_path  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_possible_variants  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_scope_by_selected_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_scope_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_scope_elements_by_category  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_standard_headers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_variant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_variation_points  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] is_directory_per_model_component  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] remove_scope_element  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_additional_sources  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_build_type  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_include_path  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_libraries  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] set_path  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] set_scope_by_selected_elements  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_standard_headers  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_variant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] update_contained_diagrams_on_server  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPComponent methods.
 
     def add_configuration(self, name: str) -> "RPConfiguration":

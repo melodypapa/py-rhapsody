@@ -16,8 +16,8 @@ class RPActor(RPClassifier):
     # [x] add_event_reception_with_event  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_behavior_overriden  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_behavior_overriden  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [x] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # [x] update_contained_diagrams_on_server  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_classifier / irp_unit / irp_model_element methods (covered by rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPActor methods.
 
     def add_event_reception_with_event(self, name: str, event: RPModelElement) -> "RPEventReception":

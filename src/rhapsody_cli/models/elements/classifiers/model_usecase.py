@@ -13,22 +13,22 @@ class RPUseCase(RPClassifier):
     """Wraps ``IRPUseCase``: represents a use case in the model."""
 
     # IRPUseCase method parity checklist:
-    # [ ] addDescribingDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addEventReceptionWithEvent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_describing_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_event_reception_with_event  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] add_extension_point  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] deleteDescribingDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] deleteEntryPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] deleteExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] findEntryPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] findExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getDescribingDiagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] delete_describing_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] delete_entry_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] delete_extension_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] find_entry_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] find_extension_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_describing_diagram  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [x] get_describing_diagrams  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_entry_points  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_extension_points  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getIsBehaviorOverriden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsBehaviorOverriden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] updateContainedDiagramsOnServer  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClassifier / RPUnit / RPModelElement checklists)
+    # [ ] get_is_behavior_overriden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_behavior_overriden  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] update_contained_diagrams_on_server  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_classifier / irp_unit / irp_model_element methods (covered by rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPUseCase methods.
 
     def add_extension_point(self, entry_point: str) -> None:

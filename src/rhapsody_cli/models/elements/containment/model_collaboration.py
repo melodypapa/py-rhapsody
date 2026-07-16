@@ -13,46 +13,46 @@ class RPCollaboration(RPUnit):
     """Wraps ``IRPCollaboration``: a collaboration that extends ``IRPUnit``."""
 
     # IRPCollaboration method parity checklist:
-    # [ ] addActionBlock  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addCancelledTimeout  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] addClassifierRole  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] addClassifierRoleByName  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addClassifierRoleForInstance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addConditionMark  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addCtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addDataFlow  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addDestructionEvent  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addDtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addDurationConstraint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addDurationObservation  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addFoundMessage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addInteractionOccurrence  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addInteractionOperator  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addLostMessage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] addMessage  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] addReplyMessage  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addStateInvariant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addSystemBorder  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addTimeConstraint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addTimeInterval  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addTimeObservation  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] addTimeout  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] generateSequence  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getActivationCondition  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getActivationMode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getActivator  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getAssociations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getClassifier  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getConcurrentGroup  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getExecutionOccurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getInteractionOccurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getInteractionOperators  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getMessagePoints  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [x] getMessages  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [ ] getMode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getPredecessor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getSuccessor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [ ] add_action_block  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_cancelled_timeout  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] add_classifier_role  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] add_classifier_role_by_name  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_classifier_role_for_instance  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_condition_mark  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_ctor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_data_flow  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_destruction_event  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_dtor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_duration_constraint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_duration_observation  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_found_message  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_interaction_occurrence  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_interaction_operator  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_lost_message  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] add_message  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] add_reply_message  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_state_invariant  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_system_border  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_time_constraint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_time_interval  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_time_observation  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] add_timeout  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] generate_sequence  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_activation_condition  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_activation_mode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_activator  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_associations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_classifier  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_concurrent_group  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_execution_occurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_interaction_occurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_interaction_operators  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_message_points  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [x] get_messages  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [ ] get_mode  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_predecessor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_successor  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPCollaboration methods.
 
     def add_action_block(self, name: str) -> "RPUnit":

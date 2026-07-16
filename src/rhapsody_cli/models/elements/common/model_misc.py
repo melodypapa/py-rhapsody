@@ -7,9 +7,9 @@ class RPEnumerationLiteral(RPModelElement):
     """Wraps ``IRPEnumerationLiteral``: a literal value in an enumeration."""
 
     # IRPEnumerationLiteral method parity checklist:
-    # [x] getValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
+    # [x] get_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPEnumerationLiteral methods.
 
     def get_value(self) -> int:
@@ -42,7 +42,7 @@ class RPComment(RPModelElement):
     """Wraps ``IRPComment``: a free-text comment element."""
 
     # IRPComment method parity checklist:
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPComment methods.
 
     pass
@@ -55,8 +55,8 @@ class RPConstraint(RPModelElement):
     """Wraps ``IRPConstraint``: a constraint element."""
 
     # IRPConstraint method parity checklist:
-    # [x] getConstraintsByMe  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
+    # [x] get_constraints_by_me  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPConstraint methods.
 
     def get_constraints_by_me(self) -> RPCollection:

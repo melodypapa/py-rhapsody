@@ -18,15 +18,15 @@ class RPClassifierRole(RPModelElement):
     """Wraps ``IRPClassifierRole``: represents lifelines in sequence diagrams and "objects" (lifelines) in communication diagrams."""
 
     # IRPClassifierRole method parity checklist:
-    # [x] getFormalClassifier          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getFormalInstance            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getReferencedSequenceDiagram [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getReferencingClassifierRolesRecursively [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRoleType                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setFormalClassifier          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setFormalInstance            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setReferencedSequenceDiagram [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] get_formal_classifier          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_formal_instance            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_referenced_sequence_diagram [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_referencing_classifier_roles_recursively [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_role_type                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_formal_classifier          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_formal_instance            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_referenced_sequence_diagram [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPClassifierRole methods.
 
     def get_formal_classifier(self) -> "RPClassifier":
@@ -152,17 +152,17 @@ class RPSysMLPort(RPInstance):
     """Wraps ``IRPSysMLPort``: represents flowport elements in Rhapsody models."""
 
     # IRPSysMLPort method parity checklist:
-    # [x] addLink                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsReversed                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getPortDirection             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getType                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsReversed                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setPortDirection             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setType                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPInstance methods (covered by RPInstance checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPRelation methods (covered by RPRelation checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [x] add_link                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_reversed                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_port_direction             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_type                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_reversed                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_port_direction             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_type                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_instance methods (covered by rp_instance checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_relation methods (covered by rp_relation checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPSysMLPort methods.
 
     def add_link(self, from_part: "RPInstance", to_part: "RPInstance", assoc: "RPRelation", to_port: "RPSysMLPort", new_owner: "RPPackage") -> "RPLink":
@@ -284,44 +284,44 @@ class RPType(RPClassifier):
     """Wraps ``IRPType``."""
 
     # IRPType method parity checklist:
-    # [x] addEnumerationLiteral        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] deleteEnumerationLiteral     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getDeclaration               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnumerationLiterals       [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsPredefined              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsTypedef                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsTypedefConstant         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsTypedefOrdered          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsTypedefReference        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getKind                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getTypedefBaseType           [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getTypedefMultiplicity       [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isArray                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isEnum                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isEqualTo                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isImplicit                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isKindEnumeration            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isKindLanguage               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isKindStruct                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isKindTypedef                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isKindUnion                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isPointer                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isPointerToPointer           [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isReference                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isReferenceToPointer         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isStruct                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isTemplate                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isUnion                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setDeclaration               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsTypedefConstant         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsTypedefOrdered          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsTypedefReference        [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setKind                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setTypedefBaseType           [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setTypedefMultiplicity       [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [x] add_enumeration_literal        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_enumeration_literal     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_declaration               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_enumeration_literals       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_predefined              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_typedef                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_typedef_constant         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_typedef_ordered          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_typedef_reference        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_kind                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_typedef_base_type           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_typedef_multiplicity       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_array                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_enum                       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_equal_to                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_implicit                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_kind_enumeration            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_kind_language               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_kind_struct                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_kind_typedef                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_kind_union                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_pointer                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_pointer_to_pointer           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_reference                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_reference_to_pointer         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_struct                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_template                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_union                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_declaration               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_typedef_constant         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_typedef_ordered          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_typedef_reference        [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_kind                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_typedef_base_type           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_typedef_multiplicity       [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_classifier methods (covered by rp_classifier checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPType methods.
 
     def add_enumeration_literal(self, name: str) -> "RPEnumerationLiteral":

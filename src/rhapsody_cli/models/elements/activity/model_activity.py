@@ -25,24 +25,24 @@ class RPFlow(RPModelElement):
     """Wraps ``IRPFlow``."""
 
     # IRPFlow method parity checklist:
-    # [x] addConveyed                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getConveyed                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getDirection                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd1                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd1Port                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd1SysMLPort             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd2                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd2Port                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getEnd2SysMLPort             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] removeConveyed               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setDirection                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd1                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd1ViaPort               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd1ViaSysMLPort          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd2                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd2ViaPort               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setEnd2ViaSysMLPort          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] add_conveyed                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_conveyed                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_direction                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end1                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end1_port                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end1_sys_ml_port             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end2                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end2_port                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_end2_sys_ml_port             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_conveyed               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_direction                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end1                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end1_via_port               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end1_via_sys_ml_port          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end2                      [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end2_via_port               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_end2_via_sys_ml_port          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPFlow methods.
 
     def add_conveyed(self, p_element: "RPModelElement") -> None:
@@ -293,12 +293,12 @@ class RPFlowItem(RPClassifier):
     """Wraps ``IRPFlowItem``: represents item flows in Rhapsody models."""
 
     # IRPFlowItem method parity checklist:
-    # [x] addRepresented               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRepresented               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] removeRepresented            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
+    # [x] add_represented               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_represented               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_represented            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_classifier methods (covered by rp_classifier checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
     # No deprecated IRPFlowItem methods.
 
     def add_represented(self, p_element: "RPModelElement") -> None:
@@ -339,27 +339,27 @@ class RPFlowchart(RPStatechart):
     """Wraps ``IRPFlowchart``: represents activities in Rhapsody models."""
 
     # IRPFlowchart method parity checklist:
-    # [x] addAcceptEventAction         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addAcceptTimeEvent           [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addActivityParameter         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addCallBehavior              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addCallOperation             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addObjectNode                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addReferenceActivity         [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addSwimlane                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getFlowchartDiagram          [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsAnalysisOnly            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getItsOwner                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getSwimlanes                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsAnalysisOnly            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setItsOwner                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPClass methods (covered by RPClass checklist)
-    # [inherited] IRPClassifier methods (covered by RPClassifier checklist)
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPStatechart methods (covered by RPStatechart checklist)
-    # [inherited] IRPUnit methods (covered by RPUnit checklist)
-    # [deprecated] getItsOwner  - skipped (deprecated in Rhapsody Java API)
-    # [deprecated] setItsOwner  - skipped (deprecated in Rhapsody Java API)
+    # [x] add_accept_event_action         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_accept_time_event           [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_activity_parameter         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_call_behavior              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_call_operation             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_object_node                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_reference_activity         [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_swimlane                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_flowchart_diagram          [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_analysis_only            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_its_owner                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_swimlanes                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_analysis_only            [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_its_owner                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_class methods (covered by rp_class checklist)
+    # [inherited] irp_classifier methods (covered by rp_classifier checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_statechart methods (covered by rp_statechart checklist)
+    # [inherited] irp_unit methods (covered by rp_unit checklist)
+    # [deprecated] get_its_owner  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] set_its_owner  - skipped (deprecated in Rhapsody Java API)
     # No non-deprecated IRPFlowchart methods.
 
     def add_accept_event_action(self, name: str, parent: "RPState") -> "RPAcceptEventAction":
@@ -571,18 +571,18 @@ class RPObjectNode(RPState):
     """Wraps ``IRPObjectNode``: represents Object Node elements in activity diagrams."""
 
     # IRPObjectNode method parity checklist:
-    # [x] addInState                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getInState                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getInStateList               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRepresents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] removeInState                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setInState                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setRepresents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPState methods (covered by RPState checklist)
-    # [inherited] IRPStateVertex methods (covered by RPStateVertex checklist)
-    # [deprecated] getInState  - skipped (deprecated in Rhapsody Java API)
-    # [deprecated] setInState  - skipped (deprecated in Rhapsody Java API)
+    # [x] add_in_state                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_in_state                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_in_state_list               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_represents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] remove_in_state                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_in_state                   [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_represents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_state methods (covered by rp_state checklist)
+    # [inherited] irp_state_vertex methods (covered by rp_state_vertex checklist)
+    # [deprecated] get_in_state  - skipped (deprecated in Rhapsody Java API)
+    # [deprecated] set_in_state  - skipped (deprecated in Rhapsody Java API)
     # No non-deprecated IRPObjectNode methods.
 
     def add_in_state(self, val: "RPModelElement") -> None:
@@ -667,12 +667,12 @@ class RPSwimlane(RPModelElement):
     """Wraps ``IRPSwimlane``: represents swimlanes in an activity diagram."""
 
     # IRPSwimlane method parity checklist:
-    # [x] addSwimlane                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getContents                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getRepresents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getSwimlanes                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setRepresents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] add_swimlane                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_contents                  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_represents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_swimlanes                 [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_represents                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPSwimlane methods.
 
     def add_swimlane(self, name: str) -> "RPSwimlane":

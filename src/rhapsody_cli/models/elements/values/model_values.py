@@ -12,12 +12,12 @@ class RPInstanceSlot(RPModelElement):
     """Wraps ``IRPInstanceSlot``."""
 
     # IRPInstanceSlot method parity checklist:
-    # [x] addElementValue              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] addStringValue               [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getSlotProperty              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getValues                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setSlotProperty              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] add_element_value              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] add_string_value               [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_slot_property              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_values                    [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_slot_property              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPInstanceSlot methods.
 
     def add_element_value(self, val: "RPModelElement") -> "RPInstanceValue":
@@ -101,13 +101,13 @@ class RPInstanceSpecification(RPModelElement):
     """Wraps ``IRPInstanceSpecification``."""
 
     # IRPInstanceSpecification method parity checklist:
-    # [x] addInstanceSlot              [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getClassifier                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getInstanceSlots             [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] isRootInstanceSpecification  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] populateSlots                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setClassifier                [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [x] add_instance_slot              [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_classifier                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_instance_slots             [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] is_root_instance_specification  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] populate_slots                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_classifier                [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPInstanceSpecification methods.
 
     def add_instance_slot(self, name: str, slot_property: "RPModelElement") -> "RPInstanceSlot":
@@ -209,7 +209,7 @@ class RPValueSpecification(RPModelElement):
     """
 
     # IRPValueSpecification method parity checklist:
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPValueSpecification methods.
 
     pass
@@ -219,10 +219,10 @@ class RPInstanceValue(RPValueSpecification):
     """Wraps ``IRPInstanceValue``: used in contexts where a single model element must be stored."""
 
     # IRPInstanceValue method parity checklist:
-    # [x] getValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
+    # [x] get_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_value_specification methods (covered by rp_value_specification checklist)
     # No deprecated IRPInstanceValue methods.
 
     def get_value(self) -> "RPModelElement":
@@ -252,10 +252,10 @@ class RPLiteralSpecification(RPValueSpecification):
     """Wraps ``IRPLiteralSpecification``: used in contexts where a single value must be stored."""
 
     # IRPLiteralSpecification method parity checklist:
-    # [x] getValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setValue                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklist)
-    # [inherited] IRPValueSpecification methods (covered by RPValueSpecification checklist)
+    # [x] get_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_value                     [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklist)
+    # [inherited] irp_value_specification methods (covered by rp_value_specification checklist)
     # No deprecated IRPLiteralSpecification methods.
 
     def get_value(self) -> str:

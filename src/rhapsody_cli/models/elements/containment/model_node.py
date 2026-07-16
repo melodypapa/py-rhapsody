@@ -12,13 +12,13 @@ class RPNode(RPUnit):
     """Wraps ``IRPNode``: a node that extends ``IRPUnit``."""
 
     # IRPNode method parity checklist:
-    # [x] addComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] deleteComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] findComponentInstance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getCPUtype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getComponentInstances  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setCPUtype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [x] add_component_instance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] delete_component_instance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] find_component_instance  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_cp_utype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_component_instances  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_cp_utype  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPNode methods.
 
     def add_component_instance(self, name: str) -> "RPComponentInstance":

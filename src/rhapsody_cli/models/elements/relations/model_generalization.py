@@ -13,17 +13,17 @@ class RPGeneralization(RPModelElement):
     """Wraps ``IRPGeneralization``: a generalization (inheritance) relationship."""
 
     # IRPGeneralization method parity checklist:
-    # [ ] getBaseClass  [x] impl  [x] docstring  [ ] unit test  [x] integration test
-    # [ ] getDerivedClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsVirtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setBaseClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setDerivedClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setExtensionPoint  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsVirtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setVisibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPModelElement methods (covered by RPModelElement checklists)
+    # [ ] get_base_class  [x] impl  [x] docstring  [ ] unit test  [x] integration test
+    # [ ] get_derived_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_extension_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_virtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_visibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_base_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_derived_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_extension_point  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_virtual  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_visibility  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPGeneralization methods.
 
     def get_base_class(self) -> RPClassifier:

@@ -8,7 +8,7 @@ class RPModule(RPInstance):
     """Wraps ``IRPModule``: a module that extends ``IRPInstance``."""
 
     # IRPModule method parity checklist:
-    # [inherited] IRPInstance / IRPRelation / IRPUnit / IRPModelElement methods (covered by RPInstance / RPRelation / RPUnit / RPModelElement checklists)
+    # [inherited] irp_instance / irp_relation / irp_unit / irp_model_element methods (covered by rp_instance / rp_relation / rp_unit / rp_model_element checklists)
     # No deprecated IRPModule methods.
 
     pass

@@ -13,11 +13,11 @@ class RPAssociationClass(RPClass):
     """Wraps ``IRPAssociationClass``: an association class that extends ``IRPClass``."""
 
     # IRPAssociationClass method parity checklist:
-    # [ ] getEnd1  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getEnd2  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] getIsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [ ] setIsClass  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [inherited] IRPClass / IRPClassifier / IRPUnit / IRPModelElement methods (covered by RPClass / RPClassifier / RPUnit / RPModelElement checklists)
+    # [ ] get_end1  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_end2  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] get_is_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [ ] set_is_class  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
+    # [inherited] irp_class / irp_classifier / irp_unit / irp_model_element methods (covered by rp_class / rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPAssociationClass methods.
 
     def get_end1(self) -> "RPRelation":

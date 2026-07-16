@@ -35,7 +35,7 @@ class RPVariable(RPUnit):
     # [x] set_default_value  [x] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_type  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_type_declaration  [x] impl  [x] docstring  [x] unit test  [x] integration test
-    # [inherited] IRPUnit / IRPModelElement methods (covered by RPUnit / RPModelElement checklists)
+    # [inherited] irp_unit / irp_model_element methods (covered by rp_unit / rp_model_element checklists)
     # No deprecated IRPVariable methods.
 
     def add_element_default_value(self, new_default_val: RPModelElement) -> "RPInstanceValue":
@@ -165,19 +165,19 @@ class RPAttribute(RPVariable):
     """Wraps ``IRPAttribute``: represents an attribute in a classifier."""
 
     # IRPAttribute method parity checklist:
-    # [x] getIsConstant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsOrdered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getIsReference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_constant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_ordered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_is_reference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_static  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_visibility  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsConstant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsOrdered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setIsReference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_constant  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_ordered  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_is_reference  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_static  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_visibility  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # [inherited] irp_variable / irp_unit / irp_model_element methods (covered by rp_variable / rp_unit / rp_model_element checklists)
     # No deprecated IRPAttribute methods.
 
     def get_is_constant(self) -> int:
@@ -320,16 +320,16 @@ class RPTag(RPVariable):
     """Wraps ``IRPTag``: a tag that extends ``IRPVariable``."""
 
     # IRPTag method parity checklist:
-    # [x] getBase  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getFromProfile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getMultiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getTagMetaClass  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] getValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setMultiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_tag_context_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from RPModelElement)
-    # [x] setTagMetaClass  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] setValue  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # [x] get_base  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_from_profile  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_tag_meta_class  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] get_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_multiplicity  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_tag_context_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test   (inherited from rp_model_element)
+    # [x] set_tag_meta_class  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [x] set_value  [x] impl  [x] docstring  [x] unit test  [ ] integration test
+    # [inherited] irp_variable / irp_unit / irp_model_element methods (covered by rp_variable / rp_unit / rp_model_element checklists)
     # No deprecated IRPTag methods.
 
     def get_base(self) -> RPModelElement:
@@ -430,7 +430,7 @@ class RPArgument(RPVariable):
     # IRPArgument method parity checklist:
     # [x] get_argument_direction  [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_argument_direction  [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [inherited] IRPVariable / IRPUnit / IRPModelElement methods (covered by RPVariable / RPUnit / RPModelElement checklists)
+    # [inherited] irp_variable / irp_unit / irp_model_element methods (covered by rp_variable / rp_unit / rp_model_element checklists)
     # No deprecated IRPArgument methods.
 
     def get_argument_direction(self) -> str:

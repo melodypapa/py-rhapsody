@@ -40,7 +40,7 @@ class RPClass(RPClassifier):
     # [x] get_is_composite           [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_final               [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] get_is_reactive            [x] impl  [x] docstring  [x] unit test  [ ] integration test
-    # [x] set_is_abstract (unimplemented -- raises NotImplementedError, see docstring)  [ ] impl  [x] docstring  [x] unit test  [x] integration test
+    # [x] set_is_abstract (unimplemented -- raises not_implemented_error, see docstring)  [ ] impl  [x] docstring  [x] unit test  [x] integration test
     # [x] set_is_active              [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_behavior_overriden   [x] impl  [x] docstring  [x] unit test  [ ] integration test
     # [x] set_is_final               [x] impl  [x] docstring  [x] unit test  [ ] integration test
