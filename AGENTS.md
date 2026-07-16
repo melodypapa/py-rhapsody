@@ -26,7 +26,7 @@ Pythonic wrapper around the IBM Rhapsody COM API. All method names use snake_cas
 
 ```bash
 pip install -e ".[dev,cli]"   # full setup (CLI tests need tabulate/rich)
-pytest tests/unit/             # unit tests only — what CI runs
+pytest tests/unit/             # unit tests only — what CI runs (1505 tests collected)
 pytest -k "test_foo"           # pattern match
 ```
 
@@ -43,9 +43,9 @@ Write failing test first, then implement. Coverage target 80% min, 90%+ preferre
 ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytest tests/unit
 ```
 
-- ruff: E, F, I, UP, B rule sets. Black: line-length 200, py38 target.
+- ruff: E, F, I, UP, B, N rule sets. Black: line-length 200, py38 target.
 - `win32com.*` / `pywintypes`: `ignore_missing_imports` in mypy config.
-- mypy only runs on Python < 3.10 in CI (pattern-matching syntax issue in pytest on 3.10+).
+- CI runs `mypy` only on Python < 3.10 (pattern-matching syntax issue in pytest on 3.10+ blocks the type-checked code path).
 - CI runs full gate on `windows-latest` across Python 3.8–3.13. Codecov upload.
 
 ## Forbidden
@@ -57,11 +57,13 @@ ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytes
 
 ## Adding a New Element Wrapper
 
+**Read `docs/java_api` html files first** — it documents every java model classes detail information. before you start to write the wrapper and integration tests.
+
 1. Create `src/rhapsody_cli/models/elements/<subpackage>/model_<class>.py`
 2. Subclass `RPModelElement`, add methods using snake_case names mirroring Java API
 3. `AbstractRPModelElement.register_wrapper("MetaClass", RPMyClass)` at module level
 4. Add import in the subpackage's `__init__.py`
-5. Write tests using `make_fake_element` / `make_fake_collection`
+5. Write tests using `make_fake_element` / `make_fake_collection` (use `docs/java_api.md` to find the exact Java method names to mock)
 
 ## Adding a CLI Subcommand
 
