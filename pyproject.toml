@@ -64,14 +64,9 @@ module = "pywintypes"
 ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
-module = "_pytest.*"
+module = ["pytest", "pytest.*", "_pytest", "_pytest.*"]
 ignore_missing_imports = true
-follow_imports = "silent"
-
-[[tool.mypy.overrides]]
-module = "pytest.*"
-ignore_missing_imports = true
-follow_imports = "silent"
+follow_imports = "skip"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
