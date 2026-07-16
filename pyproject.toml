@@ -67,6 +67,7 @@ ignore_missing_imports = true
 testpaths = ["tests"]
 markers = [
     "integration: marks tests as integration tests (require Rhapsody)",
+    "system: marks tests as system tests (subprocess CLI, require Rhapsody)",
 ]
 addopts = [
     "--cov=rhapsody_cli",
