@@ -95,10 +95,8 @@ def test_class_add_event_reception_with_event_unwraps_and_wraps() -> None:
     fake.addEventReceptionWithEvent.return_value = reception
     klass = RPClass(fake)
 
-    result = klass.add_event_reception_with_event("onTick", AbstractRPModelElement.wrap(event))
-
-    fake.addEventReceptionWithEvent.assert_called_once_with("onTick", event)
-    assert result.get_name() == "onTick"
+    with pytest.raises(NotImplementedError):
+        klass.add_event_reception_with_event("onTick", AbstractRPModelElement.wrap(event))
 
 
 def test_class_add_link_unwraps_all_args_and_wraps_result() -> None:

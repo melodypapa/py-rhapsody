@@ -7,7 +7,6 @@ import time
 
 import pytest
 
-from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers import RPClass, RPOperation
 from rhapsody_cli.models.elements.containment import RPPackage, RPProject
 from rhapsody_cli.models.elements.interactions import RPEventReception
@@ -357,4 +356,3 @@ class TestRPClassIntegration:
             test_class.update_contained_diagrams_on_server(0)
         finally:
             test_class.delete_from_project()
-

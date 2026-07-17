@@ -1354,9 +1354,8 @@ def test_model_element_set_description_html_delegates_to_com() -> None:
     fake = make_fake_element("Class")
     element = RPModelElement(fake)
 
-    element.set_description_html("<p>desc</p>")
-
-    fake.setDescriptionHTML.assert_called_once_with("<p>desc</p>")
+    with pytest.raises(NotImplementedError):
+        element.set_description_html("<p>desc</p>")
 
 
 def test_model_element_set_description_rtf_delegates_to_com() -> None:

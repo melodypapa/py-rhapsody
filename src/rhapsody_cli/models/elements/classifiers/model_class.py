@@ -146,8 +146,7 @@ class RPClass(RPClassifier):
             com.telelogic.rhapsody.core.IRPClass::addEventReceptionWithEvent(java.lang.String name, com.telelogic.rhapsody.core.IRPEvent event)
         """
         raise NotImplementedError(
-            "addEventReceptionWithEvent is not exposed in the Rhapsody COM automation type library. "
-            "Use add_event_reception(name) instead and set the event via the reception object."
+            "addEventReceptionWithEvent is not exposed in the Rhapsody COM automation type library. " "Use add_event_reception(name) instead and set the event via the reception object."
         )
 
     def add_link(

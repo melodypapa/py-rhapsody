@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPActor``."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
@@ -43,8 +43,7 @@ class RPActor(RPClassifier):
             com.telelogic.rhapsody.core.IRPActor::addEventReceptionWithEvent(java.lang.String name, com.telelogic.rhapsody.core.IRPEvent event)
         """
         raise NotImplementedError(
-            "addEventReceptionWithEvent is not exposed in the Rhapsody COM automation type library. "
-            "Use add_event_reception(name) instead and set the event via the reception object."
+            "addEventReceptionWithEvent is not exposed in the Rhapsody COM automation type library. " "Use add_event_reception(name) instead and set the event via the reception object."
         )
 
     def get_is_behavior_overriden(self) -> bool:

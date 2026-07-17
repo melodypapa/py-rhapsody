@@ -45,9 +45,7 @@ class TestRPAssociationClassIntegration:
         class_a = pkg.add_class(class_a_name)
         class_b = pkg.add_class(class_b_name)
         try:
-            class_a.add_relation_to(
-                class_b, "roleA", "Association", "1", "roleB", "Association", "1", link_name
-            )
+            class_a.add_relation_to(class_b, "roleA", "Association", "1", "roleB", "Association", "1", link_name)
             assoc_classes = pkg.get_association_classes()
             found = None
             for ac in assoc_classes:

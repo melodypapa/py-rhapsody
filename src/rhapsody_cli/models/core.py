@@ -1548,8 +1548,7 @@ class RPModelElement(AbstractRPModelElement):
             com.telelogic.rhapsody.core.IRPModelElement::setDescriptionHTML(java.lang.String descriptionHTML)
         """
         raise NotImplementedError(
-            "setDescriptionHTML is documented as 'Not implemented - should not be used' in the Rhapsody Java API. "
-            "This method is not available in the COM automation interface."
+            "setDescriptionHTML is documented as 'Not implemented - should not be used' in the Rhapsody Java API. " "This method is not available in the COM automation interface."
         )
 
     def set_description_rtf(self, description_rtf: str) -> None:
