@@ -60,13 +60,13 @@ ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests/ && pytes
 
 ## Element Wrappers
 
-**Read `docs/java_api` (HTML dir) and `docs/java_api.md` first** — documents Java model classes with exact method names/signatures.
+**Read `docs/java_api` (HTML dir) first** — javadoc-generated, documents Java model classes with exact method names/signatures. Authoritative for "does this method exist on this IRP* interface".
 
 1. Create `src/rhapsody_cli/models/elements/<subpackage>/model_<class>.py`
 2. Subclass `RPModelElement`, add methods using snake_case names mirroring Java API
 3. `AbstractRPModelElement.register_wrapper("MetaClass", RPMyClass)` at module level
 4. Add import in the subpackage's `__init__.py`
-5. Write tests using `make_fake_element` / `make_fake_collection` (mock exact Java method names from `docs/java_api.md`)
+5. Write tests using `make_fake_element` / `make_fake_collection` (mock exact Java method names from `docs/java_api` HTML docs)
 
 ## CLI Subcommands
 

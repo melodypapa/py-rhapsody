@@ -115,31 +115,6 @@ def test_project_get_components_returns_collection() -> None:
     assert isinstance(result, RPCollection)
 
 
-def test_project_find_by_name_returns_wrapped_element() -> None:
-    fake = make_fake_element("Project")
-    found = make_fake_element("Class", getName="MyClass")
-    fake.findByName.return_value = found
-    project = RPProject(fake)
-
-    result = project.find_by_name("MyClass")
-
-    fake.findByName.assert_called_once_with("MyClass")
-    assert result.get_name() == "MyClass"
-
-
-def test_project_find_by_meta_class_returns_collection() -> None:
-    from rhapsody_cli.models.core import RPCollection
-
-    fake = make_fake_element("Project")
-    cls1 = make_fake_element("Class", getName="Class1")
-    fake.findByMetaClass.return_value = make_fake_collection([cls1])
-    project = RPProject(fake)
-
-    result = project.find_by_meta_class("Class")
-
-    assert isinstance(result, RPCollection)
-
-
 def test_project_find_element_by_guid_returns_wrapped_element() -> None:
     fake = make_fake_element("Project")
     found = make_fake_element("Class", getName="MyClass")
@@ -150,25 +125,6 @@ def test_project_find_element_by_guid_returns_wrapped_element() -> None:
 
     fake.findElementByGUID.assert_called_once_with("12345")
     assert result.get_name() == "MyClass"
-
-
-def test_project_is_dirty_returns_int() -> None:
-    fake = make_fake_element("Project", getIsDirty=1)
-    project = RPProject(fake)
-
-    result = project.get_is_dirty()
-
-    fake.getIsDirty.assert_called_once_with()
-    assert result == 1
-
-
-def test_project_set_dirty_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    project = RPProject(fake)
-
-    project.set_dirty(1)
-
-    fake.setDirty.assert_called_once_with(1)
 
 
 # --- New tests for RPProject ---
@@ -231,68 +187,6 @@ def test_project_find_node_delegates_to_com() -> None:
 
     fake.findNode.assert_called_once_with("Node1")
     assert result.get_name() == "Node1"
-
-
-def test_project_add_configuration_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.addConfiguration.return_value = config
-    project = RPProject(fake)
-
-    result = project.add_configuration("Default")
-
-    fake.addConfiguration.assert_called_once_with("Default")
-    assert result.get_name() == "Default"
-
-
-def test_project_get_configurations_returns_collection() -> None:
-    from rhapsody_cli.models.core import RPCollection
-
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.getConfigurations.return_value = make_fake_collection([config])
-    project = RPProject(fake)
-
-    result = project.get_configurations()
-
-    assert isinstance(result, RPCollection)
-
-
-def test_project_find_configuration_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.findConfiguration.return_value = config
-    project = RPProject(fake)
-
-    result = project.find_configuration("Default")
-
-    fake.findConfiguration.assert_called_once_with("Default")
-    assert result.get_name() == "Default"
-
-
-def test_project_add_collaboration_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    collab = make_fake_element("Collaboration", getName="Collab1")
-    fake.addCollaboration.return_value = collab
-    project = RPProject(fake)
-
-    result = project.add_collaboration("Collab1")
-
-    fake.addCollaboration.assert_called_once_with("Collab1")
-    assert result.get_name() == "Collab1"
-
-
-def test_project_get_collaborations_returns_collection() -> None:
-    from rhapsody_cli.models.core import RPCollection
-
-    fake = make_fake_element("Project")
-    collab = make_fake_element("Collaboration", getName="Collab1")
-    fake.getCollaborations.return_value = make_fake_collection([collab])
-    project = RPProject(fake)
-
-    result = project.get_collaborations()
-
-    assert isinstance(result, RPCollection)
 
 
 def test_project_get_all_stereotypes_returns_collection() -> None:
