@@ -43,7 +43,7 @@ class RPCollaboration(RPUnit):
     # [ ] get_activator  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] get_associations  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] get_classifier  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
-    # [wrong-interface] get_classifier_roles  - calls getClassifierRoles; exists on IRPAssociationRole, not IRPCollaboration (audit 2026-07-18)
+    # [wrong-interface] get_classifier_roles  - REMOVED; exists on IRPAssociationRole, not IRPCollaboration (use RPAssociationRole instead)
     # [ ] get_concurrent_group  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] get_execution_occurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
     # [ ] get_interaction_occurrences  [x] impl  [x] docstring  [ ] unit test  [ ] integration test
@@ -446,17 +446,6 @@ class RPCollaboration(RPUnit):
             com.telelogic.rhapsody.core.IRPCollaboration::getAssociations()
         """
         return RPCollection(self.call_com(lambda: self._com.getAssociations()))
-
-    def get_classifier_roles(self) -> "RPCollection":
-        """Returns all classifier roles in the collaboration.
-
-        Returns:
-            An ``RPCollection`` of ``IRPClassifierRole`` objects.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPCollaboration::getClassifierRoles()
-        """
-        return RPCollection(self.call_com(lambda: self._com.getClassifierRoles()))
 
     def get_classifier(self) -> "RPUnit | None":
         """Returns the classifier of the collaboration.

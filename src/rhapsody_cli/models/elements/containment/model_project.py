@@ -98,10 +98,9 @@ class RPProject(RPPackage):
     #   get_is_dirty (getIsDirty), set_dirty (setDirty),
     #   add_collaboration (addCollaboration), get_collaborations (getCollaborations),
     #   find_collaboration (findCollaboration), delete_collaboration (deleteCollaboration)
-    # [wrong-interface] add_configuration  - calls addConfiguration; exists on IRPComponent, not IRPProject (duplicate of RPComponent.add_configuration)
-    # [wrong-interface] get_configurations  - calls getConfigurations; exists on IRPComponent, not IRPProject (duplicate of RPComponent.get_configurations)
-    # [wrong-interface] find_configuration  - calls findConfiguration; exists on IRPComponent, not IRPProject (duplicate of RPComponent.find_configuration)
-    # [wrong-interface] delete_configuration  - calls deleteConfiguration; exists on IRPComponent, not IRPProject (duplicate of RPComponent.delete_configuration)
+    # The following [wrong-interface] methods were REMOVED from RPProject (they exist on IRPComponent, not IRPProject - use RPComponent instead):
+    #   add_configuration (addConfiguration), get_configurations (getConfigurations),
+    #   find_configuration (findConfiguration), delete_configuration (deleteConfiguration)
 
     def add_package(self, name: str) -> "RPPackage":
         """Adds a new package to the project.
@@ -299,56 +298,6 @@ class RPProject(RPPackage):
         AbstractRPModelElement.call_com(lambda: self._com.deleteNode(node._com))
 
     # --- Configuration methods ---
-    def add_configuration(self, name: str) -> "RPConfiguration":
-        """Adds a new configuration to the project.
-
-        Args:
-            name: The name of the new configuration.
-
-        Returns:
-            The wrapped ``IRPConfiguration`` created.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPProject::addConfiguration(java.lang.String name)
-        """
-        return cast("RPConfiguration", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addConfiguration(name))))
-
-    def get_configurations(self) -> "RPCollection":
-        """Returns all configurations in the project.
-
-        Returns:
-            An ``RPCollection`` of ``IRPConfiguration`` objects.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPProject::getConfigurations()
-        """
-        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getConfigurations", "configurations"))
-
-    def find_configuration(self, name: str) -> "RPConfiguration":
-        """Finds a configuration in the project by name.
-
-        Args:
-            name: The name of the configuration to find.
-
-        Returns:
-            The wrapped ``IRPConfiguration`` if found, otherwise empty wrapper.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPProject::findConfiguration(java.lang.String name)
-        """
-        return cast("RPConfiguration", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findConfiguration(name))))
-
-    def delete_configuration(self, config: Any) -> None:
-        """Deletes a configuration from the project.
-
-        Args:
-            config: The configuration to delete.
-
-        Reference:
-            com.telelogic.rhapsody.core.IRPProject::deleteConfiguration(com.telelogic.rhapsody.core.IRPConfiguration config)
-        """
-        AbstractRPModelElement.call_com(lambda: self._com.deleteConfiguration(config._com))
-
     def get_active_configuration(self) -> "RPConfiguration":
         """Returns the active configuration of the project.
 

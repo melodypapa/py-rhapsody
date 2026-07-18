@@ -189,43 +189,6 @@ def test_project_find_node_delegates_to_com() -> None:
     assert result.get_name() == "Node1"
 
 
-def test_project_add_configuration_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.addConfiguration.return_value = config
-    project = RPProject(fake)
-
-    result = project.add_configuration("Default")
-
-    fake.addConfiguration.assert_called_once_with("Default")
-    assert result.get_name() == "Default"
-
-
-def test_project_get_configurations_returns_collection() -> None:
-    from rhapsody_cli.models.core import RPCollection
-
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.getConfigurations.return_value = make_fake_collection([config])
-    project = RPProject(fake)
-
-    result = project.get_configurations()
-
-    assert isinstance(result, RPCollection)
-
-
-def test_project_find_configuration_delegates_to_com() -> None:
-    fake = make_fake_element("Project")
-    config = make_fake_element("Configuration", getName="Default")
-    fake.findConfiguration.return_value = config
-    project = RPProject(fake)
-
-    result = project.find_configuration("Default")
-
-    fake.findConfiguration.assert_called_once_with("Default")
-    assert result.get_name() == "Default"
-
-
 def test_project_get_all_stereotypes_returns_collection() -> None:
     from rhapsody_cli.models.core import RPCollection
 

@@ -48,18 +48,6 @@ def test_collaboration_add_message_delegates_and_wraps() -> None:
     assert result.get_name() == "msg1"
 
 
-def test_collaboration_get_classifier_roles_returns_collection() -> None:
-    fake = make_fake_element("Collaboration")
-    cr = make_fake_element("ClassifierRole", getName="cr1")
-    fake.getClassifierRoles.return_value = make_fake_collection([cr])
-    collab = RPCollaboration(fake)
-
-    result = collab.get_classifier_roles()
-
-    fake.getClassifierRoles.assert_called_once_with()
-    assert isinstance(result, RPCollection)
-
-
 def test_collaboration_get_messages_returns_collection() -> None:
     fake = make_fake_element("Collaboration")
     msg = make_fake_element("Message", getName="msg1")
