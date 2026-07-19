@@ -122,3 +122,33 @@ class TestProjectNewAction:
 
         fake_app.create_new_project.assert_called_once_with(".", "MyNewProject")
         assert action._project is fake_project
+
+
+class TestProjectCommandExportImportRegistration:
+    """Tests that ProjectCommand registers export/import subcommands.
+
+    UTS_XCH_00090: ProjectCommand registers export/import subcommands
+    """
+
+    def test_get_actions_includes_export_action(self) -> None:
+        """ProjectCommand.get_actions() must include a ProjectExportAction instance."""
+        cmd = ProjectCommand(["export", "--file", "out.yaml"])
+        actions = cmd.get_actions()
+        command_ids = [a.command_id for a in actions]
+
+        assert "export" in command_ids
+
+    def test_get_actions_includes_import_action(self) -> None:
+        """ProjectCommand.get_actions() must include a ProjectImportAction instance."""
+        cmd = ProjectCommand(["import", "--file", "in.yaml"])
+        actions = cmd.get_actions()
+        command_ids = [a.command_id for a in actions]
+
+        assert "import" in command_ids
+
+    def test_get_actions_returns_six_actions(self) -> None:
+        """ProjectCommand.get_actions() must return exactly 6 actions after adding export/import."""
+        cmd = ProjectCommand(["open", "MyProject.rpy"])
+        actions = cmd.get_actions()
+
+        assert len(actions) == 6
