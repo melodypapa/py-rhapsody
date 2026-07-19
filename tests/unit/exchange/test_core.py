@@ -501,3 +501,123 @@ class TestGetProjectName:
         orphan.get_meta_class.return_value = "Package"
         orphan.get_name.return_value = "Orphan"
         orphan.get_owner.return_value = None
+        helper = _make_helper()
+
+        result = helper._get_project_name(orphan)
+
+        assert result == ""
+
+
+class TestFindOrCreateDependency:
+    """UTS_XCH_00031: find_or_create_dependency."""
+
+    def test_creates_dependency_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_dep = MagicMock()
+        new_dep.get_name.return_value = "dep1"
+        parent.add_new_aggr.return_value = new_dep
+        helper = _make_helper()
+
+        result = helper.find_or_create_dependency(parent, "dep1")
+
+        parent.add_new_aggr.assert_called_once_with("Dependency", "dep1")
+        assert result.get_name() == "dep1"
+
+    def test_returns_existing_dependency(self) -> None:
+        existing = MagicMock()
+        existing.get_meta_class.return_value = "Dependency"
+        existing.get_name.return_value = "dep1"
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = [existing]
+        helper = _make_helper()
+
+        result = helper.find_or_create_dependency(parent, "dep1")
+
+        parent.add_new_aggr.assert_not_called()
+        assert result.get_name() == "dep1"
+
+
+class TestFindOrCreateGeneralization:
+    """UTS_XCH_00032: find_or_create_generalization."""
+
+    def test_creates_generalization_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_gen = MagicMock()
+        new_gen.get_name.return_value = "gen1"
+        parent.add_new_aggr.return_value = new_gen
+        helper = _make_helper()
+
+        result = helper.find_or_create_generalization(parent, "gen1")
+
+        parent.add_new_aggr.assert_called_once_with("Generalization", "gen1")
+        assert result.get_name() == "gen1"
+
+
+class TestFindOrCreateRelation:
+    """UTS_XCH_00033: find_or_create_relation."""
+
+    def test_creates_relation_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_rel = MagicMock()
+        new_rel.get_name.return_value = "assoc1"
+        parent.add_new_aggr.return_value = new_rel
+        helper = _make_helper()
+
+        result = helper.find_or_create_relation(parent, "assoc1")
+
+        parent.add_new_aggr.assert_called_once_with("Relation", "assoc1")
+        assert result.get_name() == "assoc1"
+
+
+class TestFindOrCreatePort:
+    """UTS_XCH_00034: find_or_create_port."""
+
+    def test_creates_port_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_port = MagicMock()
+        new_port.get_name.return_value = "p1"
+        parent.add_new_aggr.return_value = new_port
+        helper = _make_helper()
+
+        result = helper.find_or_create_port(parent, "p1")
+
+        parent.add_new_aggr.assert_called_once_with("Port", "p1")
+        assert result.get_name() == "p1"
+
+
+class TestFindOrCreateEvent:
+    """UTS_XCH_00035: find_or_create_event."""
+
+    def test_creates_event_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_evt = MagicMock()
+        new_evt.get_name.return_value = "TickEvent"
+        parent.add_new_aggr.return_value = new_evt
+        helper = _make_helper()
+
+        result = helper.find_or_create_event(parent, "TickEvent")
+
+        parent.add_new_aggr.assert_called_once_with("Event", "TickEvent")
+        assert result.get_name() == "TickEvent"
+
+
+class TestFindOrCreateEventReception:
+    """UTS_XCH_00036: find_or_create_event_reception."""
+
+    def test_creates_reception_via_add_new_aggr(self) -> None:
+        parent = MagicMock()
+        parent.get_nested_elements.return_value = []
+        new_rec = MagicMock()
+        new_rec.get_name.return_value = "onTick"
+        parent.add_new_aggr.return_value = new_rec
+        helper = _make_helper()
+
+        result = helper.find_or_create_event_reception(parent, "onTick")
+
+        parent.add_new_aggr.assert_called_once_with("EventReception", "onTick")
+        assert result.get_name() == "onTick"

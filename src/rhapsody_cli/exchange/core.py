@@ -114,6 +114,48 @@ class RhapsodyModelHelper:
             return existing
         return parent.add_new_aggr("EnumerationLiteral", name)
 
+    def find_or_create_dependency(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create a Dependency under parent. Source/target wiring handled by importer."""
+        existing = self.find_child_by_name(parent, "Dependency", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("Dependency", name)
+
+    def find_or_create_generalization(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create a Generalization under parent. Base class wiring handled by importer."""
+        existing = self.find_child_by_name(parent, "Generalization", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("Generalization", name)
+
+    def find_or_create_relation(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create a Relation (Association/Aggregation/Composition) under parent."""
+        existing = self.find_child_by_name(parent, "Relation", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("Relation", name)
+
+    def find_or_create_port(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create a Port under parent. Contract/interface wiring handled by importer."""
+        existing = self.find_child_by_name(parent, "Port", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("Port", name)
+
+    def find_or_create_event(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create an Event under parent. Base/super event wiring handled by importer."""
+        existing = self.find_child_by_name(parent, "Event", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("Event", name)
+
+    def find_or_create_event_reception(self, parent: RPModelElement, name: str) -> RPModelElement:
+        """Find or create an EventReception under parent. Event reference wiring handled by importer."""
+        existing = self.find_child_by_name(parent, "EventReception", name)
+        if existing is not None:
+            return existing
+        return parent.add_new_aggr("EventReception", name)
+
     # ------------------------------------------------------------------
     # Property application
     # ------------------------------------------------------------------
