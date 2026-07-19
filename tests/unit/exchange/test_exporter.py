@@ -15,6 +15,12 @@ UTS_XCH_00076: _export_stereotypes returns names
 UTS_XCH_00077: _export_tags returns name/value dict
 UTS_XCH_00078: _export_element skips unsupported metaclass
 UTS_XCH_00079: _export_element attaches stereotypes and tags
+UTS_XCH_00080: _export_dependency emits depends_on
+UTS_XCH_00081: _export_generalization emits base_class, visibility, is_virtual
+UTS_XCH_00082: _export_relation emits relation_type, from, to, extras
+UTS_XCH_00083: _export_port emits flags, contract, interfaces
+UTS_XCH_00084: _export_event emits base_event and super_event
+UTS_XCH_00085: _export_event_reception emits event reference
 """
 
 from unittest.mock import MagicMock
@@ -362,3 +368,242 @@ class TestExportElementSkipUnsupported:
         result = exporter._export_element(None)
 
         assert result is None
+
+
+class TestExportDependency:
+    """UTS_XCH_00080: _export_dependency emits depends_on."""
+
+    def test_emits_depends_on(self) -> None:
+        target = MagicMock()
+        target.get_name.return_value = "OtherClass"
+        dep = MagicMock()
+        dep.get_meta_class.return_value = "Dependency"
+        dep.get_name.return_value = "dep1"
+        dep.get_depends_on.return_value = target
+        dep.get_stereotypes.return_value = []
+        dep.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(dep)
+
+        assert result["type"] == "Dependency"
+        assert result["depends_on"] == "OtherClass"
+
+    def test_omits_depends_on_when_unresolvable(self) -> None:
+        dep = MagicMock()
+        dep.get_meta_class.return_value = "Dependency"
+        dep.get_name.return_value = "dep1"
+        dep.get_depends_on.return_value = None
+        dep.get_stereotypes.return_value = []
+        dep.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(dep)
+
+        assert result["type"] == "Dependency"
+        assert "depends_on" not in result
+
+
+class TestExportGeneralization:
+    """UTS_XCH_00081: _export_generalization emits base_class, visibility, is_virtual."""
+
+    def test_emits_all_fields(self) -> None:
+        base = MagicMock()
+        base.get_name.return_value = "BaseClass"
+        gen = MagicMock()
+        gen.get_meta_class.return_value = "Generalization"
+        gen.get_name.return_value = "gen1"
+        gen.get_base_class.return_value = base
+        gen.get_visibility.return_value = "public"
+        gen.get_is_virtual.return_value = True
+        gen.get_stereotypes.return_value = []
+        gen.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(gen)
+
+        assert result["type"] == "Generalization"
+        assert result["base_class"] == "BaseClass"
+        assert result["visibility"] == "public"
+        assert result["is_virtual"] is True
+
+
+class TestExportRelation:
+    """UTS_XCH_00082: _export_relation emits relation_type, from, to, extras."""
+
+    def test_emits_all_fields(self) -> None:
+        source = MagicMock()
+        source.get_name.return_value = "MyClass"
+        target = MagicMock()
+        target.get_name.return_value = "OtherClass"
+        rel = MagicMock()
+        rel.get_meta_class.return_value = "Relation"
+        rel.get_name.return_value = "assoc1"
+        rel.get_relation_type.return_value = "Association"
+        rel.get_of_class.return_value = source
+        rel.get_other_class.return_value = target
+        rel.get_multiplicity.return_value = "0..*"
+        rel.get_is_navigable.return_value = True
+        rel.get_relation_role_name.return_value = "items"
+        rel.get_visibility.return_value = "public"
+        rel.get_stereotypes.return_value = []
+        rel.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(rel)
+
+        assert result["type"] == "Relation"
+        assert result["relation_type"] == "Association"
+        assert result["from"] == "MyClass"
+        assert result["to"] == "OtherClass"
+        assert result["multiplicity"] == "0..*"
+        assert result["is_navigable"] is True
+        assert result["role"] == "items"
+        assert result["visibility"] == "public"
+
+    def test_omits_optional_fields_when_none(self) -> None:
+        source = MagicMock()
+        source.get_name.return_value = "MyClass"
+        target = MagicMock()
+        target.get_name.return_value = "OtherClass"
+        rel = MagicMock()
+        rel.get_meta_class.return_value = "Relation"
+        rel.get_name.return_value = "assoc1"
+        rel.get_relation_type.return_value = "Aggregation"
+        rel.get_of_class.return_value = source
+        rel.get_other_class.return_value = target
+        rel.get_multiplicity.return_value = None
+        rel.get_is_navigable.return_value = None
+        rel.get_relation_role_name.return_value = None
+        rel.get_visibility.return_value = None
+        rel.get_stereotypes.return_value = []
+        rel.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(rel)
+
+        assert result["relation_type"] == "Aggregation"
+        assert "multiplicity" not in result
+        assert "is_navigable" not in result
+        assert "role" not in result
+        assert "visibility" not in result
+
+
+class TestExportPort:
+    """UTS_XCH_00083: _export_port emits flags, contract, interfaces."""
+
+    def test_emits_flags_and_contract(self) -> None:
+        contract = MagicMock()
+        contract.get_name.return_value = "IFoo"
+        port = MagicMock()
+        port.get_meta_class.return_value = "Port"
+        port.get_name.return_value = "p1"
+        port.get_is_behavioral.return_value = True
+        port.get_is_reversed.return_value = False
+        port.get_contract.return_value = contract
+        port.get_provided_interfaces.return_value = []
+        port.get_required_interfaces.return_value = []
+        port.get_stereotypes.return_value = []
+        port.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(port)
+
+        assert result["type"] == "Port"
+        assert result["is_behavioral"] is True
+        assert result["is_reversed"] is False
+        assert result["contract"] == "IFoo"
+
+    def test_emits_provided_and_required_interfaces(self) -> None:
+        iface1 = MagicMock()
+        iface1.get_name.return_value = "IFoo"
+        iface2 = MagicMock()
+        iface2.get_name.return_value = "IBar"
+        port = MagicMock()
+        port.get_meta_class.return_value = "Port"
+        port.get_name.return_value = "p1"
+        port.get_is_behavioral.return_value = None
+        port.get_is_reversed.return_value = None
+        port.get_contract.return_value = None
+        port.get_provided_interfaces.return_value = [iface1]
+        port.get_required_interfaces.return_value = [iface2]
+        port.get_stereotypes.return_value = []
+        port.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(port)
+
+        assert result["provided_interfaces"] == ["IFoo"]
+        assert result["required_interfaces"] == ["IBar"]
+
+
+class TestExportEvent:
+    """UTS_XCH_00084: _export_event emits base_event and super_event."""
+
+    def test_emits_base_and_super_event(self) -> None:
+        base = MagicMock()
+        base.get_name.return_value = "BaseEvt"
+        sup = MagicMock()
+        sup.get_name.return_value = "SuperEvt"
+        event = MagicMock()
+        event.get_meta_class.return_value = "Event"
+        event.get_name.return_value = "TickEvent"
+        event.get_base_event.return_value = base
+        event.get_super_event.return_value = sup
+        event.get_stereotypes.return_value = []
+        event.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(event)
+
+        assert result["type"] == "Event"
+        assert result["base_event"] == "BaseEvt"
+        assert result["super_event"] == "SuperEvt"
+
+    def test_omits_optional_fields_when_none(self) -> None:
+        event = MagicMock()
+        event.get_meta_class.return_value = "Event"
+        event.get_name.return_value = "TickEvent"
+        event.get_base_event.return_value = None
+        event.get_super_event.return_value = None
+        event.get_stereotypes.return_value = []
+        event.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(event)
+
+        assert "base_event" not in result
+        assert "super_event" not in result
+
+
+class TestExportEventReception:
+    """UTS_XCH_00085: _export_event_reception emits event reference."""
+
+    def test_emits_event(self) -> None:
+        evt = MagicMock()
+        evt.get_name.return_value = "TickEvent"
+        reception = MagicMock()
+        reception.get_meta_class.return_value = "EventReception"
+        reception.get_name.return_value = "onTick"
+        reception.get_event.return_value = evt
+        reception.get_stereotypes.return_value = []
+        reception.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(reception)
+
+        assert result["type"] == "EventReception"
+        assert result["event"] == "TickEvent"
+
+    def test_omits_event_when_none(self) -> None:
+        reception = MagicMock()
+        reception.get_meta_class.return_value = "EventReception"
+        reception.get_name.return_value = "onTick"
+        reception.get_event.return_value = None
+        reception.get_stereotypes.return_value = []
+        reception.get_all_tags.return_value = []
+        exporter = _make_exporter()
+
+        result = exporter._export_element(reception)
+
+        assert "event" not in result

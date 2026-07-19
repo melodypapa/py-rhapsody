@@ -66,6 +66,12 @@ class RhapsodyExporter(RhapsodyModelHelper):
             "Type": self._export_type,
             "Object": self._export_object,
             "EnumerationLiteral": self._export_enumeration_literal,
+            "Dependency": self._export_dependency,
+            "Generalization": self._export_generalization,
+            "Relation": self._export_relation,
+            "Port": self._export_port,
+            "Event": self._export_event,
+            "EventReception": self._export_event_reception,
         }
         exporter = dispatch.get(meta_class)
         if exporter is None:
@@ -150,6 +156,95 @@ class RhapsodyExporter(RhapsodyModelHelper):
     def _export_enumeration_literal(self, literal: RPModelElement) -> Dict[str, Any]:
         return {"name": literal.get_name(), "type": "EnumerationLiteral"}
 
+    def _export_dependency(self, dep: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": dep.get_name(), "type": "Dependency"}
+        target = self._safe_get(dep, "get_depends_on")
+        target_name = self._classifier_name(target)
+        if target_name:
+            spec["depends_on"] = target_name
+        return spec
+
+    def _export_generalization(self, gen: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": gen.get_name(), "type": "Generalization"}
+        base = self._safe_get(gen, "get_base_class")
+        base_name = self._classifier_name(base)
+        if base_name:
+            spec["base_class"] = base_name
+        visibility = self._safe_get(gen, "get_visibility")
+        if visibility:
+            spec["visibility"] = visibility
+        is_virtual = self._safe_get(gen, "get_is_virtual")
+        if is_virtual is not None:
+            spec["is_virtual"] = bool(is_virtual)
+        return spec
+
+    def _export_relation(self, rel: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": rel.get_name(), "type": "Relation"}
+        relation_type = self._safe_get(rel, "get_relation_type")
+        if relation_type:
+            spec["relation_type"] = relation_type
+        source = self._safe_get(rel, "get_of_class")
+        source_name = self._classifier_name(source)
+        if source_name:
+            spec["from"] = source_name
+        target = self._safe_get(rel, "get_other_class")
+        target_name = self._classifier_name(target)
+        if target_name:
+            spec["to"] = target_name
+        multiplicity = self._safe_get(rel, "get_multiplicity")
+        if multiplicity:
+            spec["multiplicity"] = multiplicity
+        is_navigable = self._safe_get(rel, "get_is_navigable")
+        if is_navigable is not None:
+            spec["is_navigable"] = bool(is_navigable)
+        role = self._safe_get(rel, "get_relation_role_name")
+        if role:
+            spec["role"] = role
+        visibility = self._safe_get(rel, "get_visibility")
+        if visibility:
+            spec["visibility"] = visibility
+        return spec
+
+    def _export_port(self, port: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": port.get_name(), "type": "Port"}
+        is_behavioral = self._safe_get(port, "get_is_behavioral")
+        if is_behavioral is not None:
+            spec["is_behavioral"] = bool(is_behavioral)
+        is_reversed = self._safe_get(port, "get_is_reversed")
+        if is_reversed is not None:
+            spec["is_reversed"] = bool(is_reversed)
+        contract = self._safe_get(port, "get_contract")
+        contract_name = self._classifier_name(contract)
+        if contract_name:
+            spec["contract"] = contract_name
+        provided = self._export_name_list(port, "get_provided_interfaces")
+        if provided:
+            spec["provided_interfaces"] = provided
+        required = self._export_name_list(port, "get_required_interfaces")
+        if required:
+            spec["required_interfaces"] = required
+        return spec
+
+    def _export_event(self, event: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": event.get_name(), "type": "Event"}
+        base = self._safe_get(event, "get_base_event")
+        base_name = self._classifier_name(base)
+        if base_name:
+            spec["base_event"] = base_name
+        sup = self._safe_get(event, "get_super_event")
+        sup_name = self._classifier_name(sup)
+        if sup_name:
+            spec["super_event"] = sup_name
+        return spec
+
+    def _export_event_reception(self, reception: RPModelElement) -> Dict[str, Any]:
+        spec: Dict[str, Any] = {"name": reception.get_name(), "type": "EventReception"}
+        event = self._safe_get(reception, "get_event")
+        event_name = self._classifier_name(event)
+        if event_name:
+            spec["event"] = event_name
+        return spec
+
     def _export_stereotypes(self, element: RPModelElement) -> List[str]:
         result: List[str] = []
         try:
@@ -230,3 +325,28 @@ class RhapsodyExporter(RhapsodyModelHelper):
         tags = self._export_tags(element)
         if tags:
             spec["tags"] = tags
+
+    def _export_name_list(self, element: RPModelElement, method_name: str) -> List[str]:
+        if not hasattr(element, method_name):
+            return []
+        try:
+            collection = getattr(element, method_name)()
+            if collection is None:
+                return []
+            result: List[str] = []
+            for item in collection:
+                name = self._classifier_name(item)
+                if name:
+                    result.append(name)
+            return result
+        except Exception:
+            return []
+
+    def _classifier_name(self, classifier: Any) -> Optional[str]:
+        if classifier is None:
+            return None
+        try:
+            wrapped = self._wrap_if_needed(classifier)
+            return wrapped.get_name()
+        except Exception:
+            return None
