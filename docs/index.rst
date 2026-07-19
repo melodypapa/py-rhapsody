@@ -235,6 +235,7 @@ Documentation Structure
    requirements/swr_attr_requirements
    requirements/swr_port_requirements
    requirements/swr_elem_requirements
+   requirements/swr_xch_requirements
 
 .. toctree::
    :maxdepth: 1
