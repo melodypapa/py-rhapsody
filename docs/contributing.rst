@@ -217,7 +217,7 @@ Example Issue
 
    Environment:
    - Python 3.9
-   - rhapsody-cli 0.1.0
+   - rhapsody-cli 0.2.0
    - Windows 10
    - Rhapsody 8.3
 

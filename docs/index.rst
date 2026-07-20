@@ -5,7 +5,7 @@ Welcome to rhapsody-cli's Documentation
 
 rhapsody-cli is a Pythonic wrapper around the IBM Rhapsody COM API, providing a complete Python interface to the Rhapsody modeling tool. It mirrors the Rhapsody Java API, enabling developers to programmatically interact with Rhapsody models and projects.
 
-**Current Version**: 0.1.0
+**Current Version**: 0.2.0
 **Python Requirements**: >= 3.8
 **License**: MIT
 **Platform**: Windows (requires IBM Rhapsody installation)
@@ -46,7 +46,7 @@ Key Features
 * **Error Handling**: Comprehensive error handling with meaningful error messages
 * **Type Annotations**: Full type hints for IDE support and static analysis
 * **CLI Tools**: Command-line interface for common tasks
-* **Test-Driven**: Comprehensive test suite with 1519 tests
+* **Test-Driven**: Comprehensive test suite with 1621 tests
 
 Architecture
 ------------
@@ -319,7 +319,7 @@ Project Structure
 Supported Element Types
 -----------------------
 
-The package currently wraps **50+ element types** including:
+The package currently wraps **96 element types** including:
 
 **Containment Elements**: Project, Package, Profile, Module, Configuration, Node, Component, ComponentInstance, Collaboration
 
