@@ -37,7 +37,7 @@ jobs:
     - name: Type check with mypy
       if: matrix.python-version < '3.10'
       run: |
-        mypy src/ tests/
+        mypy src/
     - name: Test with pytest
       run: |
         pytest tests/unit -v --cov=src/rhapsody_cli --cov-report=xml

@@ -14,8 +14,8 @@ knowledge and documentation transfer directly.
 
 - **Complete API Mirroring**: Method names and signatures match the Rhapsody Java API exactly (converted to snake_case)
 - **Object-Oriented Design**: Clean Python classes wrapping COM objects with proper type hints
-- **Comprehensive Element Support**: 50+ Rhapsody element types wrapped with full method coverage
-- **CLI Tools**: Command-line utilities for project, package, class, operation, attribute, and port management
+- **Comprehensive Element Support**: 96 Rhapsody element types wrapped with full method coverage
+- **CLI Tools**: Command-line utilities for project, package, class, operation, attribute, port, export, and import management
 - **Multi-Level Path Navigation**: Navigate hierarchical model structures using `/` or `\` separators
 - **Bulk Operations**: Create multiple elements, list recursively, and delete with safety confirmations
 - **Robust Error Handling**: Automatic COM error translation with user-friendly exception messages
@@ -84,7 +84,7 @@ app.quit()
 
 ### Command-Line Interface
 
-The CLI provides six command groups: `project`, `package`, `class`, `attribute`, `operation`, and `port`.
+The CLI provides eight command groups: `project`, `package`, `class`, `attribute`, `operation`, `port`, `export`, and `import`.
 
 #### Project Management
 
@@ -140,6 +140,20 @@ rhapsody-cli attribute update --path Sensors/TemperatureSensor --name threshold 
 rhapsody-cli attribute delete --path Sensors/TemperatureSensor --name threshold
 ```
 
+#### Export and Import (YAML)
+
+The `export` and `import` command groups serialize Rhapsody model elements to / from YAML:
+
+```bash
+# Export a project or package to a YAML file
+rhapsody-cli export project --path MyProject "C:\Models\MyProject.yaml"
+rhapsody-cli export package --path Sensors "C:\Models\Sensors.yaml"
+
+# Import a previously exported YAML file back into Rhapsody
+rhapsody-cli import project "C:\Models\MyProject.yaml"
+rhapsody-cli import package "C:\Models\Sensors.yaml"
+```
+
 ### Global Options
 
 `--verbose`/`-v` and `--format {table,json,csv}` are specified **after** the command group name (most subcommands also accept a per-action `--output <file>`):
@@ -173,7 +187,7 @@ project2 = app2.open_project("project2.rpy")
 ### Running Tests
 
 ```bash
-# Run all unit tests (936 tests, no Rhapsody installation required)
+# Run all unit tests (1621 tests, no Rhapsody installation required)
 pytest tests/unit
 
 # Run with coverage
@@ -201,7 +215,7 @@ pytest && ruff check src/ tests/ && black --check src/ tests/ && mypy src/ tests
 
 ### Test Coverage
 
-- **1519 unit tests** covering all wrapped methods and edge cases
+- **1621 unit tests** covering all wrapped methods and edge cases
 - **Mocked COM objects** (`tests/unit/models/fakes.py`) - no Rhapsody installation required
 - **Integration tests** for real COM automation verification
 - **Branch coverage** tracking with 80% minimum threshold
@@ -232,7 +246,7 @@ RPModelElement (wraps IRPModelElement - base for all model elements)
    │  ├─ RPActor (wraps IRPActor)
    │  ├─ RPUseCase (wraps IRPUseCase)
    │  └─ ... (15+ classifier types)
-   └─ ... (50+ total wrapped element types)
+   └─ ... (96 total wrapped element types)
 ```
 
 ### Adding New Element Types
@@ -330,7 +344,7 @@ The `docs/conf.py` configuration includes:
 
 ## Supported Rhapsody Elements
 
-The package currently wraps **50+ element types** including:
+The package currently wraps **96 element types** including:
 
 **Containment Elements**: Project, Package, Profile, Module, Configuration, Node, Component, ComponentInstance, Collaboration
 
@@ -357,12 +371,14 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Changelog
 
-### v0.2.0 (2026-07-13)
+### v0.2.0 (2026-07-20)
 
 - **Breaking**: Renamed all wrapper methods from camelCase to snake_case (`addClass` → `add_class`, `getName` → `get_name`, etc.) for consistent Pythonic naming
 - **Breaking**: Removed the generic `element` and `io` command groups in favor of dedicated per-type commands
 - Added `package`, `class`, `operation`, `attribute`, and `port` command groups, each with `create`/`list`/`view`/`delete` subcommands (plus `update` for `package` and `class`, and `link` for `class` generalization)
 - Added `RPPort` wrapper and `RPClassifier.add_port()` convenience method
+- Added `export` and `import` command groups with `project`/`package` subcommands for YAML-based model exchange (RhapsodyExporter / RhapsodyImporter)
+- Expanded wrapped element coverage from 50+ to **96** element types
 - Enhanced package duplicate detection with clearer, user-friendly error messages
 - Refactored CLI error handling to use logger + `CliExecutionError` instead of `print()`/`sys.exit()`
 - Various Sphinx documentation and build-warning fixes
