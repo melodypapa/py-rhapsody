@@ -3,7 +3,10 @@
 import argparse
 
 from rhapsody_cli.actions.abstract_action import RhapsodyContextAction
-from rhapsody_cli.exceptions import RhapsodyConnectionError
+from rhapsody_cli.exceptions import CliExecutionError, RhapsodyConnectionError
+from rhapsody_cli.exchange.exporter import RhapsodyExporter
+from rhapsody_cli.exchange.importer import RhapsodyImporter
+from rhapsody_cli.exchange.yaml_utils import RhapsodyYaml
 
 
 class ProjectOpenAction(RhapsodyContextAction):
@@ -117,3 +120,66 @@ class ProjectNewAction(RhapsodyContextAction):
             self._handle_connection_error(e, "Failed to create project")
         except Exception as e:
             self._handle_execution_error(e, f"Failed to create project '{project_name}'")
+
+
+class ProjectExportAction(RhapsodyContextAction):
+    """Action for `project export` — exports the active project to a YAML file.
+
+    SWR_XCH_001: Import/Export CLI Actions
+    """
+
+    def __init__(self) -> None:
+        super().__init__(command_id="export")
+
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
+        parser = sub_parser.add_parser(self.command_id, help="Export the active project to a YAML file")
+        parser.add_argument("--file", required=True, help="Output YAML file path")
+        self.add_verbose_argument(parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        try:
+            app = self._connect_app()
+            project = app.active_project()
+            exporter = RhapsodyExporter(app=app)
+            data = exporter.export(project)
+            yaml_io = RhapsodyYaml()
+            yaml_io.write(args.file, data)
+            self.logger.info("Exported project to %s", args.file)
+        except RhapsodyConnectionError as e:
+            self._handle_connection_error(e, "export project")
+        except CliExecutionError:
+            raise
+        except Exception as e:
+            self._handle_execution_error(e, "export project")
+
+
+class ProjectImportAction(RhapsodyContextAction):
+    """Action for `project import` — imports a YAML file into the active project.
+
+    SWR_XCH_001: Import/Export CLI Actions
+    """
+
+    def __init__(self) -> None:
+        super().__init__(command_id="import")
+
+    def init_arguments(self, sub_parser: "argparse._SubParsersAction[argparse.ArgumentParser]") -> None:
+        parser = sub_parser.add_parser(self.command_id, help="Import a YAML file into the active project")
+        parser.add_argument("--file", required=True, help="Input YAML file path")
+        self.add_verbose_argument(parser)
+
+    def execute(self, args: argparse.Namespace) -> None:
+        try:
+            app = self._connect_app()
+            project = app.active_project()
+            yaml_io = RhapsodyYaml()
+            data = yaml_io.read(args.file)
+            importer = RhapsodyImporter(app=app)
+            importer.import_template(data, project)
+            app.save_all()
+            self.logger.info("Imported %s into project", args.file)
+        except RhapsodyConnectionError as e:
+            self._handle_connection_error(e, "import project")
+        except CliExecutionError:
+            raise
+        except Exception as e:
+            self._handle_execution_error(e, "import project")

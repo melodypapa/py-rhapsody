@@ -682,3 +682,107 @@ class TestPackageUpdateAction:
             action.execute(args)
 
         assert "Either --path or --guid is required" in str(exc_info.value)
+
+
+class TestPackageExportAction:
+    """UTS_XCH_00088: package export action writes YAML file."""
+
+    def test_export_writes_yaml_file(self) -> None:
+        from rhapsody_cli.actions.package_action import PackageExportAction
+
+        action = PackageExportAction()
+        fake_app = MagicMock(name="FakeApplication")
+        fake_package = MagicMock(name="FakePackage")
+
+        with patch("rhapsody_cli.actions.package_action.RhapsodyExporter") as mock_exporter_cls:
+            with patch("rhapsody_cli.actions.package_action.RhapsodyYaml") as mock_yaml_cls:
+                mock_exporter = MagicMock()
+                mock_exporter_cls.return_value = mock_exporter
+                mock_exporter.export.return_value = {"version": 1, "project": "P", "rhapsody-model": []}
+
+                args = MagicMock()
+                args.path = "Sensors"
+                args.file = "sensors.yaml"
+                args.verbose = False
+
+                with patch.object(action, "_connect_app", return_value=fake_app), patch.object(action, "_resolve_and_validate_package", return_value=fake_package):
+                    action.execute(args)
+
+                mock_exporter_cls.assert_called_once_with(app=fake_app)
+                mock_exporter.export.assert_called_once_with(fake_package)
+                mock_yaml_cls.return_value.write.assert_called_once_with("sensors.yaml", {"version": 1, "project": "P", "rhapsody-model": []})
+
+    def test_export_raises_on_unresolved_package(self) -> None:
+        from rhapsody_cli.actions.package_action import PackageExportAction
+
+        action = PackageExportAction()
+        fake_app = MagicMock(name="FakeApplication")
+
+        with patch("rhapsody_cli.actions.package_action.RhapsodyExporter"), patch("rhapsody_cli.actions.package_action.RhapsodyYaml"):
+            args = MagicMock()
+            args.path = "Nonexistent"
+            args.file = "out.yaml"
+            args.verbose = False
+
+            with patch.object(action, "_connect_app", return_value=fake_app), patch.object(
+                action,
+                "_resolve_and_validate_package",
+                side_effect=CliExecutionError("package not found"),
+            ):
+                with pytest.raises(CliExecutionError, match="package not found"):
+                    action.execute(args)
+
+
+class TestPackageImportAction:
+    """UTS_XCH_00089: package import action reads YAML and imports into package."""
+
+    def test_import_reads_yaml_and_calls_import_template(self) -> None:
+        from rhapsody_cli.actions.package_action import PackageImportAction
+
+        action = PackageImportAction()
+        fake_app = MagicMock(name="FakeApplication")
+        fake_package = MagicMock(name="FakePackage")
+
+        with patch("rhapsody_cli.actions.package_action.RhapsodyYaml") as mock_yaml_cls:
+            with patch("rhapsody_cli.actions.package_action.RhapsodyImporter") as mock_importer_cls:
+                mock_yaml = MagicMock()
+                mock_yaml_cls.return_value = mock_yaml
+                mock_yaml.read.return_value = {"version": 1, "project": "P", "rhapsody-model": []}
+
+                mock_importer = MagicMock()
+                mock_importer_cls.return_value = mock_importer
+
+                args = MagicMock()
+                args.path = "Sensors"
+                args.file = "sensors.yaml"
+                args.verbose = False
+
+                with patch.object(action, "_connect_app", return_value=fake_app), patch.object(action, "_resolve_and_validate_package", return_value=fake_package):
+                    action.execute(args)
+
+                mock_yaml.read.assert_called_once_with("sensors.yaml")
+                mock_importer_cls.assert_called_once_with(app=fake_app)
+                mock_importer.import_template.assert_called_once_with({"version": 1, "project": "P", "rhapsody-model": []}, fake_package)
+                fake_app.save_all.assert_called_once()
+
+    def test_import_raises_on_yaml_read_failure(self) -> None:
+        from rhapsody_cli.actions.package_action import PackageImportAction
+
+        action = PackageImportAction()
+        fake_app = MagicMock(name="FakeApplication")
+        fake_package = MagicMock(name="FakePackage")
+
+        with patch("rhapsody_cli.actions.package_action.RhapsodyYaml") as mock_yaml_cls:
+            with patch("rhapsody_cli.actions.package_action.RhapsodyImporter"):
+                mock_yaml = MagicMock()
+                mock_yaml_cls.return_value = mock_yaml
+                mock_yaml.read.side_effect = CliExecutionError("file not found")
+
+                args = MagicMock()
+                args.path = "Sensors"
+                args.file = "missing.yaml"
+                args.verbose = False
+
+                with patch.object(action, "_connect_app", return_value=fake_app), patch.object(action, "_resolve_and_validate_package", return_value=fake_package):
+                    with pytest.raises(CliExecutionError, match="file not found"):
+                        action.execute(args)
