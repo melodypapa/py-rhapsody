@@ -2,12 +2,13 @@
 
 from typing import TYPE_CHECKING, cast
 
-from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
+from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers.model_interface_item import RPInterfaceItem
 
 if TYPE_CHECKING:
+    from rhapsody_cli.models.elements.activity.model_activity import RPFlowchart
     from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
-    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPActivityDiagram
+    from rhapsody_cli.models.elements.variables.model_variables import RPArgument
 
 
 class RPOperation(RPInterfaceItem):
@@ -179,7 +180,7 @@ class RPOperation(RPInterfaceItem):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setReturnTypeDeclaration", "returnTypeDeclaration", new_val)
 
-    def delete_argument(self, argument: RPModelElement) -> None:
+    def delete_argument(self, argument: "RPArgument") -> None:
         """Deletes the specified argument from the operation.
 
         Args:
@@ -198,16 +199,16 @@ class RPOperation(RPInterfaceItem):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteFlowchart())
 
-    def get_flowchart(self) -> "RPActivityDiagram":
+    def get_flowchart(self) -> "RPFlowchart":
         """Returns the flowchart associated with the operation.
 
         Returns:
-            The wrapped activity diagram representing the flowchart.
+            The wrapped flowchart representing the operation's flowchart.
 
         Reference:
             com.telelogic.rhapsody.core.IRPOperation::getFlowchart()
         """
-        return cast("RPActivityDiagram", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getFlowchart", "flowchart")))
+        return cast("RPFlowchart", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getFlowchart", "flowchart")))
 
     def get_implementation_signature(self) -> str:
         """Returns the implementation signature of the operation.
@@ -330,7 +331,7 @@ class RPOperation(RPInterfaceItem):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setBody", "body", body)
 
-    def set_flowchart(self, flowchart: RPModelElement) -> None:
+    def set_flowchart(self, flowchart: "RPFlowchart") -> None:
         """Sets the flowchart associated with the operation.
 
         Args:

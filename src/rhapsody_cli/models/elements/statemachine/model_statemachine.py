@@ -1,6 +1,6 @@
 """Statemachine model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 
@@ -41,7 +41,7 @@ class RPStateVertex(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPStateVertex::addFlow(java.lang.String type, com.telelogic.rhapsody.core.IRPStateVertex to)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlow(type_, to._com)))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addFlow(type_, to._com))))
 
     def add_transition(self, to: "RPStateVertex") -> "RPTransition":
         """Adds a transition from this element to the specified element.
@@ -55,7 +55,7 @@ class RPStateVertex(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPStateVertex::addTransition(com.telelogic.rhapsody.core.IRPStateVertex to)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addTransition(to._com)))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addTransition(to._com))))
 
     def delete_transition(self, transition: "RPTransition") -> None:
         """Deletes the specified transition.
@@ -212,7 +212,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::addConnector(java.lang.String type)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addConnector(type_)))
+        return cast("RPConnector", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addConnector(type_))))
 
     def add_internal_transition(self, trigger: "RPInterfaceItem") -> "RPTransition":
         """Adds an internal transition to the state.
@@ -229,7 +229,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::addInternalTransition(com.telelogic.rhapsody.core.IRPInterfaceItem trigger)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addInternalTransition(trigger._com)))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addInternalTransition(trigger._com))))
 
     def add_state(self, name: str) -> "RPState":
         """Adds a new substate to this state.
@@ -261,7 +261,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::addStaticReaction(com.telelogic.rhapsody.core.IRPInterfaceItem trigger)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStaticReaction(trigger._com)))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStaticReaction(trigger._com))))
 
     def add_termination_state(self) -> "RPState":
         """Adds a termination state to a statechart.
@@ -290,7 +290,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::createDefaultTransition(com.telelogic.rhapsody.core.IRPState from)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.createDefaultTransition(from_._com)))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.createDefaultTransition(from_._com))))
 
     def create_nested_statechart(self) -> "RPStatechart":
         """Deprecated. Use ``createSubStatechart()`` instead.
@@ -312,7 +312,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::createSubStatechart()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.createSubStatechart()))
+        return cast("RPStatechart", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.createSubStatechart())))
 
     def delete_connector(self, connector: "RPConnector") -> None:
         """Deletes the specified connector element.
@@ -359,7 +359,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getDefaultTransition()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getDefaultTransition", "defaultTransition"))
+        return cast("RPTransition", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getDefaultTransition", "defaultTransition")))
 
     def get_entry_action(self) -> str:
         """Returns the entry action that was defined for the state.
@@ -458,7 +458,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getItsStatechart()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getItsStatechart", "itsStatechart"))
+        return cast("RPStatechart", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getItsStatechart", "itsStatechart")))
 
     def get_its_swimlane(self) -> "RPSwimlane":
         """Returns the swimlane that the action is located in.
@@ -469,7 +469,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getItsSwimlane()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getItsSwimlane", "itsSwimlane"))
+        return cast("RPSwimlane", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getItsSwimlane", "itsSwimlane")))
 
     def get_logical_states(self) -> "RPCollection":
         """Returns a collection of all the substates of the current state and all the first-level substates of those states, down to the second level.
@@ -492,9 +492,9 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getNestedStatechart()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNestedStatechart", "nestedStatechart"))
+        return cast("RPStatechart", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNestedStatechart", "nestedStatechart")))
 
-    def get_reference_to_activity(self) -> "RPModelElement":
+    def get_reference_to_activity(self) -> Optional["RPModelElement"]:
         """For call behavior elements, returns the activity that is referenced.
 
         Returns:
@@ -519,7 +519,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getSendAction()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getSendAction", "sendAction"))
+        return cast("RPSendAction", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getSendAction", "sendAction")))
 
     def get_state_type(self) -> str:
         """Returns the type of the state, for example, an And state or a Termination state.
@@ -589,7 +589,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getTheEntryAction()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTheEntryAction", "theEntryAction"))
+        return cast("RPAction", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTheEntryAction", "theEntryAction")))
 
     def get_the_exit_action(self) -> "RPAction":
         """Returns the exit action element of the state.
@@ -603,7 +603,7 @@ class RPState(RPStateVertex):
         Reference:
             com.telelogic.rhapsody.core.IRPState::getTheExitAction()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTheExitAction", "theExitAction"))
+        return cast("RPAction", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTheExitAction", "theExitAction")))
 
     def is_and(self) -> int:
         """Checks whether the state contains one or more And Lines.

@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPHyperLink``."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 from rhapsody_cli.models.elements.relations.model_dependency import RPDependency
@@ -24,11 +24,11 @@ class RPHyperLink(RPDependency):
     # [inherited] irp_dependency / irp_model_element methods (covered by rp_dependency / rp_model_element checklists)
     # Deprecated IRPHyperLink methods listed above.
 
-    def get_target(self) -> RPModelElement:
+    def get_target(self) -> Optional[RPModelElement]:
         """Returns the target element of the hyperlink.
 
         Returns:
-            The wrapped target model element.
+            The wrapped target model element, or None if not set.
 
         Reference:
             com.telelogic.rhapsody.core.IRPHyperLink::getTarget()

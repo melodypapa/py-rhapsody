@@ -13,6 +13,7 @@ from rhapsody_cli.models.core import (
 from rhapsody_cli.models.elements.classifiers import RPClassifier
 
 if TYPE_CHECKING:
+    from rhapsody_cli.models.elements.containment.model_profile import RPProfile
     from rhapsody_cli.models.elements.values.model_values import (
         RPInstanceValue,
         RPLiteralSpecification,
@@ -332,27 +333,27 @@ class RPTag(RPVariable):
     # [inherited] irp_variable / irp_unit / irp_model_element methods (covered by rp_variable / rp_unit / rp_model_element checklists)
     # No deprecated IRPTag methods.
 
-    def get_base(self) -> RPModelElement:
-        """Returns the base element for the tag.
+    def get_base(self) -> "RPTag":
+        """Returns the base tag on which the local copy of the tag is based.
 
         Returns:
-            The wrapped ``IRPModelElement`` that is the base of the tag.
+            The wrapped ``IRPTag`` that is the base of the tag.
 
         Reference:
             com.telelogic.rhapsody.core.IRPTag::getBase()
         """
-        return cast(RPModelElement, AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getBase", "base")))
+        return cast("RPTag", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getBase", "base")))
 
-    def get_from_profile(self) -> str:
+    def get_from_profile(self) -> "RPProfile":
         """Returns the profile from which the tag originates.
 
         Returns:
-            The profile name as a string.
+            The wrapped ``IRPProfile`` from which the tag originates.
 
         Reference:
             com.telelogic.rhapsody.core.IRPTag::getFromProfile()
         """
-        return str(AbstractRPModelElement._get_method_or_property(self._com, "getFromProfile", "fromProfile"))
+        return cast("RPProfile", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getFromProfile", "fromProfile")))
 
     def get_multiplicity(self) -> str:
         """Gets the multiplicity specified for the tag.

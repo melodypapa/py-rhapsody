@@ -1,6 +1,6 @@
 """Files model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement, RPUnit
 
@@ -367,7 +367,7 @@ class RPFileFragment(RPModelElement):
     # [inherited] irp_model_element methods (covered by rp_model_element checklist)
     # No deprecated IRPFileFragment methods.
 
-    def get_fragment_element(self) -> "RPModelElement":
+    def get_fragment_element(self) -> Optional["RPModelElement"]:
         """Gets the fragmentElement property.
 
         Returns:

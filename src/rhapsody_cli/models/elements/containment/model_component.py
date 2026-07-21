@@ -206,7 +206,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getAdditionalSources()
         """
-        return self._get_method_or_property(self._com, "getAdditionalSources", "additionalSources")
+        return str(self._get_method_or_property(self._com, "getAdditionalSources", "additionalSources"))
 
     def get_build_type(self) -> str:
         """Returns the build type for the component.
@@ -217,7 +217,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getBuildType()
         """
-        return self._get_method_or_property(self._com, "getBuildType", "buildType")
+        return str(self._get_method_or_property(self._com, "getBuildType", "buildType"))
 
     def get_config_by_dependency(self) -> "RPConfiguration":
         """Returns the configuration by dependency.
@@ -264,7 +264,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getFileName()
         """
-        return self._get_method_or_property(self._com, "getFileName", "fileName")
+        return str(self._get_method_or_property(self._com, "getFileName", "fileName"))
 
     def get_files(self) -> "RPCollection":
         """Returns all files in the component.
@@ -286,7 +286,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getIncludePath()
         """
-        return self._get_method_or_property(self._com, "getIncludePath", "includePath")
+        return str(self._get_method_or_property(self._com, "getIncludePath", "includePath"))
 
     def get_libraries(self) -> str:
         """Returns the libraries for the component.
@@ -297,7 +297,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getLibraries()
         """
-        return self._get_method_or_property(self._com, "getLibraries", "libraries")
+        return str(self._get_method_or_property(self._com, "getLibraries", "libraries"))
 
     def get_model_element_file_name(self) -> str:
         """Returns the model element file name for the component.
@@ -308,7 +308,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getModelElementFileName()
         """
-        return self._get_method_or_property(self._com, "getModelElementFileName", "modelElementFileName")
+        return str(self._get_method_or_property(self._com, "getModelElementFileName", "modelElementFileName"))
 
     def get_nested_components(self) -> "RPCollection":
         """Returns all nested components in this component.
@@ -330,7 +330,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getPackageFile()
         """
-        return self._get_method_or_property(self._com, "getPackageFile", "packageFile")
+        return str(self._get_method_or_property(self._com, "getPackageFile", "packageFile"))
 
     def get_panel_diagrams(self) -> "RPCollection":
         """Returns all panel diagrams in the component.
@@ -352,7 +352,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getPath()
         """
-        return self._get_method_or_property(self._com, "getPath", "path")
+        return str(self._get_method_or_property(self._com, "getPath", "path"))
 
     def get_possible_variants(self) -> "RPCollection":
         """Returns all possible variants for the component.
@@ -410,7 +410,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getStandardHeaders()
         """
-        return self._get_method_or_property(self._com, "getStandardHeaders", "standardHeaders")
+        return str(self._get_method_or_property(self._com, "getStandardHeaders", "standardHeaders"))
 
     def get_variant(self) -> str:
         """Returns the variant for the component.
@@ -421,7 +421,7 @@ class RPComponent(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPComponent::getVariant()
         """
-        return self._get_method_or_property(self._com, "getVariant", "variant")
+        return str(self._get_method_or_property(self._com, "getVariant", "variant"))
 
     def get_variation_points(self) -> "RPCollection":
         """Returns all variation points for the component.

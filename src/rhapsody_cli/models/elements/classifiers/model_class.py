@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from rhapsody_cli.models.elements.classifiers.model_operation import RPOperation
     from rhapsody_cli.models.elements.common.model_other_model import RPType
     from rhapsody_cli.models.elements.graphics.model_graphics import RPLink
-    from rhapsody_cli.models.elements.interactions.model_interactions import RPEventReception
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEvent, RPEventReception
 
 
 class RPClass(RPClassifier):
@@ -124,7 +124,7 @@ class RPClass(RPClassifier):
         """
         return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReception(name))))
 
-    def add_event_reception_with_event(self, name: str, event: RPModelElement) -> "RPEventReception":
+    def add_event_reception_with_event(self, name: str, event: "RPEvent") -> "RPEventReception":
         """Adds a new event reception, using the specified event.
 
         Note: ``addEventReceptionWithEvent`` is not exposed in the Rhapsody COM
@@ -273,7 +273,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteClass(name))
 
-    def delete_constructor(self, constructor: RPModelElement) -> None:
+    def delete_constructor(self, constructor: "RPOperation") -> None:
         """Deletes the specified constructor from the current class.
 
         Args:
@@ -292,7 +292,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteDestructor())
 
-    def delete_event_reception(self, p_val: RPModelElement) -> None:
+    def delete_event_reception(self, p_val: "RPEventReception") -> None:
         """Deletes the specified event reception.
 
         It is preferable to use :meth:`delete_reception` instead.
@@ -305,7 +305,7 @@ class RPClass(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteEventReception(p_val._com))
 
-    def delete_reception(self, p_val: RPModelElement) -> None:
+    def delete_reception(self, p_val: "RPEventReception") -> None:
         """Deletes the specified reception from the current class.
 
         Args:

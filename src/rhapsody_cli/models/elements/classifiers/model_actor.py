@@ -2,11 +2,11 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
+from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.interactions.model_interactions import RPEventReception
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEvent, RPEventReception
 
 
 class RPActor(RPClassifier):
@@ -20,7 +20,7 @@ class RPActor(RPClassifier):
     # [inherited] irp_classifier / irp_unit / irp_model_element methods (covered by rp_classifier / rp_unit / rp_model_element checklists)
     # No deprecated IRPActor methods.
 
-    def add_event_reception_with_event(self, name: str, event: RPModelElement) -> "RPEventReception":
+    def add_event_reception_with_event(self, name: str, event: "RPEvent") -> "RPEventReception":
         """Adds a new event reception to the actor, using the specified event.
 
         Note: ``addEventReceptionWithEvent`` is not exposed in the Rhapsody COM

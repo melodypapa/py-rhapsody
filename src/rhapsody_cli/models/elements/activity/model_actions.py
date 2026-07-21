@@ -1,6 +1,6 @@
 """Actions model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.interactions.model_interactions import RPMessage
@@ -308,7 +308,7 @@ class RPSendAction(RPAction):
         """
         return cast("RPInterfaceItem", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getInvokedOperation", "invokedOperation")))
 
-    def get_target(self) -> "RPModelElement":
+    def get_target(self) -> Optional["RPModelElement"]:
         """Gets the event target of the Send Action element.
 
         Returns:

@@ -72,7 +72,7 @@ class RPNode(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPNode::getCPUtype()
         """
-        return self._get_method_or_property(self._com, "getCPUtype", "CPUtype")
+        return str(self._get_method_or_property(self._com, "getCPUtype", "CPUtype"))
 
     def get_component_instances(self) -> "RPCollection":
         """Returns all component instances in the node.

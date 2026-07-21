@@ -1,12 +1,22 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPUseCase``."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
-    from rhapsody_cli.models.elements.diagrams.model_diagram_types import RPDiagram
+    from rhapsody_cli.models.elements.diagrams import RPDiagram
+    from rhapsody_cli.models.elements.interactions.model_interactions import RPEvent, RPEventReception
+
+
+class RPExtensionPoint(RPModelElement):
+    """Wraps extension point concept (returned as IRPModelElement from COM)."""
+
+    pass
+
+
+AbstractRPModelElement.register_wrapper("ExtensionPoint", RPExtensionPoint)
 
 
 class RPUseCase(RPClassifier):
@@ -87,7 +97,7 @@ class RPUseCase(RPClassifier):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getDescribingDiagrams", "describingDiagrams"))
 
-    def add_describing_diagram(self, diagram: RPModelElement) -> None:
+    def add_describing_diagram(self, diagram: "RPDiagram") -> None:
         """Adds a diagram to describe this use case.
 
         Args:
@@ -98,21 +108,22 @@ class RPUseCase(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.addDescribingDiagram(diagram._com))
 
-    def add_event_reception_with_event(self, event: RPModelElement) -> RPModelElement:
+    def add_event_reception_with_event(self, name: str, event: "RPEvent") -> "RPEventReception":
         """Adds an event reception with the specified event.
 
         Args:
+            name: The name to use for the new event reception.
             event: The wrapped event to use for the event reception.
 
         Returns:
             The wrapped event reception created.
 
         Reference:
-            com.telelogic.rhapsody.core.IRPUseCase::addEventReceptionWithEvent(com.telelogic.rhapsody.core.IRPEvent event)
+            com.telelogic.rhapsody.core.IRPUseCase::addEventReceptionWithEvent(java.lang.String name, com.telelogic.rhapsody.core.IRPEvent event)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReceptionWithEvent(event._com)))
+        return cast("RPEventReception", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addEventReceptionWithEvent(name, event._com))))
 
-    def delete_describing_diagram(self, diagram: RPModelElement) -> None:
+    def delete_describing_diagram(self, diagram: "RPDiagram") -> None:
         """Deletes a describing diagram from the use case.
 
         Args:
@@ -145,7 +156,7 @@ class RPUseCase(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteExtensionPoint(extension_point))
 
-    def find_entry_point(self, name: str) -> RPModelElement:
+    def find_entry_point(self, name: str) -> Optional[RPModelElement]:
         """Finds an entry point by name.
 
         Args:
@@ -159,7 +170,7 @@ class RPUseCase(RPClassifier):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findEntryPoint(name)))
 
-    def find_extension_point(self, name: str) -> RPModelElement:
+    def find_extension_point(self, name: str) -> Optional[RPModelElement]:
         """Finds an extension point by name.
 
         Args:

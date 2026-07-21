@@ -406,7 +406,7 @@ class RPRelation(RPUnit):
         """
         AbstractRPModelElement._set_method_or_property(self._com, "setQualifier", "qualifier", qualifier)
 
-    def set_qualifier_type(self, p_val: RPModelElement) -> None:
+    def set_qualifier_type(self, p_val: RPClassifier) -> None:
         """Sets the type to use for the qualifier for the association.
 
         Args:

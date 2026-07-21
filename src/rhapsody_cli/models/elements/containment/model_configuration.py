@@ -115,7 +115,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getAdditionalSources()
         """
-        return self._get_method_or_property(self._com, "getAdditionalSources", "additionalSources")
+        return str(self._get_method_or_property(self._com, "getAdditionalSources", "additionalSources"))
 
     def get_all_elements_in_instrumentation_scope(self) -> "RPCollection":
         """Returns all elements in instrumentation scope.
@@ -137,7 +137,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getBuildSet()
         """
-        return self._get_method_or_property(self._com, "getBuildSet", "buildSet")
+        return str(self._get_method_or_property(self._com, "getBuildSet", "buildSet"))
 
     def get_compiler_switches(self) -> str:
         """Returns the compiler switches for the configuration.
@@ -148,7 +148,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getCompilerSwitches()
         """
-        return self._get_method_or_property(self._com, "getCompilerSwitches", "compilerSwitches")
+        return str(self._get_method_or_property(self._com, "getCompilerSwitches", "compilerSwitches"))
 
     def get_directory(self) -> str:
         """Returns the directory for the configuration.
@@ -159,7 +159,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getDirectory()
         """
-        return self._get_method_or_property(self._com, "getDirectory", "directory")
+        return str(self._get_method_or_property(self._com, "getDirectory", "directory"))
 
     def get_executable_name(self) -> str:
         """Returns the executable name for the configuration.
@@ -170,7 +170,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getExecutableName()
         """
-        return self._get_method_or_property(self._com, "getExecutableName", "executableName")
+        return str(self._get_method_or_property(self._com, "getExecutableName", "executableName"))
 
     def get_generate_code_for_actors(self) -> int:
         """Returns whether to generate code for actors.
@@ -192,7 +192,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getIncludePath()
         """
-        return self._get_method_or_property(self._com, "getIncludePath", "includePath")
+        return str(self._get_method_or_property(self._com, "getIncludePath", "includePath"))
 
     def get_initial_instances(self) -> "RPCollection":
         """Returns all initial instances in the configuration.
@@ -214,7 +214,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getInitializationCode()
         """
-        return self._get_method_or_property(self._com, "getInitializationCode", "initializationCode")
+        return str(self._get_method_or_property(self._com, "getInitializationCode", "initializationCode"))
 
     def get_instrumentation_scope(self) -> "RPCollection":
         """Returns the instrumentation scope for the configuration.
@@ -258,7 +258,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getLibraries()
         """
-        return self._get_method_or_property(self._com, "getLibraries", "libraries")
+        return str(self._get_method_or_property(self._com, "getLibraries", "libraries"))
 
     def get_link_switches(self) -> str:
         """Returns the link switches for the configuration.
@@ -269,7 +269,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getLinkSwitches()
         """
-        return self._get_method_or_property(self._com, "getLinkSwitches", "linkSwitches")
+        return str(self._get_method_or_property(self._com, "getLinkSwitches", "linkSwitches"))
 
     def get_main_name(self) -> str:
         """Returns the main name for the configuration.
@@ -280,7 +280,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getMainName()
         """
-        return self._get_method_or_property(self._com, "getMainName", "mainName")
+        return str(self._get_method_or_property(self._com, "getMainName", "mainName"))
 
     def get_makefile_name(self) -> str:
         """Returns the makefile name for the configuration.
@@ -291,7 +291,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getMakefileName()
         """
-        return self._get_method_or_property(self._com, "getMakefileName", "makefileName")
+        return str(self._get_method_or_property(self._com, "getMakefileName", "makefileName"))
 
     def get_path(self) -> str:
         """Returns the path for the configuration.
@@ -302,7 +302,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getPath()
         """
-        return self._get_method_or_property(self._com, "getPath", "path")
+        return str(self._get_method_or_property(self._com, "getPath", "path"))
 
     def get_scope_type(self) -> int:
         """Returns the scope type for the configuration.
@@ -324,7 +324,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getStandardHeaders()
         """
-        return self._get_method_or_property(self._com, "getStandardHeaders", "standardHeaders")
+        return str(self._get_method_or_property(self._com, "getStandardHeaders", "standardHeaders"))
 
     def get_statechart_implementation(self) -> int:
         """Returns the statechart implementation for the configuration.
@@ -346,7 +346,7 @@ class RPConfiguration(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPConfiguration::getTargetName()
         """
-        return self._get_method_or_property(self._com, "getTargetName", "targetName")
+        return str(self._get_method_or_property(self._com, "getTargetName", "targetName"))
 
     def get_time_model(self) -> int:
         """Returns the time model for the configuration.

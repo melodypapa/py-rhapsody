@@ -411,8 +411,7 @@ def test_wrap_falls_back_to_model_element_for_unregistered_type() -> None:
 def test_wrap_handles_none_com_object() -> None:
     wrapped = AbstractRPModelElement.wrap(None)
 
-    assert type(wrapped) is RPModelElement
-    assert wrapped._com is None
+    assert wrapped is None
 
 
 # ---------------------------------------------------------------------------

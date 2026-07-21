@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPDependency``."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPModelElement
 
@@ -22,22 +22,22 @@ class RPDependency(RPModelElement):
     # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPDependency methods.
 
-    def get_dependent(self) -> RPModelElement:
+    def get_dependent(self) -> Optional[RPModelElement]:
         """Returns the model element that is dependent.
 
         Returns:
-            The wrapped dependent model element.
+            The wrapped dependent model element, or None if not set.
 
         Reference:
             com.telelogic.rhapsody.core.IRPDependency::getDependent()
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getDependent", "dependent"))
 
-    def get_depends_on(self) -> RPModelElement:
+    def get_depends_on(self) -> Optional[RPModelElement]:
         """Returns the model element that is depended upon.
 
         Returns:
-            The wrapped model element that is depended upon.
+            The wrapped model element that is depended upon, or None if not set.
 
         Reference:
             com.telelogic.rhapsody.core.IRPDependency::getDependsOn()

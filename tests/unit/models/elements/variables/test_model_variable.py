@@ -258,13 +258,17 @@ def test_tag_get_base_wraps_result() -> None:
     assert result.get_name() == "BaseClass"
 
 
-def test_tag_get_from_profile_returns_str() -> None:
+def test_tag_get_from_profile_returns_profile() -> None:
+    from rhapsody_cli.models.elements.containment.model_profile import RPProfile
     from rhapsody_cli.models.elements.variables.model_variables import RPTag
 
-    fake = make_fake_element("Tag", getFromProfile="MyProfile")
+    fake_profile = make_fake_element("Profile", getName="MyProfile")
+    fake = make_fake_element("Tag", getFromProfile=fake_profile)
     tag = RPTag(fake)
 
-    assert tag.get_from_profile() == "MyProfile"
+    result = tag.get_from_profile()
+    assert isinstance(result, RPProfile)
+    assert result.get_name() == "MyProfile"
     fake.getFromProfile.assert_called_once_with()
 
 

@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPProject``."""
 
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.containment.model_package import RPPackage
@@ -206,7 +206,7 @@ class RPProject(RPPackage):
         """
         return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getComponents", "components"))
 
-    def find_element_by_guid(self, guid: str) -> "RPModelElement":
+    def find_element_by_guid(self, guid: str) -> Optional["RPModelElement"]:
         """Finds an element in the project by GUID.
 
         Args:
@@ -404,7 +404,7 @@ class RPProject(RPPackage):
         AbstractRPModelElement.call_com(lambda: self._com.saveAs(file_path))
 
     # --- Find by binary ID ---
-    def find_element_by_binary_id(self, binary_id: str) -> "RPModelElement":
+    def find_element_by_binary_id(self, binary_id: str) -> Optional["RPModelElement"]:
         """Finds an element in the project by binary ID.
 
         Args:
@@ -418,7 +418,7 @@ class RPProject(RPPackage):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findElementByBinaryID(binary_id)))
 
-    def find_element_by_file_name(self, file_name: str) -> "RPModelElement":
+    def find_element_by_file_name(self, file_name: str) -> Optional["RPModelElement"]:
         """Finds an element in the project by file name.
 
         Args:

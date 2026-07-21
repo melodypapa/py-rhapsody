@@ -1,6 +1,6 @@
 """Diagram-family wrappers: mirrors IRPDiagram from com.telelogic.rhapsody.core."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import (
     AbstractRPModelElement,
@@ -226,7 +226,7 @@ class RPDiagram(RPUnit):
         """
         return cast("RPGraphElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.createDiagramView(name))))
 
-    def get_diagram_view_of(self, name: str) -> "RPGraphElement":
+    def get_diagram_view_of(self, name: str) -> Optional["RPGraphElement"]:
         """Returns the diagram view with the specified name.
 
         Args:

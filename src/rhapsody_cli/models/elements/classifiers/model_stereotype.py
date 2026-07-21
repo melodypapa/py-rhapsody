@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING
 
-from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection
+from rhapsody_cli.models.core import AbstractRPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
 
 if TYPE_CHECKING:
@@ -55,16 +55,16 @@ class RPStereotype(RPClassifier):
         """
         return int(AbstractRPModelElement._get_method_or_property(self._com, "getIsNewTerm", "isNewTerm"))
 
-    def get_of_meta_class(self) -> RPCollection:
-        """Returns the collection of metaclasses this stereotype can be applied to.
+    def get_of_meta_class(self) -> str:
+        """Returns the names of the metaclasses that the stereotype can be applied to.
 
         Returns:
-            An ``RPCollection`` of metaclass names.
+            The metaclass names as a string.
 
         Reference:
             com.telelogic.rhapsody.core.IRPStereotype::getOfMetaClass()
         """
-        return RPCollection(AbstractRPModelElement._get_method_or_property(self._com, "getOfMetaClass", "ofMetaClass"))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getOfMetaClass", "ofMetaClass"))
 
     def remove_meta_class(self, meta_class: str) -> None:
         """Removes a metaclass from the stereotype's applicable metaclasses.

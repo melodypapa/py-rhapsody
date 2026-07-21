@@ -12,25 +12,25 @@ class RPEnumerationLiteral(RPModelElement):
     # [inherited] irp_model_element methods (covered by rp_model_element checklists)
     # No deprecated IRPEnumerationLiteral methods.
 
-    def get_value(self) -> int:
-        """Returns the integer value of the enumeration literal.
+    def get_value(self) -> str:
+        """Returns the value of the enumeration literal.
 
         Returns:
-            The enumeration literal value as an integer.
+            The enumeration literal value as a string.
 
         Reference:
             com.telelogic.rhapsody.core.IRPEnumerationLiteral::getValue()
         """
-        return int(AbstractRPModelElement._get_method_or_property(self._com, "getValue", "value"))
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getValue", "value"))
 
-    def set_value(self, value: int) -> None:
-        """Sets the integer value of the enumeration literal.
+    def set_value(self, value: str) -> None:
+        """Sets the value of the enumeration literal.
 
         Args:
-            value: The integer value to set.
+            value: The value to set.
 
         Reference:
-            com.telelogic.rhapsody.core.IRPEnumerationLiteral::setValue(int value)
+            com.telelogic.rhapsody.core.IRPEnumerationLiteral::setValue(java.lang.String value)
         """
         AbstractRPModelElement.call_com(lambda: self._com.setValue(value))
 

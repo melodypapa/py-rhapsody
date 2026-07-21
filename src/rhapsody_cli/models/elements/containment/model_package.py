@@ -750,7 +750,7 @@ class RPPackage(RPUnit):
         return cast("RPPackage", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedPackage(name))))
 
     # --- Association methods ---
-    def add_association(self, name: str) -> "RPRelation":
+    def add_association(self, name: str) -> "RPRelation":  # type: ignore[override]
         """Adds a new association to the package.
 
         Args:
@@ -1379,7 +1379,7 @@ class RPPackage(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPPackage::getEventsBaseId()
         """
-        return AbstractRPModelElement._get_method_or_property(self._com, "getEventsBaseId", "eventsBaseId")
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getEventsBaseId", "eventsBaseId"))
 
     def get_namespace(self) -> str:
         """Returns the namespace for this package.
@@ -1390,7 +1390,7 @@ class RPPackage(RPUnit):
         Reference:
             com.telelogic.rhapsody.core.IRPPackage::getNamespace()
         """
-        return AbstractRPModelElement._get_method_or_property(self._com, "getNamespace", "namespace")
+        return str(AbstractRPModelElement._get_method_or_property(self._com, "getNamespace", "namespace"))
 
     def get_saved_in_separate_directory(self) -> int:
         """Returns whether the package is saved in a separate directory.

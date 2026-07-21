@@ -57,11 +57,11 @@ def test_constraint_is_registered() -> None:
     assert isinstance(wrapped, RPConstraint)
 
 
-def test_enumeration_literal_get_value_returns_int() -> None:
+def test_enumeration_literal_get_value_returns_str() -> None:
     fake = make_fake_element("EnumerationLiteral")
-    fake.getValue.return_value = 42
+    fake.getValue.return_value = "42"
     literal = RPEnumerationLiteral(fake)
-    assert literal.get_value() == 42
+    assert literal.get_value() == "42"
     fake.getValue.assert_called_once_with()
 
 
@@ -69,8 +69,8 @@ def test_enumeration_literal_set_value_delegates() -> None:
     fake = make_fake_element("EnumerationLiteral")
     fake.setValue.return_value = None
     literal = RPEnumerationLiteral(fake)
-    literal.set_value(99)
-    fake.setValue.assert_called_once_with(99)
+    literal.set_value("99")
+    fake.setValue.assert_called_once_with("99")
 
 
 def test_constraint_get_constraints_by_me_returns_collection() -> None:

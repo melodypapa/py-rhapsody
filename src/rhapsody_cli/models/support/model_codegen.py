@@ -1,6 +1,6 @@
 """Codegen model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
@@ -46,7 +46,7 @@ class RPBaseExternalCodeGeneratorTool(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPBaseExternalCodeGeneratorTool::shouldAbortCodeGeneration()
         """
-        return self.call_com(lambda: self._com.shouldAbortCodeGeneration())
+        return int(self.call_com(lambda: self._com.shouldAbortCodeGeneration()))
 
     def write_code_gen_message(self, msg: str) -> None:
         """Writes a code generation message.
@@ -138,7 +138,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::addInstance(long addedToSD, java.lang.String instanceNavExp)
         """
-        return self.call_com(lambda: self._com.addInstance(added_to_s_d, instance_nav_exp))
+        return int(self.call_com(lambda: self._com.addInstance(added_to_s_d, instance_nav_exp)))
 
     def add_synth_sd_to_model2(self, p_msc_orig: "RPSequenceDiagram", synth_s_d: int, open_s_d: int) -> int:
         """Adds a synthesized sequence diagram to the model.
@@ -157,7 +157,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::addSynthSDToModel2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig, long synthSD, int openSD)
         """
-        return self.call_com(lambda: self._com.addSynthSDToModel2(p_msc_orig._com, synth_s_d, open_s_d))
+        return int(self.call_com(lambda: self._com.addSynthSDToModel2(p_msc_orig._com, synth_s_d, open_s_d)))
 
     def create_sd2(self, p_msc_orig: "RPSequenceDiagram", testedmscname: str) -> int:
         """Creates a sequence diagram.
@@ -175,7 +175,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::createSD2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig, java.lang.String testedmscname)
         """
-        return self.call_com(lambda: self._com.createSD2(p_msc_orig._com, testedmscname))
+        return int(self.call_com(lambda: self._com.createSD2(p_msc_orig._com, testedmscname)))
 
     def receive_message(self, p_tested_s_d: int, p_event_sent: int) -> None:
         """Receives a sequence diagram message.
@@ -208,7 +208,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::removeSynthSDToModel2(com.telelogic.rhapsody.core.IRPSequenceDiagram pMscOrig)
         """
-        return self.call_com(lambda: self._com.removeSynthSDToModel2(p_msc_orig._com))
+        return int(self.call_com(lambda: self._com.removeSynthSDToModel2(p_msc_orig._com)))
 
     def s_d_add_condition_mark(self, p_tested_s_d: int, instance: str, text: str, type_: str) -> int:
         """Sends a condition mark to an instance in a sequence diagram.
@@ -228,7 +228,7 @@ class RPDiagSynthAPI(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPDiagSynthAPI::sDAddConditionMark(long pTestedSD, java.lang.String instance, java.lang.String text, java.lang.String type)
         """
-        return self.call_com(lambda: self._com.sDAddConditionMark(p_tested_s_d, instance, text, type_))
+        return int(self.call_com(lambda: self._com.sDAddConditionMark(p_tested_s_d, instance, text, type_)))
 
     def send_message(self, p_tested_s_d: int, source: str, target: str, event: str, operation: str, type_: str) -> int:
         """Sends a sequence diagram message.
@@ -253,7 +253,7 @@ class RPDiagSynthAPI(RPModelElement):
                 java.lang.String target, java.lang.String event,
                 java.lang.String operation, java.lang.String type)
         """
-        return self.call_com(lambda: self._com.sendMessage(p_tested_s_d, source, target, event, operation, type_))
+        return int(self.call_com(lambda: self._com.sendMessage(p_tested_s_d, source, target, event, operation, type_)))
 
 
 class RPExternalCheckRegistry(RPModelElement):
@@ -573,7 +573,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addDiagramToViewsList(com.telelogic.rhapsody.core.IRPDiagram view)
         """
-        return self.call_com(lambda: self._com.addDiagramToViewsList(view._com))
+        return int(self.call_com(lambda: self._com.addDiagramToViewsList(view._com)))
 
     def add_filter_element_type(self, element_type: str) -> None:
         """Adds an element type to the list of element types that the search
@@ -653,7 +653,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addMatrixToViewsList(com.telelogic.rhapsody.core.IRPMatrixView view)
         """
-        return self.call_com(lambda: self._com.addMatrixToViewsList(view._com))
+        return int(self.call_com(lambda: self._com.addMatrixToViewsList(view._com)))
 
     def add_search_scope(self, scope_element: "RPModelElement") -> None:
         """Adds an element to the scope for the search.
@@ -686,7 +686,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::addTableToViewsList(com.telelogic.rhapsody.core.IRPTableView view)
         """
-        return self.call_com(lambda: self._com.addTableToViewsList(view._com))
+        return int(self.call_com(lambda: self._com.addTableToViewsList(view._com)))
 
     def get_filter_element_types(self) -> "RPCollection":
         """Returns the element types that are to be searched for the search text.
@@ -874,7 +874,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::getFilterSubQueryUseWithNotOperator(com.telelogic.rhapsody.core.IRPTableLayout subQuery)
         """
-        return self.call_com(lambda: self._com.getFilterSubQueryUseWithNotOperator(sub_query._com))
+        return int(self.call_com(lambda: self._com.getFilterSubQueryUseWithNotOperator(sub_query._com)))
 
     def get_filter_tag_find_as(self) -> str:
         """Returns the type of search that was specified for the tag name and
@@ -968,7 +968,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getSearchScopeElements", "searchScopeElements"))
 
-    def get_view(self, index: int) -> "RPModelElement":
+    def get_view(self, index: int) -> Optional["RPModelElement"]:
         """Retrieves the specified item from the list of tables, matrices, and
         diagrams that are to be searched.
 
@@ -1093,7 +1093,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeFilterSubQuery(com.telelogic.rhapsody.core.IRPTableLayout subQuery)
         """
-        return self.call_com(lambda: self._com.removeFilterSubQuery(sub_query._com))
+        return int(self.call_com(lambda: self._com.removeFilterSubQuery(sub_query._com)))
 
     def remove_filter_tag(self) -> None:
         """Removes the tag name and tag value criteria that were defined for
@@ -1123,7 +1123,7 @@ class RPSearchQuery(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPSearchQuery::removeSearchScopeElement(com.telelogic.rhapsody.core.IRPModelElement scopeElement)
         """
-        return self.call_com(lambda: self._com.removeSearchScopeElement(scope_element._com))
+        return int(self.call_com(lambda: self._com.removeSearchScopeElement(scope_element._com)))
 
     def remove_view(self, index: int) -> None:
         """Removes the specified view from the list of views to be searched for
@@ -1376,7 +1376,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getSearchFindAsOption", "searchFindAsOption"))
 
-    def get_search_scope_object(self) -> "RPModelElement":
+    def get_search_scope_object(self) -> Optional["RPModelElement"]:
         """Returns the scope specified for the search.
 
         Deprecated. Use getSearchScopeElements instead, as Rhapsody now
@@ -1678,7 +1678,7 @@ class RPSearchResult(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getMatchedFields", "matchedFields"))
 
-    def get_matched_object(self) -> "RPModelElement":
+    def get_matched_object(self) -> Optional["RPModelElement"]:
         """Returns the property matchedObject.
 
         Returns:
