@@ -9,7 +9,7 @@ a registry populated by each element module at import time.
 """
 
 from enum import IntEnum
-from typing import TYPE_CHECKING, Any, Callable, Dict, Iterator, Type, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterator, Optional, Type, TypeVar, cast
 
 from rhapsody_cli import com_utils
 
@@ -60,14 +60,19 @@ class AbstractRPModelElement:
         return value
 
     @classmethod
-    def wrap(cls, com_obj: Any) -> "RPModelElement":
+    def wrap(cls, com_obj: Any) -> Optional["RPModelElement"]:
         """Wrap a raw Rhapsody COM model element in its matching wrapper class.
 
-        Returns an RPModelElement wrapping a None COM object if com_obj is None
-        (e.g., when findNestedElement returns no result).
+        Args:
+            com_obj: A raw COM object from Rhapsody API, or None.
+
+        Returns:
+            An RPModelElement (or specific subclass) wrapping the COM object,
+            or None if com_obj is None. None typically indicates a search/find
+            operation returned no result (e.g., findNestedElement not found).
         """
         if com_obj is None:
-            return RPModelElement(None)
+            return None  # Truthfully return None instead of wrapping it
         meta_class = str(cls._get_method_or_property(com_obj, "getMetaClass", "metaClass"))
         wrapper_cls = cls._WRAPPER_REGISTRY.get(meta_class, RPModelElement)
         return wrapper_cls(com_obj)
@@ -283,7 +288,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addAssociation(com.telelogic.rhapsody.core.IRPRelation end1, com.telelogic.rhapsody.core.IRPRelation end2, java.lang.String name)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addAssociation(end1._com, end2._com, name)))
+        return cast("RPAssociationClass", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addAssociation(end1._com, end2._com, name))))
 
     def add_dependency(self, depends_on_name: str, depends_on_type: str) -> "RPDependency":
         """Adds a dependency from the model element to the model element specified by the parameters.
@@ -306,7 +311,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addDependency(java.lang.String dependsOnName, java.lang.String dependsOnType)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependency(depends_on_name, depends_on_type)))
+        return cast("RPDependency", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependency(depends_on_name, depends_on_type))))
 
     def add_dependency_between(self, dependent: "RPModelElement", depends_on: "RPModelElement") -> "RPDependency":
         """Creates a dependency between the two specified elements.
@@ -328,7 +333,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addDependencyBetween(com.telelogic.rhapsody.core.IRPModelElement dependent, com.telelogic.rhapsody.core.IRPModelElement dependsOn)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependencyBetween(dependent._com, depends_on._com)))
+        return cast("RPDependency", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependencyBetween(dependent._com, depends_on._com))))
 
     def add_dependency_to(self, element: "RPModelElement") -> "RPDependency":
         """Adds a dependency upon another model element.
@@ -342,7 +347,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addDependencyTo(com.telelogic.rhapsody.core.IRPModelElement element)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependencyTo(element._com)))
+        return cast("RPDependency", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addDependencyTo(element._com))))
 
     def add_link_to_element(
         self,
@@ -374,7 +379,7 @@ class RPModelElement(AbstractRPModelElement):
                 com.telelogic.rhapsody.core.IRPModelElement fromPort,
                 com.telelogic.rhapsody.core.IRPModelElement toPort)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addLinkToElement(to_element._com, assoc._com, from_port._com, to_port._com)))
+        return cast("RPLink", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addLinkToElement(to_element._com, assoc._com, from_port._com, to_port._com))))
 
     def add_new_aggr(self, meta_type: str, name: str) -> "RPModelElement":
         """Adds a new model element to the current element, for example, adding a class to a package.
@@ -389,7 +394,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addNewAggr(java.lang.String metaType, java.lang.String name)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNewAggr(meta_type, name)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNewAggr(meta_type, name))))
 
     def add_property(self, property_key: str, property_type: str, property_value: str) -> None:
         """Adds a new property to the model element and assigns a value to it.
@@ -431,7 +436,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addRemoteDependencyTo(com.telelogic.rhapsody.core.IRPModelElement element, java.lang.String linkType)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addRemoteDependencyTo(element._com, link_type)))
+        return cast("RPDependency", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addRemoteDependencyTo(element._com, link_type))))
 
     def add_specific_stereotype(self, stereotype: "RPStereotype") -> None:
         """Applies the specified stereotype to the model element.
@@ -462,7 +467,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::addStereotype(java.lang.String name, java.lang.String metaType)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStereotype(name, meta_type)))
+        return cast("RPStereotype", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addStereotype(name, meta_type))))
 
     def become_template_instantiation_of(self, new_val: "RPModelElement") -> None:
         """Makes the current model element a template instantiation of the specified template.
@@ -491,7 +496,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::changeTo(java.lang.String metaClass)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.changeTo(meta_class)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.changeTo(meta_class))))
 
     def clone(self, name: str, new_owner: "RPModelElement") -> "RPModelElement":
         """Clones a model element.
@@ -506,7 +511,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::clone(java.lang.String name, com.telelogic.rhapsody.core.IRPModelElement newOwner)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.clone(name, new_owner._com)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.clone(name, new_owner._com))))
 
     def create_oslc_link(self, type: str, purl: str) -> None:
         """Creates an OSLC link between the element and the element represented by the specified URL.
@@ -573,7 +578,7 @@ class RPModelElement(AbstractRPModelElement):
         """
         return str(AbstractRPModelElement.call_com(lambda: self._com.errorMessage()))
 
-    def find_elements_by_full_name(self, name: str, meta_class: str) -> "RPModelElement":
+    def find_elements_by_full_name(self, name: str, meta_class: str) -> Optional["RPModelElement"]:
         """Searches for the specified model element in the specified path under the current model element.
 
         Args:
@@ -581,14 +586,14 @@ class RPModelElement(AbstractRPModelElement):
             meta_class: The metaclass of the element to find.
 
         Returns:
-            The wrapped matching model element.
+            The wrapped matching model element, or None if not found.
 
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::findElementsByFullName(java.lang.String name, java.lang.String metaClass)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findElementsByFullName(name, meta_class)))
 
-    def find_nested_element(self, name: str, meta_class: str) -> "RPModelElement":
+    def find_nested_element(self, name: str, meta_class: str) -> Optional["RPModelElement"]:
         """Searches for the specified model element.
 
         Only the first level of nesting below the current element is searched;
@@ -599,14 +604,14 @@ class RPModelElement(AbstractRPModelElement):
             meta_class: The metaclass of the element to find.
 
         Returns:
-            The wrapped matching model element.
+            The wrapped matching model element, or None if not found.
 
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::findNestedElement(java.lang.String name, java.lang.String metaClass)
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedElement(name, meta_class)))
 
-    def find_nested_element_recursive(self, name: str, meta_class: str) -> "RPModelElement":
+    def find_nested_element_recursive(self, name: str, meta_class: str) -> Optional["RPModelElement"]:
         """Searches recursively for the specified model element.
 
         All levels of nesting below the current element are searched; use
@@ -617,7 +622,7 @@ class RPModelElement(AbstractRPModelElement):
             meta_class: The metaclass of the element to find.
 
         Returns:
-            The wrapped matching model element.
+            The wrapped matching model element, or None if not found.
 
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::findNestedElementRecursive(java.lang.String name, java.lang.String metaClass)
@@ -939,7 +944,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getMainDiagram()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getMainDiagram", "mainDiagram"))
+        return cast("RPDiagram", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getMainDiagram", "mainDiagram")))
 
     def get_nested_elements(self) -> "RPCollection":
         """Gets a collection of all the model elements that are directly under the current element.
@@ -993,7 +998,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getNewTermStereotype()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNewTermStereotype", "newTermStereotype"))
+        return cast("RPStereotype", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNewTermStereotype", "newTermStereotype")))
 
     def get_of_template(self) -> "RPModelElement":
         """If the element is an instantiation of a template, returns the template that it instantiates.
@@ -1004,7 +1009,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getOfTemplate()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOfTemplate", "ofTemplate"))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOfTemplate", "ofTemplate")))
 
     def get_oslc_links(self) -> "RPCollection":
         """Returns a collection of all the element's OSLC links.
@@ -1095,7 +1100,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getOwner()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOwner", "owner"))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getOwner", "owner")))
 
     def get_project(self) -> "RPProject":
         """Returns the project that the current element belongs to.
@@ -1106,7 +1111,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getProject()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getProject", "project"))
+        return cast("RPProject", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getProject", "project")))
 
     def get_property_value(self, property_key: str) -> str:
         """Returns the value of the specified property for the model element.
@@ -1276,7 +1281,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getSaveUnit()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getSaveUnit", "saveUnit"))
+        return cast("RPUnit", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getSaveUnit", "saveUnit")))
 
     def get_stereotypes(self) -> "RPCollection":
         """Returns a collection of the stereotypes that have been applied to the element.
@@ -1303,7 +1308,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getTag(java.lang.String name)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getTag(name)))
+        return cast("RPTag", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.getTag(name))))
 
     def get_template_parameters(self) -> "RPCollection":
         """For model elements that are templates, returns the template parameters.
@@ -1325,7 +1330,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::getTi()
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTi", "ti"))
+        return cast("RPTemplateInstantiation", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getTi", "ti")))
 
     def get_tool_tip_html(self) -> str:
         """Returns the HTML that would be used to display the tooltip for the element in the user interface.
@@ -1707,7 +1712,7 @@ class RPModelElement(AbstractRPModelElement):
                 com.telelogic.rhapsody.core.IRPCollection elements,
                 com.telelogic.rhapsody.core.IRPCollection multiplicities)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagContextValue(tag._com, elements._com, multiplicities._com)))
+        return cast("RPTag", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagContextValue(tag._com, elements._com, multiplicities._com))))
 
     def set_tag_element_value(self, tag: "RPTag", val: "RPModelElement") -> "RPTag":
         """Applies a tag whose type is a model element to the current element with the value specified.
@@ -1725,7 +1730,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::setTagElementValue(com.telelogic.rhapsody.core.IRPTag tag, com.telelogic.rhapsody.core.IRPModelElement val)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagElementValue(tag._com, val._com)))
+        return cast("RPTag", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagElementValue(tag._com, val._com))))
 
     def set_tag_value(self, tag: "RPTag", val: str) -> "RPTag":
         """Applies the specified tag to the model element with the value specified.
@@ -1743,7 +1748,7 @@ class RPModelElement(AbstractRPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPModelElement::setTagValue(com.telelogic.rhapsody.core.IRPTag tag, java.lang.String val)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagValue(tag._com, val)))
+        return cast("RPTag", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.setTagValue(tag._com, val))))
 
     def set_ti(self, ti: "RPTemplateInstantiation") -> None:
         """Sets the template instantiation for the model element (for internal use only).
@@ -1842,7 +1847,7 @@ class RPUnit(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPUnit::copyToAnotherProject(com.telelogic.rhapsody.core.IRPModelElement parentInTarget)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.copyToAnotherProject(parent_in_target._com)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.copyToAnotherProject(parent_in_target._com))))
 
     def get_add_to_model_mode(self) -> int:
         """Returns an indication of how the unit was added to the model.
@@ -2057,7 +2062,7 @@ class RPUnit(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPUnit::load(int withSubs)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.load(with_subs)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.load(with_subs))))
 
     def move_to_another_project_leave_a_reference(self, parent_in_target: "RPModelElement") -> "RPModelElement":
         """Moves the unit to a different project, and adds a reference to it in the original project.
@@ -2072,7 +2077,7 @@ class RPUnit(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPUnit::moveToAnotherProjectLeaveAReference(com.telelogic.rhapsody.core.IRPModelElement parentInTarget)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.moveToAnotherProjectLeaveAReference(parent_in_target._com)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.moveToAnotherProjectLeaveAReference(parent_in_target._com))))
 
     def reference_to_another_project(self, parent_in_target: "RPModelElement") -> "RPModelElement":
         """Creates a reference to the unit in a different project.
@@ -2087,7 +2092,7 @@ class RPUnit(RPModelElement):
         Reference:
             com.telelogic.rhapsody.core.IRPUnit::referenceToAnotherProject(com.telelogic.rhapsody.core.IRPModelElement parentInTarget)
         """
-        return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.referenceToAnotherProject(parent_in_target._com)))
+        return cast("RPModelElement", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.referenceToAnotherProject(parent_in_target._com))))
 
     def save(self, with_subs: int = 0) -> None:
         """Saves the unit.
@@ -2281,7 +2286,7 @@ class RPCollection:
         """
         AbstractRPModelElement.call_com(lambda: self._com.addGraphicalItem(item._com))
 
-    def to_list(self) -> list:
+    def to_list(self) -> list[Any]:
         """Converts the collection to a Python list.
 
         Returns:
