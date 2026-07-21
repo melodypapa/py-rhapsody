@@ -9,7 +9,7 @@ a registry populated by each element module at import time.
 """
 
 from enum import IntEnum
-from typing import TYPE_CHECKING, Any, Callable, Dict, Iterator, Optional, Type, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterator, List, Optional, Type, TypeVar, cast
 
 from rhapsody_cli import com_utils
 
@@ -2286,7 +2286,7 @@ class RPCollection:
         """
         AbstractRPModelElement.call_com(lambda: self._com.addGraphicalItem(item._com))
 
-    def to_list(self) -> list[Any]:
+    def to_list(self) -> List[Any]:
         """Converts the collection to a Python list.
 
         Returns:

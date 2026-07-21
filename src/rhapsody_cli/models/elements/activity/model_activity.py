@@ -1,6 +1,6 @@
 """Activity model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
@@ -87,11 +87,11 @@ class RPFlow(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getDirection", "direction"))
 
-    def get_end1(self) -> "RPModelElement":
+    def get_end1(self) -> "Optional[RPModelElement]":
         """Returns the first end of the flow.
 
         Returns:
-            Any: The model element at the first end of the flow.
+            The model element at the first end of the flow, or None if not set.
 
         Raises:
             RhapsodyRuntimeException: If the operation fails.
@@ -129,11 +129,11 @@ class RPFlow(RPModelElement):
         """
         return cast("RPSysMLPort", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getEnd1SysMLPort())))
 
-    def get_end2(self) -> "RPModelElement":
+    def get_end2(self) -> "Optional[RPModelElement]":
         """Returns the second end of the flow.
 
         Returns:
-            Any: The model element at the second end of the flow.
+            The model element at the second end of the flow, or None if not set.
 
         Raises:
             RhapsodyRuntimeException: If the operation fails.
@@ -618,11 +618,11 @@ class RPObjectNode(RPState):
         """
         return RPCollection(self.call_com(lambda: self._com.getInStateList()))
 
-    def get_represents(self) -> "RPModelElement":
+    def get_represents(self) -> "Optional[RPModelElement]":
         """Returns the class/type that this object node represents.
 
         Returns:
-            Any: The class/type that this object node represents.
+            The class/type that this object node represents, or None if not set.
 
         Reference:
             com.telelogic.rhapsody.core.IRPObjectNode::getRepresents()
@@ -703,11 +703,11 @@ class RPSwimlane(RPModelElement):
         """
         return RPCollection(self.call_com(lambda: self._com.getContents()))
 
-    def get_represents(self) -> "RPModelElement":
+    def get_represents(self) -> "Optional[RPModelElement]":
         """Returns the model element that the swimlane represents.
 
         Returns:
-            Any: The model element that the swimlane represents.
+            The model element that the swimlane represents, or None if not set.
 
         Reference:
             com.telelogic.rhapsody.core.IRPSwimlane::getRepresents()

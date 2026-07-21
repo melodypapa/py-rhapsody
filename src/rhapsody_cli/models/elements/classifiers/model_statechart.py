@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPStatechart``."""
 
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_class import RPClass
@@ -217,7 +217,7 @@ class RPStatechart(RPClass):
         """
         AbstractRPModelElement.call_com(lambda: self._com.openDiagramView())
 
-    def add_new_accept_event_action(self, name: str) -> RPModelElement:
+    def add_new_accept_event_action(self, name: str) -> Optional["RPModelElement"]:
         """Adds a new accept event action to the statechart.
 
         Args:
@@ -231,7 +231,7 @@ class RPStatechart(RPClass):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.addNewAcceptEventAction(name)))
 
-    def add_new_accept_time_event(self, name: str) -> RPModelElement:
+    def add_new_accept_time_event(self, name: str) -> Optional["RPModelElement"]:
         """Adds a new accept time event to the statechart.
 
         Args:
@@ -380,7 +380,7 @@ class RPStatechart(RPClass):
         """
         return RPCollection(AbstractRPModelElement.call_com(lambda: self._com.getPicturesWithImageMap(first_file_name, diagram_map._com)))
 
-    def get_root_state(self) -> RPModelElement:
+    def get_root_state(self) -> Optional["RPModelElement"]:
         """Returns the root state of the statechart.
 
         Returns:

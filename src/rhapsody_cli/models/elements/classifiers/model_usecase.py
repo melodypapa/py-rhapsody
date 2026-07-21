@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPUseCase``."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_classifier import RPClassifier
@@ -156,7 +156,7 @@ class RPUseCase(RPClassifier):
         """
         AbstractRPModelElement.call_com(lambda: self._com.deleteExtensionPoint(extension_point))
 
-    def find_entry_point(self, name: str) -> RPModelElement:
+    def find_entry_point(self, name: str) -> Optional[RPModelElement]:
         """Finds an entry point by name.
 
         Args:
@@ -170,7 +170,7 @@ class RPUseCase(RPClassifier):
         """
         return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findEntryPoint(name)))
 
-    def find_extension_point(self, name: str) -> RPModelElement:
+    def find_extension_point(self, name: str) -> Optional[RPModelElement]:
         """Finds an extension point by name.
 
         Args:

@@ -1,6 +1,6 @@
 """Templates model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.variables.model_variables import RPVariable
@@ -125,7 +125,7 @@ class RPTemplateParameter(RPVariable):
         """
         return str(AbstractRPModelElement._get_method_or_property(self._com, "getParameterKind", "parameterKind"))
 
-    def get_representative(self) -> "RPModelElement":
+    def get_representative(self) -> Optional["RPModelElement"]:
         """Returns the representative of this template parameter.
 
         For internal use only.

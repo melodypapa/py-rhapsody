@@ -1,6 +1,6 @@
 """Graphics model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement, RPUnit
 from rhapsody_cli.models.elements.interactions.model_interactions import RPMessage
@@ -447,7 +447,7 @@ class RPGraphElement(RPModelElement):
         """
         return RPCollection(self.call_com(lambda: self._com.getLocalProperties()))
 
-    def get_model_object(self) -> "RPModelElement":
+    def get_model_object(self) -> Optional["RPModelElement"]:
         """Returns the model object associated with this graph element.
 
         Returns:
@@ -844,7 +844,7 @@ class RPLink(RPUnit):
         """
         return cast("RPInstance", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getFrom())))
 
-    def get_from_element(self) -> "RPModelElement":
+    def get_from_element(self) -> Optional["RPModelElement"]:
         """Returns the source element of this link.
 
         Returns:
@@ -925,7 +925,7 @@ class RPLink(RPUnit):
         """
         return cast("RPInstance", AbstractRPModelElement.wrap(self.call_com(lambda: self._com.getTo())))
 
-    def get_to_element(self) -> "RPModelElement":
+    def get_to_element(self) -> Optional["RPModelElement"]:
         """Returns the target element of this link.
 
         Returns:

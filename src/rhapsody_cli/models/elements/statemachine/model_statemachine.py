@@ -1,6 +1,6 @@
 """Statemachine model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 
@@ -494,7 +494,7 @@ class RPState(RPStateVertex):
         """
         return cast("RPStatechart", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getNestedStatechart", "nestedStatechart")))
 
-    def get_reference_to_activity(self) -> "RPModelElement":
+    def get_reference_to_activity(self) -> Optional["RPModelElement"]:
         """For call behavior elements, returns the activity that is referenced.
 
         Returns:

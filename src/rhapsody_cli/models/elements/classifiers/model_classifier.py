@@ -1,6 +1,6 @@
 """Wraps ``com.telelogic.rhapsody.core.IRPClassifier``."""
 
-from typing import TYPE_CHECKING, Any, cast
+from typing import TYPE_CHECKING, Any, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement, RPUnit
 
@@ -587,7 +587,7 @@ class RPClassifier(RPUnit):
         """
         return cast("RPClassifier", AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(lambda: self._com.findNestedClassifier(new_val))))
 
-    def find_nested_classifier_recursive(self, new_val: str) -> "RPModelElement":
+    def find_nested_classifier_recursive(self, new_val: str) -> Optional["RPModelElement"]:
         """Searches recursively for the classifier with the name specified.
 
         This method searches all of the levels below the current classifier. To

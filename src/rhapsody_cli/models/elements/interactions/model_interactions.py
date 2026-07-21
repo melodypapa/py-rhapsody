@@ -1,6 +1,6 @@
 """Interactions model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Optional, cast
 
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
 from rhapsody_cli.models.elements.classifiers.model_interface_item import RPInterfaceItem
@@ -226,7 +226,7 @@ class RPMessage(RPModelElement):
     def get_formal_interface_item(self) -> "RPInterfaceItem":
         return cast("RPInterfaceItem", AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getFormalInterfaceItem", "formalInterfaceItem")))
 
-    def get_formal_type(self) -> "RPModelElement":
+    def get_formal_type(self) -> "Optional[RPModelElement]":
         return AbstractRPModelElement.wrap(AbstractRPModelElement._get_method_or_property(self._com, "getFormalType", "formalType"))
 
     def get_invariant(self) -> str:

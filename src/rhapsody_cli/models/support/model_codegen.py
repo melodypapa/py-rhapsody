@@ -1,6 +1,6 @@
 """Codegen model-element wrappers (auto-generated stubs)."""
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from rhapsody_cli.application import RhapsodyApplication
 from rhapsody_cli.models.core import AbstractRPModelElement, RPCollection, RPModelElement
@@ -968,7 +968,7 @@ class RPSearchQuery(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getSearchScopeElements", "searchScopeElements"))
 
-    def get_view(self, index: int) -> "RPModelElement":
+    def get_view(self, index: int) -> Optional["RPModelElement"]:
         """Retrieves the specified item from the list of tables, matrices, and
         diagrams that are to be searched.
 
@@ -1376,7 +1376,7 @@ class RPSearchQuery(RPModelElement):
         """
         return str(self._get_method_or_property(self._com, "getSearchFindAsOption", "searchFindAsOption"))
 
-    def get_search_scope_object(self) -> "RPModelElement":
+    def get_search_scope_object(self) -> Optional["RPModelElement"]:
         """Returns the scope specified for the search.
 
         Deprecated. Use getSearchScopeElements instead, as Rhapsody now
@@ -1678,7 +1678,7 @@ class RPSearchResult(RPModelElement):
         """
         return RPCollection(self._get_method_or_property(self._com, "getMatchedFields", "matchedFields"))
 
-    def get_matched_object(self) -> "RPModelElement":
+    def get_matched_object(self) -> Optional["RPModelElement"]:
         """Returns the property matchedObject.
 
         Returns:
