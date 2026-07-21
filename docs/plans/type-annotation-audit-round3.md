@@ -213,89 +213,165 @@ pytest tests/unit/ -q
 
 ## Design Decision: Optional Return Types for Search Methods
 
-### Problem Discovered
+### Background: Java API Behavior
 
-During round 3 completion, a critical design issue was discovered in methods that can return "not found" results:
+From `docs/java_api/com/telelogic/rhapsody/core/IRPModelElement.html`:
+
+```
+findNestedElement(String name, String metaClass)
+  Returns: the model element that was specified
+  Note: the element is always returned as an object of type IRPModelElement
+```
+
+**Key observation from Java docs:**
+- Return type is `IRPModelElement` (non-null in Java signature)
+- But in reality, COM/Java returns `null` when element not found
+- Java allows null returns even though type signature shows non-null
+- Users in Java must check `if (element == null)` to handle not-found case
+
+### Current Python Implementation (WRONG)
+
+Our current code attempts to match Java's non-Optional return type:
 
 ```python
-# Current implementation (PROBLEMATIC):
 def find_nested_element(self, name: str, meta_class: str) -> RPModelElement:
     """Returns the wrapped matching model element."""
     return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(...))
-    # Returns RPModelElement(None) if not found
-    # BUT: Users must access private _com to check if it's null!
+    # When COM returns None, we do: return RPModelElement(None)
+    # Problem: Type annotation says "always RPModelElement"
+    # But we're returning a wrapper with _com = None inside!
 ```
 
-**The issue:** When COM returns `None` (element not found), we wrap it as `RPModelElement(None)`. But `_com` is a private implementation detail. Users have no public way to know if the returned element is valid or null.
-
-### Current Workaround (Broken)
+**The problem:**
+- ❌ Type annotation promises `RPModelElement` (never None)
+- ❌ But actual runtime: returns `RPModelElement(None)` when not found
+- ❌ No public way to check if it's valid (must access private `_com`)
+- ❌ Type checker thinks element is always usable
 
 ```python
-# Users forced to do this (accessing private implementation):
-element = package.find_nested_element("Foo", "Class")
-if element._com is None:  # ❌ Private implementation detail!
-    print("Not found")
+# This type-checks as OK (type checker sees RPModelElement)
+element = package.find_nested_element("NonExistent", "Class")
+# But at runtime, element._com is None - accessing methods will crash!
+name = element.get_name()  # ❌ Crash at runtime, but type checker didn't warn
 ```
 
-### Solution: Use Optional[SpecificType]
+### Solution: Add Optional to Match Runtime Behavior
 
-**Recommended approach:** Return `Optional[SpecificType]` for any method that can return "not found". Since `AbstractRPModelElement.wrap()` dispatches COM objects to their specific wrapper classes (not just `RPModelElement`), search methods can return specific types:
+**Core insight:** Even though Java API docs show `IRPModelElement` (non-null), the actual runtime behavior allows null. Python's `Optional` is the correct way to represent this truthfully.
 
 ```python
-# CORRECT implementation:
+# CORRECT Python implementation:
 def find_nested_element(self, name: str, meta_class: str) -> Optional["RPModelElement"]:
-    """Returns the wrapped matching model element, or None if not found."""
+    """Returns the wrapped matching model element, or None if not found.
+    
+    Matches Java behavior where findNestedElement can return null when
+    element not found, even though Java API signature shows IRPModelElement.
+    """
     com_result = AbstractRPModelElement.call_com(lambda: self._com.findNestedElement(name, meta_class))
     if com_result is None:
-        return None  # Explicit None
+        return None  # Explicit None - truthful to actual behavior
     return AbstractRPModelElement.wrap(com_result)
     # Returns specific wrapper (RPClass, RPPackage, etc.) or None
 ```
 
-**Why this is better:**
-1. ✅ **Pythonic**: Follows standard Python None handling patterns
-2. ✅ **Type-safe**: Mypy enforces `if element is None` checks
-3. ✅ **No private access**: Users never see `_com`
-4. ✅ **Specific types**: Can return `RPClass`, `RPPackage`, etc., not just `RPModelElement`
+**Why this is correct:**
+1. ✅ **Java API truthfulness**: Java API signature lies (says non-null, returns null). Python's Optional tells the truth.
+2. ✅ **Type-safe**: Mypy ENFORCES `if element is None:` checks before using
+3. ✅ **No private access**: Users never need to check `element._com`
+4. ✅ **Specific types**: Returns `RPClass`, `RPPackage`, etc., not just `RPModelElement`
+5. ✅ **Matches child class returns**: `wrap()` returns specific subclass, not base class
 
-### Methods Affected (Future Fix)
+### How to Check Java API Docs
 
-Search methods that should return `Optional`:
+When auditing return types, follow this pattern:
+
+```
+STEP 1: Check Java API signature
+  find_nested_element() -> IRPModelElement (appears non-null)
+
+STEP 2: Read documentation/usage examples
+  "Returns the model element that was specified"
+  Search for: "null", "not found", "returns null", "no result"
+
+STEP 3: Check COM behavior
+  Does this method search/look up elements? (find, get_by_name, etc.)
+  → YES → Can return null/None when not found → MUST be Optional
+
+  Does this method create/return a new element? (add_*, create_*, etc.)
+  → NO: Never Optional (always returns element or raises exception)
+
+STEP 4: Add Optional to Python signature
+  Java signature: IRPModelElement findNestedElement(...)
+  Python signature: Optional[RPModelElement] find_nested_element(...)
+  Implementation: return None if com_obj is None, else wrap(com_obj)
+```
+
+### Methods Affected (Phase 2 Implementation)
+
+**Search/lookup methods that should return `Optional`:**
 - `find_nested_element()` → `Optional[RPModelElement]`
 - `find_nested_element_recursive()` → `Optional[RPModelElement]`
-- `find_elements_by_full_name()` → `RPCollection` (already iterable, no None needed)
-- Any similar "search" method in child classes
+- `find_elements_by_full_name()` → Returns `RPCollection` (already handles empty)
+- Any method with "find", "get_by_*", "lookup" pattern
+- Check Java docs for each to confirm "can return null" behavior
 
-### Methods Unaffected
+**Methods that should STAY non-Optional:**
+- `get_name()`, `get_meta_class()`, `get_guid()` → Always return value or throw
+- `add_*()` methods → Always return newly created element or throw
+- `get_all_*()` methods → Return collections (empty if none found)
+- Constructor methods → Return new element or throw
 
-Methods that **always** return a valid element (or raise exception):
-- `get_name()`, `get_meta_class()`, etc. → Stay as `str`, `RPModelElement`, etc.
-- `add_*()` methods → Always return newly created element or raise
-- Factory methods → Always return valid wrapper
+### Implementation Strategy (Phase 2)
 
-### Implementation Strategy
-
-**Phase 2 (post-round3):**
-1. Identify all "search" methods that can return "not found"
-2. Change return type from `RPModelElement` → `Optional[RPModelElement]`
-3. Update `wrap()` logic: return `None` directly instead of `RPModelElement(None)`
-4. Update all callers to handle `Optional` with `if element is None:` checks
-5. Update tests to verify both found and not-found cases
-
-### Example Usage After Fix
-
-```python
-# Clean, Pythonic code:
-element = package.find_nested_element("Foo", "Class")
-if element is None:
-    print("Element not found")
-else:
-    print(f"Found: {element.get_name()}")
-
-# With type checking:
-found_element: Optional[RPModelElement] = package.find_nested_element("Foo", "Class")
-if found_element is not None:
-    name = found_element.get_name()  # Type checker knows it's valid here
 ```
+Phase 2: Optional Return Type Implementation
+
+1. Audit all methods against Java API docs
+   - Identify which can legitimately return "not found"/null
+   - Mark as Optional[SpecificType] in signature
+   
+2. Update find_nested_element() and similar search methods
+   - Change: -> RPModelElement to -> Optional[RPModelElement]
+   - Update implementation to return None directly (not wrap None)
+   
+3. Update all callers
+   - Anywhere find_nested_element() is called, add None checks
+   - Type checker will enforce this (mypy will error if skipped)
+   
+4. Update tests
+   - Test both "found" and "not found" cases
+   - Verify Optional behavior matches expectations
+   
+5. Quality gate
+   - mypy strict mode must pass
+   - All tests pass
+   - No accessing private _com attribute
+```
+
+### Example: Before vs After
+
+**BEFORE (Current - Type Unsafe):**
+```python
+# Type annotation says never None, but actual return can be None!
+element = package.find_nested_element("Foo", "Class")
+# Type checker thinks element is always valid
+name = element.get_name()  # ❌ CRASH if not found, but no type error
+```
+
+**AFTER (Phase 2 - Type Safe):**
+```python
+# Type annotation matches actual behavior
+element = package.find_nested_element("Foo", "Class")
+if element is None:  # ✅ Type checker REQUIRES this check
+    print("Not found")
+else:
+    name = element.get_name()  # ✅ Type checker knows it's safe here
+```
+
+### Key Principle
+
+> **When Java API docs show non-null but code can return null, Python's `Optional` is MORE TRUTHFUL than Java's signature.**
+
+The Java API docs were written before nullable annotations existed. Python's `Optional` corrects this by explicitly encoding the actual runtime behavior.
 
 ---
