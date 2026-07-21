@@ -208,3 +208,94 @@ pytest tests/unit/ -q
 - `core.py` has ~16 `Incompatible return value type` errors from round 1 changes — these require test file fixes
 - Test files across `tests/unit/` have `RPModelElement` → expected specific type errors — these are downstream of the source changes and will be cleaned separately
 - Don't touch `docs/` or `tests/` unless a test directly fails because of a source change
+
+---
+
+## Design Decision: Optional Return Types for Search Methods
+
+### Problem Discovered
+
+During round 3 completion, a critical design issue was discovered in methods that can return "not found" results:
+
+```python
+# Current implementation (PROBLEMATIC):
+def find_nested_element(self, name: str, meta_class: str) -> RPModelElement:
+    """Returns the wrapped matching model element."""
+    return AbstractRPModelElement.wrap(AbstractRPModelElement.call_com(...))
+    # Returns RPModelElement(None) if not found
+    # BUT: Users must access private _com to check if it's null!
+```
+
+**The issue:** When COM returns `None` (element not found), we wrap it as `RPModelElement(None)`. But `_com` is a private implementation detail. Users have no public way to know if the returned element is valid or null.
+
+### Current Workaround (Broken)
+
+```python
+# Users forced to do this (accessing private implementation):
+element = package.find_nested_element("Foo", "Class")
+if element._com is None:  # ❌ Private implementation detail!
+    print("Not found")
+```
+
+### Solution: Use Optional[SpecificType]
+
+**Recommended approach:** Return `Optional[SpecificType]` for any method that can return "not found". Since `AbstractRPModelElement.wrap()` dispatches COM objects to their specific wrapper classes (not just `RPModelElement`), search methods can return specific types:
+
+```python
+# CORRECT implementation:
+def find_nested_element(self, name: str, meta_class: str) -> Optional["RPModelElement"]:
+    """Returns the wrapped matching model element, or None if not found."""
+    com_result = AbstractRPModelElement.call_com(lambda: self._com.findNestedElement(name, meta_class))
+    if com_result is None:
+        return None  # Explicit None
+    return AbstractRPModelElement.wrap(com_result)
+    # Returns specific wrapper (RPClass, RPPackage, etc.) or None
+```
+
+**Why this is better:**
+1. ✅ **Pythonic**: Follows standard Python None handling patterns
+2. ✅ **Type-safe**: Mypy enforces `if element is None` checks
+3. ✅ **No private access**: Users never see `_com`
+4. ✅ **Specific types**: Can return `RPClass`, `RPPackage`, etc., not just `RPModelElement`
+
+### Methods Affected (Future Fix)
+
+Search methods that should return `Optional`:
+- `find_nested_element()` → `Optional[RPModelElement]`
+- `find_nested_element_recursive()` → `Optional[RPModelElement]`
+- `find_elements_by_full_name()` → `RPCollection` (already iterable, no None needed)
+- Any similar "search" method in child classes
+
+### Methods Unaffected
+
+Methods that **always** return a valid element (or raise exception):
+- `get_name()`, `get_meta_class()`, etc. → Stay as `str`, `RPModelElement`, etc.
+- `add_*()` methods → Always return newly created element or raise
+- Factory methods → Always return valid wrapper
+
+### Implementation Strategy
+
+**Phase 2 (post-round3):**
+1. Identify all "search" methods that can return "not found"
+2. Change return type from `RPModelElement` → `Optional[RPModelElement]`
+3. Update `wrap()` logic: return `None` directly instead of `RPModelElement(None)`
+4. Update all callers to handle `Optional` with `if element is None:` checks
+5. Update tests to verify both found and not-found cases
+
+### Example Usage After Fix
+
+```python
+# Clean, Pythonic code:
+element = package.find_nested_element("Foo", "Class")
+if element is None:
+    print("Element not found")
+else:
+    print(f"Found: {element.get_name()}")
+
+# With type checking:
+found_element: Optional[RPModelElement] = package.find_nested_element("Foo", "Class")
+if found_element is not None:
+    name = found_element.get_name()  # Type checker knows it's valid here
+```
+
+---
