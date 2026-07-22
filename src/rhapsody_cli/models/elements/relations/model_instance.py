@@ -222,3 +222,6 @@ class RPInstance(RPRelation):
 
 
 AbstractRPModelElement.register_wrapper("Instance", RPInstance)
+# Also register "Object" metaClass (used in live Rhapsody for instance elements)
+# See: https://github.com/melodypapa/rhapsody-cli/issues/96
+AbstractRPModelElement.register_wrapper("Object", RPInstance)

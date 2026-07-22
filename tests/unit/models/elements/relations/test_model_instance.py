@@ -75,6 +75,21 @@ def test_instance_is_registered_for_meta_class_instance() -> None:
     assert isinstance(wrapped, RPInstance)
 
 
+def test_instance_is_registered_for_meta_class_object() -> None:
+    """Test that RPInstance is also registered for metaClass 'Object'.
+
+    In live Rhapsody, instance elements may return 'Object' as their metaClass
+    (as documented in metaclasses.txt). This test verifies both registrations work.
+
+    See: https://github.com/melodypapa/rhapsody-cli/issues/96
+    """
+    fake = make_fake_element("Object", getName="driver1")
+
+    wrapped = AbstractRPModelElement.wrap(fake)
+
+    assert isinstance(wrapped, RPInstance)
+
+
 def test_instance_add_relation_to_the_whole_wraps_result() -> None:
     fake = make_fake_element("Instance")
     relation = make_fake_element("Relation", getName="whole")
